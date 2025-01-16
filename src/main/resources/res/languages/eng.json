@@ -1,0 +1,36 @@
+{
+    "General": {
+        "AppName": "Remind Me",
+        "Version": "Version",
+        "From": "From",
+        "To": "A",
+        "OkButton": "Ok",
+        "CancelButton": "Cancel",
+        "CloseButton": "Close",
+        "ApplyButton": "Apply"
+    },
+    "Menu": {
+        "File": "File",
+        "Options": "Options",
+        "About": "About",
+        "Help": "Help",
+        "BugReport": "Report a bug",
+        "Clear": "Clear",
+        "Donate": "Donate",
+        "History": "History",
+        "InfoPage": "Info",
+        "New": "New",
+        "Quit": "Quit",
+        "Save": "Save",
+        "SaveWithName": "Save with name",
+        "Preferences": "Preferences",
+        "Import": "Import remind list",
+        "Export": "Export remind list",
+        "Share": "Share",
+        "Support": "Support",
+        "Website": "Website"
+    },
+    "TrayIcon": {
+        "TrayTooltip": "Remind Service"
+    }
+}

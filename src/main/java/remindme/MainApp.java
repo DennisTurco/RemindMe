@@ -1,7 +1,12 @@
 package remindme;
 
+import java.io.IOException;
+
+import remindme.Entities.Preferences;
 import remindme.Enums.ConfigKey;
+import remindme.Enums.TranslationLoaderEnum;
 import remindme.Json.JSONConfigReader;
+import remindme.Logger.LogLevel;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";
@@ -12,12 +17,12 @@ public class MainApp {
         Logger.configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
 
         // load preferred language
-        // try {
-        //     Preferences.loadPreferencesFromJSON();
-        //     TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
-        // } catch (IOException ex) {
-        //     Logger.logMessage("An error occurred during loading preferences: ", LogLevel.DEBUG, ex);
-        // }
+        try { 
+            Preferences.loadPreferencesFromJSON();
+            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
+        } catch (IOException ex) {
+            Logger.logMessage("An error occurred during loading preferences: ", LogLevel.DEBUG, ex);
+        }
 
         boolean isBackgroundMode = args.length > 0 && args[0].equalsIgnoreCase("--background");
 
