@@ -1,5 +1,6 @@
 {
   "LOG_FILE_STRING": "log_file.txt",
+  "REMIND_LIST_FILE_STRING": "remind_list",
   "CONFIG_FILE_STRING": "config.json",
   "PREFERENCES_FILE_STRING": "preferences.json",
   "RES_DIRECTORY_STRING": "src/main/resources/res/",

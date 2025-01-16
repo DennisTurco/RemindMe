@@ -10,6 +10,7 @@ import com.google.gson.JsonParser;
 
 public enum ConfigKey {
     LOG_FILE_STRING,
+    REMIND_LIST_FILE_STRING,
     CONFIG_FILE_STRING,
     PREFERENCES_FILE_STRING,
     RES_DIRECTORY_STRING,
