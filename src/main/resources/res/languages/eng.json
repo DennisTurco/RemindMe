@@ -30,6 +30,15 @@
         "Support": "Support",
         "Website": "Website"
     },
+    "TimePickerDialog": {
+        "TimeIntervalTitle": "Time interval for reminder",
+        "Description": " by \nchoosing the frequency in days, hours, minutes and seconds.",
+        "Days": "Days",
+        "Hours": "Hours",
+        "Minutes": "Minutes",
+        "Seconsa": "Seconds",
+        "SpinnerTooltip": "Mouse wheel to adjust the value"
+    },
     "TrayIcon": {
         "TrayTooltip": "Remind Service"
     }

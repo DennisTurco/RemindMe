@@ -17,6 +17,7 @@ public class TranslationLoaderEnum {
     public enum TranslationCategory {
         GENERAL("General"),
         MENU("Menu"),
+        TIME_PICKER_DIALOG("TimePickerDialog"),
         PREFERENCES_DIALOG("PreferencesDialog"),
         TRAY_ICON("TrayIcon"),
         DIALOGS("Dialogs");
@@ -84,7 +85,13 @@ public class TranslationLoaderEnum {
         
 
         // TimePickerDialog
-        
+        TIME_INTERVAL_TITLE("TimeIntervalTitle", "Time interval for reminder"),
+        DESCRIPTION("Description", ""),
+        DAYS("Days", "Days"),
+        HOURS("Hours", "Hours"),
+        MINUTES("Minutes", "Minutes"),
+        SECONDS("Seconds", "Seconds"),
+        SPINNER_TOOLTIP("SpinnerTooltip", "Mouse wheel to adjust the value"),
 
         // PreferencesDialog
         PREFERENCES_TITLE("PreferencesTitle", "Preferences"),
