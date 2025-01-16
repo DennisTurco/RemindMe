@@ -19,6 +19,7 @@ public class TranslationLoaderEnum {
         MENU("Menu"),
         TIME_PICKER_DIALOG("TimePickerDialog"),
         PREFERENCES_DIALOG("PreferencesDialog"),
+        REMIND_LIST("RemindList"),
         TRAY_ICON("TrayIcon"),
         DIALOGS("Dialogs");
     
@@ -75,14 +76,34 @@ public class TranslationLoaderEnum {
         SUPPORT("Support", "Support"),
         WEBSITE("Website", "Website"),
 
-        // TabbedFrames
-        
+        // MainFrame
+        EXPORT_AS("ExportAs", "Export as: "),
+        EXPORT_AS_PDF_TOOLTIP("ExportAsPdfTooltip", "Export as PDF"),
+        EXPORT_AS_CSV_TOOLTIP("ExportAsCsvTooltip", "Export as CSV"),
+        RESEARCH_BAR_TOOLTIP("ResearchBarTooltip", "Research bar"),
+        RESEARCH_BAR_PLACEHOLDER("ResearchBarPlaceholder", "Search..."),
 
-        // BackupEntry
-        
-
-        // BackupList
-        
+        // RemindList
+        EDIT_POPUP("EditPopup", "Edit"),
+        DELETE_POPUP("DeletePopup", "Delete"),
+        DUPLICATE_POPUP("DuplicatePopup", "Duplicate"),
+        RENAME_BACKUP_POPUP("RenameBackupPopup", "Rename"),
+        NAME_COLUMN("NameColumn", "Name"),
+        LAST_EXECUTION_COLUMN("LastExecutionColumn", "Last Execution"),
+        NEXT_EXECUTION_COLUMN("NextExecutionColumn", "Next Execution"),
+        IS_ACTIVE_COLUMN("IsActiveColumn", "Active"),
+        IS_TOP_LEVEL_COLUMN("IsTopLevelColumn", "Top Level"),
+        TIME_INTERVAL_COLUMN("TimeIntervalColumn", "Time Interval"),
+        NAME_DETAIL("NameDetail", "Name"),
+        DESCRIPTION_DETAIL("DescriptionDetail", "Description"),
+        COUNT_DETAIL("CountDetail", "Count"),
+        LAST_EXECUTION_DETAIL("LastExecutionDetail", "LastExecution"),
+        NEXT_EXECUTION_DETAIL("NextExecutionDetail", "NextExecution"),
+        IS_ACTIVE_DETAIL("IsActiveDetail", "Active"),
+        IS_TOP_LEVEL_DETAIL("IsTopLevelDetail", "TopLevel"),
+        CREATION_DATE_DETAIL("CreationDateDetail", "CreationDate"),
+        LAST_UPDATE_DATE_DETAIL("LastUpdateDateDetail", "LastUpdateDate"),
+        TIME_INTERVAL_DETAIL("TimeIntervalDetail", "TimeInterval"),
 
         // TimePickerDialog
         TIME_INTERVAL_TITLE("TimeIntervalTitle", "Time interval for reminder"),
@@ -99,11 +120,17 @@ public class TranslationLoaderEnum {
         THEME("Theme", "Theme"),
 
         // TrayIcon
-        TRAY_TOOLTIP("TrayTooltip", "Remind Service");
-        
+        TRAY_TOOLTIP("TrayTooltip", "Remind Service"),
 
         // Dialogs
-        
+        EXCEPTION_MESSAGE_TITLE("ExceptionMessageTitle", "Error..."),
+        EXCEPTION_MESSAGE_CLIPBOARD_MESSAGE("ExceptionMessageClipboardMessage", "Error text has been copied to the clipboard."),
+        EXCEPTION_MESSAGE_CLIPBOARD_BUTTON("ExceptionMessageClipboardButton", "Copy to clipboard"),
+        EXCEPTION_MESSAGE_REPORT_BUTTON("ExceptionMessageReportButton", "Report the Problem"),
+        EXCEPTION_MESSAGE_REPORT_MESSAGE("ExceptionMessageReportMessage", "Please report this error, either with an image of the screen or by copying the following error text (it is appreciable to provide a description of the operations performed before the error):"),
+        ERROR_MESSAGE_OPENING_WEBSITE("ErrorMessageOpeningWebsite", "Failed to open the web page. Please try again."),
+        ERROR_GENERIC_TITLE("ErrorGenericTitle", "Error"),
+        ERROR_WRONG_TIME_INTERVAL("ErrorWrongTimeInterval", "The time interval is not correct");
 
         private final String keyName;
         private final String defaultValue;

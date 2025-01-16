@@ -1,5 +1,6 @@
 package remindme.Dialogs;
 
+import remindme.GUI.MainGUI;
 import remindme.Entities.Preferences;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.LanguagesEnum;
@@ -21,9 +22,9 @@ import remindme.Managers.ExceptionManager;
 
 public class PreferencesDialog extends javax.swing.JDialog {
 
-    private final remindmeGUI mainGui;
+    private final MainGUI mainGui;
 
-    public PreferencesDialog(java.awt.Frame parent, boolean modal, remindmeGUI mainGui) {
+    public PreferencesDialog(java.awt.Frame parent, boolean modal, MainGUI mainGui) {
         super(parent, modal);
         this.mainGui = mainGui;
         
@@ -182,7 +183,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
         themesComboBox.addItem(ThemesEnum.HIGH_CONTRAST.getThemeName());
         themesComboBox.addItem(ThemesEnum.SOLARIZED_DARK.getThemeName());
         themesComboBox.addItem(ThemesEnum.SOLARIZED_LIGHT.getThemeName());
-
+        
         themesComboBox.setSelectedItem(Preferences.getTheme().getThemeName());
     }
     

@@ -6,7 +6,6 @@ import java.util.List;
 public class Remind {
     private String _name;
     private String _description;
-    private String _additionalNotes;
     private int _remindCount;
     private boolean _isActive;
     private boolean _isTopLevel;
@@ -20,7 +19,6 @@ public class Remind {
     public Remind() {
         this._name = "";
         this._description = "";
-        this._additionalNotes = "";
         this._remindCount = 0;
         this._isActive = false;
         this._isTopLevel = false;
@@ -31,10 +29,9 @@ public class Remind {
         this._timeInterval = null;
     }
 
-    public Remind(String name, String description, String additionalNotes, int remindCount, boolean isActive, boolean isTopLevel, LocalDateTime lastExecution, LocalDateTime nextExecution, LocalDateTime creationDate, LocalDateTime lastUpdateDate, TimeInterval timeInterval) {
+    public Remind(String name, String description, int remindCount, boolean isActive, boolean isTopLevel, LocalDateTime lastExecution, LocalDateTime nextExecution, LocalDateTime creationDate, LocalDateTime lastUpdateDate, TimeInterval timeInterval) {
         this._name = name;
         this._description = description;
-        this._additionalNotes = additionalNotes;
         this._remindCount = remindCount;
         this._isActive = isActive;
         this._isTopLevel = isTopLevel;
@@ -71,9 +68,6 @@ public class Remind {
     public String getDescription() {
         return _description;
     }
-    public String getAdditionalNotes() {
-        return _additionalNotes;
-    }
     public int getRemindCount() {
         return _remindCount;
     }
@@ -104,9 +98,6 @@ public class Remind {
     }
     public void setDescription(String description) {
         this._description = description;
-    }
-    public void setAdditionalNotes(String additionalNotes) {
-        this._additionalNotes = additionalNotes;
     }
     public void setRemindCount(int remindCount) {
         this._remindCount = remindCount;

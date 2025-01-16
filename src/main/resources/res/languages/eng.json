@@ -30,6 +30,37 @@
         "Support": "Support",
         "Website": "Website"
     },
+    "MainFrame": {
+        "ExportAs": "Export as: ",
+        "ExportAsPdfTooltip": "Export as PDF",
+        "ExportAsCsvTooltip": "Export as CSV",
+        "ResearchBarTooltip": "Research bar",
+        "ResearchBarPlaceholder": "Search..."
+    },
+    "RemindList": {
+        "NameColumn": "Name",
+        "LastExecutionColumn": "Last Execution",
+        "NextExecutionColumn": "Next Execution",
+        "IsActiveColumn": "Active",
+        "IsTopLevelColumn": "Top Level",
+        "TimeIntervalColumn": "Time Interval",
+        
+        "NameDetail": "Name",
+        "DescriptionDetail": "Description",
+        "CountDetail": "Count",
+        "LastExecutionDetail": "LastExecution",
+        "NextExecutionDetail": "NextExecution",
+        "IsActiveDetail": "Active",
+        "IsTopLevelDetail": "TopLevel",
+        "CreationDateDetail": "CreationDate",
+        "LastUpdateDateDetail": "LastUpdateDate",
+        "TimeIntervalDetail": "TimeInterval",
+
+        "EditPopup": "Edit",
+        "DeletePopup": "Delete",
+        "DuplicatePopup": "Duplicate",
+        "RenamePopup": "Rename"
+    },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Time interval for reminder",
         "Description": " by \nchoosing the frequency in days, hours, minutes and seconds.",
@@ -41,5 +72,15 @@
     },
     "TrayIcon": {
         "TrayTooltip": "Remind Service"
+    },
+    "Dialogs": {
+        "ExceptionMessageTitle":"Error...",
+        "ExceptionMessageClipboardMessage":"Error text has been copied to the clipboard.",
+        "ExceptionMessageClipboardButton":"Copy to clipboard",
+        "ExceptionMessageReportButton":"Report the Problem",
+        "ExceptionMessageReportMessage":"Please report this error, either with an image of the screen or by copying the following error text (it is appreciable to provide a description of the operations performed before the error):",
+        "ErrorMessageOpeningWebsite":"Failed to open the web page. Please try again.",
+        "ErrorGenericTitle":"Error",
+        "ErrorWrongTimeInterval":"The time interval is not correct"
     }
 }

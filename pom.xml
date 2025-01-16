@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
-        <exec.mainClass>remindme.RemindMe</exec.mainClass>
+        <exec.mainClass>remindme.MainApp</exec.mainClass>
     </properties>
     <dependencies>
         <!-- Dependency for json -->

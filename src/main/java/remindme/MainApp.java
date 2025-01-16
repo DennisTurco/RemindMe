@@ -5,6 +5,7 @@ import java.io.IOException;
 import remindme.Entities.Preferences;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum;
+import remindme.GUI.MainGUI;
 import remindme.Json.JSONConfigReader;
 import remindme.Logger.LogLevel;
 
@@ -51,5 +52,10 @@ public class MainApp {
         //         gui.showWindow();
         //     });
         // }
+
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            MainGUI gui = new MainGUI();
+            gui.showWindow();
+        });
     }
 }

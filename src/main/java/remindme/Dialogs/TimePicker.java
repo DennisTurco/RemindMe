@@ -68,11 +68,22 @@ public class TimePicker extends javax.swing.JDialog {
         } 
     }
     
+    private void secondsIntervalSpinnerChange() {        
+        Integer seconds = (Integer) secondsSpinner.getValue();
+        
+        if (seconds == null || seconds < 0) {
+            secondsSpinner.setValue(0);
+        }  else if (seconds > 59) {
+            secondsSpinner.setValue(59);
+        } 
+    }
+    
     private boolean checkInputCorrectness() {
         Integer days = (Integer) daysSpinner.getValue();
         Integer hours = (Integer) hoursSpinner.getValue();
         Integer minutes = (Integer) minutesSpinner.getValue();
-        return (days != null && days >= 0 && hours != null && hours >= 0 && hours <= 23 && minutes != null && minutes >= 0 && minutes <= 59 && (days != 0 || hours != 0 || minutes != 0));
+        Integer seconds = (Integer) secondsSpinner.getValue();
+        return (days != null && days >= 0 && hours != null && hours >= 0 && hours <= 23 && minutes != null && minutes >= 0 && minutes <= 59 && seconds != null && seconds >= 0 && seconds <= 59 && (days != 0 || hours != 0 || minutes != 0 || seconds != 0));
     }
     
     private void mouseWeel(java.awt.event.MouseWheelEvent evt) {
@@ -100,6 +111,8 @@ public class TimePicker extends javax.swing.JDialog {
         minutesSpinner = new javax.swing.JSpinner();
         btnOk = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        secondsSpinner = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Time interval for auto backup");
@@ -111,7 +124,7 @@ public class TimePicker extends javax.swing.JDialog {
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(2);
-        jTextArea1.setText("Select how often to perform the automatic backup by \nchoosing the frequency in days, hours, and minutes.");
+        jTextArea1.setText("Select how often to open the reminder by choosing \nthe frequency in days, hours, minutes, or seconds.");
         jTextArea1.setAutoscrolls(false);
         jTextArea1.setBorder(null);
         jTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -175,6 +188,20 @@ public class TimePicker extends javax.swing.JDialog {
             }
         });
 
+        jLabel4.setText("Seconds");
+
+        secondsSpinner.setToolTipText("Mouse wheel to adjust the value");
+        secondsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                secondsSpinnerStateChanged(evt);
+            }
+        });
+        secondsSpinner.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                secondsSpinnerMouseWheelMoved(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -199,7 +226,11 @@ public class TimePicker extends javax.swing.JDialog {
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(minutesSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnOk))
+                            .addComponent(btnOk)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(secondsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
                 .addContainerGap())
@@ -221,7 +252,11 @@ public class TimePicker extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(minutesSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(secondsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOk)
                     .addComponent(jButton2))
@@ -272,12 +307,21 @@ public class TimePicker extends javax.swing.JDialog {
         minutesIntervalSpinnerChange();
     }//GEN-LAST:event_minutesSpinnerStateChanged
 
+    private void secondsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_secondsSpinnerStateChanged
+        secondsIntervalSpinnerChange();
+    }//GEN-LAST:event_secondsSpinnerStateChanged
+
+    private void secondsSpinnerMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_secondsSpinnerMouseWheelMoved
+        mouseWeel(evt);
+    }//GEN-LAST:event_secondsSpinnerMouseWheelMoved
+
     private void setTranslations() {
         setTitle(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.TIME_INTERVAL_TITLE));
         jTextArea1.setText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.DESCRIPTION));
         daysSpinner.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP));
         hoursSpinner.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP));
         minutesSpinner.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP));
+        secondsSpinner.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.SPINNER_TOOLTIP));
         btnOk.setText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.OK_BUTTON));
         jButton2.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.CANCEL_BUTTON));
         jLabel1.setText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.DAYS));
@@ -294,8 +338,10 @@ public class TimePicker extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JSpinner minutesSpinner;
+    private javax.swing.JSpinner secondsSpinner;
     // End of variables declaration//GEN-END:variables
 }

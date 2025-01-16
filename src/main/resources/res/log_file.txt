@@ -1,0 +1,8 @@
+2025-01-17T00:15:41.811160500 [DEBUG] Background mode: false
+2025-01-17T00:15:41.807192900 [INFO] Application started
+2025-01-17T00:15:41.804713 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-17T00:15:41.796280500 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
+2025-01-16T23:48:09.217860100 [DEBUG] Background mode: false
+2025-01-16T23:48:09.212900200 [INFO] Application started
+2025-01-16T23:48:09.209924100 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
+2025-01-16T23:48:09.199013 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
