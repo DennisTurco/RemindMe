@@ -152,6 +152,15 @@ public class TranslationLoaderEnum {
         ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE("ErrorMessageForWrongFileExtensionTitle", "Invalid File"),
         ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_MESSAGE("ErrorMessageForWrongFileExtensionMessage", "Error: Please select a valid JSON file."),
         SHARE_LINK_COPIED_MESSAGE("ShareLinkCopiedMessage", "Share link copied to clipboard!"),
+        SUCCESS_GENERIC_TITLE( "SuccessGenericTitle", "Success"),
+        SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE("SuccessfullyExportedToCsvMessage", "Backups exported to CSV successfully!"),
+        SUCCESSFULLY_EXPORTED_TO_PDF_MESSAGE("SuccessfullyExportedToPdfMessage", "Backups exported to PDF successfully!"),
+        ERROR_MESSAGE_FOR_EXPORTING_TO_CSV("ErrorMessageForExportingToCsv", "Error exporting backups to CSV: "),
+        ERROR_MESSAGE_FOR_EXPORTING_TO_PDF("ErrorMessageForExportingToPdf", "Error exporting backups to PDF: "),
+        CSV_NAME_MESSAGE_INPUT("CsvNameMessageInput", "Enter the name of the CSV file."),
+        PDF_NAME_MESSAGE_INPUT("PdfNameMessageInput", "Enter the name of the PDF file."),
+        DUPLICATED_FILE_NAME_MESSAGE("DuplicatedFileNameMessage", "File already exists. Overwrite?"),
+        ERROR_MESSAGE_INVALID_FILENAME("ErrorMessageInvalidFilename", "Invalid file name. Use only alphanumeric characters, dashes, and underscores."),
         CONFIRMATION_DELETION_TITLE("ConfirmationDeletionTitle", "Confirm Deletion"),
         CONFIRMATION_DELETION_MESSAGE("ConfirmationDeletionMessage", "Are you sure you want to delete the selected rows?");
 

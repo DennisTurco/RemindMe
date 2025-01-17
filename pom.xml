@@ -36,5 +36,19 @@
             <artifactId>flatlaf-extras</artifactId> <!-- for svg icons -->
             <version>3.5.4</version>
         </dependency>
+
+        <!-- for export as PDF -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>7.2.5</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>7.2.5</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>

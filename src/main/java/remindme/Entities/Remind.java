@@ -59,6 +59,21 @@ public class Remind {
         );
     }
 
+    public String toCsvString() {
+        return String.format("%s,%s,%s,%s,%s,%s",
+            this._name,
+            this._isActive,
+            this._isTopLevel,
+            this._lastExecution != null ? _lastExecution.toString() : "",
+            this._nextExecution != null ? _nextExecution.toString() : "",
+            this._timeInterval != null ? this._timeInterval.toString() : ""
+        );
+    }
+
+    public static String getCSVHeader() {
+        return "Name,Active,TopLevel,LastExecution,NextExecution,Interval (gg.HH:mm:ss)";
+    }
+
     public static Remind getRemindByName(List<Remind> reminds, String remindName) {
         for (Remind rem : reminds) {
             if (rem.getName().equals(remindName)) {

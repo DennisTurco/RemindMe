@@ -1,5 +1,6 @@
 package remindme.Managers;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,7 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
+
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -104,6 +108,32 @@ public final class RemindManager {
         return remindName;
     }
 
+    public static String pathSearchWithFileChooser(boolean allowFiles) {
+        Logger.logMessage("Event --> File chooser", Logger.LogLevel.INFO);
+        
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        
+        if (allowFiles)
+            jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        else
+            jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int returnValue = jfc.showSaveDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+
+            if (selectedFile.isDirectory()) {
+                Logger.logMessage("You selected the directory: " + selectedFile, Logger.LogLevel.INFO);
+            } else if (selectedFile.isFile()) {
+                Logger.logMessage("You selected the file: " + selectedFile, Logger.LogLevel.INFO);
+            }
+
+            return selectedFile.toString();
+        }
+
+        return null;
+    }
+
     ///////////////////////////////////////////////////////////////////
 
     public void addReminder() {
@@ -147,10 +177,14 @@ public final class RemindManager {
 
     public void exportRemindListAsPDF() {
         Logger.logMessage("Event --> exporting remind list as pdf", Logger.LogLevel.INFO);
+
+        ImportExportManager.exportRemindListAsPDF(reminds, Remind.getCSVHeader());
     }
 
     public void exportRemindListAsCSV() {
         Logger.logMessage("Event --> exporting remind list as csv", Logger.LogLevel.INFO);
+
+        ImportExportManager.exportRemindListAsCSV(reminds, Remind.getCSVHeader());
     }
 
     public void renameRemind(Remind remind) {

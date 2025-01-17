@@ -1,3 +1,25 @@
+2025-01-17T19:46:18.080979300 [INFO] Exporting reminds to CSV finished
+2025-01-17T19:46:15.300416100 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2025-01-17T19:46:12.046316200 [INFO] Event --> File chooser
+2025-01-17T19:46:12.044804500 [INFO] Exporting reminds to CSV
+2025-01-17T19:46:12.043812600 [INFO] Event --> exporting remind list as csv
+2025-01-17T19:45:40.242618700 [INFO] Exporting reminds to PDF finished
+2025-01-17T19:45:35.002956900 [INFO] You selected the directory: C:\Users\Utente\Desktop
+2025-01-17T19:45:28.368579100 [INFO] Event --> File chooser
+2025-01-17T19:45:28.367116200 [INFO] Exporting reminds to PDF
+2025-01-17T19:45:28.364610900 [INFO] Event --> exporting remind list as pdf
+2025-01-17T19:45:26.755778600 [DEBUG] Selected remind: test
+2025-01-17T19:45:25.656482500 [DEBUG] Selected remind: test
+2025-01-17T19:45:16.936156 [DEBUG] Background mode: false
+2025-01-17T19:45:16.931194 [INFO] Application started
+2025-01-17T19:45:16.925242200 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T19:45:16.912841700 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T19:30:56.383433700 [INFO] Event --> exporting remind list as csv
+2025-01-17T19:30:52.376091400 [INFO] Event --> exporting remind list as pdf
+2025-01-17T19:30:44.792875800 [DEBUG] Background mode: false
+2025-01-17T19:30:44.785435700 [INFO] Application started
+2025-01-17T19:30:44.779190900 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T19:30:44.756667500 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
 2025-01-17T19:13:40.109824500 [INFO] Event --> exporting remind list to json
 2025-01-17T19:13:32.507401100 [DEBUG] Background mode: false
 2025-01-17T19:13:32.503433100 [INFO] Application started
