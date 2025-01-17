@@ -21,7 +21,7 @@ import remindme.Managers.ExceptionManager;
 public class Preferences {
     private static LanguagesEnum language;
     private static ThemesEnum theme;
-    private static RemindList remindList;
+    private static RemindListPath remindList;
 
     public static void loadPreferencesFromJSON() {
         try (FileReader reader = new FileReader(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.PREFERENCES_FILE_STRING.getValue())) {
@@ -94,7 +94,7 @@ public class Preferences {
         return ThemesEnum.INTELLIJ;
     }
     
-    private static RemindList getRemindListFromJson(JsonObject jsonObject) {
+    private static RemindListPath getRemindListFromJson(JsonObject jsonObject) {
         if (jsonObject.has("RemindList") && !jsonObject.get("RemindList").isJsonNull()) {
             JsonObject RemindListObject = jsonObject.getAsJsonObject("RemindList");
 
@@ -106,7 +106,7 @@ public class Preferences {
                 ? RemindListObject.get("File").getAsString()
                 : ConfigKey.REMIND_LIST_FILE_STRING.getValue() + ConfigKey.VERSION.getValue() + ".json";
 
-            return new RemindList(directory, file);
+            return new RemindListPath(directory, file);
         }
         return getDefaultRemindList();
     }
@@ -117,11 +117,11 @@ public class Preferences {
     public static ThemesEnum getTheme() {
         return theme;
     }
-    public static RemindList getRemindList() {
+    public static RemindListPath getRemindList() {
         return remindList;
     }
-    public static RemindList getDefaultRemindList() {
-        return new RemindList(
+    public static RemindListPath getDefaultRemindList() {
+        return new RemindListPath(
             ConfigKey.RES_DIRECTORY_STRING.getValue(),
             ConfigKey.REMIND_LIST_FILE_STRING.getValue() + ConfigKey.VERSION.getValue() + ".json"
         );
@@ -132,7 +132,7 @@ public class Preferences {
     public static void setTheme(ThemesEnum theme) {
         Preferences.theme = theme;
     }
-    public static void setRemindList(RemindList remindList) {
+    public static void setRemindList(RemindListPath remindList) {
         Preferences.remindList = remindList;
     }
     public static void setLanguage(String selectedLanguage) {

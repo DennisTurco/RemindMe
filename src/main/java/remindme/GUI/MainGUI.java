@@ -5,7 +5,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -257,6 +257,10 @@ public final class MainGUI extends javax.swing.JFrame {
         MenuInfoPage.setSvgImage("res/img/info.svg", 16, 16);
     }
 
+    public JPopupMenu getTablePopup() {
+        return TablePopup;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      *  
@@ -266,6 +270,7 @@ public final class MainGUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         TablePopup = new javax.swing.JPopupMenu();
         EditPoputItem = new javax.swing.JMenuItem();
@@ -274,19 +279,18 @@ public final class MainGUI extends javax.swing.JFrame {
         renamePopupItem = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         copyRemindNamePopupItem = new javax.swing.JMenuItem();
-        jPanel2 = new javax.swing.JPanel();
-        tablePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        detailsLabel = new javax.swing.JTextArea();
+        versionLabel = new javax.swing.JLabel();
+        tablePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         researchField = new javax.swing.JTextField();
         ExportLabel = new javax.swing.JLabel();
         exportAsCsvBtn = new remindme.Svg.SVGButton();
         exportAsPdfBtn = new remindme.Svg.SVGButton();
         newRemindBtn = new remindme.Svg.SVGButton();
-        detailsPanel = new javax.swing.JPanel();
-        detailsLabel = new javax.swing.JLabel();
-        versionLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         MenuNew = new remindme.Svg.SVGMenuItem();
@@ -308,40 +312,59 @@ public final class MainGUI extends javax.swing.JFrame {
         MenuSupport = new remindme.Svg.SVGMenuItem();
 
         EditPoputItem.setText("Edit");
+        EditPoputItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditPoputItemActionPerformed(evt);
+            }
+        });
         TablePopup.add(EditPoputItem);
 
         DeletePopupItem.setText("Delete");
+        DeletePopupItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeletePopupItemActionPerformed(evt);
+            }
+        });
         TablePopup.add(DeletePopupItem);
 
         DuplicatePopupItem.setText("Duplicate");
+        DuplicatePopupItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DuplicatePopupItemActionPerformed(evt);
+            }
+        });
         TablePopup.add(DuplicatePopupItem);
 
-        renamePopupItem.setText("Rename remind");
+        renamePopupItem.setText("Rename reminder");
+        renamePopupItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renamePopupItemActionPerformed(evt);
+            }
+        });
         TablePopup.add(renamePopupItem);
 
         jMenu4.setText("Copy text");
 
-        copyRemindNamePopupItem.setText("Copy remind name");
+        copyRemindNamePopupItem.setText("Copy reminder name");
+        copyRemindNamePopupItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyRemindNamePopupItemActionPerformed(evt);
+            }
+        });
         jMenu4.add(copyRemindNamePopupItem);
 
         TablePopup.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Remind Me");
-        setResizable(false);
-
-        tablePanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablePanelMouseClicked(evt);
-            }
-        });
+        setMinimumSize(new java.awt.Dimension(750, 450));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Name", "Active", "Top Level", "Last Execution", "Next Execution", "Time interval"
+                "Name", "Active", "Top Level", "Last execution", "Next execution", "Time interval"
             }
         ) {
             Class[] types = new Class [] {
@@ -367,6 +390,18 @@ public final class MainGUI extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(table);
+
+        detailsLabel.setColumns(20);
+        detailsLabel.setRows(5);
+        jScrollPane2.setViewportView(detailsLabel);
+
+        versionLabel.setText("Version 2.0.2");
+
+        tablePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePanelMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel1.setText("|");
@@ -415,27 +450,23 @@ public final class MainGUI extends javax.swing.JFrame {
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
-                    .addGroup(tablePanelLayout.createSequentialGroup()
-                        .addComponent(newRemindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)))
-                .addContainerGap())
+                .addComponent(newRemindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ExportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7))
         );
         tablePanelLayout.setVerticalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tablePanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(exportAsCsvBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -443,54 +474,11 @@ public final class MainGUI extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ExportLabel)))
-                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(newRemindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
-                .addContainerGap())
+                    .addComponent(newRemindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         researchField.getAccessibleContext().setAccessibleName("");
-
-        detailsLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        javax.swing.GroupLayout detailsPanelLayout = new javax.swing.GroupLayout(detailsPanel);
-        detailsPanel.setLayout(detailsPanelLayout);
-        detailsPanelLayout.setHorizontalGroup(
-            detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detailsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(detailsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        detailsPanelLayout.setVerticalGroup(
-            detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(detailsPanelLayout.createSequentialGroup()
-                .addComponent(detailsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(detailsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(detailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        versionLabel.setText("Version 2.0.2");
 
         jMenu1.setText("File");
 
@@ -504,14 +492,29 @@ public final class MainGUI extends javax.swing.JFrame {
         jMenu1.add(MenuNew);
         jMenu1.add(jSeparator4);
 
-        MenuImport.setText("Import remind list");
+        MenuImport.setText("Import list");
+        MenuImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuImportActionPerformed(evt);
+            }
+        });
         jMenu1.add(MenuImport);
 
-        MenuExport.setText("Export remind list");
+        MenuExport.setText("Export list");
+        MenuExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuExportActionPerformed(evt);
+            }
+        });
         jMenu1.add(MenuExport);
         jMenu1.add(jSeparator5);
 
         MenuHistory.setText("History");
+        MenuHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuHistoryActionPerformed(evt);
+            }
+        });
         jMenu1.add(MenuHistory);
 
         jMenuBar1.add(jMenu1);
@@ -528,6 +531,11 @@ public final class MainGUI extends javax.swing.JFrame {
 
         MenuQuit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
         MenuQuit.setText("Quit");
+        MenuQuit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuQuitActionPerformed(evt);
+            }
+        });
         jMenu2.add(MenuQuit);
 
         jMenuBar1.add(jMenu2);
@@ -535,15 +543,35 @@ public final class MainGUI extends javax.swing.JFrame {
         jMenu3.setText("About");
 
         MenuWebsite.setText("Website");
+        MenuWebsite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuWebsiteActionPerformed(evt);
+            }
+        });
         jMenu3.add(MenuWebsite);
 
         MenuInfoPage.setText("Info");
+        MenuInfoPage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuInfoPageActionPerformed(evt);
+            }
+        });
         jMenu3.add(MenuInfoPage);
 
         MenuShare.setText("Share");
+        MenuShare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuShareActionPerformed(evt);
+            }
+        });
         jMenu3.add(MenuShare);
 
         MenuDonate.setText("Donate");
+        MenuDonate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuDonateActionPerformed(evt);
+            }
+        });
         jMenu3.add(MenuDonate);
 
         jMenuBar1.add(jMenu3);
@@ -551,9 +579,19 @@ public final class MainGUI extends javax.swing.JFrame {
         jMenu5.setText("Help");
 
         MenuBugReport.setText("Report a bug");
+        MenuBugReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuBugReportActionPerformed(evt);
+            }
+        });
         jMenu5.add(MenuBugReport);
 
         MenuSupport.setText("Support");
+        MenuSupport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuSupportActionPerformed(evt);
+            }
+        });
         jMenu5.add(MenuSupport);
 
         jMenuBar1.add(jMenu5);
@@ -565,26 +603,34 @@ public final class MainGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addComponent(tablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(3, 3, 3))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(versionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(654, 654, 654)
+                .addContainerGap()
+                .addComponent(tablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(versionLabel)
-                .addContainerGap(7, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -595,21 +641,16 @@ public final class MainGUI extends javax.swing.JFrame {
         remindManager.openPreferences();
     }//GEN-LAST:event_MenuPreferencesActionPerformed
 
-    private void tablePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePanelMouseClicked
-        table.clearSelection(); // deselect any selected row
-        detailsLabel.setText(""); // clear the label
-    }//GEN-LAST:event_tablePanelMouseClicked
-
     private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
-        // TODO add your handling code here:
+        remindManager.addReminder();
     }//GEN-LAST:event_addBackupEntryButtonActionPerformed
 
     private void exportAsPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsPdfBtnActionPerformed
-        // TODO add your handling code here:
+        remindManager.exportRemindListAsPDF();
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
-        // TODO add your handling code here:
+        remindManager.exportRemindListAsCSV();
     }//GEN-LAST:event_exportAsCsvBtnActionPerformed
 
     private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
@@ -673,11 +714,75 @@ public final class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void MenuNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuNewActionPerformed
-        // TODO add your handling code here:
+        remindManager.addReminder();
     }//GEN-LAST:event_MenuNewActionPerformed
 
+    private void MenuImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuImportActionPerformed
+        remindManager.importRemindListFromJSON();
+    }//GEN-LAST:event_MenuImportActionPerformed
+
+    private void MenuExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuExportActionPerformed
+        remindManager.exportRemindListTOJSON();
+    }//GEN-LAST:event_MenuExportActionPerformed
+
+    private void MenuHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuHistoryActionPerformed
+        remindManager.menuHistory();
+    }//GEN-LAST:event_MenuHistoryActionPerformed
+
+    private void MenuQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitActionPerformed
+        remindManager.menuQuit();
+    }//GEN-LAST:event_MenuQuitActionPerformed
+
+    private void MenuWebsiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuWebsiteActionPerformed
+        remindManager.menuWebsite();
+    }//GEN-LAST:event_MenuWebsiteActionPerformed
+
+    private void MenuInfoPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuInfoPageActionPerformed
+        remindManager.menuInfoPage();
+    }//GEN-LAST:event_MenuInfoPageActionPerformed
+
+    private void MenuShareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuShareActionPerformed
+        remindManager.menuShare();
+    }//GEN-LAST:event_MenuShareActionPerformed
+
+    private void MenuDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDonateActionPerformed
+        remindManager.menuDonate();
+    }//GEN-LAST:event_MenuDonateActionPerformed
+
+    private void MenuBugReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBugReportActionPerformed
+        remindManager.menuBugReport();
+    }//GEN-LAST:event_MenuBugReportActionPerformed
+
+    private void MenuSupportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuSupportActionPerformed
+        remindManager.menuSupport();
+    }//GEN-LAST:event_MenuSupportActionPerformed
+
+    private void EditPoputItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPoputItemActionPerformed
+        remindManager.popupEdit();
+    }//GEN-LAST:event_EditPoputItemActionPerformed
+
+    private void DeletePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePopupItemActionPerformed
+        remindManager.popupDelete();
+    }//GEN-LAST:event_DeletePopupItemActionPerformed
+
+    private void DuplicatePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DuplicatePopupItemActionPerformed
+        remindManager.popupDuplicate();
+    }//GEN-LAST:event_DuplicatePopupItemActionPerformed
+
+    private void renamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renamePopupItemActionPerformed
+        remindManager.popupRename(0, remindTable);
+    }//GEN-LAST:event_renamePopupItemActionPerformed
+
+    private void copyRemindNamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyRemindNamePopupItemActionPerformed
+        remindManager.popupCopyRemindName();
+    }//GEN-LAST:event_copyRemindNamePopupItemActionPerformed
+
+    private void tablePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePanelMouseClicked
+        table.clearSelection(); // deselect any selected row
+        detailsLabel.setText(""); // clear the label
+    }//GEN-LAST:event_tablePanelMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem copyRemindNamePopupItem;
     private javax.swing.JMenuItem DeletePopupItem;
     private javax.swing.JMenuItem DuplicatePopupItem;
     private javax.swing.JMenuItem EditPoputItem;
@@ -695,9 +800,8 @@ public final class MainGUI extends javax.swing.JFrame {
     private remindme.Svg.SVGMenuItem MenuSupport;
     private remindme.Svg.SVGMenuItem MenuWebsite;
     private javax.swing.JPopupMenu TablePopup;
-    private remindme.Svg.SVGButton newRemindBtn;
-    private javax.swing.JLabel detailsLabel;
-    private javax.swing.JPanel detailsPanel;
+    private javax.swing.JMenuItem copyRemindNamePopupItem;
+    private javax.swing.JTextArea detailsLabel;
     private remindme.Svg.SVGButton exportAsCsvBtn;
     private remindme.Svg.SVGButton exportAsPdfBtn;
     private javax.swing.JLabel jLabel1;
@@ -707,10 +811,11 @@ public final class MainGUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private remindme.Svg.SVGButton newRemindBtn;
     private javax.swing.JMenuItem renamePopupItem;
     private javax.swing.JTextField researchField;
     private javax.swing.JTable table;

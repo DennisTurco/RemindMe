@@ -1,121 +1,30 @@
-2025-01-17T11:24:55.997328500 [DEBUG] Selected remind: test
-2025-01-17T11:24:55.623329600 [DEBUG] Selected remind: test
-2025-01-17T11:24:53.029778900 [DEBUG] Selected remind: test
-2025-01-17T11:24:50.118097200 [DEBUG] Background mode: false
-2025-01-17T11:24:50.111744700 [INFO] Application started
-2025-01-17T11:24:50.104241500 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T11:24:50.095177900 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Dark
-2025-01-17T11:24:35.130501500 [DEBUG] Selected remind: test
-2025-01-17T11:24:30.306498800 [INFO] Right click on row: 1
-2025-01-17T11:24:30.304499300 [DEBUG] Selected remind: test
-2025-01-17T11:24:29.156433100 [INFO] Right click on row: 2
-2025-01-17T11:24:29.154440 [DEBUG] Selected remind: test
-2025-01-17T11:24:28.540484500 [INFO] Double-click on row: 2
-2025-01-17T11:24:28.536974100 [DEBUG] Selected remind: test
-2025-01-17T11:24:28.365992500 [DEBUG] Selected remind: test
-2025-01-17T11:24:26.926144300 [INFO] Double-click on row: 1
-2025-01-17T11:24:26.924138500 [DEBUG] Selected remind: test
-2025-01-17T11:24:26.762508400 [DEBUG] Selected remind: test
-2025-01-17T11:24:26.198162200 [DEBUG] Selected remind: test
-2025-01-17T11:24:24.588450700 [DEBUG] Selected remind: test
-2025-01-17T11:24:24.242305100 [DEBUG] Selected remind: test
-2025-01-17T11:24:23.907508200 [DEBUG] Selected remind: test
-2025-01-17T11:24:23.570220 [DEBUG] Selected remind: test
-2025-01-17T11:24:22.173029300 [DEBUG] Selected remind: test
-2025-01-17T11:24:21.848800200 [DEBUG] Selected remind: test
-2025-01-17T11:24:21.530297900 [DEBUG] Selected remind: test
-2025-01-17T11:24:21.021453800 [DEBUG] Selected remind: test
-2025-01-17T11:24:18.482339100 [DEBUG] Selected remind: test
-2025-01-17T11:24:17.365759100 [DEBUG] Selected remind: test
-2025-01-17T11:24:15.918268100 [DEBUG] Selected remind: test
-2025-01-17T11:24:14.516361 [DEBUG] Selected remind: test
-2025-01-17T11:24:12.699927300 [DEBUG] Background mode: false
-2025-01-17T11:24:12.689658 [INFO] Application started
-2025-01-17T11:24:12.681008300 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T11:24:12.672985600 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Dark
-2025-01-17T11:17:18.989684 [DEBUG] Background mode: false
-2025-01-17T11:17:18.982293300 [INFO] Application started
-2025-01-17T11:17:18.973776800 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T11:17:18.964721800 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Dark
-2025-01-17T11:08:28.270468600 [DEBUG] Delete key pressed on rows: [0, 1, 2]
-2025-01-17T11:08:17.528122300 [DEBUG] Background mode: false
-2025-01-17T11:08:17.518375800 [INFO] Application started
-2025-01-17T11:08:17.507002 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T11:08:17.492353100 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Dark
-2025-01-17T11:07:50.492808500 [DEBUG] Delete key pressed on rows: [0]
-2025-01-17T11:07:43.592991900 [DEBUG] Background mode: false
-2025-01-17T11:07:43.583154700 [INFO] Application started
-2025-01-17T11:07:43.568809500 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T11:07:43.557738300 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Dark
-2025-01-17T11:04:42.519622100 [DEBUG] Background mode: false
-2025-01-17T11:04:42.509991200 [INFO] Application started
-2025-01-17T11:04:42.500795700 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T11:04:42.489404 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Dark
-2025-01-17T11:01:54.587360900 [INFO] File initialized with empty JSON array: []
-2025-01-17T11:01:54.584360900 [INFO] New remind list created with name: src/main/resources/res/remind_list1.0.0.json
-2025-01-17T11:01:53.838055100 [DEBUG] Background mode: false
-2025-01-17T11:01:53.827823600 [INFO] Application started
-2025-01-17T11:01:53.818313 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T11:01:53.807250 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Dark
-2025-01-17T09:27:01.830462100 [INFO] Reloading preferences
-2025-01-17T09:27:01.827958600 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T09:27:01.810932700 [INFO] Theme set to: Dark
-2025-01-17T09:27:01.806908600 [INFO] Language set to: English
-2025-01-17T09:27:01.803912600 [INFO] Updating preferences -> Language: English; Theme: Dark
-2025-01-17T09:26:56.828108800 [INFO] Reloading preferences
-2025-01-17T09:26:56.824108 [INFO] Preferences updated to JSON file: language = fra.json, theme = Dark
-2025-01-17T09:26:56.806554900 [INFO] Theme set to: Dark
-2025-01-17T09:26:56.802553100 [INFO] Language set to: Français
-2025-01-17T09:26:56.798033100 [INFO] Updating preferences -> Language: Français; Theme: Dark
-2025-01-17T09:26:52.536629100 [INFO] Reloading preferences
-2025-01-17T09:26:52.533618 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T09:26:52.510988600 [INFO] Theme set to: Dark
-2025-01-17T09:26:52.508441900 [INFO] Language set to: English
-2025-01-17T09:26:52.505937 [INFO] Updating preferences -> Language: English; Theme: Dark
-2025-01-17T09:26:49.164644100 [INFO] Event --> opening preferences dialog
-2025-01-17T09:26:46.028598700 [DEBUG] Background mode: false
-2025-01-17T09:26:46.023598500 [INFO] Application started
-2025-01-17T09:26:46.018194 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T09:26:46.012191800 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Dark
-2025-01-17T09:26:23.902940100 [WARN] Warning: Unrecognized key in JSON: Seconsa, using default value.
-2025-01-17T09:26:23.900923300 [INFO] Reloading preferences
-2025-01-17T09:26:23.898410500 [INFO] Preferences updated to JSON file: language = eng.json, theme = Dark
-2025-01-17T09:26:23.871499700 [INFO] Theme set to: Dark
-2025-01-17T09:26:23.866839100 [WARN] Warning: Unrecognized key in JSON: Seconsa, using default value.
-2025-01-17T09:26:23.860323200 [INFO] Language set to: English
-2025-01-17T09:26:23.856319300 [INFO] Updating preferences -> Language: English; Theme: Dark
-2025-01-17T09:26:21.334505500 [INFO] Event --> opening preferences dialog
-2025-01-17T09:26:18.438264400 [DEBUG] Background mode: false
-2025-01-17T09:26:18.431260100 [INFO] Application started
-2025-01-17T09:26:18.427752300 [INFO] Preferences updated to JSON file: language = esp.json, theme = Dark
-2025-01-17T09:26:18.417536200 [DEBUG] Preferences loaded from JSON file: language = esp.json, theme = Dark
-2025-01-17T09:24:20.032797400 [WARN] Warning: Unrecognized key in JSON: Seconsa, using default value.
-2025-01-17T09:24:20.028282900 [INFO] Language set to: English
-2025-01-17T09:24:20.024761800 [INFO] Updating preferences -> Language: English; Theme: Dark
-2025-01-17T09:24:14.386156800 [INFO] Reloading preferences
-2025-01-17T09:24:14.383153500 [INFO] Preferences updated to JSON file: language = esp.json, theme = Dark
-2025-01-17T09:24:14.368073900 [INFO] Theme set to: Dark
-2025-01-17T09:24:14.366072800 [INFO] Language set to: Español
-2025-01-17T09:24:14.362076900 [INFO] Updating preferences -> Language: Español; Theme: Dark
-2025-01-17T09:24:09.415493500 [INFO] Reloading preferences
-2025-01-17T09:24:09.411432500 [INFO] Preferences updated to JSON file: language = esp.json, theme = Light
-2025-01-17T09:24:09.390238800 [INFO] Theme set to: Light
-2025-01-17T09:24:09.387730300 [INFO] Language set to: Español
-2025-01-17T09:24:09.384726400 [INFO] Updating preferences -> Language: Español; Theme: Light
-2025-01-17T09:24:07.130030400 [INFO] Event --> opening preferences dialog
-2025-01-17T09:24:01.213124 [DEBUG] Background mode: false
-2025-01-17T09:24:01.207311200 [INFO] Application started
-2025-01-17T09:24:01.203081300 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
-2025-01-17T09:24:01.195010900 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
-2025-01-17T09:13:44.453876100 [DEBUG] Background mode: false
-2025-01-17T09:13:44.449236600 [INFO] Application started
-2025-01-17T09:13:44.445974800 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
-2025-01-17T09:13:44.439831100 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
-2025-01-17T00:15:41.811160500 [DEBUG] Background mode: false
-2025-01-17T00:15:41.807192900 [INFO] Application started
-2025-01-17T00:15:41.804713 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
-2025-01-17T00:15:41.796280500 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
-2025-01-16T23:48:09.217860100 [DEBUG] Background mode: false
-2025-01-16T23:48:09.212900200 [INFO] Application started
-2025-01-16T23:48:09.209924100 [INFO] Preferences updated to JSON file: language = ita.json, theme = Light
-2025-01-16T23:48:09.199013 [DEBUG] Preferences loaded from JSON file: language = ita.json, theme = Light
+2025-01-17T19:13:40.109824500 [INFO] Event --> exporting remind list to json
+2025-01-17T19:13:32.507401100 [DEBUG] Background mode: false
+2025-01-17T19:13:32.503433100 [INFO] Application started
+2025-01-17T19:13:32.499960700 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T19:13:32.492520600 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T18:32:15.062866700 [INFO] Event --> exporting remind list to json
+2025-01-17T18:32:13.001312100 [INFO] Event --> importing remind list from json
+2025-01-17T18:32:09.683586500 [DEBUG] Background mode: false
+2025-01-17T18:32:09.678627 [INFO] Application started
+2025-01-17T18:32:09.672674600 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T18:32:09.663746600 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T18:29:21.430188100 [DEBUG] Background mode: false
+2025-01-17T18:29:21.426248500 [INFO] Application started
+2025-01-17T18:29:21.422746400 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T18:29:21.415799400 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T18:27:07.454975200 [DEBUG] Selected remind: test
+2025-01-17T18:26:58.599556300 [DEBUG] Selected remind: test
+2025-01-17T18:26:58.173929600 [DEBUG] Selected remind: test
+2025-01-17T18:26:57.687740200 [DEBUG] Selected remind: test
+2025-01-17T18:26:49.575956 [DEBUG] Selected remind: test
+2025-01-17T18:26:49.180818200 [DEBUG] Selected remind: test
+2025-01-17T18:26:48.650005800 [DEBUG] Selected remind: test
+2025-01-17T18:26:44.958847200 [DEBUG] Selected remind: test
+2025-01-17T18:26:44.294926100 [DEBUG] Selected remind: test
+2025-01-17T18:26:43.562672400 [DEBUG] Selected remind: test
+2025-01-17T18:26:43.169360100 [DEBUG] Selected remind: test
+2025-01-17T18:26:24.483468300 [DEBUG] Background mode: false
+2025-01-17T18:26:24.479996200 [INFO] Application started
+2025-01-17T18:26:24.476525 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T18:26:24.468588400 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange

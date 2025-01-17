@@ -1,10 +1,10 @@
 package remindme.Entities;
 
-public class RemindList {
+public class RemindListPath {
     private String directory;
     private String file;
 
-    public RemindList(String directory, String file) {
+    public RemindListPath(String directory, String file) {
         this.directory = directory;
         this.file = file;
     }
