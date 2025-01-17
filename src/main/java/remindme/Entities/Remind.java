@@ -1,7 +1,13 @@
 package remindme.Entities;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+
+import remindme.Json.JSONReminder;
+import remindme.Logger;
+import remindme.Managers.ExceptionManager;
 
 public class Remind {
     private String _name;
@@ -62,6 +68,23 @@ public class Remind {
         return null;
     }
 
+    public static Remind getBackupByName(String remindName) {
+        List<Remind> reminds;
+        try {
+            reminds = new JSONReminder().readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+            for (Remind remind : reminds) {
+                if (remind.getName().equals(remindName)) {
+                    return remind;
+                }
+            }
+        } catch (IOException ex) {
+            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        }
+
+        return null;
+    }
+
     public String getName() {
         return _name;
     }
@@ -71,10 +94,10 @@ public class Remind {
     public int getRemindCount() {
         return _remindCount;
     }
-    public boolean isIsActive() {
+    public boolean isActive() {
         return _isActive;
     }
-    public boolean isIsTopLevel() {
+    public boolean isTopLevel() {
         return _isTopLevel;
     }
     public LocalDateTime getLastExecution() {

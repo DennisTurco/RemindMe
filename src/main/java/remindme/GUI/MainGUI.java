@@ -1,45 +1,63 @@
 package remindme.GUI;
 
-import remindme.Entities.TimeInterval;
-import remindme.Dialogs.PreferencesDialog;
-import remindme.Dialogs.TimePicker;
-import remindme.Entities.Preferences;
-import remindme.Enums.ConfigKey;
-import remindme.Enums.MenuItems;
-import remindme.Enums.TranslationLoaderEnum;
-import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
-import remindme.Enums.TranslationLoaderEnum.TranslationKey;
-import remindme.Json.JSONConfigReader;
-import remindme.Managers.ExceptionManager;
-import remindme.Managers.ThemeManager;
-import remindme.Logger;
-import remindme.Logger.LogLevel;
-
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import com.formdev.flatlaf.FlatClientProperties;
+
+import remindme.Logger;
+import remindme.Entities.Remind;
+import remindme.Enums.ConfigKey;
+import remindme.Enums.MenuItems;
+import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
+import remindme.Enums.TranslationLoaderEnum.TranslationKey;
+import remindme.Json.JSONConfigReader;
+import remindme.Managers.ThemeManager;
+import remindme.Table.CheckboxCellRenderer;
+import remindme.Table.RemindTable;
+import remindme.Table.RemindTableModel;
+import remindme.Table.StripedRowRenderer;
+import remindme.Managers.RemindManager;
 
 /**
  * @author Dennis Turco
  */
-public class MainGUI extends javax.swing.JFrame {
+public final class MainGUI extends javax.swing.JFrame {
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
-    public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
-    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    
     
     private Integer selectedRow;
+    private final RemindManager remindManager;
+
+    public static DefaultTableModel model;
+    public static RemindTable remindTable;
+    public static RemindTableModel tableModel;
     
     public MainGUI() {
         ThemeManager.updateThemeFrame(this);
         
         initComponents();
+
+        remindManager = new RemindManager(this);
 
         // logo application
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
@@ -50,6 +68,8 @@ public class MainGUI extends javax.swing.JFrame {
         
         // set app sizes
         setScreenSize();
+
+        initializeTable();
 
         // icons
         researchField.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new com.formdev.flatlaf.extras.FlatSVGIcon("res/img/search.svg", 16, 16));
@@ -74,36 +94,167 @@ public class MainGUI extends javax.swing.JFrame {
 
         this.setSize(width,height);
     }
-    
-    private TimeInterval openTimePicker(TimeInterval time) {
-        TimePicker picker = new TimePicker(this, time, true);
-        picker.setVisible(true);
-        return picker.getTimeInterval();
-    }
-    
-    private void openPreferences() {
-        Logger.logMessage("Event --> opening preferences dialog", LogLevel.INFO);
 
-        PreferencesDialog prefs = new PreferencesDialog(this, true, this);
-        prefs.setVisible(true);
+    public void initializeTable() {
+        List<Remind> reminds = remindManager.retriveAndGetReminds();
+        displayRemindList(reminds);
     }
 
-    public void reloadPreferences() {
-        Logger.logMessage("Reloading preferences", LogLevel.INFO);
-
-        // load language
-        try {
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
-            setTranslations();
-        } catch (IOException ex) {
-            Logger.logMessage("An error occurred during reloading preferences operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+    private void displayRemindList(List<Remind> reminds) {
+        RemindTableModel tempModel = new RemindTableModel(remindManager.getColumnTranslations(), 0);
+    
+        // Populate the model with remind data
+        for (Remind remind : reminds) {
+            tempModel.addRow(new Object[]{
+                remind.getName(),
+                    remind.isActive(),
+                    remind.isTopLevel(),
+                    remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "",
+                    remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "",
+                    remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : ""
+            });
         }
+    
+        remindTable = new RemindTable(tempModel);
+
+        // Add key bindings using InputMap and ActionMap
+        InputMap inputMap = remindTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        ActionMap actionMap = remindTable.getActionMap();
+
+        // Handle Enter key
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enterKey");
+        actionMap.put("enterKey", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = remindTable.getSelectedRow();
+                if (selectedRow == -1) return;
+
+                Logger.logMessage("Enter key pressed on row: " + selectedRow, Logger.LogLevel.DEBUG);
+                //TODO: OpenRemind((String) remindTable.getValueAt(selectedRow, 0));
+            }
+        });
+
+        // Handle Delete key
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteKey");
+        actionMap.put("deleteKey", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int[] selectedRows = remindTable.getSelectedRows();
+                if (selectedRows.length == 0) return;
         
-        // load theme
-        ThemeManager.updateThemeFrame(this);
-        ThemeManager.refreshPopup(TablePopup);
-        setSvgImages();
+                Logger.logMessage("Delete key pressed on rows: " + Arrays.toString(selectedRows), Logger.LogLevel.DEBUG);
+
+                int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (response != JOptionPane.YES_OPTION) {
+                    return;
+                }
+
+                for (int row : selectedRows) {
+                    remindManager.removeReminder(row, false);
+                }
+            }
+        });
+
+        // Apply renderers for each column
+        TableColumnModel columnModel = remindTable.getColumnModel();
+
+        for (int i = 0; i < columnModel.getColumnCount(); i++) {
+            if (i == 1 || i == 2) {
+                columnModel.getColumn(i).setCellRenderer(new CheckboxCellRenderer());
+                columnModel.getColumn(i).setCellEditor(remindTable.getDefaultEditor(Boolean.class));
+            } else {
+                columnModel.getColumn(i).setCellRenderer(new StripedRowRenderer());
+            }
+        }
+            
+        // Add the existing mouse listener to the new table
+        remindTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt); // Reuse the existing method
+            }
+        });
+    
+        // Update the global model reference
+        MainGUI.model = tempModel;
+    
+        // Replace the existing table in the GUI
+        JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
+        table = remindTable; // Update the reference to the new table
+        scrollPane.setViewportView(table); // Replace the table in the scroll pane
+    }
+
+    public void setMenuItems() {
+        MenuBugReport.setVisible(configReader.isMenuItemEnabled(MenuItems.BugReport.name()));
+        MenuPreferences.setVisible(configReader.isMenuItemEnabled(MenuItems.Preferences.name()));
+        MenuDonate.setVisible(configReader.isMenuItemEnabled(MenuItems.Donate.name()));
+        MenuHistory.setVisible(configReader.isMenuItemEnabled(MenuItems.History.name()));
+        MenuInfoPage.setVisible(configReader.isMenuItemEnabled(MenuItems.InfoPage.name()));
+        MenuNew.setVisible(configReader.isMenuItemEnabled(MenuItems.New.name()));
+        MenuQuit.setVisible(configReader.isMenuItemEnabled(MenuItems.Quit.name()));
+        MenuShare.setVisible(configReader.isMenuItemEnabled(MenuItems.Share.name()));
+        MenuSupport.setVisible(configReader.isMenuItemEnabled(MenuItems.Support.name()));
+        MenuWebsite.setVisible(configReader.isMenuItemEnabled(MenuItems.Website.name()));
+        MenuImport.setVisible(configReader.isMenuItemEnabled(MenuItems.Import.name()));
+        MenuExport.setVisible(configReader.isMenuItemEnabled(MenuItems.Export.name()));
+    }
+
+    public void setTranslations() {
+        // general
+        versionLabel.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.VERSION) + " " + ConfigKey.VERSION.getValue());
+        
+        // menu
+        jMenu1.setText(TranslationCategory.MENU.getTranslation(TranslationKey.FILE));
+        jMenu2.setText(TranslationCategory.MENU.getTranslation(TranslationKey.OPTIONS));
+        jMenu3.setText(TranslationCategory.MENU.getTranslation(TranslationKey.ABOUT));
+        jMenu5.setText(TranslationCategory.MENU.getTranslation(TranslationKey.HELP));
+
+        // menu items
+        MenuBugReport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.BUG_REPORT));
+        MenuDonate.setText(TranslationCategory.MENU.getTranslation(TranslationKey.DONATE));
+        MenuHistory.setText(TranslationCategory.MENU.getTranslation(TranslationKey.HISTORY));
+        MenuInfoPage.setText(TranslationCategory.MENU.getTranslation(TranslationKey.INFO_PAGE));
+        MenuNew.setText(TranslationCategory.MENU.getTranslation(TranslationKey.NEW));
+        MenuQuit.setText(TranslationCategory.MENU.getTranslation(TranslationKey.QUIT));
+        MenuPreferences.setText(TranslationCategory.MENU.getTranslation(TranslationKey.PREFERENCES));
+        MenuImport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.IMPORT));
+        MenuExport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.EXPORT));
+        MenuShare.setText(TranslationCategory.MENU.getTranslation(TranslationKey.SHARE));
+        MenuSupport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.SUPPORT));
+        MenuWebsite.setText(TranslationCategory.MENU.getTranslation(TranslationKey.WEBSITE));
+
+        // remind list
+        ExportLabel.setText(TranslationCategory.MAIN_FRAME.getTranslation(TranslationKey.EXPORT_AS));
+        newRemindBtn.setToolTipText(TranslationCategory.MAIN_FRAME.getTranslation(TranslationKey.NEW_REMIND_TOOLTIP));
+        exportAsPdfBtn.setToolTipText(TranslationCategory.MAIN_FRAME.getTranslation(TranslationKey.EXPORT_AS_PDF_TOOLTIP));
+        exportAsCsvBtn.setToolTipText(TranslationCategory.MAIN_FRAME.getTranslation(TranslationKey.EXPORT_AS_CSV_TOOLTIP));
+        researchField.setToolTipText(TranslationCategory.MAIN_FRAME.getTranslation(TranslationKey.RESEARCH_BAR_TOOLTIP));
+        researchField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TranslationCategory.MAIN_FRAME.getTranslation(TranslationKey.RESEARCH_BAR_PLACEHOLDER));
+
+        // popup
+        copyRemindNamePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.COPY_NAME_POPUP));
+        DeletePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DELETE_POPUP));
+        DuplicatePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DUPLICATE_POPUP));
+        EditPoputItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.EDIT_POPUP));
+        renamePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.RENAME_POPUP));
+    }
+    
+    public void setSvgImages() {
+        exportAsCsvBtn.setSvgImage("res/img/csv.svg", 30, 30);
+        exportAsPdfBtn.setSvgImage("res/img/pdf.svg", 30, 30);
+        newRemindBtn.setSvgImage("res/img/add.svg", 30, 30);
+        MenuImport.setSvgImage("res/img/import.svg", 16, 16);
+        MenuExport.setSvgImage("res/img/export.svg", 16, 16);
+        MenuNew.setSvgImage("res/img/new_file.svg", 16, 16);
+        MenuBugReport.setSvgImage("res/img/bug.svg", 16, 16);
+        MenuHistory.setSvgImage("res/img/history.svg", 16, 16);
+        MenuDonate.setSvgImage("res/img/donate.svg", 16, 16);
+        MenuPreferences.setSvgImage("res/img/settings.svg", 16, 16);
+        MenuShare.setSvgImage("res/img/share.svg", 16, 16);
+        MenuSupport.setSvgImage("res/img/support.svg", 16, 16);
+        MenuWebsite.setSvgImage("res/img/website.svg", 16, 16);
+        MenuQuit.setSvgImage("res/img/quit.svg", 16, 16);
+        MenuInfoPage.setSvgImage("res/img/info.svg", 16, 16);
     }
 
     /**
@@ -122,7 +273,7 @@ public class MainGUI extends javax.swing.JFrame {
         DuplicatePopupItem = new javax.swing.JMenuItem();
         renamePopupItem = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        CopyBackupNamePopupItem = new javax.swing.JMenuItem();
+        copyRemindNamePopupItem = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         tablePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -132,7 +283,7 @@ public class MainGUI extends javax.swing.JFrame {
         ExportLabel = new javax.swing.JLabel();
         exportAsCsvBtn = new remindme.Svg.SVGButton();
         exportAsPdfBtn = new remindme.Svg.SVGButton();
-        addBackupEntryButton = new remindme.Svg.SVGButton();
+        newRemindBtn = new remindme.Svg.SVGButton();
         detailsPanel = new javax.swing.JPanel();
         detailsLabel = new javax.swing.JLabel();
         versionLabel = new javax.swing.JLabel();
@@ -165,13 +316,13 @@ public class MainGUI extends javax.swing.JFrame {
         DuplicatePopupItem.setText("Duplicate");
         TablePopup.add(DuplicatePopupItem);
 
-        renamePopupItem.setText("Rename backup");
+        renamePopupItem.setText("Rename remind");
         TablePopup.add(renamePopupItem);
 
         jMenu4.setText("Copy text");
 
-        CopyBackupNamePopupItem.setText("Copy backup name");
-        jMenu4.add(CopyBackupNamePopupItem);
+        copyRemindNamePopupItem.setText("Copy remind name");
+        jMenu4.add(copyRemindNamePopupItem);
 
         TablePopup.add(jMenu4);
 
@@ -249,10 +400,10 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        addBackupEntryButton.setToolTipText("Add new backup");
-        addBackupEntryButton.setMaximumSize(new java.awt.Dimension(32, 32));
-        addBackupEntryButton.setMinimumSize(new java.awt.Dimension(32, 32));
-        addBackupEntryButton.addActionListener(new java.awt.event.ActionListener() {
+        newRemindBtn.setToolTipText("Add new reminder");
+        newRemindBtn.setMaximumSize(new java.awt.Dimension(32, 32));
+        newRemindBtn.setMinimumSize(new java.awt.Dimension(32, 32));
+        newRemindBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addBackupEntryButtonActionPerformed(evt);
             }
@@ -267,7 +418,7 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGroup(tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
                     .addGroup(tablePanelLayout.createSequentialGroup()
-                        .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(newRemindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -293,7 +444,7 @@ public class MainGUI extends javax.swing.JFrame {
                             .addComponent(researchField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ExportLabel)))
                     .addComponent(exportAsPdfBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addBackupEntryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(newRemindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addContainerGap())
@@ -353,10 +504,10 @@ public class MainGUI extends javax.swing.JFrame {
         jMenu1.add(MenuNew);
         jMenu1.add(jSeparator4);
 
-        MenuImport.setText("Import backup list");
+        MenuImport.setText("Import remind list");
         jMenu1.add(MenuImport);
 
-        MenuExport.setText("Export backup list");
+        MenuExport.setText("Export remind list");
         jMenu1.add(MenuExport);
         jMenu1.add(jSeparator5);
 
@@ -441,7 +592,7 @@ public class MainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void MenuPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPreferencesActionPerformed
-        openPreferences();
+        remindManager.openPreferences();
     }//GEN-LAST:event_MenuPreferencesActionPerformed
 
     private void tablePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePanelMouseClicked
@@ -466,101 +617,67 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_researchFieldKeyTyped
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-        // TODO add your handling code here:
+        selectedRow = table.rowAtPoint(evt.getPoint()); // get index of the row
+
+        if (selectedRow == -1) { // if clicked outside valid rows
+            table.clearSelection(); // deselect any selected row
+            detailsLabel.setText(""); // clear the label
+        } else {
+            // get correct remind
+            String remindName = (String) remindTable.getValueAt(selectedRow, 0);
+            Remind remind = Remind.getRemindByName(new ArrayList<>(remindManager.getReminds()), remindName);
+
+            Logger.logMessage("Selected remind: " + remindName, Logger.LogLevel.DEBUG);
+
+            // Handling right mouse button click
+            if (SwingUtilities.isRightMouseButton(evt)) {
+                Logger.logMessage("Right click on row: " + selectedRow, Logger.LogLevel.INFO);
+                table.setRowSelectionInterval(selectedRow, selectedRow); // select clicked row
+                TablePopup.show(evt.getComponent(), evt.getX(), evt.getY()); // show popup
+            }
+
+            // Handling left mouse button double-click
+            else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
+                Logger.logMessage("Double-click on row: " + selectedRow, Logger.LogLevel.INFO);
+                //TODO: OpenBackup(remindName);
+            }
+
+            // Handling single left mouse button click
+            else if (SwingUtilities.isLeftMouseButton(evt)) {
+                String remindNameStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NAME_DETAIL);
+                String descriptionStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DESCRIPTION_DETAIL);
+                String isActiveStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_ACTIVE_DETAIL);
+                String isTopLevelStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_TOP_LEVEL_DETAIL);
+                String lastExeutionStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.LAST_EXECUTION_DETAIL);
+                String nextExecutionStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NEXT_EXECUTION_DETAIL);
+                String timeIntervalStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_INTERVAL_DETAIL);
+                String creationDateStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.CREATION_DATE_DETAIL);
+                String lastUpdateDateStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.LAST_UPDATE_DATE_DETAIL);
+                String remindCountStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.COUNT_DETAIL);
+
+                detailsLabel.setText(
+                    "<html><b>" + remindNameStr + ":</b> " + remind.getName() + ", " +
+                    "<b>" + descriptionStr + ":</b> " + remind.getDescription() + ", " +
+                    "<b>" + isActiveStr + ":</b> " + remind.isActive() + ", " +
+                    "<b>" + isTopLevelStr + ":</b> " + remind.isTopLevel() + ", " +
+                    "<b>" + lastExeutionStr + ":</b> " + (remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "") + ", " +
+                    "<b>" + nextExecutionStr + ":</b> " + (remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "_") + ", " +
+                    "<b>" + timeIntervalStr + ":</b> " + (remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : "_") + ", " +
+                    "<b>" + creationDateStr + ":</b> " + (remind.getCreationDate() != null ? remind.getCreationDate().format(RemindManager.formatter) : "_") + ", " +
+                    "<b>" + lastUpdateDateStr + ":</b> " + (remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().format(RemindManager.formatter) : "_") + ", " +
+                    "<b>" + remindCountStr + ":</b> " + (remind.getRemindCount()) + ", " +
+                    "</html>"
+                );
+            }
+        }
     }//GEN-LAST:event_tableMouseClicked
 
     private void MenuNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuNewActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuNewActionPerformed
 
-    private void setMenuItems() {
-        MenuBugReport.setVisible(configReader.isMenuItemEnabled(MenuItems.BugReport.name()));
-        MenuPreferences.setVisible(configReader.isMenuItemEnabled(MenuItems.Preferences.name()));
-        MenuDonate.setVisible(configReader.isMenuItemEnabled(MenuItems.Donate.name()));
-        MenuHistory.setVisible(configReader.isMenuItemEnabled(MenuItems.History.name()));
-        MenuInfoPage.setVisible(configReader.isMenuItemEnabled(MenuItems.InfoPage.name()));
-        MenuNew.setVisible(configReader.isMenuItemEnabled(MenuItems.New.name()));
-        MenuQuit.setVisible(configReader.isMenuItemEnabled(MenuItems.Quit.name()));
-        MenuShare.setVisible(configReader.isMenuItemEnabled(MenuItems.Share.name()));
-        MenuSupport.setVisible(configReader.isMenuItemEnabled(MenuItems.Support.name()));
-        MenuWebsite.setVisible(configReader.isMenuItemEnabled(MenuItems.Website.name()));
-        MenuImport.setVisible(configReader.isMenuItemEnabled(MenuItems.Import.name()));
-        MenuExport.setVisible(configReader.isMenuItemEnabled(MenuItems.Export.name()));
-    }
-
-    private void setTranslations() {
-        // general
-        versionLabel.setText(TranslationCategory.GENERAL.getTranslation(TranslationKey.VERSION) + " " + ConfigKey.VERSION.getValue());
-        
-        // menu
-        jMenu1.setText(TranslationCategory.MENU.getTranslation(TranslationKey.FILE));
-        jMenu2.setText(TranslationCategory.MENU.getTranslation(TranslationKey.OPTIONS));
-        jMenu3.setText(TranslationCategory.MENU.getTranslation(TranslationKey.ABOUT));
-        jMenu5.setText(TranslationCategory.MENU.getTranslation(TranslationKey.HELP));
-
-        // menu items
-        MenuBugReport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.BUG_REPORT));
-        MenuDonate.setText(TranslationCategory.MENU.getTranslation(TranslationKey.DONATE));
-        MenuHistory.setText(TranslationCategory.MENU.getTranslation(TranslationKey.HISTORY));
-        MenuInfoPage.setText(TranslationCategory.MENU.getTranslation(TranslationKey.INFO_PAGE));
-        MenuNew.setText(TranslationCategory.MENU.getTranslation(TranslationKey.NEW));
-        MenuQuit.setText(TranslationCategory.MENU.getTranslation(TranslationKey.QUIT));
-        MenuPreferences.setText(TranslationCategory.MENU.getTranslation(TranslationKey.PREFERENCES));
-        MenuImport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.IMPORT));
-        MenuExport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.EXPORT));
-        MenuShare.setText(TranslationCategory.MENU.getTranslation(TranslationKey.SHARE));
-        MenuSupport.setText(TranslationCategory.MENU.getTranslation(TranslationKey.SUPPORT));
-        MenuWebsite.setText(TranslationCategory.MENU.getTranslation(TranslationKey.WEBSITE));
-
-
-        // backup list
-        ExportLabel.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.EXPORT_AS));
-        addBackupEntryButton.setToolTipText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NEW_REMIND_TOOLTIP));
-        exportAsPdfBtn.setToolTipText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.EXPORT_AS_PDF_TOOLTIP));
-        exportAsCsvBtn.setToolTipText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.EXPORT_AS_CSV_TOOLTIP));
-        researchField.setToolTipText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.RESEARCH_BAR_TOOLTIP));
-        researchField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.RESEARCH_BAR_PLACEHOLDER));
-
-        // popup
-        CopyBackupNamePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.COPY_REMIND_NAME_POPUP));
-        DeletePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DELETE_POPUP));
-        DuplicatePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DUPLICATE_POPUP));
-        EditPoputItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.EDIT_POPUP));
-        renamePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.RENAME_BACKUP_POPUP));
-    }
-
-    private String[] getColumnTranslations() {
-        String[] columnNames = {
-            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NAME_COLUMN),
-            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_ACTIVE_COLUMN),
-            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_TOP_LEVEL_COLUMN),
-            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.LAST_EXECUTION_COLUMN),
-            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NEXT_EXECUTION_COLUMN),
-            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN)
-        };
-        return columnNames;
-    }
-    
-    private void setSvgImages() {
-        exportAsCsvBtn.setSvgImage("res/img/csv.svg", 30, 30);
-        exportAsPdfBtn.setSvgImage("res/img/pdf.svg", 30, 30);
-        addBackupEntryButton.setSvgImage("res/img/add.svg", 30, 30);
-        MenuImport.setSvgImage("res/img/import.svg", 16, 16);
-        MenuExport.setSvgImage("res/img/export.svg", 16, 16);
-        MenuNew.setSvgImage("res/img/new_file.svg", 16, 16);
-        MenuBugReport.setSvgImage("res/img/bug.svg", 16, 16);
-        MenuHistory.setSvgImage("res/img/history.svg", 16, 16);
-        MenuDonate.setSvgImage("res/img/donate.svg", 16, 16);
-        MenuPreferences.setSvgImage("res/img/settings.svg", 16, 16);
-        MenuShare.setSvgImage("res/img/share.svg", 16, 16);
-        MenuSupport.setSvgImage("res/img/support.svg", 16, 16);
-        MenuWebsite.setSvgImage("res/img/website.svg", 16, 16);
-        MenuQuit.setSvgImage("res/img/quit.svg", 16, 16);
-        MenuInfoPage.setSvgImage("res/img/info.svg", 16, 16);
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem CopyBackupNamePopupItem;
+    private javax.swing.JMenuItem copyRemindNamePopupItem;
     private javax.swing.JMenuItem DeletePopupItem;
     private javax.swing.JMenuItem DuplicatePopupItem;
     private javax.swing.JMenuItem EditPoputItem;
@@ -578,7 +695,7 @@ public class MainGUI extends javax.swing.JFrame {
     private remindme.Svg.SVGMenuItem MenuSupport;
     private remindme.Svg.SVGMenuItem MenuWebsite;
     private javax.swing.JPopupMenu TablePopup;
-    private remindme.Svg.SVGButton addBackupEntryButton;
+    private remindme.Svg.SVGButton newRemindBtn;
     private javax.swing.JLabel detailsLabel;
     private javax.swing.JPanel detailsPanel;
     private remindme.Svg.SVGButton exportAsCsvBtn;

@@ -1,0 +1,39 @@
+[
+    {
+        "name": "test",
+        "description": "",
+        "count": 4,
+        "isActive": true,
+        "isTopLevel": false,
+        "lastExecution": "2024-12-12T22:52:41.381624500",
+        "nextExecution": "2024-12-12T22:52:41.381624500",
+        "timeInterval": "1.3:23:23",
+        "creationDate": "2024-12-12T22:52:41.381624500",
+        "lastUpdateDate": "2024-12-12T22:52:41.381624500"
+    },
+    {
+        "name": "test",
+        "description": "",
+        "count": 4,
+        "isActive": true,
+        "isTopLevel": false,
+        "lastExecution": "2024-12-12T22:52:41.381624500",
+        "nextExecution": "2024-12-12T22:52:41.381624500",
+        "timeInterval": "1.3:23:23",
+        "creationDate": "2024-12-12T22:52:41.381624500",
+        "lastUpdateDate": "2024-12-12T22:52:41.381624500"
+    },
+    {
+        "name": "test",
+        "description": "",
+        "count": 4,
+        "isActive": true,
+        "isTopLevel": false,
+        "lastExecution": "2024-12-12T22:52:41.381624500",
+        "nextExecution": "2024-12-12T22:52:41.381624500",
+        "timeInterval": "1.3:23:23",
+        "creationDate": "2024-12-12T22:52:41.381624500",
+        "lastUpdateDate": "2024-12-12T22:52:41.381624500"
+    }
+
+]

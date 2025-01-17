@@ -24,8 +24,8 @@
         "Save": "Save",
         "SaveWithName": "Save with name",
         "Preferences": "Preferences",
-        "Import": "Import remind list",
-        "Export": "Export remind list",
+        "Import": "Import remind list from .json",
+        "Export": "Export remind list to .json",
         "Share": "Share",
         "Support": "Support",
         "Website": "Website"
@@ -59,7 +59,8 @@
         "EditPopup": "Edit",
         "DeletePopup": "Delete",
         "DuplicatePopup": "Duplicate",
-        "RenamePopup": "Rename"
+        "RenamePopup": "Rename",
+        "CopyNamePopup": "Copy remind name"
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Time interval for reminder",
@@ -67,7 +68,7 @@
         "Days": "Days",
         "Hours": "Hours",
         "Minutes": "Minutes",
-        "Seconsa": "Seconds",
+        "Seconds": "Seconds",
         "SpinnerTooltip": "Mouse wheel to adjust the value"
     },
     "TrayIcon": {
@@ -81,6 +82,8 @@
         "ExceptionMessageReportMessage":"Please report this error, either with an image of the screen or by copying the following error text (it is appreciable to provide a description of the operations performed before the error):",
         "ErrorMessageOpeningWebsite":"Failed to open the web page. Please try again.",
         "ErrorGenericTitle":"Error",
-        "ErrorWrongTimeInterval":"The time interval is not correct"
+        "ErrorWrongTimeInterval":"The time interval is not correct",
+        "ConfirmationDeletionTitle":"Confirm Deletion",
+        "ConfirmationDeletionMessage":"Are you sure you want to delete the selected rows?"
     }
 }

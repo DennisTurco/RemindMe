@@ -45,6 +45,9 @@ public class ThemeManager {
     }
 
     private static void repaint(Object objectToRepaint) {
+        if (objectToRepaint == null) 
+            throw new NullPointerException("objectToRepaint cannot be null");
+        
         if (objectToRepaint instanceof Dialog || objectToRepaint instanceof JPopupMenu || objectToRepaint instanceof Frame) {
             // Update all components and revalidate and repaint
             SwingUtilities.updateComponentTreeUI((Component) objectToRepaint);
@@ -95,7 +98,6 @@ public class ThemeManager {
                     UIManager.setLookAndFeel(new FlatIntelliJLaf());
                     break;
             }
-
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.logMessage("Error setting LookAndFeel: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));

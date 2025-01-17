@@ -1,13 +1,14 @@
 package remindme.Dialogs;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
+import remindme.Entities.TimeInterval;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
-import remindme.Entities.TimeInterval;
-
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 public class TimePicker extends javax.swing.JDialog {
 
@@ -115,7 +116,7 @@ public class TimePicker extends javax.swing.JDialog {
         secondsSpinner = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Time interval for auto backup");
+        setTitle("Time interval for remind");
         setMaximumSize(new java.awt.Dimension(325, 290));
         setMinimumSize(new java.awt.Dimension(325, 290));
         setPreferredSize(new java.awt.Dimension(325, 290));

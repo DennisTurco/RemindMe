@@ -19,14 +19,15 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 
 import remindme.Managers.ExceptionManager;
+import remindme.Managers.RemindManager;
 
 public class PreferencesDialog extends javax.swing.JDialog {
 
-    private final MainGUI mainGui;
+    private final RemindManager remindManager;
 
-    public PreferencesDialog(java.awt.Frame parent, boolean modal, MainGUI mainGui) {
+    public PreferencesDialog(java.awt.Frame parent, boolean modal, RemindManager remindManager) {
         super(parent, modal);
-        this.mainGui = mainGui;
+        this.remindManager = remindManager;
         
         initComponents();
         
@@ -151,7 +152,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
 
             // update globally
             Preferences.updatePreferencesToJSON();
-            mainGui.reloadPreferences();
+            remindManager.reloadPreferences();
         } catch (IOException ex) {
             Logger.logMessage("An error occurred during applying preferences: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));

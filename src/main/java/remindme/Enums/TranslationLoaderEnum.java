@@ -20,6 +20,7 @@ public class TranslationLoaderEnum {
         TIME_PICKER_DIALOG("TimePickerDialog"),
         PREFERENCES_DIALOG("PreferencesDialog"),
         REMIND_LIST("RemindList"),
+        MAIN_FRAME("MainFrame"),
         TRAY_ICON("TrayIcon"),
         DIALOGS("Dialogs");
     
@@ -69,14 +70,15 @@ public class TranslationLoaderEnum {
         QUIT("Quit", "Quit"),
         SAVE("Save", "Save"),
         PREFERENCES("Preferences", "Preferences"),
-        IMPORT("Import", "Import"),
-        EXPORT("Export", "Export"),
+        IMPORT("Import", "Import from .json"),
+        EXPORT("Export", "Export to .json"),
         SAVE_WITH_NAME("SaveWithName", "Save with name"),
         SHARE("Share", "Share"),
         SUPPORT("Support", "Support"),
         WEBSITE("Website", "Website"),
 
         // MainFrame
+        NEW_REMIND_TOOLTIP("AddBackupTooltip", "Add new reminder"),
         EXPORT_AS("ExportAs", "Export as: "),
         EXPORT_AS_PDF_TOOLTIP("ExportAsPdfTooltip", "Export as PDF"),
         EXPORT_AS_CSV_TOOLTIP("ExportAsCsvTooltip", "Export as CSV"),
@@ -87,7 +89,8 @@ public class TranslationLoaderEnum {
         EDIT_POPUP("EditPopup", "Edit"),
         DELETE_POPUP("DeletePopup", "Delete"),
         DUPLICATE_POPUP("DuplicatePopup", "Duplicate"),
-        RENAME_BACKUP_POPUP("RenameBackupPopup", "Rename"),
+        RENAME_POPUP("RenamePopup", "Rename"),
+        COPY_NAME_POPUP("CopyNamePopup", "Copy remind name"),
         NAME_COLUMN("NameColumn", "Name"),
         LAST_EXECUTION_COLUMN("LastExecutionColumn", "Last Execution"),
         NEXT_EXECUTION_COLUMN("NextExecutionColumn", "Next Execution"),
@@ -130,7 +133,9 @@ public class TranslationLoaderEnum {
         EXCEPTION_MESSAGE_REPORT_MESSAGE("ExceptionMessageReportMessage", "Please report this error, either with an image of the screen or by copying the following error text (it is appreciable to provide a description of the operations performed before the error):"),
         ERROR_MESSAGE_OPENING_WEBSITE("ErrorMessageOpeningWebsite", "Failed to open the web page. Please try again."),
         ERROR_GENERIC_TITLE("ErrorGenericTitle", "Error"),
-        ERROR_WRONG_TIME_INTERVAL("ErrorWrongTimeInterval", "The time interval is not correct");
+        ERROR_WRONG_TIME_INTERVAL("ErrorWrongTimeInterval", "The time interval is not correct"),
+        CONFIRMATION_DELETION_TITLE("ConfirmationDeletionTitle", "Confirm Deletion"),
+        CONFIRMATION_DELETION_MESSAGE("ConfirmationDeletionMessage", "Are you sure you want to delete the selected rows?");
 
         private final String keyName;
         private final String defaultValue;
@@ -191,12 +196,11 @@ public class TranslationLoaderEnum {
                         } else {
                             // If the key is not recognized in the enum, log it and use the default value
                             Logger.logMessage("Warning: Unrecognized key in JSON: " + key + ", using default value.", LogLevel.WARN);
-                            category.addTranslation(translationKey, translationKey.getDefaultValue());
                         }
                     }
                 }
             }
-        }
+        } 
     }
 
     public static String getTranslation(TranslationCategory category, TranslationKey key) {
