@@ -50,5 +50,12 @@
             <version>7.2.5</version>
             <type>jar</type>
         </dependency>
+        
+        <!-- Timing Framework -->
+        <dependency>
+            <groupId>com.kenai.nbpwr</groupId>
+            <artifactId>org-jdesktop-animation-timing</artifactId>
+            <version>1.0-201002281504</version>
+        </dependency>
     </dependencies>
 </project>

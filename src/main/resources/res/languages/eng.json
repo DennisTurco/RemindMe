@@ -7,7 +7,9 @@
         "OkButton": "Ok",
         "CancelButton": "Cancel",
         "CloseButton": "Close",
-        "ApplyButton": "Apply"
+        "ApplyButton": "Apply",
+        "SaveButton": "Save",
+        "AddButton": "Add"
     },
     "Menu": {
         "File": "File",
@@ -15,14 +17,11 @@
         "About": "About",
         "Help": "Help",
         "BugReport": "Report a bug",
-        "Clear": "Clear",
         "Donate": "Donate",
         "History": "History",
         "InfoPage": "Info",
         "New": "New",
         "Quit": "Quit",
-        "Save": "Save",
-        "SaveWithName": "Save with name",
         "Preferences": "Preferences",
         "Import": "Import list from .json",
         "Export": "Export list to .json",
@@ -42,7 +41,7 @@
         "LastExecutionColumn": "Last Execution",
         "NextExecutionColumn": "Next Execution",
         "IsActiveColumn": "Active",
-        "IsTopLevelColumn": "Top Level",
+        "IsTopLevelColumn": "Show on Top",
         "TimeIntervalColumn": "Time Interval",
         
         "NameDetail": "Name",
@@ -51,7 +50,7 @@
         "LastExecutionDetail": "LastExecution",
         "NextExecutionDetail": "NextExecution",
         "IsActiveDetail": "Active",
-        "IsTopLevelDetail": "TopLevel",
+        "IsTopLevelDetail": "ShowOnTop",
         "CreationDateDetail": "CreationDate",
         "LastUpdateDateDetail": "LastUpdateDate",
         "TimeIntervalDetail": "TimeInterval",
@@ -61,6 +60,23 @@
         "DuplicatePopup": "Duplicate",
         "RenamePopup": "Rename",
         "CopyNamePopup": "Copy remind name"
+    },
+    "ManageRemindDialog": {
+        "EditTitle": "Time interval for reminder",
+        "CreateTitle": "Time interval for reminder",
+        "NameText": "Name",
+        "ActiveText": "Active", 
+        "TopLevelText": "Show on Top", 
+        "PreviewText": "Reminder preview",
+        "NamePlaceholder": "Enter reminder name",
+        "DescriptionPlaceholder": "Enter description (optional)",
+        "NameTooltip": "Enter a name for the reminder",
+        "ActiveTooltip": "Activate or disable the reminder",
+        "TopLevelTooltip": "If enabled, the reminder will always appear on top of other windows",
+        "DescriptionTooltip": "Provide additional details for this reminder",
+        "IconTooltip": "Choose an icon for the reminder notification",
+        "SoundTooltip": "Choose a sound for the reminder notification",
+        "SoundButtonTooltip": "Preview the selected sound"
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Time interval for reminder",

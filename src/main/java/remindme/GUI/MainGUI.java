@@ -44,7 +44,6 @@ import remindme.Managers.RemindManager;
 public final class MainGUI extends javax.swing.JFrame {
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     
-    
     private Integer selectedRow;
     private final RemindManager remindManager;
 
@@ -150,7 +149,7 @@ public final class MainGUI extends javax.swing.JFrame {
                 }
 
                 for (int row : selectedRows) {
-                    remindManager.removeReminder(row, false);
+                    //remindManager.removeReminder(row, false);
                 }
             }
         });
@@ -232,7 +231,6 @@ public final class MainGUI extends javax.swing.JFrame {
         researchField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, TranslationCategory.MAIN_FRAME.getTranslation(TranslationKey.RESEARCH_BAR_PLACEHOLDER));
 
         // popup
-        copyRemindNamePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.COPY_NAME_POPUP));
         DeletePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DELETE_POPUP));
         DuplicatePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DUPLICATE_POPUP));
         EditPoputItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.EDIT_POPUP));
@@ -270,19 +268,17 @@ public final class MainGUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         TablePopup = new javax.swing.JPopupMenu();
         EditPoputItem = new javax.swing.JMenuItem();
         DeletePopupItem = new javax.swing.JMenuItem();
         DuplicatePopupItem = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        activePopupItem = new javax.swing.JCheckBoxMenuItem();
+        topLevelPopupItem = new javax.swing.JCheckBoxMenuItem();
         renamePopupItem = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        copyRemindNamePopupItem = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        detailsLabel = new javax.swing.JTextArea();
         versionLabel = new javax.swing.JLabel();
         tablePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -291,6 +287,8 @@ public final class MainGUI extends javax.swing.JFrame {
         exportAsCsvBtn = new remindme.Svg.SVGButton();
         exportAsPdfBtn = new remindme.Svg.SVGButton();
         newRemindBtn = new remindme.Svg.SVGButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        detailsLabel = new javax.swing.JEditorPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         MenuNew = new remindme.Svg.SVGMenuItem();
@@ -335,6 +333,28 @@ public final class MainGUI extends javax.swing.JFrame {
         });
         TablePopup.add(DuplicatePopupItem);
 
+        jMenu6.setText("Enable / disable");
+
+        activePopupItem.setSelected(true);
+        activePopupItem.setText("Active");
+        activePopupItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activePopupItemActionPerformed(evt);
+            }
+        });
+        jMenu6.add(activePopupItem);
+
+        topLevelPopupItem.setSelected(true);
+        topLevelPopupItem.setText("Show on Top");
+        topLevelPopupItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                topLevelPopupItemActionPerformed(evt);
+            }
+        });
+        jMenu6.add(topLevelPopupItem);
+
+        TablePopup.add(jMenu6);
+
         renamePopupItem.setText("Rename reminder");
         renamePopupItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -342,18 +362,6 @@ public final class MainGUI extends javax.swing.JFrame {
             }
         });
         TablePopup.add(renamePopupItem);
-
-        jMenu4.setText("Copy text");
-
-        copyRemindNamePopupItem.setText("Copy reminder name");
-        copyRemindNamePopupItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copyRemindNamePopupItemActionPerformed(evt);
-            }
-        });
-        jMenu4.add(copyRemindNamePopupItem);
-
-        TablePopup.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Remind Me");
@@ -390,10 +398,6 @@ public final class MainGUI extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(table);
-
-        detailsLabel.setColumns(20);
-        detailsLabel.setRows(5);
-        jScrollPane2.setViewportView(detailsLabel);
 
         versionLabel.setText("Version 2.0.2");
 
@@ -479,6 +483,8 @@ public final class MainGUI extends javax.swing.JFrame {
         );
 
         researchField.getAccessibleContext().setAccessibleName("");
+
+        jScrollPane3.setViewportView(detailsLabel);
 
         jMenu1.setText("File");
 
@@ -616,7 +622,7 @@ public final class MainGUI extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -627,8 +633,8 @@ public final class MainGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(versionLabel)
                 .addContainerGap())
         );
@@ -654,7 +660,7 @@ public final class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_exportAsCsvBtnActionPerformed
 
     private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
-        // TODO add your handling code here:
+        remindManager.researchInTable(researchField.getText());
     }//GEN-LAST:event_researchFieldKeyTyped
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -680,7 +686,8 @@ public final class MainGUI extends javax.swing.JFrame {
             // Handling left mouse button double-click
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
                 Logger.logMessage("Double-click on row: " + selectedRow, Logger.LogLevel.INFO);
-                //TODO: OpenBackup(remindName);
+                
+                remindManager.editRemind(remind);
             }
 
             // Handling single left mouse button click
@@ -696,6 +703,7 @@ public final class MainGUI extends javax.swing.JFrame {
                 String lastUpdateDateStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.LAST_UPDATE_DATE_DETAIL);
                 String remindCountStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.COUNT_DETAIL);
 
+                detailsLabel.setContentType("text/html");
                 detailsLabel.setText(
                     "<html><b>" + remindNameStr + ":</b> " + remind.getName() + ", " +
                     "<b>" + descriptionStr + ":</b> " + remind.getDescription() + ", " +
@@ -758,29 +766,33 @@ public final class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuSupportActionPerformed
 
     private void EditPoputItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPoputItemActionPerformed
-        remindManager.popupEdit();
+        remindManager.popupEdit(table);
     }//GEN-LAST:event_EditPoputItemActionPerformed
 
     private void DeletePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePopupItemActionPerformed
-        remindManager.popupDelete();
+        remindManager.popupDelete(table);
     }//GEN-LAST:event_DeletePopupItemActionPerformed
 
     private void DuplicatePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DuplicatePopupItemActionPerformed
-        remindManager.popupDuplicate();
+        remindManager.popupDuplicate(table);
     }//GEN-LAST:event_DuplicatePopupItemActionPerformed
 
     private void renamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renamePopupItemActionPerformed
-        remindManager.popupRename(0, remindTable);
+        remindManager.popupRename(table);
     }//GEN-LAST:event_renamePopupItemActionPerformed
-
-    private void copyRemindNamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyRemindNamePopupItemActionPerformed
-        remindManager.popupCopyRemindName();
-    }//GEN-LAST:event_copyRemindNamePopupItemActionPerformed
 
     private void tablePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePanelMouseClicked
         table.clearSelection(); // deselect any selected row
         detailsLabel.setText(""); // clear the label
     }//GEN-LAST:event_tablePanelMouseClicked
+
+    private void activePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activePopupItemActionPerformed
+        remindManager.popupActive(table);
+    }//GEN-LAST:event_activePopupItemActionPerformed
+
+    private void topLevelPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_topLevelPopupItemActionPerformed
+        remindManager.popupTopLevl(table);
+    }//GEN-LAST:event_topLevelPopupItemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem DeletePopupItem;
@@ -800,19 +812,19 @@ public final class MainGUI extends javax.swing.JFrame {
     private remindme.Svg.SVGMenuItem MenuSupport;
     private remindme.Svg.SVGMenuItem MenuWebsite;
     private javax.swing.JPopupMenu TablePopup;
-    private javax.swing.JMenuItem copyRemindNamePopupItem;
-    private javax.swing.JTextArea detailsLabel;
+    private javax.swing.JCheckBoxMenuItem activePopupItem;
+    private javax.swing.JEditorPane detailsLabel;
     private remindme.Svg.SVGButton exportAsCsvBtn;
     private remindme.Svg.SVGButton exportAsPdfBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private remindme.Svg.SVGButton newRemindBtn;
@@ -820,6 +832,7 @@ public final class MainGUI extends javax.swing.JFrame {
     private javax.swing.JTextField researchField;
     private javax.swing.JTable table;
     private javax.swing.JPanel tablePanel;
+    private javax.swing.JCheckBoxMenuItem topLevelPopupItem;
     private javax.swing.JLabel versionLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,3 +1,314 @@
+2025-01-19T00:59:29.312071500 [INFO] Event --> adding new reminder
+2025-01-19T00:59:25.527498100 [DEBUG] Background mode: false
+2025-01-19T00:59:25.521545500 [INFO] Application started
+2025-01-19T00:59:25.515593400 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:59:25.503689600 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:57:22.712991700 [INFO] Right click on row: 1
+2025-01-19T00:57:22.710511500 [DEBUG] Selected remind: test
+2025-01-19T00:57:22.156172900 [DEBUG] Selected remind: test
+2025-01-19T00:57:21.605339200 [DEBUG] Selected remind: uuuu
+2025-01-19T00:57:18.549948400 [DEBUG] Background mode: false
+2025-01-19T00:57:18.544988900 [INFO] Application started
+2025-01-19T00:57:18.538044400 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:57:18.527134400 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:53:35.957684100 [INFO] Event --> editing reminder
+2025-01-19T00:53:35.954708800 [INFO] Double-click on row: 1
+2025-01-19T00:53:35.952752800 [DEBUG] Selected remind: test
+2025-01-19T00:53:35.789752800 [DEBUG] Selected remind: test
+2025-01-19T00:53:34.434162600 [DEBUG] Background mode: false
+2025-01-19T00:53:34.427714700 [INFO] Application started
+2025-01-19T00:53:34.421762300 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:53:34.410850 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:53:12.177541800 [INFO] Event --> editing reminder
+2025-01-19T00:53:12.175557700 [INFO] Double-click on row: 0
+2025-01-19T00:53:12.174069600 [DEBUG] Selected remind: uuuu
+2025-01-19T00:53:12.024817200 [DEBUG] Selected remind: uuuu
+2025-01-19T00:53:10.275749400 [DEBUG] Background mode: false
+2025-01-19T00:53:10.269798200 [INFO] Application started
+2025-01-19T00:53:10.264837200 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:53:10.253925 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:52:48.485527700 [INFO] Event --> editing reminder
+2025-01-19T00:52:48.484039500 [INFO] Double-click on row: 0
+2025-01-19T00:52:48.482055300 [DEBUG] Selected remind: uuuu
+2025-01-19T00:52:48.286144700 [DEBUG] Selected remind: uuuu
+2025-01-19T00:52:46.033984400 [DEBUG] Background mode: false
+2025-01-19T00:52:46.028500 [INFO] Application started
+2025-01-19T00:52:46.023540200 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:52:46.012157 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:42:18.971102300 [INFO] Event --> adding new reminder
+2025-01-19T00:42:09.287705800 [DEBUG] updating remind list
+2025-01-19T00:42:06.807513200 [DEBUG] updating remind list
+2025-01-19T00:42:06.315449 [DEBUG] updating remind list
+2025-01-19T00:42:05.048376700 [DEBUG] updating remind list
+2025-01-19T00:42:04.830018300 [DEBUG] updating remind list
+2025-01-19T00:42:02.654368900 [DEBUG] updating remind list
+2025-01-19T00:42:00.751506500 [DEBUG] updating remind list
+2025-01-19T00:42:00.455851300 [DEBUG] updating remind list
+2025-01-19T00:41:59.509867700 [DEBUG] updating remind list
+2025-01-19T00:41:53.529609700 [DEBUG] updating remind list
+2025-01-19T00:41:45.493319 [DEBUG] Selected remind: test
+2025-01-19T00:41:40.376627700 [DEBUG] updating remind list
+2025-01-19T00:41:39.990052700 [DEBUG] updating remind list
+2025-01-19T00:41:39.572482700 [DEBUG] updating remind list
+2025-01-19T00:41:39.401835800 [DEBUG] updating remind list
+2025-01-19T00:41:38.824830100 [DEBUG] updating remind list
+2025-01-19T00:41:38.658422100 [DEBUG] updating remind list
+2025-01-19T00:41:38.134540800 [DEBUG] updating remind list
+2025-01-19T00:41:37.459084900 [DEBUG] updating remind list
+2025-01-19T00:41:34.077496900 [DEBUG] Background mode: false
+2025-01-19T00:41:34.072537400 [INFO] Application started
+2025-01-19T00:41:34.066585100 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:41:34.057160900 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:36:54.669658500 [DEBUG] Selected remind: uuuu
+2025-01-19T00:36:54.258233700 [DEBUG] Selected remind: test
+2025-01-19T00:36:53.016112 [DEBUG] Selected remind: test
+2025-01-19T00:36:52.602922300 [DEBUG] Selected remind: uuuu
+2025-01-19T00:36:52.174028400 [DEBUG] Selected remind: test
+2025-01-19T00:36:50.838422900 [DEBUG] Selected remind: test
+2025-01-19T00:36:47.662751200 [DEBUG] Background mode: false
+2025-01-19T00:36:47.657296400 [INFO] Application started
+2025-01-19T00:36:47.651839800 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:36:47.642415 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:31:49.013322200 [INFO] Right click on row: 1
+2025-01-19T00:31:49.012358500 [DEBUG] Selected remind: test
+2025-01-19T00:31:48.627723200 [DEBUG] Selected remind: test
+2025-01-19T00:31:46.731497900 [DEBUG] Background mode: false
+2025-01-19T00:31:46.727556500 [INFO] Application started
+2025-01-19T00:31:46.722595100 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:31:46.714162700 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:31:33.937884100 [DEBUG] Background mode: false
+2025-01-19T00:31:33.933916500 [INFO] Application started
+2025-01-19T00:31:33.929492800 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:31:33.920523900 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:30:13.168896900 [INFO] Right click on row: 1
+2025-01-19T00:30:13.166889400 [DEBUG] Selected remind: test
+2025-01-19T00:30:12.856443500 [DEBUG] Selected remind: test
+2025-01-19T00:30:11.643406700 [DEBUG] Selected remind: uuuu
+2025-01-19T00:30:06.216578100 [DEBUG] Background mode: false
+2025-01-19T00:30:06.212610600 [INFO] Application started
+2025-01-19T00:30:06.208146 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:30:06.198723300 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:13:26.605715800 [INFO] Event --> adding new reminder
+2025-01-19T00:13:25.318388 [DEBUG] Selected remind: test
+2025-01-19T00:13:22.310074500 [INFO] Right click on row: 1
+2025-01-19T00:13:22.308559100 [DEBUG] Selected remind: test
+2025-01-19T00:13:21.506927700 [DEBUG] Selected remind: uuuu
+2025-01-19T00:13:21.070384100 [DEBUG] Selected remind: test
+2025-01-19T00:13:20.566330800 [DEBUG] Selected remind: test
+2025-01-19T00:13:20.126676100 [DEBUG] Selected remind: test
+2025-01-19T00:13:19.293978500 [DEBUG] Selected remind: uuuu
+2025-01-19T00:13:18.922217400 [DEBUG] Selected remind: test
+2025-01-19T00:13:18.513375300 [DEBUG] Selected remind: test
+2025-01-19T00:12:56.085455500 [DEBUG] Selected remind: test
+2025-01-19T00:12:53.287800900 [INFO] Right click on row: 2
+2025-01-19T00:12:53.286283800 [DEBUG] Selected remind: test
+2025-01-19T00:12:49.702743800 [INFO] Event --> removing reminder
+2025-01-19T00:12:31.619909100 [INFO] Right click on row: 2
+2025-01-19T00:12:31.618411900 [DEBUG] Selected remind: test
+2025-01-19T00:12:31.211486200 [DEBUG] Selected remind: test
+2025-01-19T00:12:30.126920600 [INFO] Right click on row: 2
+2025-01-19T00:12:30.125430700 [DEBUG] Selected remind: test
+2025-01-19T00:12:29.875524600 [DEBUG] Selected remind: test
+2025-01-19T00:12:19.047560200 [INFO] Event --> editing reminder
+2025-01-19T00:12:18.472954900 [INFO] Right click on row: 0
+2025-01-19T00:12:18.470971500 [DEBUG] Selected remind: uuuu
+2025-01-19T00:12:16.318454 [DEBUG] Background mode: false
+2025-01-19T00:12:16.313494300 [INFO] Application started
+2025-01-19T00:12:16.307542500 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:12:16.298118500 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:07:57.919230100 [INFO] Right click on row: 0
+2025-01-19T00:07:57.917746 [DEBUG] Selected remind: uuuu
+2025-01-19T00:07:57.674368200 [DEBUG] Selected remind: uuuu
+2025-01-19T00:07:55.928986 [DEBUG] Background mode: false
+2025-01-19T00:07:55.924026 [INFO] Application started
+2025-01-19T00:07:55.918074100 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-19T00:07:55.905674100 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T23:53:16.367270700 [INFO] Event --> editing reminder
+2025-01-18T23:53:14.450700700 [INFO] Right click on row: 1
+2025-01-18T23:53:14.448938600 [DEBUG] Selected remind: test
+2025-01-18T23:53:04.310978400 [INFO] Double-click on row: 1
+2025-01-18T23:53:04.309474 [DEBUG] Selected remind: test
+2025-01-18T23:53:04.126476600 [DEBUG] Selected remind: test
+2025-01-18T23:53:03.433835300 [DEBUG] Selected remind: test
+2025-01-18T23:53:03.258131900 [INFO] Double-click on row: 1
+2025-01-18T23:53:03.256148 [DEBUG] Selected remind: test
+2025-01-18T23:53:03.066021200 [DEBUG] Selected remind: test
+2025-01-18T23:53:02.458985700 [DEBUG] Selected remind: uuuu
+2025-01-18T23:52:59.533045500 [DEBUG] Selected remind: uuuu
+2025-01-18T23:52:57.462402100 [DEBUG] Background mode: false
+2025-01-18T23:52:57.456449400 [INFO] Application started
+2025-01-18T23:52:57.450993900 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T23:52:57.440577800 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T23:51:34.948641900 [DEBUG] Selected remind: uuuu
+2025-01-18T23:51:32.167290500 [DEBUG] Selected remind: test
+2025-01-18T23:51:31.883478200 [DEBUG] Selected remind: test
+2025-01-18T23:51:31.515097800 [DEBUG] Selected remind: uuuu
+2025-01-18T23:51:27.663277500 [DEBUG] Background mode: false
+2025-01-18T23:51:27.658815 [INFO] Application started
+2025-01-18T23:51:27.653357600 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T23:51:27.643934 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T23:50:12.562748800 [INFO] Event --> editing reminder
+2025-01-18T23:50:11.008968100 [INFO] Right click on row: 0
+2025-01-18T23:50:11.007479900 [DEBUG] Selected remind: uuuu
+2025-01-18T23:49:26.776232300 [INFO] Event --> editing reminder
+2025-01-18T23:49:26.151448200 [INFO] Right click on row: 0
+2025-01-18T23:49:26.149987400 [DEBUG] Selected remind: uuuu
+2025-01-18T23:49:25.980007800 [DEBUG] Selected remind: uuuu
+2025-01-18T23:49:23.168825800 [DEBUG] Background mode: false
+2025-01-18T23:49:23.164361600 [INFO] Application started
+2025-01-18T23:49:23.159401500 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T23:49:23.150473400 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T15:35:18.025903700 [INFO] Event --> adding new reminder
+2025-01-18T15:31:35.510142900 [INFO] Event --> adding new reminder
+2025-01-18T15:31:21.791712900 [DEBUG] Background mode: false
+2025-01-18T15:31:21.787249600 [INFO] Application started
+2025-01-18T15:31:21.781792600 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T15:31:21.771376300 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T14:46:17.043540300 [INFO] Event --> adding new reminder
+2025-01-18T14:46:13.633956400 [DEBUG] Background mode: false
+2025-01-18T14:46:13.629988500 [INFO] Application started
+2025-01-18T14:46:13.625028200 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T14:46:13.615108300 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T13:48:37.331538800 [INFO] Event --> adding new reminder
+2025-01-18T13:48:34.285155900 [DEBUG] Background mode: false
+2025-01-18T13:48:34.280196600 [INFO] Application started
+2025-01-18T13:48:34.269780200 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T13:48:34.260355800 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T12:02:46.470556600 [INFO] Event --> adding new reminder
+2025-01-18T12:02:43.490727600 [DEBUG] Background mode: false
+2025-01-18T12:02:43.486734400 [INFO] Application started
+2025-01-18T12:02:43.482270100 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T12:02:43.473838200 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T11:58:30.114513200 [INFO] Event --> adding new reminder
+2025-01-18T11:58:23.938025400 [DEBUG] Selected remind: uuuu
+2025-01-18T11:58:21.190257900 [DEBUG] Background mode: false
+2025-01-18T11:58:21.185793400 [INFO] Application started
+2025-01-18T11:58:21.181329300 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T11:58:21.171409300 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T10:00:32.859423400 [INFO] Event --> editing reminder
+2025-01-18T10:00:32.285324900 [INFO] Right click on row: 0
+2025-01-18T10:00:32.283311400 [DEBUG] Selected remind: uuuu
+2025-01-18T10:00:32.080459 [DEBUG] Selected remind: uuuu
+2025-01-18T10:00:29.861480800 [DEBUG] Background mode: false
+2025-01-18T10:00:29.856521200 [INFO] Application started
+2025-01-18T10:00:29.851064800 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T10:00:29.842633300 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T09:59:13.115416 [INFO] Right click on row: 0
+2025-01-18T09:59:13.114162700 [DEBUG] Selected remind: uuuu
+2025-01-18T09:58:56.943702500 [INFO] Right click on row: 0
+2025-01-18T09:58:56.942709900 [DEBUG] Selected remind: uuuu
+2025-01-18T09:58:56.516770400 [INFO] Double-click on row: 0
+2025-01-18T09:58:56.515281500 [DEBUG] Selected remind: uuuu
+2025-01-18T09:58:56.356920200 [DEBUG] Selected remind: uuuu
+2025-01-18T09:58:55.078057100 [DEBUG] Selected remind: uuuu
+2025-01-18T09:58:54.738300300 [DEBUG] Selected remind: test
+2025-01-18T09:58:54.251226800 [DEBUG] Selected remind: test
+2025-01-18T09:58:53.524783100 [DEBUG] Selected remind: test
+2025-01-18T09:58:53.038788300 [DEBUG] Selected remind: test
+2025-01-18T09:53:33.511508900 [DEBUG] Background mode: false
+2025-01-18T09:53:33.505061200 [INFO] Application started
+2025-01-18T09:53:33.491668700 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T09:53:33.479764900 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T00:43:53.125887400 [INFO] Event --> adding new reminder
+2025-01-18T00:43:49.864480400 [DEBUG] Background mode: false
+2025-01-18T00:43:49.860980400 [INFO] Application started
+2025-01-18T00:43:49.856516400 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T00:43:49.848604400 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T00:41:59.382236500 [INFO] Event --> adding new reminder
+2025-01-18T00:41:56.686385300 [DEBUG] Background mode: false
+2025-01-18T00:41:56.681426500 [INFO] Application started
+2025-01-18T00:41:56.676961500 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T00:41:56.669050300 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T00:03:04.105713200 [INFO] Right click on row: 1
+2025-01-18T00:03:04.104223100 [DEBUG] Selected remind: test
+2025-01-18T00:02:54.290432 [DEBUG] Selected remind: test
+2025-01-18T00:02:51.335779 [INFO] Event --> copying reminder name to the clipboard
+2025-01-18T00:02:45.759715 [INFO] Right click on row: 2
+2025-01-18T00:02:45.758227600 [DEBUG] Selected remind: test
+2025-01-18T00:02:45.006970700 [INFO] Right click on row: 1
+2025-01-18T00:02:45.005456200 [DEBUG] Selected remind: test
+2025-01-18T00:02:43.594881700 [INFO] Event --> backup renaming
+2025-01-18T00:02:42.579202500 [INFO] Right click on row: 2
+2025-01-18T00:02:42.577715 [DEBUG] Selected remind: test
+2025-01-18T00:02:40.696039200 [INFO] Event --> removing reminder
+2025-01-18T00:02:39.374618400 [INFO] Right click on row: 1
+2025-01-18T00:02:39.373619800 [DEBUG] Selected remind: test
+2025-01-18T00:02:38.148845300 [INFO] Right click on row: 0
+2025-01-18T00:02:38.147357600 [DEBUG] Selected remind: uuuu
+2025-01-18T00:02:15.894512100 [DEBUG] Selected remind: test
+2025-01-18T00:02:15.024503700 [DEBUG] Selected remind: test
+2025-01-18T00:01:50.683341500 [DEBUG] Selected remind: test
+2025-01-18T00:01:50.376575400 [DEBUG] Selected remind: test
+2025-01-18T00:01:47.626077500 [DEBUG] Selected remind: test
+2025-01-18T00:01:47.204985100 [DEBUG] Selected remind: test
+2025-01-18T00:01:46.581244 [DEBUG] Selected remind: uuuu
+2025-01-18T00:01:46.197628 [DEBUG] Selected remind: test
+2025-01-18T00:01:45.803794500 [DEBUG] Selected remind: test
+2025-01-18T00:01:35.013823200 [DEBUG] Selected remind: test
+2025-01-18T00:01:34.177145800 [INFO] Right click on row: 0
+2025-01-18T00:01:34.175657200 [DEBUG] Selected remind: uuuu
+2025-01-18T00:01:33.668614400 [INFO] Right click on row: 1
+2025-01-18T00:01:33.667126300 [DEBUG] Selected remind: test
+2025-01-18T00:01:33.209034200 [INFO] Right click on row: 2
+2025-01-18T00:01:33.207546200 [DEBUG] Selected remind: test
+2025-01-18T00:01:32.627225800 [INFO] Right click on row: 2
+2025-01-18T00:01:32.626234 [DEBUG] Selected remind: test
+2025-01-18T00:01:32.235000100 [DEBUG] Selected remind: test
+2025-01-18T00:01:31.560632800 [INFO] Right click on row: 1
+2025-01-18T00:01:31.559144100 [DEBUG] Selected remind: test
+2025-01-18T00:01:31.206651500 [DEBUG] Selected remind: test
+2025-01-18T00:01:30.751732100 [DEBUG] Selected remind: uuuu
+2025-01-18T00:00:50.368852500 [DEBUG] Background mode: false
+2025-01-18T00:00:50.241379900 [INFO] Application started
+2025-01-18T00:00:50.212612500 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T00:00:50.165492400 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T00:00:46.578014400 [INFO] Event --> exit
+2025-01-18T00:00:43.703916800 [DEBUG] Background mode: false
+2025-01-18T00:00:43.698460300 [INFO] Application started
+2025-01-18T00:00:43.692508600 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-18T00:00:43.683084300 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T23:57:36.673886100 [DEBUG] Selected remind: test
+2025-01-17T23:57:27.021743500 [DEBUG] Selected remind: uuuu
+2025-01-17T23:57:24.638237900 [DEBUG] Selected remind: uuuu
+2025-01-17T23:57:23.156162200 [DEBUG] updating remind list
+2025-01-17T23:57:20.484019 [INFO] Event --> backup renaming
+2025-01-17T23:57:12.997028700 [INFO] Right click on row: 2
+2025-01-17T23:57:12.995514800 [DEBUG] Selected remind: test
+2025-01-17T23:57:12.684452300 [DEBUG] Selected remind: test
+2025-01-17T23:57:10.497813500 [INFO] Event --> duplicating reminder
+2025-01-17T23:57:08.835625500 [INFO] Right click on row: 1
+2025-01-17T23:57:08.834174700 [DEBUG] Selected remind: test
+2025-01-17T23:57:07.572020200 [INFO] Right click on row: 0
+2025-01-17T23:57:07.570506700 [DEBUG] Selected remind: test
+2025-01-17T23:57:07.020554400 [DEBUG] Selected remind: test
+2025-01-17T23:57:03.800052 [DEBUG] Selected remind: test
+2025-01-17T23:57:03.300932 [DEBUG] Selected remind: test
+2025-01-17T23:57:00.204483100 [DEBUG] Selected remind: test
+2025-01-17T23:56:53.183545300 [DEBUG] Selected remind: test
+2025-01-17T23:56:52.817937400 [DEBUG] Selected remind: test
+2025-01-17T23:56:52.292261 [DEBUG] Selected remind: test
+2025-01-17T23:56:51.911739300 [DEBUG] Selected remind: test
+2025-01-17T23:56:51.464363300 [DEBUG] Selected remind: test
+2025-01-17T23:56:50.834621200 [DEBUG] Selected remind: test
+2025-01-17T23:56:48.644884400 [DEBUG] Selected remind: test
+2025-01-17T23:56:46.641683600 [DEBUG] Background mode: false
+2025-01-17T23:56:46.636724700 [INFO] Application started
+2025-01-17T23:56:46.632756 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T23:56:46.623827600 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T23:55:59.257450300 [DEBUG] Selected remind: test
+2025-01-17T23:55:58.810616700 [DEBUG] Selected remind: test
+2025-01-17T23:55:58.141406900 [DEBUG] Selected remind: test
+2025-01-17T23:55:56.845328800 [DEBUG] Selected remind: test
+2025-01-17T23:55:55.141907900 [DEBUG] Background mode: false
+2025-01-17T23:55:55.138434100 [INFO] Application started
+2025-01-17T23:55:55.134483300 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T23:55:55.126997200 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T23:48:06.742629800 [DEBUG] Selected remind: test
+2025-01-17T23:48:05.933600300 [DEBUG] Selected remind: test
+2025-01-17T23:47:57.966576900 [DEBUG] Background mode: false
+2025-01-17T23:47:57.962578700 [INFO] Application started
+2025-01-17T23:47:57.954147700 [INFO] Preferences updated to JSON file: language = eng.json, theme = Arc Dark - Orange
+2025-01-17T23:47:57.944253800 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Arc Dark - Orange
 2025-01-17T19:46:18.080979300 [INFO] Exporting reminds to CSV finished
 2025-01-17T19:46:15.300416100 [INFO] You selected the directory: C:\Users\Utente\Desktop
 2025-01-17T19:46:12.046316200 [INFO] Event --> File chooser

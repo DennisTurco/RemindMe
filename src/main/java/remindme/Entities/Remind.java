@@ -83,7 +83,7 @@ public class Remind {
         return null;
     }
 
-    public static Remind getBackupByName(String remindName) {
+    public static Remind getRemindByName(String remindName) {
         List<Remind> reminds;
         try {
             reminds = new JSONReminder().readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());

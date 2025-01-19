@@ -15,6 +15,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import remindme.Dialogs.ManageRemind;
 
 import remindme.Dialogs.PreferencesDialog;
 import remindme.Dialogs.TimePicker;
@@ -134,17 +135,44 @@ public final class RemindManager {
         return null;
     }
 
+    public void researchInTable(String research) {
+        List<Remind> tempReminds = new ArrayList<>();
+        
+        for (Remind remind : reminds) {
+            if (remind.getName().contains(research) || 
+                    (remind.getLastExecution() != null && remind.getLastExecution().toString().contains(research)) ||
+                    (remind.getNextExecution() != null && remind.getNextExecution().toString().contains(research)) ||
+                    (remind.getTimeInterval() != null && remind.getTimeInterval().toString().contains(research))) {
+                tempReminds.add(remind);
+            }
+        }
+        
+        TableDataManager.updateTableWithNewRemindList(tempReminds, formatter);
+    }
+
+    private String getRemindNameByTableRow(javax.swing.JTable table) {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            return (String) table.getValueAt(selectedRow, 0);
+        }
+
+        return null;
+    }
+
     ///////////////////////////////////////////////////////////////////
 
     public void addReminder() {
         Logger.logMessage("Event --> adding new reminder", Logger.LogLevel.INFO);
+        
+        ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.CREATE_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.ADD_BUTTON));
+        manage.setVisible(true);
     }
 
     public void saveReminder() {
         Logger.logMessage("Event --> saving reminder", Logger.LogLevel.INFO);
     }
 
-    public void removeReminder(int row, boolean d) {
+    public void removeReminder(Remind remind, boolean d) {
         Logger.logMessage("Event --> removing reminder", Logger.LogLevel.INFO);
     }
 
@@ -156,7 +184,7 @@ public final class RemindManager {
         Logger.logMessage("Event --> cipying reminder name", Logger.LogLevel.INFO);
     }
 
-    public void duplicateReminder() {
+    public void duplicateReminder(Remind remind) {
         Logger.logMessage("Event --> duplicating reminder", Logger.LogLevel.INFO);
     }
 
@@ -196,6 +224,13 @@ public final class RemindManager {
         remind.setName(remindName);
         remind.setLastUpdateDate(LocalDateTime.now());
         updateRemindList(reminds);
+    }
+
+    public void editRemind(Remind remind) {
+        Logger.logMessage("Event --> editing reminder", Logger.LogLevel.INFO);
+
+        ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EDIT_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON), remind);
+        manage.setVisible(true);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -241,39 +276,52 @@ public final class RemindManager {
     }
 
     public void menuQuit() {
-
+        Logger.logMessage("Event --> exit", Logger.LogLevel.INFO);
+        System.exit(main.EXIT_ON_CLOSE);
     }
 
     public void menuInfoPage() {
-
+        
     }
 
     ///////////////////////////////////////////////////////////////////
 
-    public void popupRename(int selectedRow, RemindTable remindTable) {
-        if (selectedRow != -1) {
-            // get correct remind
-            String remindName = (String) remindTable.getValueAt(selectedRow, 0);
-            Remind remind = Remind.getRemindByName(new ArrayList<>(reminds), remindName);
-
-            renameRemind(remind);
-        }
+    public void popupRename(javax.swing.JTable table) {
+        String remindName = getRemindNameByTableRow(table);
+        if (remindName != null)        
+            renameRemind(Remind.getRemindByName(remindName));
     }
 
-    public void popupDelete() {
-        removeReminder(0, false);
+    public void popupDelete(javax.swing.JTable table) {
+        String remindName = getRemindNameByTableRow(table);
+        if (remindName != null)
+            removeReminder(Remind.getRemindByName(remindName), false);
     }
 
-    public void popupEdit() {
-        
+    public void popupEdit(javax.swing.JTable table) {
+        String remindName = getRemindNameByTableRow(table);
+        if (remindName != null)
+            editRemind(Remind.getRemindByName(remindName));
     }
 
-    public void popupDuplicate() {
-        Logger.logMessage("Event --> duplicating reminder", Logger.LogLevel.INFO);
+    public void popupDuplicate(javax.swing.JTable table) {
+        String remindName = getRemindNameByTableRow(table);
+        if (remindName != null)
+            duplicateReminder(Remind.getRemindByName(remindName));
     }
 
-    public void popupCopyRemindName() {
+    public void popupCopyRemindName(javax.swing.JTable table) {
         Logger.logMessage("Event --> copying reminder name to the clipboard", Logger.LogLevel.INFO);
+
+        String remindName = getRemindNameByTableRow(table);
+    }
+
+    public void popupActive(javax.swing.JTable table) {
+        String remindName = getRemindNameByTableRow(table);
+    }
+
+    public void popupTopLevl(javax.swing.JTable table) {
+        String remindName = getRemindNameByTableRow(table);
     }
 
     ///////////////////////////////////////////////////////////////////
