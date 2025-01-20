@@ -1,6 +1,5 @@
 package remindme.Dialogs;
 
-import remindme.GUI.MainGUI;
 import remindme.Entities.Preferences;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.LanguagesEnum;

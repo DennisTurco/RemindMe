@@ -83,9 +83,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel1" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="timeIntervalBtn" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="timeIntervalBtn" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="reminderPreviewBtn" min="-2" max="-2" attributes="0"/>
@@ -119,11 +119,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="OkBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ok"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OkBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="soundComboBox">
       <Properties>
@@ -167,6 +173,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="iconComboBoxActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -175,6 +184,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Reminder preview"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reminderPreviewBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -184,6 +196,9 @@
     <Component class="remindme.Svg.SVGButton" name="timeIntervalBtn">
     </Component>
     <Component class="remindme.Svg.SVGButton" name="soundPreviewBtn">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="soundPreviewBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

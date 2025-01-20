@@ -28,7 +28,6 @@ import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.GUI.MainGUI;
 import remindme.Json.JSONReminder;
-import remindme.Table.RemindTable;
 import remindme.Table.TableDataManager;
 import remindme.Logger;
 import remindme.Logger.LogLevel;

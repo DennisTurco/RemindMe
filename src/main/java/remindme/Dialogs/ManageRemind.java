@@ -1,11 +1,15 @@
 package remindme.Dialogs;
 
 import remindme.Entities.Remind;
+import remindme.Entities.RemindNotification;
+import remindme.Enums.IconsEnum;
+import remindme.Enums.SoundsEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
+import remindme.Managers.SoundPlayer;
 
 public class ManageRemind extends javax.swing.JDialog {
-
+    
     public ManageRemind(java.awt.Frame parent, boolean modal, String title, String confirmBtnName, Remind remind) {
         super(parent, modal);
         initializeDialog(title, confirmBtnName);
@@ -23,6 +27,9 @@ public class ManageRemind extends javax.swing.JDialog {
         setTitle(title);
         OkBtn.setText(confirmBtnName);
 
+        setIcons();
+        setSounds();
+
         setTranslations();
     }
 
@@ -31,6 +38,8 @@ public class ManageRemind extends javax.swing.JDialog {
         descriptionTextArea.setText(remind.getDescription());
         activeCheckBox.setSelected(remind.isActive());
         topLevelCheckBox.setSelected(remind.isTopLevel());
+        iconComboBox.setSelectedItem(remind.getIcon().getIconName());
+        soundComboBox.setSelectedItem(remind.getSound().getSoundName());
     }
     
     public void setSvgImages() {
@@ -54,6 +63,55 @@ public class ManageRemind extends javax.swing.JDialog {
         iconComboBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.ICON_TOOLTIP));
         soundComboBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.SOUND_TOOLTIP));
         soundPreviewBtn.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.SOUND_BUTTON_TOOLTIP));
+    }
+
+    private void setIcons() {
+        iconComboBox.removeAllItems();
+
+        iconComboBox.addItem(IconsEnum.ALERT.getIconName());
+        iconComboBox.addItem(IconsEnum.BOOK.getIconName());
+        iconComboBox.addItem(IconsEnum.BOOK_CLOSED.getIconName());
+        iconComboBox.addItem(IconsEnum.EYE.getIconName());
+        iconComboBox.addItem(IconsEnum.EYE_CLOSED.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_BEER.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_CALCULATOR.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_COMPUTER.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_JOGGING.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_SHOPPING.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_SLEEPING.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_WEARING_TIE.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_WITH_DIETARY.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_WITH_DIETARY.getIconName());
+        iconComboBox.addItem(IconsEnum.MAN_YOGA.getIconName());
+        iconComboBox.addItem(IconsEnum.MUSIC1.getIconName());
+        iconComboBox.addItem(IconsEnum.MUSIC2.getIconName());
+        iconComboBox.addItem(IconsEnum.PAUSE_CIRCLE.getIconName());
+        iconComboBox.addItem(IconsEnum.WARNING.getIconName());
+        iconComboBox.addItem(IconsEnum.WORK.getIconName());
+        
+        iconComboBox.setSelectedItem(IconsEnum.getDefaultIcon());
+    }
+    
+    private void setSounds() {
+        soundComboBox.removeAllItems();
+
+        soundComboBox.addItem(SoundsEnum.NoSound.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound1.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound2.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound3.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound4.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound5.getSoundName());
+        // soundComboBox.addItem(SoundsEnum.Sound6.getSoundName());
+        // soundComboBox.addItem(SoundsEnum.Sound7.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound8.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound9.getSoundName());
+        // soundComboBox.addItem(SoundsEnum.Sound10.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound11.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound12.getSoundName());
+        
+        soundComboBox.setSelectedItem(SoundsEnum.getDefaultSound());
     }
 
     /**
@@ -90,8 +148,18 @@ public class ManageRemind extends javax.swing.JDialog {
         topLevelCheckBox.setText("Top Level");
 
         cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
 
         OkBtn.setText("Ok");
+        OkBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OkBtnActionPerformed(evt);
+            }
+        });
 
         soundComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -101,10 +169,26 @@ public class ManageRemind extends javax.swing.JDialog {
         jScrollPane2.setViewportView(descriptionTextArea);
 
         iconComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        iconComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iconComboBoxActionPerformed(evt);
+            }
+        });
 
         reminderPreviewBtn.setText("Reminder preview");
+        reminderPreviewBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reminderPreviewBtnActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("jLabel1");
+
+        soundPreviewBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                soundPreviewBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,7 +241,7 @@ public class ManageRemind extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(timeIntervalBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -172,6 +256,29 @@ public class ManageRemind extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void soundPreviewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundPreviewBtnActionPerformed
+        String sound = (String) soundComboBox.getSelectedItem();
+        SoundPlayer.playSound(SoundsEnum.getSoundbyName(sound));
+    }//GEN-LAST:event_soundPreviewBtnActionPerformed
+
+    private void iconComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iconComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_iconComboBoxActionPerformed
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void OkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_OkBtnActionPerformed
+
+    private void reminderPreviewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reminderPreviewBtnActionPerformed
+        RemindNotification remind = new RemindNotification(remindNameTextField.getText(), descriptionTextArea.getText(), IconsEnum.getIconbyName((String)iconComboBox.getSelectedItem()), SoundsEnum.getSoundbyName((String)soundComboBox.getSelectedItem()));
+        ReminderDialog dialog = new ReminderDialog(this, false, remind);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_reminderPreviewBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton OkBtn;

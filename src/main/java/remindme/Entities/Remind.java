@@ -7,6 +7,8 @@ import java.util.List;
 
 import remindme.Json.JSONReminder;
 import remindme.Logger;
+import remindme.Enums.IconsEnum;
+import remindme.Enums.SoundsEnum;
 import remindme.Managers.ExceptionManager;
 
 public class Remind {
@@ -20,7 +22,8 @@ public class Remind {
     private LocalDateTime _creationDate;
     private LocalDateTime _lastUpdateDate;
     private TimeInterval _timeInterval;
-    //private RemindIcon _icon;
+    private IconsEnum _icon;
+    private SoundsEnum _sound;
 
     public Remind() {
         this._name = "";
@@ -33,9 +36,11 @@ public class Remind {
         this._creationDate = null;
         this._lastUpdateDate = null;
         this._timeInterval = null;
+        this._icon = IconsEnum.ALERT;
+        this._sound = SoundsEnum.NoSound;
     }
 
-    public Remind(String name, String description, int remindCount, boolean isActive, boolean isTopLevel, LocalDateTime lastExecution, LocalDateTime nextExecution, LocalDateTime creationDate, LocalDateTime lastUpdateDate, TimeInterval timeInterval) {
+    public Remind(String name, String description, int remindCount, boolean isActive, boolean isTopLevel, LocalDateTime lastExecution, LocalDateTime nextExecution, LocalDateTime creationDate, LocalDateTime lastUpdateDate, TimeInterval timeInterval, IconsEnum icon, SoundsEnum sound) {
         this._name = name;
         this._description = description;
         this._remindCount = remindCount;
@@ -46,6 +51,8 @@ public class Remind {
         this._creationDate = creationDate;
         this._lastUpdateDate = lastUpdateDate;
         this._timeInterval = timeInterval;
+        this._icon = icon;
+        this._sound = sound;
     }
 
     @Override
@@ -130,6 +137,12 @@ public class Remind {
     public TimeInterval getTimeInterval() {
         return _timeInterval;
     }
+    public IconsEnum getIcon() {
+        return _icon;
+    }
+    public SoundsEnum getSound() {
+        return _sound;
+    }
 
     public void setName(String name) {
         this._name = name;
@@ -161,5 +174,10 @@ public class Remind {
     public void setTimeInterval(TimeInterval timeInterval) {
         this._timeInterval = timeInterval;
     }
-    
+    public void setIcon(IconsEnum icon) {
+        this._icon = icon;
+    }
+    public void setSound(SoundsEnum sound) {
+        this._sound = sound;
+    }
 }

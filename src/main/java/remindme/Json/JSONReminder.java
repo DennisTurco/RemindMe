@@ -24,6 +24,8 @@ import com.google.gson.reflect.TypeToken;
 import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
 import remindme.Entities.TimeInterval;
+import remindme.Enums.IconsEnum;
+import remindme.Enums.SoundsEnum;
 import remindme.Logger;
 import remindme.Managers.ExceptionManager;
 
@@ -71,6 +73,8 @@ public class JSONReminder {
                 String creationDateStr = getStringOrNull(remindObj, "creationDate");
                 String lastUpdateDateStr = getStringOrNull(remindObj, "lastUpdateDate");
                 String timeIntervalStr = getStringOrNull(remindObj, "timeInterval");
+                IconsEnum icon = IconsEnum.getIconbyName(getStringOrNull(remindObj, "icon"));
+                SoundsEnum sound = SoundsEnum.getSoundbyName(getStringOrNull(remindObj, "sound"));
 
                 int countValue = remindObj.has("count") ? remindObj.get("count").getAsInt() : 0;
     
@@ -81,11 +85,17 @@ public class JSONReminder {
                 Boolean isTopLevelValue = remindObj.has("isTopLevel") && !remindObj.get("isTopLevel").isJsonNull() 
                     ? remindObj.get("isTopLevel").getAsBoolean() 
                     : null;
-    
+
                 LocalDateTime lastExecutionValue = lastExecutionStr != null ? LocalDateTime.parse(lastExecutionStr) : null;
                 LocalDateTime nextExecutionValue = nextExecutionStr != null ? LocalDateTime.parse(nextExecutionStr) : null;
                 LocalDateTime creationDateValue = creationDateStr != null ? LocalDateTime.parse(creationDateStr) : null;
                 LocalDateTime lastUpdateDateValue = lastUpdateDateStr != null ? LocalDateTime.parse(lastUpdateDateStr) : null;
+
+                if (icon == null)
+                    icon = IconsEnum.getDefaultIcon();
+
+                if (sound == null) 
+                    sound = SoundsEnum.getDefaultSound();
     
                 remindList.add(new Remind(
                     nameValue,
@@ -97,7 +107,9 @@ public class JSONReminder {
                     nextExecutionValue,
                     creationDateValue,
                     lastUpdateDateValue,
-                    TimeInterval.getTimeIntervalFromString(timeIntervalStr)
+                    TimeInterval.getTimeIntervalFromString(timeIntervalStr),
+                    icon,
+                    sound
                 ));
             }
     
@@ -133,6 +145,8 @@ public class JSONReminder {
                 remindObject.addProperty("timeInterval", remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : null);
                 remindObject.addProperty("creationDate", remind.getCreationDate() != null ? remind.getCreationDate().toString() : null);
                 remindObject.addProperty("lastUpdateDate", remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().toString() : null);
+                remindObject.addProperty("icon", remind.getIcon().getIconName());
+                remindObject.addProperty("sound", remind.getSound().getSoundName());
 
                 updatedRemindArray.add(remindObject);
             }
@@ -167,6 +181,8 @@ public class JSONReminder {
                     remindObject.addProperty("timeInterval", updatedRemind.getTimeInterval() != null ? updatedRemind.getTimeInterval().toString() : null);
                     remindObject.addProperty("creationDate", updatedRemind.getCreationDate() != null ? updatedRemind.getCreationDate().toString() : null);
                     remindObject.addProperty("lastUpdateDate", updatedRemind.getLastUpdateDate() != null ? updatedRemind.getLastUpdateDate().toString() : null);
+                    remindObject.addProperty("icon", updatedRemind.getIcon().getIconName());
+                    remindObject.addProperty("sound", updatedRemind.getSound().getSoundName());
                     break;
                 }
             }
