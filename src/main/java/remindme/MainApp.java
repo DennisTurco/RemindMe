@@ -9,6 +9,7 @@ import remindme.Entities.Preferences;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum;
 import remindme.GUI.MainGUI;
+import remindme.Json.JSONConfigReader;
 
 public class MainApp {
 
@@ -38,22 +39,22 @@ public class MainApp {
         logger.info("Application started");
         logger.debug("Background mode: " + isBackgroundMode);
         
-        // if (isBackgroundMode) {
-        //     Logger.logMessage("Backup service starting in the background", Logger.LogLevel.INFO);
-        //     BackupService service = new BackupService();
-        //     try {
-        //         service.startService();
-        //     } catch (IOException ex) {
-        //         Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-        //         openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        //     }
-        // }
-        // else if (!isBackgroundMode) {
-        //     javax.swing.SwingUtilities.invokeLater(() -> {
-        //         remindmeGUI gui = new remindmeGUI();
-        //         gui.showWindow();
-        //     });
-        // }
+        if (isBackgroundMode) {
+            Logger.logMessage("Backup service starting in the background", Logger.LogLevel.INFO);
+            BackgroundService service = new BackgroundService();
+            try {
+                service.startService();
+            } catch (IOException ex) {
+                Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+                ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            }
+        }
+        else if (!isBackgroundMode) {
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                MainGUI gui = new MainGUI();
+                gui.showWindow();
+            });
+        }
 
         javax.swing.SwingUtilities.invokeLater(() -> {
             MainGUI gui = new MainGUI();

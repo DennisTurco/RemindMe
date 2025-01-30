@@ -1,24 +1,39 @@
 package remindme.Dialogs;
 
+import java.time.LocalDateTime;
+
 import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
+import remindme.Entities.TimeInterval;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
+import remindme.Managers.RemindManager;
 import remindme.Managers.SoundPlayer;
 
 public class ManageRemind extends javax.swing.JDialog {
+
+    private final boolean create;
+    private boolean closeOk;
+    private final Remind currentRemind;
+    private TimeInterval timeInterval;
     
     public ManageRemind(java.awt.Frame parent, boolean modal, String title, String confirmBtnName, Remind remind) {
         super(parent, modal);
         initializeDialog(title, confirmBtnName);
         insertRemindValues(remind);
+        this.currentRemind = remind;
+        this.create = false;
+        this.timeInterval = remind.getTimeInterval();
     }
 
     public ManageRemind(java.awt.Frame parent, boolean modal, String title, String confirmBtnName) {
         super(parent, modal);
         initializeDialog(title, confirmBtnName);
+        this.currentRemind = null;
+        this.create = true;
+        this.timeInterval = TimeInterval.getDefaultTimeInterval();
     }
 
     private void initializeDialog(String title, String confirmBtnName) {
@@ -26,11 +41,46 @@ public class ManageRemind extends javax.swing.JDialog {
         setSvgImages();
         setTitle(title);
         OkBtn.setText(confirmBtnName);
+        this.closeOk = false;
 
         setIcons();
         setSounds();
 
         setTranslations();
+    }
+
+    public Remind getRemindInserted() {
+        if (!closeOk) 
+            return null;
+
+        String name = remindNameTextField.getText();
+        String description = descriptionTextArea.getText();
+        boolean active = activeCheckBox.isSelected();
+        boolean topLevel = topLevelCheckBox.isSelected();
+        IconsEnum icon = IconsEnum.getIconbyName((String) iconComboBox.getSelectedItem());
+        SoundsEnum sound = SoundsEnum.getSoundbyName((String) soundComboBox.getSelectedItem());
+        LocalDateTime creationDate;
+        LocalDateTime lastUpdateDate;
+        LocalDateTime lastExecution;
+        int remindCount;
+        if (create) {
+            creationDate = LocalDateTime.now();
+            lastUpdateDate = creationDate;
+            lastExecution = null;
+            remindCount = 0;
+        }
+        else {
+            creationDate = currentRemind.getCreationDate();
+            lastUpdateDate = LocalDateTime.now();
+            lastExecution = currentRemind.getLastExecution();
+            remindCount = currentRemind.getRemindCount();
+        }
+
+        LocalDateTime nextExecution = RemindManager.getnextExecutionByTimeInterval(timeInterval);
+
+        //TODO: check correctness before retutn the new Remind
+
+        return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound);
     }
 
     private void insertRemindValues(Remind remind) {
@@ -110,6 +160,7 @@ public class ManageRemind extends javax.swing.JDialog {
         // soundComboBox.addItem(SoundsEnum.Sound10.getSoundName());
         soundComboBox.addItem(SoundsEnum.Sound11.getSoundName());
         soundComboBox.addItem(SoundsEnum.Sound12.getSoundName());
+        soundComboBox.addItem(SoundsEnum.Sound13.getSoundName());
         
         soundComboBox.setSelectedItem(SoundsEnum.getDefaultSound());
     }
@@ -267,11 +318,14 @@ public class ManageRemind extends javax.swing.JDialog {
     }//GEN-LAST:event_iconComboBoxActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        closeOk = false;
         this.dispose();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void OkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkBtnActionPerformed
-        // TODO add your handling code here:
+        closeOk = true;
+        this.dispose();
+
     }//GEN-LAST:event_OkBtnActionPerformed
 
     private void reminderPreviewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reminderPreviewBtnActionPerformed

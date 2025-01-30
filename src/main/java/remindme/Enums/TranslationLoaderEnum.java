@@ -112,8 +112,8 @@ public class TranslationLoaderEnum {
         TIME_INTERVAL_DETAIL("TimeIntervalDetail", "TimeInterval"),
 
         // ManageRemindDialog
-        EDIT_TITLE("EditTitle", "Time interval for reminder"),
-        CREATE_TITLE("CreateTitle", "Time interval for reminder"),
+        EDIT_TITLE("EditTitle", "Edit reminder"),
+        CREATE_TITLE("CreateTitle", "Create a new reminder"),
         NAME_TEXT("NameText", "Name"),
         ACTIVE_TEXT("ActiveText", "Active"),
         TOP_LEVEL_TEXT("TopLevelText", "Show on Top"),

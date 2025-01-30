@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import remindme.Json.JSONReminder;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
+import remindme.Json.JSONReminder;
+import remindme.Logger;
 import remindme.Managers.ExceptionManager;
 
 public class Remind {
@@ -57,6 +59,21 @@ public class Remind {
         this._timeInterval = timeInterval;
         this._icon = icon;
         this._sound = sound;
+    }
+
+    public void updateReming(Remind newRemind) {
+        this._name = newRemind.getName();
+        this._description = newRemind.getDescription();
+        this._remindCount = newRemind.getRemindCount();
+        this._isActive = newRemind.isActive();
+        this._isTopLevel = newRemind.isTopLevel();
+        this._lastExecution = newRemind.getLastExecution();
+        this._nextExecution = newRemind.getNextExecution();
+        this._creationDate = newRemind.getCreationDate();
+        this._lastUpdateDate = newRemind.getLastUpdateDate();
+        this._timeInterval = newRemind.getTimeInterval();
+        this._icon = newRemind.getIcon();
+        this._sound = newRemind.getSound();
     }
 
     @Override
