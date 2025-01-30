@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -14,11 +17,10 @@ import com.google.gson.JsonParser;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.LanguagesEnum;
 import remindme.Enums.ThemesEnum;
-import remindme.Logger;
-import remindme.Logger.LogLevel;
 import remindme.Managers.ExceptionManager;
 
 public class Preferences {
+    private static final Logger logger = LoggerFactory.getLogger(Preferences.class);
     private static LanguagesEnum language;
     private static ThemesEnum theme;
     private static RemindListPath remindList;
@@ -32,15 +34,15 @@ public class Preferences {
             theme = getThemeFromJson(jsonObject);
             remindList = getRemindListFromJson(jsonObject);
 
-            Logger.logMessage("Preferences loaded from JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName(), Logger.LogLevel.DEBUG);
+            logger.info("Preferences loaded from JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
 
             updatePreferencesToJSON();
 
         } catch (FileNotFoundException e) {
-            Logger.logMessage("Preferences file not found. Using default preferences.", Logger.LogLevel.WARN);
+            logger.error("Preferences file not found. Using default preferences." + e.getMessage(), e);
             updatePreferencesToJSON(); // Create the JSON file with default preferences
         } catch (Exception ex) {
-            Logger.logMessage("An error occurred while loading preferences: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred while loading preferences: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
@@ -62,10 +64,10 @@ public class Preferences {
             Gson gson = new Gson();
             gson.toJson(jsonObject, writer);
 
-            Logger.logMessage("Preferences updated to JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName() , Logger.LogLevel.INFO);
+            logger.info("Preferences updated to JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
 
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred during updating preferences to json operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred during updating preferences to json operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
@@ -140,13 +142,13 @@ public class Preferences {
             for (LanguagesEnum lang : LanguagesEnum.values()) {
                 if (lang.getLanguageName().equalsIgnoreCase(selectedLanguage)) {
                     language = lang;
-                    Logger.logMessage("Language set to: " + language.getLanguageName(), LogLevel.INFO);
+                    logger.info("Language set to: " + language.getLanguageName());
                     return;
                 }
             }
-            Logger.logMessage("Invalid language name: " + selectedLanguage, LogLevel.WARN);
+            logger.warn("Invalid language name: " + selectedLanguage);
         } catch (Exception ex) {
-            Logger.logMessage("An error occurred during setting language operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred during setting language operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
@@ -155,13 +157,13 @@ public class Preferences {
             for (ThemesEnum t : ThemesEnum.values()) {
                 if (t.getThemeName().equalsIgnoreCase(selectedTheme)) {
                     theme = t;
-                    Logger.logMessage("Theme set to: " + theme.getThemeName(), LogLevel.INFO);
+                    logger.info("Theme set to: " + theme.getThemeName());
                     return;
                 }
             }
-            Logger.logMessage("Invalid theme name: " + selectedTheme, LogLevel.WARN);
+            logger.warn("Invalid theme name: " + selectedTheme);
         } catch (Exception ex) {
-            Logger.logMessage("An error occurred during setting theme operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred during setting theme operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }

@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -26,17 +29,19 @@ import remindme.Entities.Remind;
 import remindme.Entities.TimeInterval;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
-import remindme.Logger;
 import remindme.Managers.ExceptionManager;
 
 public class JSONReminder {
+
+    private static final Logger logger = LoggerFactory.getLogger(JSONReminder.class);
+
     public List<Remind> readRemindListFromJSON(String directoryPath, String filename) throws IOException {
         List<Remind> remindList = new ArrayList<>();
     
         // Check if the directory is correct, otherwise reset to default
         File directory = new File(directoryPath);
         if (!directory.exists() || !directory.isDirectory()) {
-            Logger.logMessage("Directory of the remind list file doesn't exist, reset to default value.", Logger.LogLevel.INFO);
+            logger.info("Directory of the remind list file doesn't exist, reset to default value");
             Preferences.setRemindList(Preferences.getDefaultRemindList());
             Preferences.updatePreferencesToJSON();
             directoryPath = Preferences.getRemindList().getDirectory();
@@ -48,14 +53,14 @@ public class JSONReminder {
         // Check if the file exists and is not empty
         if (!file.exists()) {
             file.createNewFile();
-            Logger.logMessage("New remind list created with name: " + filePath, Logger.LogLevel.INFO);
+            logger.info("New remind list created with name: " + filePath);
         }
         if (file.length() == 0) {
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write("[]");
-                Logger.logMessage("File initialized with empty JSON array: []", Logger.LogLevel.INFO);
+                logger.info("File initialized with empty JSON array: []");
             } catch (IOException e) {
-                Logger.logMessage("Error initializing file: " + e.getMessage(), Logger.LogLevel.ERROR, e);
+                logger.error("Error initializing file: " + e.getMessage(), e);
                 throw e;
             }
         }
@@ -114,7 +119,7 @@ public class JSONReminder {
             }
     
         } catch (IOException | JsonSyntaxException | NullPointerException ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         return remindList;
@@ -154,7 +159,7 @@ public class JSONReminder {
             // Write the JSON array to the file
             gson.toJson(updatedRemindArray, writer);
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
@@ -191,14 +196,14 @@ public class JSONReminder {
             try (Writer writer = new FileWriter(filePath)) {
                 gson.toJson(remindList, writer);
             } catch (IOException ex) {
+                logger.error("An error occurred: " + ex.getMessage(), ex);
                 ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             }
-
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         } catch (JsonSyntaxException ex) {
-            Logger.logMessage("Invalid JSON format: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("Invalid JSON format: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }

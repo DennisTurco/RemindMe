@@ -5,14 +5,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import remindme.Logger;
-import remindme.Logger.LogLevel;
-
 public class TranslationLoaderEnum {
+
+    private static final Logger logger = LoggerFactory.getLogger(TranslationLoaderEnum.class);
 
     public enum TranslationCategory {
         GENERAL("General"),
@@ -20,6 +22,7 @@ public class TranslationLoaderEnum {
         MANAGE_REMIND_DIALOG("ManageRemindDialog"),
         TIME_PICKER_DIALOG("TimePickerDialog"),
         PREFERENCES_DIALOG("PreferencesDialog"),
+        USER_DIALOG("UserDialog"),
         REMIND_LIST("RemindList"),
         MAIN_FRAME("MainFrame"),
         TRAY_ICON("TrayIcon"),
@@ -139,6 +142,16 @@ public class TranslationLoaderEnum {
         LANGUAGE("Language", "Language"),
         THEME("Theme", "Theme"),
 
+        // User dialog
+        USER_TITLE("UserTitle", "Insert your data"),
+        USER_NAME("Name", "Name"),
+        USER_SURNAME("Surname", "Surname"),
+        USER_EMAIL("Email", "Email"),
+        ERROR_MESSAGE_FOR_MISSING_DATA("ErrorMessageForMissingData", "Please fill in all the required fields."),
+        ERROR_MESSAGE_FOR_WRONG_EMAIL("ErrorMessageForWrongEmail", "The provided email address is invalid. Please provide a correct one."),
+        EMAIL_CONFIRMATION_SUBJECT("EmailConfirmationSubject", "Thank you for choosing Backup Manager!"),
+        EMAIL_CONFIRMATION_BODY("EmailConfirmationBody", "Hi [UserName],\n\nThank you for downloading and registering **Backup Manager**, your new tool for secure and efficient backup management!\n\nThis is an automated email sent to confirm your registration. We will contact you by email only to inform you about new releases or important updates of the application.\n\nIn the meantime, if you have any questions, need assistance, or have suggestions, we are always here for you. You can reach us at **[SupportEmail]**.\n\nThank you again for choosing Backup Manager, and enjoy managing your backups!\n\nBest regards,\nThe Backup Manager Team"),
+
         // TrayIcon
         TRAY_TOOLTIP("TrayTooltip", "Remind Service"),
 
@@ -239,7 +252,7 @@ public class TranslationLoaderEnum {
                             category.addTranslation(translationKey, translationValue);
                         } else {
                             // If the key is not recognized in the enum, log it and use the default value
-                            Logger.logMessage("Warning: Unrecognized key in JSON: " + key + ", using default value.", LogLevel.WARN);
+                            logger.warn("Warning: Unrecognized key in JSON: " + key + ", using default value");
                         }
                     }
                 }

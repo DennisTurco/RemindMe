@@ -6,12 +6,17 @@ import java.net.URISyntaxException;
 import java.awt.Desktop;
 import javax.swing.JOptionPane;
 
-import remindme.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 
 public class WebsiteManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebsiteManager.class);
+
     public static void openWebSite(String reportUrl) {
         try {
             if (Desktop.isDesktopSupported()) {
@@ -21,7 +26,7 @@ public class WebsiteManager {
                 }
             }
         } catch (IOException | URISyntaxException e) {
-            Logger.logMessage("Failed to open the web page. Please try again", Logger.LogLevel.WARN);
+            logger.warn("Failed to open the web page. Please try again");
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_OPENING_WEBSITE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -38,15 +43,15 @@ public class WebsiteManager {
                     URI uri = new URI(mailTo);
                     desktop.mail(uri);
                 } catch (IOException | URISyntaxException ex) {
-                    Logger.logMessage("Failed to send email: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+                    logger.error("Failed to send email: " + ex.getMessage(), ex);
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_UNABLE_TO_SEND_EMAIL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                Logger.logMessage("Mail action is unsupported in your system's desktop environment.", Logger.LogLevel.WARN);
+                logger.warn("Mail action is unsupported in your system's desktop environment");
                 JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_NOT_SUPPORTED_EMAIL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            Logger.logMessage("Desktop integration is unsupported on this system.", Logger.LogLevel.WARN);
+            logger.warn("Desktop integration is unsupported on this system");
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_NOT_SUPPORTED_EMAIL_GENERIC), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -56,6 +61,7 @@ public class WebsiteManager {
         try {
             return java.net.URLEncoder.encode(value, "UTF-8").replace("+", "%20");
         } catch (IOException e) {
+            logger.error("An error occurred during URI encode: " + e.getMessage(), e);
             return value; // If encoding fails, return the original value
         }
     }

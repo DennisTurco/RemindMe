@@ -22,15 +22,18 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.formdev.flatlaf.FlatClientProperties;
 
-import remindme.Logger;
 import remindme.Entities.Remind;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.MenuItems;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.Json.JSONConfigReader;
+import remindme.Json.JSONReminder;
 import remindme.Managers.ThemeManager;
 import remindme.Table.CheckboxCellRenderer;
 import remindme.Table.RemindTable;
@@ -42,6 +45,7 @@ import remindme.Managers.RemindManager;
  * @author Dennis Turco
  */
 public final class MainGUI extends javax.swing.JFrame {
+    private static final Logger logger = LoggerFactory.getLogger(MainGUI.class);
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     
     private Integer selectedRow;
@@ -128,7 +132,7 @@ public final class MainGUI extends javax.swing.JFrame {
                 int selectedRow = remindTable.getSelectedRow();
                 if (selectedRow == -1) return;
 
-                Logger.logMessage("Enter key pressed on row: " + selectedRow, Logger.LogLevel.DEBUG);
+                logger.debug("Enter key pressed on row: " + selectedRow);
                 //TODO: OpenRemind((String) remindTable.getValueAt(selectedRow, 0));
             }
         });
@@ -141,7 +145,7 @@ public final class MainGUI extends javax.swing.JFrame {
                 int[] selectedRows = remindTable.getSelectedRows();
                 if (selectedRows.length == 0) return;
         
-                Logger.logMessage("Delete key pressed on rows: " + Arrays.toString(selectedRows), Logger.LogLevel.DEBUG);
+                logger.debug("Delete key pressed on rows: " + Arrays.toString(selectedRows));
 
                 int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (response != JOptionPane.YES_OPTION) {
@@ -674,18 +678,18 @@ public final class MainGUI extends javax.swing.JFrame {
             String remindName = (String) remindTable.getValueAt(selectedRow, 0);
             Remind remind = Remind.getRemindByName(new ArrayList<>(remindManager.getReminds()), remindName);
 
-            Logger.logMessage("Selected remind: " + remindName, Logger.LogLevel.DEBUG);
+            logger.debug("Selected remind: " + remindName);
 
             // Handling right mouse button click
             if (SwingUtilities.isRightMouseButton(evt)) {
-                Logger.logMessage("Right click on row: " + selectedRow, Logger.LogLevel.INFO);
+                logger.info("Right click on row: " + selectedRow);
                 table.setRowSelectionInterval(selectedRow, selectedRow); // select clicked row
                 TablePopup.show(evt.getComponent(), evt.getX(), evt.getY()); // show popup
             }
 
             // Handling left mouse button double-click
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
-                Logger.logMessage("Double-click on row: " + selectedRow, Logger.LogLevel.INFO);
+                logger.info("Double-click on row: " + selectedRow);
                 
                 remindManager.editRemind(remind);
             }

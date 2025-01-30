@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -13,6 +16,10 @@ public enum ConfigKey {
     REMIND_LIST_FILE_STRING,
     CONFIG_FILE_STRING,
     PREFERENCES_FILE_STRING,
+    USER_FILE_STRING,
+    PROPERTIES_FILE_STRING,
+    RESURCES_DIRECTORY_STRING,
+    LOG_DIRECTORY_STRING,
     RES_DIRECTORY_STRING,
     LANGUAGES_DIRECTORY_STRING,
     CONFIG_DIRECTORY_STRING,
@@ -27,6 +34,7 @@ public enum ConfigKey {
     GUI_WIDTH,
     GUI_HEIGHT;
 
+    private static final Logger logger = LoggerFactory.getLogger(ConfigKey.class);
     private static final Map<ConfigKey, String> configValues = new EnumMap<>(ConfigKey.class);
 
     public static void loadFromJson(String filePath) {
@@ -38,7 +46,7 @@ public enum ConfigKey {
                 }
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.error("An error occurred when loading configs from json: " + ex.getMessage(), ex);
         }
     }
 

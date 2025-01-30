@@ -1,0 +1,4 @@
+30-01-2025 23:12:36.899 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+30-01-2025 23:12:36.917 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+30-01-2025 23:12:36.921 [main] [INFO ] remindme.MainApp - Application started
+30-01-2025 23:12:36.922 [main] [DEBUG] remindme.MainApp - Background mode: false

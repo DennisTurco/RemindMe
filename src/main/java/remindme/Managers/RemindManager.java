@@ -12,6 +12,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -29,10 +32,10 @@ import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.GUI.MainGUI;
 import remindme.Json.JSONReminder;
 import remindme.Table.TableDataManager;
-import remindme.Logger;
-import remindme.Logger.LogLevel;
 
 public final class RemindManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(RemindManager.class);
 
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -53,21 +56,21 @@ public final class RemindManager {
     }
     
     public void openPreferences() {
-        Logger.logMessage("Event --> opening preferences dialog", LogLevel.INFO);
+        logger.info("Event --> opening preferences dialog");
 
         PreferencesDialog prefs = new PreferencesDialog(main, true, this);
         prefs.setVisible(true);
     }
 
     public void reloadPreferences() {
-        Logger.logMessage("Reloading preferences", LogLevel.INFO);
+        logger.info("Reloading preferences");
 
         // load language
         try {
             TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
             main.setTranslations();
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred during reloading preferences operation: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred during reloading preferences operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         
@@ -98,7 +101,7 @@ public final class RemindManager {
                         remindName = null;
                     }
                 } else if (remind.getName().equals(remindName)) {
-                    Logger.logMessage("Error saving remind", Logger.LogLevel.WARN);
+                    logger.warn("Error saving remind");
                     JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_NAME_ALREADY_USED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -109,7 +112,7 @@ public final class RemindManager {
     }
 
     public static String pathSearchWithFileChooser(boolean allowFiles) {
-        Logger.logMessage("Event --> File chooser", Logger.LogLevel.INFO);
+        logger.info("Event --> File chooser");
         
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         
@@ -123,9 +126,9 @@ public final class RemindManager {
             File selectedFile = jfc.getSelectedFile();
 
             if (selectedFile.isDirectory()) {
-                Logger.logMessage("You selected the directory: " + selectedFile, Logger.LogLevel.INFO);
+                logger.info("You selected the directory: " + selectedFile);
             } else if (selectedFile.isFile()) {
-                Logger.logMessage("You selected the file: " + selectedFile, Logger.LogLevel.INFO);
+                logger.info("You selected the file: " + selectedFile);
             }
 
             return selectedFile.toString();
@@ -161,34 +164,34 @@ public final class RemindManager {
     ///////////////////////////////////////////////////////////////////
 
     public void addReminder() {
-        Logger.logMessage("Event --> adding new reminder", Logger.LogLevel.INFO);
+        logger.info("Event --> adding new reminder");
         
         ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.CREATE_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.ADD_BUTTON));
         manage.setVisible(true);
     }
 
     public void saveReminder() {
-        Logger.logMessage("Event --> saving reminder", Logger.LogLevel.INFO);
+        logger.info("Event --> saving reminder");
     }
 
     public void removeReminder(Remind remind, boolean d) {
-        Logger.logMessage("Event --> removing reminder", Logger.LogLevel.INFO);
+        logger.info("Event --> removing reminder");
     }
 
     public void updateReminder() {
-        Logger.logMessage("Event --> updating reminder", Logger.LogLevel.INFO);
+        logger.info("Event --> updating reminder");
     }
 
     public void copyReminderName() {
-        Logger.logMessage("Event --> cipying reminder name", Logger.LogLevel.INFO);
+        logger.info("Event --> cipying reminder name");
     }
 
     public void duplicateReminder(Remind remind) {
-        Logger.logMessage("Event --> duplicating reminder", Logger.LogLevel.INFO);
+        logger.info("Event --> duplicating reminder");
     }
 
     public void importRemindListFromJSON() {
-        Logger.logMessage("Event --> importing remind list from json", Logger.LogLevel.INFO);
+        logger.info("Event --> importing remind list from json");
         List<Remind> newReminds = ImportExportManager.importRemindListFromJson(main, JSON, dateForfolderNameFormatter);
         
         // replace the current list with the imported one
@@ -197,25 +200,25 @@ public final class RemindManager {
     }
 
     public void exportRemindListTOJSON() {
-        Logger.logMessage("Event --> exporting remind list to json", Logger.LogLevel.INFO);
+        logger.info("Event --> exporting remind list to json");
 
         ImportExportManager.exportRemindListToJson();
     }
 
     public void exportRemindListAsPDF() {
-        Logger.logMessage("Event --> exporting remind list as pdf", Logger.LogLevel.INFO);
+        logger.info("Event --> exporting remind list as pdf");
 
         ImportExportManager.exportRemindListAsPDF(reminds, Remind.getCSVHeader());
     }
 
     public void exportRemindListAsCSV() {
-        Logger.logMessage("Event --> exporting remind list as csv", Logger.LogLevel.INFO);
+        logger.info("Event --> exporting remind list as csv");
 
         ImportExportManager.exportRemindListAsCSV(reminds, Remind.getCSVHeader());
     }
 
     public void renameRemind(Remind remind) {
-        Logger.logMessage("Event --> backup renaming", Logger.LogLevel.INFO);
+        logger.info("Event --> backup renaming");
         
         String remindName = insertAndGetRemindName(false);
         if (remindName == null || remindName.isEmpty()) return;
@@ -226,7 +229,7 @@ public final class RemindManager {
     }
 
     public void editRemind(Remind remind) {
-        Logger.logMessage("Event --> editing reminder", Logger.LogLevel.INFO);
+        logger.info("Event --> editing reminder");
 
         ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EDIT_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON), remind);
         manage.setVisible(true);
@@ -235,22 +238,22 @@ public final class RemindManager {
     ///////////////////////////////////////////////////////////////////
 
     public void menuSupport() {
-        Logger.logMessage("Event --> support", Logger.LogLevel.INFO);
+        logger.info("Event --> support");
         WebsiteManager.sendEmail();
     }
 
     public void menuWebsite() {
-        Logger.logMessage("Event --> shard website", Logger.LogLevel.INFO);
+        logger.info("Event --> shard website");
         WebsiteManager.openWebSite(ConfigKey.SHARD_WEBSITE.getValue());
     }
 
     public void menuDonate() {
-        Logger.logMessage("Event --> donate", Logger.LogLevel.INFO);
+        logger.info("Event --> donate");
         WebsiteManager.openWebSite(ConfigKey.DONATE_PAGE_LINK.getValue());
     }
 
     public void menuBugReport() {
-        Logger.logMessage("Event --> bug report", Logger.LogLevel.INFO);
+        logger.info("Event --> bug report");
         WebsiteManager.openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue());
     }
 
@@ -265,17 +268,17 @@ public final class RemindManager {
     }
 
     public void menuHistory() {
-        Logger.logMessage("Event --> history", Logger.LogLevel.INFO);
+        logger.info("Event --> history");
         try {
             new ProcessBuilder("notepad.exe", ConfigKey.RES_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue()).start();
         } catch (IOException e) {
-            Logger.logMessage("Error opening history file.", Logger.LogLevel.WARN);
+            logger.warn("Error opening history file");
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_OPEN_HISTORY_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void menuQuit() {
-        Logger.logMessage("Event --> exit", Logger.LogLevel.INFO);
+        logger.info("Event --> exit");
         System.exit(main.EXIT_ON_CLOSE);
     }
 
@@ -310,7 +313,7 @@ public final class RemindManager {
     }
 
     public void popupCopyRemindName(javax.swing.JTable table) {
-        Logger.logMessage("Event --> copying reminder name to the clipboard", Logger.LogLevel.INFO);
+        logger.info("Event --> copying reminder name to the clipboard");
 
         String remindName = getRemindNameByTableRow(table);
     }
@@ -347,7 +350,7 @@ public final class RemindManager {
             reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
         } catch (IOException ex) {
             reminds = null;
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         return reminds;

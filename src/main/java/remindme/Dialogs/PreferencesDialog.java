@@ -8,8 +8,6 @@ import remindme.Enums.TranslationLoaderEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.Managers.ThemeManager;
-import remindme.Logger;
-import remindme.Logger.LogLevel;
 
 import java.awt.Image;
 import java.io.IOException;
@@ -17,11 +15,15 @@ import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import remindme.Managers.ExceptionManager;
 import remindme.Managers.RemindManager;
 
 public class PreferencesDialog extends javax.swing.JDialog {
 
+    private static final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
     private final RemindManager remindManager;
 
     public PreferencesDialog(java.awt.Frame parent, boolean modal, RemindManager remindManager) {
@@ -137,7 +139,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
         String selectedLanguage = (String) languagesComboBox.getSelectedItem();
         String selectedTheme = (String) themesComboBox.getSelectedItem();
 
-        Logger.logMessage("Updating preferences -> Language: " + selectedLanguage + "; Theme: " + selectedTheme, LogLevel.INFO);
+        logger.info("Updating preferences -> Language: " + selectedLanguage + "; Theme: " + selectedTheme);
 
         try {
             // translactions
@@ -153,7 +155,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
             Preferences.updatePreferencesToJSON();
             remindManager.reloadPreferences();
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred during applying preferences: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred during applying preferences: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }  
     }//GEN-LAST:event_applyBtnActionPerformed

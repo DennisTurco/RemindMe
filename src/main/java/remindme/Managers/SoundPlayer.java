@@ -2,14 +2,17 @@ package remindme.Managers;
 
 import javax.sound.sampled.*;
 
-import remindme.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import remindme.Enums.SoundsEnum;
-import remindme.Logger.LogLevel;
 
 import java.io.File;
 import java.io.IOException;
 
 public class SoundPlayer {
+
+    private static final Logger logger = LoggerFactory.getLogger(SoundPlayer.class);
 
     public static void playSound(SoundsEnum sound) {
         if (sound == SoundsEnum.NoSound)
@@ -18,7 +21,7 @@ public class SoundPlayer {
         try {
             File soundFile = new File(sound.getSoundPath());
             if (!soundFile.exists()) {
-                Logger.logMessage("Audio file with name: " + sound.getSoundPath() + " doesn't exist" , LogLevel.WARN);
+                logger.warn("Audio file with name: " + sound.getSoundPath() + " doesn't exist");
                 return;
             }
 
@@ -36,11 +39,11 @@ public class SoundPlayer {
             });
 
         } catch (UnsupportedAudioFileException e) {
-            Logger.logMessage("Audio format not supported: " + e.getMessage(), LogLevel.ERROR, e);
+            logger.error("Audio format not supported: " + e.getMessage(), e);
         } catch (IOException e) {
-            Logger.logMessage("I/O error: " + e.getMessage(), LogLevel.ERROR, e);
+            logger.error("I/O error: " + e.getMessage(), e);
         } catch (LineUnavailableException e) {
-            Logger.logMessage("Audio line unavailable: " + e.getMessage(), LogLevel.ERROR, e);
+            logger.error("Audio line unavailable: " + e.getMessage(), e);
         }
     }
 }

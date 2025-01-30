@@ -15,6 +15,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -22,7 +25,6 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 
-import remindme.Logger;
 import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
 import remindme.Entities.RemindListPath;
@@ -34,6 +36,8 @@ import remindme.Json.JSONReminder;
 import remindme.Table.TableDataManager;
 
 class ImportExportManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(ImportExportManager.class);
 
     // return the Remind list. Null if the operations fail or cancelled by the user
     public static List<Remind> importRemindListFromJson(MainGUI main, JSONReminder JSON, DateTimeFormatter formatter) {
@@ -47,7 +51,7 @@ class ImportExportManager {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
             if (selectedFile.isFile() && selectedFile.getName().toLowerCase().endsWith(".json")) {
-                Logger.logMessage("File imported: " + selectedFile, Logger.LogLevel.INFO);
+                logger.info("File imported: " + selectedFile);
 
                 Preferences.setRemindList(new RemindListPath(selectedFile.getParent()+File.separator, selectedFile.getName()));
                 Preferences.updatePreferencesToJSON();
@@ -58,7 +62,7 @@ class ImportExportManager {
                     JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_LIST_CORRECTLY_IMPORTED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_LIST_CORRECTLY_IMPORTED_TITLE), JOptionPane.INFORMATION_MESSAGE);
                     return reminds;
                 } catch (IOException ex) {
-                    Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+                    logger.error("An error occurred: " + ex.getMessage(), ex);
                 }
             } else {
                 JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE), JOptionPane.ERROR_MESSAGE);
@@ -75,37 +79,37 @@ class ImportExportManager {
             Files.copy(sourcePath, desktopPath, StandardCopyOption.REPLACE_EXISTING);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_LIST_CORRECTLY_EXPORTED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_LIST_CORRECTLY_EXPORTED_TITLE), JOptionPane.INFORMATION_MESSAGE);
         } catch (java.nio.file.NoSuchFileException ex) {
-            Logger.logMessage("Source file not found: " + ex.getMessage(), Logger.LogLevel.ERROR);
+            logger.error("Source file not found: " + ex.getMessage());
             JOptionPane.showMessageDialog(null, "Error: The source file was not found.\nPlease check the file path.", "Export Error", JOptionPane.ERROR_MESSAGE);
         } catch (java.nio.file.AccessDeniedException ex) {
-            Logger.logMessage("Access denied to desktop: " + ex.getMessage(), Logger.LogLevel.ERROR);
+            logger.error("Access denied to desktop: " + ex.getMessage());
             JOptionPane.showMessageDialog(null, "Error: Access to the Desktop is denied.\nPlease check folder permissions and try again.","Export Error", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
-            Logger.logMessage("Unexpected error: " + ex.getMessage(), Logger.LogLevel.ERROR);
+            logger.error("Unexpected error: " + ex.getMessage());
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 
     public static void exportRemindListAsPDF(List<Remind> reminds, String headers) {
-        Logger.logMessage("Exporting reminds to PDF", Logger.LogLevel.INFO);
+        logger.info("Exporting reminds to PDF");
 
         String path = RemindManager.pathSearchWithFileChooser(false);
 
         if (path == null) {
-            Logger.logMessage("Exporting reminds to PDF cancelled", Logger.LogLevel.INFO);
+            logger.info("Exporting reminds to PDF cancelled");
             return;
         }
 
         String filename = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.PDF_NAME_MESSAGE_INPUT));
         if (filename == null || filename.isEmpty()) {
-            Logger.logMessage("Exporting reminds to PDF cancelled", Logger.LogLevel.INFO);
+            logger.info("Exporting reminds to PDF cancelled");
             return;
         }
 
         // Validate filename
         if (!filename.matches("[a-zA-Z0-9-_ ]+")) {
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_INVALID_FILENAME), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            Logger.logMessage("Exporting reminds to PDF cancelled due to invalid file name", Logger.LogLevel.INFO);
+            logger.info("Exporting reminds to PDF cancelled due to invalid file name");
             return;
         }
 
@@ -117,7 +121,7 @@ class ImportExportManager {
         if (file.exists()) {
             int overwrite = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_FILE_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION);
             if (overwrite != JOptionPane.YES_OPTION) {
-                Logger.logMessage("Exporting reminds to PDF cancelled by user (file exists)", Logger.LogLevel.INFO);
+                logger.info("Exporting reminds to PDF cancelled by user (file exists)");
                 return;
             }
         }
@@ -166,33 +170,33 @@ class ImportExportManager {
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESSFULLY_EXPORTED_TO_PDF_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESS_GENERIC_TITLE), JOptionPane.INFORMATION_MESSAGE);
             
         } catch (IOException ex) {
-            Logger.logMessage("Error exporting reminds to PDF: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("Error exporting reminds to PDF: " + ex.getMessage(), ex);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_EXPORTING_TO_PDF) + ex.getMessage(), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         } finally {
-            Logger.logMessage("Exporting reminds to PDF finished", Logger.LogLevel.INFO);
+            logger.info("Exporting reminds to PDF finished");
         }
     }
 
     public static void exportRemindListAsCSV(List<Remind> reminds, String header) {
-        Logger.logMessage("Exporting reminds to CSV", Logger.LogLevel.INFO);
+        logger.info("Exporting reminds to CSV");
 
         String path = RemindManager.pathSearchWithFileChooser(false);
 
         if (path == null) {
-            Logger.logMessage("Exporting reminds to CSV cancelled", Logger.LogLevel.INFO);
+            logger.info("Exporting reminds to CSV cancelled");
             return;
         }
 
         String filename = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CSV_NAME_MESSAGE_INPUT));
         if (filename == null || filename.isEmpty()) {
-            Logger.logMessage("Exporting reminds to CSV cancelled", Logger.LogLevel.INFO);
+            logger.info("Exporting reminds to CSV cancelled");
             return;
         }
 
         // Validate filename
         if (!filename.matches("[a-zA-Z0-9-_ ]+")) {
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_INVALID_FILENAME), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-            Logger.logMessage("Exporting reminds to CSV cancelled due to invalid file name", Logger.LogLevel.INFO);
+            logger.info("Exporting reminds to CSV cancelled due to invalid file name");
             return;
         }
         
@@ -204,7 +208,7 @@ class ImportExportManager {
         if (file.exists()) {
             int overwrite = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_FILE_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION);
             if (overwrite != JOptionPane.YES_OPTION) {
-                Logger.logMessage("Exporting reminds to CSV cancelled by user (file exists)", Logger.LogLevel.INFO);
+                logger.info("Exporting reminds to CSV cancelled by user (file exists)");
                 return;
             }
         }
@@ -224,10 +228,10 @@ class ImportExportManager {
 
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESS_GENERIC_TITLE), JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
-            Logger.logMessage("Error exporting reminds to CSV: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("Error exporting reminds to CSV: " + ex.getMessage(), ex);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_EXPORTING_TO_CSV) + ex.getMessage(), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         } finally {
-            Logger.logMessage("Exporting reminds to CSV finished", Logger.LogLevel.INFO);
+            logger.info("Exporting reminds to CSV finished");
         }
     }
 }

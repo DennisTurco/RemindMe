@@ -1,12 +1,16 @@
 package remindme.Json;
 
 import com.google.gson.*;
+
 import java.io.FileReader;
 import java.io.IOException;
 
-import remindme.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JSONConfigReader {
+    
+    private static final Logger logger = LoggerFactory.getLogger(JSONConfigReader.class);
 
     private final String filename;
     private final String directoryPath;
@@ -20,7 +24,7 @@ public class JSONConfigReader {
 
     public boolean isLogLevelEnabled(String level) {
         if (config == null) {
-            Logger.logMessage("Configuration not loaded. Cannot check log level", Logger.LogLevel.ERROR);
+            logger.error("Configuration not loaded. Cannot check log level");
             return false;
         }
 
@@ -34,7 +38,7 @@ public class JSONConfigReader {
 
     public boolean isMenuItemEnabled(String menuItem) {
         if (config == null) {
-            Logger.logMessage("Configuration not loaded. Cannot check menu items", Logger.LogLevel.ERROR);
+            logger.error("Configuration not loaded. Cannot check menu items");
             return false;
         }
 
@@ -63,10 +67,10 @@ public class JSONConfigReader {
             // if the interval is null, set to default of 5 minutes
             int timeInterval = (interval != null) ? interval.getAsInt() : 5;
 
-            Logger.logMessage("Time interval set to " + timeInterval + " seconds", Logger.LogLevel.INFO);
+            logger.info("Time interval set to " + timeInterval + " seconds");
             return timeInterval;
         } catch (NullPointerException e) {
-            Logger.logMessage("Error retrieving remind time interval, defaulting to 5 seconds: " + e.getMessage(), Logger.LogLevel.ERROR);
+            logger.error("Error retrieving remind time interval, defaulting to 5 seconds: " + e.getMessage(), e);
             return 5; // Default to 5 minutes
         }
     }
@@ -78,7 +82,7 @@ public class JSONConfigReader {
 
             return (value != null && value.isJsonPrimitive()) ? value.getAsInt() : defaultValue;
         } catch (IOException | NullPointerException e) {
-            Logger.logMessage("Error retrieving config value for " + key + ": " + e.getMessage(), Logger.LogLevel.ERROR);
+            logger.error("Error retrieving config value for " + key + ": " + e.getMessage(), e);
             return defaultValue;
         }
     }
@@ -89,7 +93,7 @@ public class JSONConfigReader {
             Gson gson = new Gson();
             config = gson.fromJson(reader, JsonObject.class);
         } catch (IOException e) {
-            Logger.logMessage("Failed to load configuration: " + e.getMessage(), Logger.LogLevel.ERROR);
+            logger.error("Failed to load configuration: " + e.getMessage(), e);
         }
     }
 

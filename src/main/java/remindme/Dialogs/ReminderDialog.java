@@ -2,13 +2,16 @@ package remindme.Dialogs;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import remindme.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import remindme.Entities.RemindNotification;
-import remindme.Logger.LogLevel;
 import remindme.Managers.SoundPlayer;
 
 public class ReminderDialog extends javax.swing.JDialog {
     
+    private static final Logger logger = LoggerFactory.getLogger(ReminderDialog.class);
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     private final int maxLength = 30;
     
@@ -23,7 +26,7 @@ public class ReminderDialog extends javax.swing.JDialog {
     }
     
     private void initDialog(RemindNotification remind) {
-        Logger.logMessage("Reminder opened with values: " + remind.toString(), LogLevel.INFO);
+        logger.info("Reminder opened with values: " + remind.toString());
         setNameLabelText(remind.getName());
         descriptionEditor.setText(remind.getDescription());
         iconLabel.setSvgImage(remind.getIcon().getIconPath(), 50, 50);

@@ -5,14 +5,18 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import remindme.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import remindme.Entities.Remind;
 import remindme.GUI.MainGUI;
 
 public class TableDataManager {
 
+    private static final Logger logger = LoggerFactory.getLogger(TableDataManager.class);
+
     public static void updateTableWithNewRemindList(List<Remind> updatedReminds, DateTimeFormatter formatter) { 
-        Logger.logMessage("updating remind list", Logger.LogLevel.DEBUG);
+        logger.debug("updating remind list");
         
         SwingUtilities.invokeLater(() -> {
             MainGUI.model.setRowCount(0);

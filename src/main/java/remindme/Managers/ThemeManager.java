@@ -10,6 +10,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
@@ -22,13 +25,14 @@ import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 
 import remindme.Entities.Preferences;
-import remindme.Logger;
 
 // https://www.formdev.com/flatlaf/#demo
 // https://www.formdev.com/flatlaf/themes/
 // https://github.com/JFormDesigner/FlatLaf/tree/main/flatlaf-intellij-themes
 
 public class ThemeManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(ThemeManager.class);
 
     public static void updateThemeFrame(Frame frame) {
         updateTheme();
@@ -99,7 +103,7 @@ public class ThemeManager {
                     break;
             }
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.logMessage("Error setting LookAndFeel: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("Error setting LookAndFeel: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }

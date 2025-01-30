@@ -5,13 +5,17 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import remindme.Json.JSONReminder;
-import remindme.Logger;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
 import remindme.Managers.ExceptionManager;
 
 public class Remind {
+    private static final Logger logger = LoggerFactory.getLogger(Remind.class);
+
     private String _name;
     private String _description;
     private int _remindCount;
@@ -100,7 +104,7 @@ public class Remind {
                 }
             }
         } catch (IOException ex) {
-            Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+            logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
 

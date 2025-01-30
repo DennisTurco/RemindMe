@@ -8,19 +8,29 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import remindme.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import remindme.Email.EmailSender;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 
-public class ExceptionManager {    
+public class ExceptionManager {
+
+        private static final Logger logger = LoggerFactory.getLogger(ExceptionManager.class);
+
         public static void openExceptionMessage(String errorMessage, String stackTrace) {
             Object[] options = {TranslationCategory.GENERAL.getTranslation(TranslationKey.CLOSE_BUTTON), TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_CLIPBOARD_BUTTON), TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_REPORT_BUTTON)};
     
             if (errorMessage == null) {
                 errorMessage = "";
             }
+            
             stackTrace = !errorMessage.isEmpty() ? errorMessage + "\n" + stackTrace : errorMessage + stackTrace;
+
+            EmailSender.sendErrorEmail("Critical Error Report", stackTrace);
+
             String stackTraceMessage = TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_REPORT_MESSAGE) + "\n" + stackTrace;
     
             int choice;
@@ -65,7 +75,7 @@ public class ExceptionManager {
                 if (choice == 1) {
                     StringSelection selection = new StringSelection(stackTrace);
                     Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
-                Logger.logMessage("Error text has been copied to the clipboard", Logger.LogLevel.INFO);
+                logger.info("Error text has been copied to the clipboard");
                 JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.EXCEPTION_MESSAGE_CLIPBOARD_MESSAGE));
             } else if (choice == 2) {
                 WebsiteManager.openWebSite(ConfigKey.ISSUE_PAGE_LINK.getValue());
