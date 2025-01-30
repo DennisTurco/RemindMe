@@ -62,8 +62,8 @@
         "CopyNamePopup": "Copy remind name"
     },
     "ManageRemindDialog": {
-        "EditTitle": "Time interval for reminder",
-        "CreateTitle": "Time interval for reminder",
+        "EditTitle": "Edit reminder",
+        "CreateTitle": "Create a new reminder",
         "NameText": "Name",
         "ActiveText": "Active", 
         "TopLevelText": "Show on Top", 

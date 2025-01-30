@@ -1,5 +1,8 @@
 package remindme.Managers;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -12,11 +15,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import remindme.Dialogs.ManageRemind;
-
 import remindme.Dialogs.PreferencesDialog;
 import remindme.Dialogs.TimePicker;
 import remindme.Entities.Preferences;
@@ -28,9 +27,9 @@ import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.GUI.MainGUI;
 import remindme.Json.JSONReminder;
-import remindme.Table.TableDataManager;
 import remindme.Logger;
 import remindme.Logger.LogLevel;
+import remindme.Table.TableDataManager;
 
 public final class RemindManager {
 
@@ -165,6 +164,13 @@ public final class RemindManager {
         
         ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.CREATE_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.ADD_BUTTON));
         manage.setVisible(true);
+        Remind remind = manage.getRemindInserted();
+
+        if (remind == null)
+            return;
+
+        reminds.add(remind);
+        updateRemindList(reminds);
     }
 
     public void saveReminder() {
@@ -230,6 +236,21 @@ public final class RemindManager {
 
         ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EDIT_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON), remind);
         manage.setVisible(true);
+        Remind updatedRemind = manage.getRemindInserted();
+        
+        if (updatedRemind == null)
+            return;
+        
+        remind.updateReming(updatedRemind);
+        updateRemindList(reminds);
+    }
+
+    public static LocalDateTime getnextExecutionByTimeInterval(TimeInterval timeInterval) {
+        if (timeInterval == null) return null;
+
+        return LocalDateTime.now().plusDays(timeInterval.getDays())
+            .plusHours(timeInterval.getHours())
+            .plusMinutes(timeInterval.getMinutes());
     }
 
     ///////////////////////////////////////////////////////////////////

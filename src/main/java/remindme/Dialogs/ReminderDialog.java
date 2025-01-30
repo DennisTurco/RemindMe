@@ -9,7 +9,7 @@ import remindme.Managers.SoundPlayer;
 
 public class ReminderDialog extends javax.swing.JDialog {
     
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     private final int maxLength = 30;
     
     public ReminderDialog(java.awt.Dialog parent, boolean modal, RemindNotification remind) {

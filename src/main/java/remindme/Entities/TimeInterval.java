@@ -54,6 +54,10 @@ public class TimeInterval {
         return new TimeInterval(parsedDays, parsedHours, parsedMinutes, parsedSeconds);
     }
 
+    public static TimeInterval getDefaultTimeInterval() {
+        return new TimeInterval(0, 1, 0, 0);
+    }
+
     public int getDays() {
         return days;
     }

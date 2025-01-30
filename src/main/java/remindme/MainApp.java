@@ -1,6 +1,7 @@
 package remindme;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import remindme.Entities.Preferences;
 import remindme.Enums.ConfigKey;
@@ -8,6 +9,8 @@ import remindme.Enums.TranslationLoaderEnum;
 import remindme.GUI.MainGUI;
 import remindme.Json.JSONConfigReader;
 import remindme.Logger.LogLevel;
+import remindme.Managers.ExceptionManager;
+import remindme.Services.BackgroundService;
 
 public class MainApp {
     private static final String CONFIG = "src/main/resources/res/config/config.json";
@@ -36,22 +39,22 @@ public class MainApp {
         Logger.logMessage("Application started", Logger.LogLevel.INFO);
         Logger.logMessage("Background mode: " + isBackgroundMode, Logger.LogLevel.DEBUG);
         
-        // if (isBackgroundMode) {
-        //     Logger.logMessage("Backup service starting in the background", Logger.LogLevel.INFO);
-        //     BackupService service = new BackupService();
-        //     try {
-        //         service.startService();
-        //     } catch (IOException ex) {
-        //         Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
-        //         openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        //     }
-        // }
-        // else if (!isBackgroundMode) {
-        //     javax.swing.SwingUtilities.invokeLater(() -> {
-        //         remindmeGUI gui = new remindmeGUI();
-        //         gui.showWindow();
-        //     });
-        // }
+        if (isBackgroundMode) {
+            Logger.logMessage("Backup service starting in the background", Logger.LogLevel.INFO);
+            BackgroundService service = new BackgroundService();
+            try {
+                service.startService();
+            } catch (IOException ex) {
+                Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+                ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+            }
+        }
+        else if (!isBackgroundMode) {
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                MainGUI gui = new MainGUI();
+                gui.showWindow();
+            });
+        }
 
         javax.swing.SwingUtilities.invokeLater(() -> {
             MainGUI gui = new MainGUI();

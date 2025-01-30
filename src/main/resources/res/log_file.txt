@@ -1,3 +1,208 @@
+2025-01-30T15:20:51.863398200 [INFO] Right click on row: 1
+2025-01-30T15:20:51.858875600 [DEBUG] Selected remind: asdasd
+2025-01-30T15:20:50.063525500 [INFO] Right click on row: 1
+2025-01-30T15:20:50.059241 [DEBUG] Selected remind: asdasd
+2025-01-30T15:20:48.219686500 [INFO] Right click on row: 1
+2025-01-30T15:20:48.212169600 [DEBUG] Selected remind: asdasd
+2025-01-30T15:20:45.823576700 [INFO] Right click on row: 1
+2025-01-30T15:20:45.820504500 [DEBUG] Selected remind: asdasd
+2025-01-30T15:20:44.007715400 [INFO] Right click on row: 1
+2025-01-30T15:20:44.004685300 [DEBUG] Selected remind: asdasd
+2025-01-30T15:20:42.089181300 [INFO] Right click on row: 1
+2025-01-30T15:20:42.085752600 [DEBUG] Selected remind: asdasd
+2025-01-30T15:20:41.631099300 [DEBUG] Selected remind: Test
+2025-01-30T15:20:40.541236300 [DEBUG] Selected remind: Test
+2025-01-30T15:20:32.173351700 [DEBUG] Selected remind: Test
+2025-01-30T15:20:30.754690500 [INFO] Event --> editing reminder
+2025-01-30T15:20:30.751683300 [INFO] Double-click on row: 4
+2025-01-30T15:20:30.747682600 [DEBUG] Selected remind: Test
+2025-01-30T15:20:30.588383800 [DEBUG] Selected remind: Test
+2025-01-30T15:20:26.104724600 [DEBUG] Delete key pressed on rows: [3]
+2025-01-30T15:20:23.433810900 [DEBUG] Selected remind: Test
+2025-01-30T15:20:22.855156400 [DEBUG] Selected remind: test
+2025-01-30T15:20:22.000438 [DEBUG] Selected remind: Test
+2025-01-30T15:20:21.602889700 [DEBUG] Selected remind: Test
+2025-01-30T15:20:19.743257 [DEBUG] Selected remind: test
+2025-01-30T15:20:17.962462200 [DEBUG] Selected remind: uuuu
+2025-01-30T15:20:17.643493900 [DEBUG] Selected remind: asdasd
+2025-01-30T15:20:16.839521900 [DEBUG] Selected remind: Test
+2025-01-30T15:20:16.277123800 [DEBUG] Selected remind: asdasd
+2025-01-30T15:20:15.835914 [DEBUG] Selected remind: test
+2025-01-30T15:20:14.732562400 [DEBUG] Selected remind: Test
+2025-01-30T15:20:13.112927500 [DEBUG] Selected remind: test
+2025-01-30T15:20:06.727208200 [DEBUG] Selected remind: Test
+2025-01-30T15:19:59.702921 [DEBUG] Selected remind: test
+2025-01-30T15:19:59.121498900 [DEBUG] Selected remind: uuuu
+2025-01-30T15:19:58.780528400 [DEBUG] Selected remind: test
+2025-01-30T15:19:53.775658 [DEBUG] Selected remind: asdasd
+2025-01-30T15:19:51.228805300 [DEBUG] Selected remind: Test
+2025-01-30T15:19:48.723798700 [DEBUG] Selected remind: Test
+2025-01-30T15:19:46.428468 [DEBUG] Selected remind: asdasd
+2025-01-30T15:19:44.914623600 [DEBUG] Selected remind: test
+2025-01-30T15:19:14.801377500 [INFO] Event --> editing reminder
+2025-01-30T15:19:14.797377800 [INFO] Double-click on row: 3
+2025-01-30T15:19:14.793377400 [DEBUG] Selected remind: Test
+2025-01-30T15:19:14.635139600 [DEBUG] Selected remind: Test
+2025-01-30T15:19:13.566269100 [DEBUG] updating remind list
+2025-01-30T15:19:09.908801300 [INFO] Event --> editing reminder
+2025-01-30T15:19:09.905782900 [INFO] Double-click on row: 4
+2025-01-30T15:19:09.902998300 [DEBUG] Selected remind: Test
+2025-01-30T15:19:09.747131100 [DEBUG] Selected remind: Test
+2025-01-30T15:19:07.871692700 [DEBUG] Selected remind: Test
+2025-01-30T15:19:05.734589500 [DEBUG] updating remind list
+2025-01-30T15:19:01.729428900 [INFO] Event --> adding new reminder
+2025-01-30T15:18:55.305790700 [INFO] Right click on row: 0
+2025-01-30T15:18:55.301516600 [DEBUG] Selected remind: uuuu
+2025-01-30T15:18:54.852210800 [DEBUG] Selected remind: uuuu
+2025-01-30T15:18:50.555015 [DEBUG] Selected remind: test
+2025-01-30T15:18:28.722683 [DEBUG] Selected remind: Test
+2025-01-30T15:17:24.207781300 [INFO] Event --> editing reminder
+2025-01-30T15:17:24.205136500 [INFO] Double-click on row: 1
+2025-01-30T15:17:24.201135 [DEBUG] Selected remind: asdasd
+2025-01-30T15:17:24.034709600 [DEBUG] Selected remind: asdasd
+2025-01-30T15:17:22.926106700 [DEBUG] updating remind list
+2025-01-30T15:17:19.493627500 [INFO] Event --> editing reminder
+2025-01-30T15:17:19.490621900 [INFO] Double-click on row: 1
+2025-01-30T15:17:19.488621 [DEBUG] Selected remind: asdasd
+2025-01-30T15:17:19.340518500 [DEBUG] Selected remind: asdasd
+2025-01-30T15:17:18.058074900 [DEBUG] updating remind list
+2025-01-30T15:17:07.284432100 [INFO] Event --> editing reminder
+2025-01-30T15:17:07.282433100 [INFO] Double-click on row: 2
+2025-01-30T15:17:07.279155400 [DEBUG] Selected remind: test
+2025-01-30T15:17:07.137539100 [DEBUG] Selected remind: test
+2025-01-30T15:17:01.031922300 [DEBUG] Selected remind: test
+2025-01-30T15:16:55.136663500 [DEBUG] Selected remind: Test
+2025-01-30T15:16:53.689298100 [DEBUG] updating remind list
+2025-01-30T15:16:47.780161600 [INFO] Reminder opened with values: [Name: Test, IconName: Book closed, SoundName: Sound 8, Description: asdasdasdas dsadas
+d
+asd
+as
+da
+sd]
+2025-01-30T15:16:35.658054100 [INFO] Event --> adding new reminder
+2025-01-30T15:16:33.316599600 [DEBUG] Background mode: false
+2025-01-30T15:16:33.309409600 [INFO] Application started
+2025-01-30T15:16:33.295628800 [INFO] Preferences updated to JSON file: language = eng.json, theme = Solarized light
+2025-01-30T15:16:33.280882500 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+2025-01-30T15:14:59.864595400 [INFO] Event --> adding new reminder
+2025-01-30T15:14:56.344565500 [DEBUG] Background mode: false
+2025-01-30T15:14:56.333423200 [INFO] Application started
+2025-01-30T15:14:56.323001900 [INFO] Preferences updated to JSON file: language = eng.json, theme = Solarized light
+2025-01-30T15:14:56.309314100 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+2025-01-30T14:50:51.705408500 [INFO] Reminder opened with values: [Name: uuuu, IconName: Alert, SoundName: Owu Woman Sound, Description: ]
+2025-01-30T14:50:47.990448400 [INFO] Event --> editing reminder
+2025-01-30T14:50:47.988202800 [INFO] Double-click on row: 0
+2025-01-30T14:50:47.984202 [DEBUG] Selected remind: uuuu
+2025-01-30T14:50:47.834007300 [DEBUG] Selected remind: uuuu
+2025-01-30T14:50:39.089943300 [INFO] Reminder opened with values: [Name: uuuu, IconName: Alert, SoundName: Owu Woman Sound, Description: ]
+2025-01-30T14:50:37.442306900 [INFO] Reminder opened with values: [Name: uuuu, IconName: Alert, SoundName: Owu Woman Sound, Description: ]
+2025-01-30T14:50:34.882072700 [INFO] Event --> editing reminder
+2025-01-30T14:50:34.879796400 [INFO] Double-click on row: 0
+2025-01-30T14:50:34.874797800 [DEBUG] Selected remind: uuuu
+2025-01-30T14:50:34.723580900 [DEBUG] Selected remind: uuuu
+2025-01-30T14:43:53.474171300 [INFO] Event --> editing reminder
+2025-01-30T14:43:53.471151900 [INFO] Double-click on row: 0
+2025-01-30T14:43:53.467781200 [DEBUG] Selected remind: uuuu
+2025-01-30T14:43:53.295955 [DEBUG] Selected remind: uuuu
+2025-01-30T14:43:47.582489500 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:47.428897300 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:47.265854 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:47.107202100 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:46.949611400 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:46.802749700 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:41.890527500 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:41.729433400 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:41.576923100 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:41.423647600 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:41.259586800 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:41.103379500 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:40.951787700 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:40.793581800 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:40.642621700 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:40.493337200 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:40.327650500 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:40.056603800 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:39.900040700 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:39.744681 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:33.676572100 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:33.504149700 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:33.357394 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:33.187653200 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:33.023656500 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:32.883192 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:32.727353600 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:32.569199300 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:32.392786 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:32.203914 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:28.779102200 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:28.143789 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:27.408046900 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:43:25.408172200 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:42:39.033400900 [INFO] Reminder opened with values: [Name: Ora di scopare, IconName: Warning, SoundName: Owu Woman Sound, Description: OOOOOHHHHH FIIIIIIIIII]
+2025-01-30T14:41:54.468572800 [INFO] Event --> editing reminder
+2025-01-30T14:41:54.465571400 [INFO] Double-click on row: 0
+2025-01-30T14:41:54.460572300 [DEBUG] Selected remind: uuuu
+2025-01-30T14:41:54.303739800 [DEBUG] Selected remind: uuuu
+2025-01-30T14:41:50.623644200 [DEBUG] Background mode: false
+2025-01-30T14:41:50.614508100 [INFO] Application started
+2025-01-30T14:41:50.602210800 [INFO] Preferences updated to JSON file: language = eng.json, theme = Solarized light
+2025-01-30T14:41:50.591585700 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+2025-01-30T14:35:29.648545300 [DEBUG] Selected remind: uuuu
+2025-01-30T14:35:16.437192800 [INFO] Reminder opened with values: [Name: È ora di uccide qualche nazi comunista, IconName: Pause circle, SoundName: Sound 9, Description: A donatello non piacciono gli ebrei fascisti e un po comunisti.
+Ora che ci penso, non gli piacciono nemmeno le femmine, ma solo le vagine.]
+2025-01-30T14:35:08.481884600 [INFO] Reminder opened with values: [Name: È ora di uccide qualche nazi comunista, IconName: Pause circle, SoundName: Sound 1, Description: A donatello non piacciono gli ebrei fascisti e un po comunisti.
+Ora che ci penso, non gli piacciono nemmeno le femmine, ma solo le vagine.]
+2025-01-30T14:34:58.400984500 [INFO] Reminder opened with values: [Name: È ora di uccide qualche nazi comunista, IconName: Man with a beer, SoundName: Sound 1, Description: A donatello non piacciono gli ebrei fascisti e un po comunisti.
+Ora che ci penso, non gli piacciono nemmeno le femmine, ma solo le vagine.]
+2025-01-30T14:34:28.053964100 [INFO] Reminder opened with values: [Name: È ora di uccide qualche nazi comunista, IconName: Man doind yoga, SoundName: Sound 1, Description: A donatello non piacciono gli ebrei fascisti e un po comunisti.
+Ora che ci penso, non gli piacciono nemmeno le femmine, ma solo le vagine.]
+2025-01-30T14:32:08.680542300 [INFO] Event --> editing reminder
+2025-01-30T14:32:08.680542300 [INFO] Double-click on row: 0
+2025-01-30T14:32:08.671834 [DEBUG] Selected remind: uuuu
+2025-01-30T14:32:08.528835400 [DEBUG] Selected remind: uuuu
+2025-01-30T14:32:07.964997200 [DEBUG] Selected remind: uuuu
+2025-01-30T14:31:24.251760600 [DEBUG] Selected remind: test
+2025-01-30T14:30:59.398810700 [DEBUG] Selected remind: test
+2025-01-30T14:30:58.352684900 [DEBUG] Selected remind: uuuu
+2025-01-30T14:30:57.941346300 [DEBUG] Selected remind: test
+2025-01-30T14:30:53.178079400 [INFO] Event --> adding new reminder
+2025-01-30T14:30:47.675215500 [DEBUG] Selected remind: uuuu
+2025-01-30T14:30:47.240386500 [DEBUG] Selected remind: test
+2025-01-30T14:30:46.864550100 [DEBUG] Selected remind: test
+2025-01-30T14:30:46.490483900 [DEBUG] Selected remind: test
+2025-01-30T14:30:35.357974300 [DEBUG] Background mode: false
+2025-01-30T14:30:35.346742300 [INFO] Application started
+2025-01-30T14:30:35.340201400 [INFO] Preferences updated to JSON file: language = eng.json, theme = Solarized light
+2025-01-30T14:30:35.328321 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+2025-01-29T12:52:14.774447500 [INFO] Event --> adding new reminder
+2025-01-29T12:52:12.241109600 [DEBUG] updating remind list
+2025-01-29T12:52:12.102720100 [DEBUG] updating remind list
+2025-01-29T12:52:11.965009800 [DEBUG] updating remind list
+2025-01-29T12:52:11.835807300 [DEBUG] updating remind list
+2025-01-29T12:52:10.918704200 [DEBUG] updating remind list
+2025-01-29T12:52:10.764625300 [DEBUG] updating remind list
+2025-01-29T12:52:10.619388 [DEBUG] updating remind list
+2025-01-29T12:52:06.822411700 [DEBUG] Selected remind: test
+2025-01-29T12:51:53.030338700 [INFO] Reminder opened with values: [Name: test, IconName: Man wearing a tie, SoundName: No Sound, Description: ]
+2025-01-29T12:51:30.845133500 [INFO] Event --> editing reminder
+2025-01-29T12:51:30.837126500 [INFO] Double-click on row: 2
+2025-01-29T12:51:30.831584800 [DEBUG] Selected remind: test
+2025-01-29T12:51:30.666874800 [DEBUG] Selected remind: test
+2025-01-29T12:51:18.798077700 [DEBUG] Selected remind: test
+2025-01-29T12:51:18.325436100 [DEBUG] Selected remind: test
+2025-01-29T12:51:17.681111900 [DEBUG] Selected remind: uuuu
+2025-01-29T12:51:17.101569900 [DEBUG] Selected remind: test
+2025-01-29T12:51:16.304412400 [DEBUG] Selected remind: test
+2025-01-29T12:51:15.635211100 [DEBUG] Selected remind: test
+2025-01-29T12:50:56.254339600 [INFO] Reminder opened with values: [Name: uuuu, IconName: Alert, SoundName: No Sound, Description: ]
+2025-01-29T12:50:44.744349100 [INFO] Event --> editing reminder
+2025-01-29T12:50:44.728348500 [INFO] Double-click on row: 0
+2025-01-29T12:50:44.723349100 [DEBUG] Selected remind: uuuu
+2025-01-29T12:50:44.474421400 [DEBUG] Selected remind: uuuu
+2025-01-29T12:50:41.405264700 [DEBUG] Background mode: false
+2025-01-29T12:50:41.396784200 [INFO] Application started
+2025-01-29T12:50:41.384748300 [INFO] Preferences updated to JSON file: language = eng.json, theme = Solarized light
+2025-01-29T12:50:41.372657900 [DEBUG] Preferences loaded from JSON file: language = eng.json, theme = Solarized light
 2025-01-20T22:37:25.184608700 [INFO] Reminder opened with values: [Name: uuuugscvghACSHGafcscASGCAhscasASAsASas, IconName: Alert, SoundName: No Sound, Description: ]
 2025-01-20T22:37:18.432210500 [INFO] Reminder opened with values: [Name: uuuu, IconName: Alert, SoundName: No Sound, Description: ]
 2025-01-20T22:37:00.866306800 [INFO] Event --> editing reminder

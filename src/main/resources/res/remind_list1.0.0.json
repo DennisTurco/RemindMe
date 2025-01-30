@@ -9,7 +9,22 @@
     "nextExecution": "2024-12-12T22:52:41.381624500",
     "timeInterval": "1.3:23:23",
     "creationDate": "2024-12-12T22:52:41.381624500",
-    "lastUpdateDate": "2025-01-17T23:57:23.153186100"
+    "lastUpdateDate": "2025-01-17T23:57:23.153186100",
+    "icon": "Alert",
+    "sound": "No Sound"
+  },
+  {
+    "name": "asdasd",
+    "description": "",
+    "count": 4,
+    "isActive": true,
+    "isTopLevel": false,
+    "lastExecution": "2024-12-12T22:52:41.381624500",
+    "timeInterval": "1.3:23:23",
+    "creationDate": "2024-12-12T22:52:41.381624500",
+    "lastUpdateDate": "2025-01-30T15:17:22.922298800",
+    "icon": "Man with diet",
+    "sound": "No Sound"
   },
   {
     "name": "test",
@@ -21,18 +36,32 @@
     "nextExecution": "2024-12-12T22:52:41.381624500",
     "timeInterval": "1.3:23:23",
     "creationDate": "2024-12-12T22:52:41.381624500",
-    "lastUpdateDate": "2024-12-12T22:52:41.381624500"
+    "lastUpdateDate": "2024-12-12T22:52:41.381624500",
+    "icon": "Alert",
+    "sound": "No Sound"
   },
   {
-    "name": "test",
-    "description": "",
-    "count": 4,
+    "name": "Test",
+    "description": "asdasdasdas dsadas\nd\nasd\nas\nda\nsd",
+    "count": 0,
     "isActive": true,
+    "isTopLevel": true,
+    "timeInterval": "0.1:0:0",
+    "creationDate": "2025-01-30T15:16:53.680887600",
+    "lastUpdateDate": "2025-01-30T15:19:13.563268900",
+    "icon": "Book closed",
+    "sound": "Sound 4"
+  },
+  {
+    "name": "Test",
+    "description": "",
+    "count": 0,
+    "isActive": false,
     "isTopLevel": false,
-    "lastExecution": "2024-12-12T22:52:41.381624500",
-    "nextExecution": "2024-12-12T22:52:41.381624500",
-    "timeInterval": "1.3:23:23",
-    "creationDate": "2024-12-12T22:52:41.381624500",
-    "lastUpdateDate": "2024-12-12T22:52:41.381624500"
+    "timeInterval": "0.1:0:0",
+    "creationDate": "2025-01-30T15:19:05.731589700",
+    "lastUpdateDate": "2025-01-30T15:19:05.731589700",
+    "icon": "Alert",
+    "sound": "No Sound"
   }
 ]

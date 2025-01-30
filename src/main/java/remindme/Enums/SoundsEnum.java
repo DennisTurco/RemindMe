@@ -13,7 +13,8 @@ public enum SoundsEnum {
     Sound9("Sound 9", "src/main/resources/res/sounds/sound9.wav"),
     //Sound10("Sound 10", "src/main/resources/res/sounds/sound10.wav"),
     Sound11("Sound 11", "src/main/resources/res/sounds/sound11.wav"),
-    Sound12("Sound 12", "src/main/resources/res/sounds/sound12.wav");
+    Sound12("Sound 12", "src/main/resources/res/sounds/sound12.wav"),
+    Sound13("Owu Woman Sound", "src/main/resources/res/sounds/UwuSound.wav");
 
     private final String soundName;
     private final String soundPath;
