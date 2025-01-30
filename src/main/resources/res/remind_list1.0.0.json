@@ -41,16 +41,17 @@
     "sound": "No Sound"
   },
   {
-    "name": "Test",
-    "description": "asdasdasdas dsadas\nd\nasd\nas\nda\nsd",
+    "name": "Donatello",
+    "description": "Donatello è gay",
     "count": 0,
     "isActive": true,
     "isTopLevel": true,
+    "nextExecution": "2025-01-31T00:21:31.099181200",
     "timeInterval": "0.1:0:0",
     "creationDate": "2025-01-30T15:16:53.680887600",
-    "lastUpdateDate": "2025-01-30T15:19:13.563268900",
-    "icon": "Book closed",
-    "sound": "Sound 4"
+    "lastUpdateDate": "2025-01-30T23:21:31.099181200",
+    "icon": "Alert",
+    "sound": "Owu Woman Sound"
   },
   {
     "name": "Test",

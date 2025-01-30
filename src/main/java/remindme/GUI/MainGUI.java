@@ -5,9 +5,11 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -27,13 +29,18 @@ import org.slf4j.LoggerFactory;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import remindme.Dialogs.EntryUserDialog;
+import remindme.Email.EmailSender;
+import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
+import remindme.Entities.User;
 import remindme.Enums.ConfigKey;
+import remindme.Enums.LanguagesEnum;
 import remindme.Enums.MenuItems;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.Json.JSONConfigReader;
-import remindme.Json.JSONReminder;
+import remindme.Json.JsonUser;
 import remindme.Managers.ThemeManager;
 import remindme.Table.CheckboxCellRenderer;
 import remindme.Table.RemindTable;
@@ -82,6 +89,74 @@ public final class MainGUI extends javax.swing.JFrame {
         
         // set all svg images
         setSvgImages();
+
+        checkForFirstAccess();
+    }
+
+    private void createUser() {
+        // first access
+        EntryUserDialog userDialog = new EntryUserDialog(this, true);
+        userDialog.setVisible(true);
+        User newUser = userDialog.getUser();
+
+        if (newUser == null) {
+            return;
+        }
+
+        JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
+
+        EmailSender.sendUserCreationEmail(newUser);
+        EmailSender.sendConfirmEmailToUser(newUser);
+    }
+
+    private void checkForFirstAccess() {
+        logger.debug("Checking for first access");
+        try {
+            User user = JsonUser.readUserFromJson(ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+
+            if (user != null) {
+                logger.info("Current user: " + user.toString());
+                return;
+            }
+
+            // set language based on PC language
+            setLanguageBasedOnPcLanguage();
+
+            // user creation
+            createUser();
+        } catch (IOException e) {
+            logger.error("I/O error occurred during read user data: " + e.getMessage(), e);
+            JsonUser.writeUserToJson(User.getDefaultUser(), ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+        }
+    }
+
+    private void setLanguageBasedOnPcLanguage() {
+        Locale defaultLocale = Locale.getDefault();
+        String language = defaultLocale.getLanguage();
+
+        logger.info("Setting default language to: " + language);
+
+        switch (language) {
+            case "en":
+                Preferences.setLanguage(LanguagesEnum.ENG);
+                break;
+            case "it":
+                Preferences.setLanguage(LanguagesEnum.ITA);
+                break;
+            case "es":
+                Preferences.setLanguage(LanguagesEnum.ESP);
+                break;
+            case "de":
+                Preferences.setLanguage(LanguagesEnum.DEU);
+                break;
+            case "fr":
+                Preferences.setLanguage(LanguagesEnum.FRA);
+                break;
+            default:
+                Preferences.setLanguage(LanguagesEnum.ENG);
+        }
+
+        remindManager.reloadPreferences();
     }
     
     public void showWindow() {
@@ -95,7 +170,7 @@ public final class MainGUI extends javax.swing.JFrame {
         int width = Math.min((int) size.getWidth(), Integer.parseInt(ConfigKey.GUI_WIDTH.getValue()));
         int height = Math.min((int) size.getHeight(), Integer.parseInt(ConfigKey.GUI_HEIGHT.getValue()));
 
-        this.setSize(width,height);
+        this.setSize(width, height);
     }
 
     public void initializeTable() {

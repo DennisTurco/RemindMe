@@ -1,6 +1,7 @@
 package remindme;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,8 @@ import remindme.Entities.Preferences;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum;
 import remindme.GUI.MainGUI;
-import remindme.Json.JSONConfigReader;
+import remindme.Managers.ExceptionManager;
+import remindme.Services.BackgroundService;
 
 public class MainApp {
 
@@ -40,12 +42,12 @@ public class MainApp {
         logger.debug("Background mode: " + isBackgroundMode);
         
         if (isBackgroundMode) {
-            Logger.logMessage("Backup service starting in the background", Logger.LogLevel.INFO);
+            logger.info("Backup service starting in the background");
             BackgroundService service = new BackgroundService();
             try {
                 service.startService();
             } catch (IOException ex) {
-                Logger.logMessage("An error occurred: " + ex.getMessage(), Logger.LogLevel.ERROR, ex);
+                logger.error("An error occurred: " + ex.getMessage(), ex);
                 ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
             }
         }
@@ -55,10 +57,5 @@ public class MainApp {
                 gui.showWindow();
             });
         }
-
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            MainGUI gui = new MainGUI();
-            gui.showWindow();
-        });
     }
 }

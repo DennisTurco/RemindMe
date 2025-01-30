@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import remindme.Json.JSONReminder;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
-import remindme.Json.JSONReminder;
-import remindme.Logger;
 import remindme.Managers.ExceptionManager;
 
 public class Remind {

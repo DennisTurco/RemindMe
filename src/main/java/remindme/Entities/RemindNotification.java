@@ -22,7 +22,7 @@ public class RemindNotification {
             this.name,
             this.icon.getIconName(),
             this.sound.getSoundName(),
-            this.description
+            this.description.replace("\n", " \\n ")
         );
     }
 

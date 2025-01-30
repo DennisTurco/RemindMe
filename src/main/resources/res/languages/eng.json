@@ -90,6 +90,16 @@
     "TrayIcon": {
         "TrayTooltip": "Remind Service"
     },
+    "UserDialog": {
+        "UserTitle": "Insert your data",
+        "Name": "Name",
+        "Surname": "Surname",
+        "Email": "Email",
+        "ErrorMessageForMissingData": "Please fill in all the required fields.",
+        "ErrorMessageForWrongEmail": "The provided email address is invalid. Please provide a correct one.",
+        "EmailConfirmationSubject": "Thank you for choosing Backup Manager!",
+        "EmailConfirmationBody": "Hi [UserName],\n\nThank you for downloading and registering Backup Manager, your new tool for secure and efficient backup management!\n\nThis is an automated email sent to confirm your registration. We will contact you by email only to inform you about new releases or important updates of the application.\n\nIn the meantime, if you have any questions, need assistance, or have suggestions, we are always here for you. You can reach us at [SupportEmail].\n\nThank you again for choosing Backup Manager, and enjoy managing your backups!\n\nBest regards,\nThe Backup Manager Team"
+    },
     "Dialogs": {
         "ExceptionMessageTitle":"Error...",
         "RemindSavedCorrectlyTitle":"Remind saved",
