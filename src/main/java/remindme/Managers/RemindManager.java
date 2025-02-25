@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -20,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import remindme.Dialogs.ManageRemind;
 import remindme.Dialogs.PreferencesDialog;
-import remindme.Dialogs.TimePicker;
 import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
 import remindme.Entities.TimeInterval;
@@ -39,19 +39,22 @@ public final class RemindManager {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     
-    private final JSONReminder JSON;
-    private final MainGUI main;
-    private List<Remind> reminds;
+    private JSONReminder JSON;
+    private static MainGUI main; // static, cause i need only one for instance
+    public static List<Remind> reminds; // static, cause i need only one for instance
 
-    public RemindManager(MainGUI main) {
-        this.main = main;
-        JSON = new JSONReminder();
+    public RemindManager(MainGUI mainGui) {
+        main = mainGui;
+        initManager();
     }
 
-    public TimeInterval openTimePicker(TimeInterval time) {
-        TimePicker picker = new TimePicker(main, time, true);
-        picker.setVisible(true);
-        return picker.getTimeInterval();
+    public RemindManager() {
+        initManager();
+    }
+
+    private void initManager() {
+        reminds = getReminds();
+        JSON = new JSONReminder();
     }
     
     public void openPreferences() {
@@ -79,35 +82,60 @@ public final class RemindManager {
         main.setSvgImages();
     }
 
-    public void updateRemindList(List<Remind> reminds) {            
+    public void updateRemindList() {
+        logger.info("Updating remind list");
+         
+        // update
         JSON.updateRemindListJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile(), reminds);
+
+        // get from file
+        getRemindList();
         
         if (MainGUI.model != null)
             TableDataManager.updateTableWithNewRemindList(reminds, formatter);
     }
 
-    private String insertAndGetRemindName(boolean canOverwrite) {
-        String remindName;
-        do {
-            remindName = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_NAME_INPUT)); // pop-up message
-            for (Remind remind : reminds) {
-                if (remind.getName().equals(remindName) && canOverwrite) {
-                    int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_REMIND_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if (response == JOptionPane.YES_OPTION) {
-                        reminds.remove(remind);
-                        break;
-                    } else {
-                        remindName = null;
-                    }
-                } else if (remind.getName().equals(remindName)) {
-                    logger.warn("Error saving remind");
-                    JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_NAME_ALREADY_USED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
-                }
+    public void getRemindList() {
+        try {
+            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+        } catch (IOException e) {
+            logger.error("An error occurred while trying to get the remind list from json file: " + e.getMessage(), e);
+            ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
+        } catch (Exception e) {
+            logger.error("An error occurred: " + e.getMessage(), e);
+        }
+    }
+
+    private String insertAndGetRemindName(List<Remind> reminds, String oldName, boolean canOverwrite) {
+        while (true) {
+            String remindName = JOptionPane.showInputDialog(null, 
+                TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_NAME_INPUT), oldName);
+    
+            // If the user cancels the operation
+            if (remindName == null || remindName.trim().isEmpty()) {
+                return null;
             }
-            if (remindName == null) return null;
-        } while (remindName.equals("null") ||  remindName.equals("null*"));	
-        if (remindName.isEmpty()) return null;
-        return remindName;
+            
+            Optional<Remind> existingBackup = reminds.stream()
+                .filter(b -> b.getName().equals(remindName))
+                .findFirst();
+    
+            if (existingBackup.isPresent()) {
+                if (canOverwrite) {
+                    int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_REMIND_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                if (response == JOptionPane.YES_OPTION) {
+                    reminds.remove(existingBackup.get());
+                    return remindName;
+                }
+                } else {
+                    logger.warn("Remind name '{}' is already in use", remindName);
+                    JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_NAME_ALREADY_USED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                return remindName;  // Return valid name
+            }
+        }
     }
 
     public static String pathSearchWithFileChooser(boolean allowFiles) {
@@ -154,7 +182,7 @@ public final class RemindManager {
     private String getRemindNameByTableRow(javax.swing.JTable table) {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            return (String) table.getValueAt(selectedRow, 0);
+            return (String) table.getValueAt(selectedRow, 1);
         }
 
         return null;
@@ -173,7 +201,8 @@ public final class RemindManager {
             return;
 
         reminds.add(remind);
-        updateRemindList(reminds);
+
+        updateRemindList();
     }
 
     public void saveReminder() {
@@ -182,6 +211,17 @@ public final class RemindManager {
 
     public void removeReminder(Remind remind, boolean d) {
         logger.info("Event --> removing reminder");
+
+        // backup list update
+        for (Remind rem : reminds) {
+            if (remind.getName().equals(rem.getName())) {
+                reminds.remove(rem);
+                logger.info("Remind removed successfully: " + rem.toString());
+                break;
+            }
+        }
+
+        updateRemindList();
     }
 
     public void updateReminder() {
@@ -194,6 +234,25 @@ public final class RemindManager {
 
     public void duplicateReminder(Remind remind) {
         logger.info("Event --> duplicating reminder");
+
+        LocalDateTime dateNow = LocalDateTime.now();
+        Remind newRemind = new Remind(
+            remind.getName() + "_copy", 
+            remind.getDescription(), 
+            0, 
+            remind.isActive(), 
+            remind.isTopLevel(), 
+            remind.getLastExecution(), 
+            remind.getNextExecution(), 
+            dateNow, 
+            dateNow, 
+            remind.getTimeInterval(), 
+            remind.getIcon(), 
+            remind.getSound()
+        );
+        
+        reminds.add(newRemind); 
+        updateRemindList();
     }
 
     public void importRemindListFromJSON() {
@@ -224,14 +283,19 @@ public final class RemindManager {
     }
 
     public void renameRemind(Remind remind) {
-        logger.info("Event --> backup renaming");
+        logger.info("Event --> remind renaming");
         
-        String remindName = insertAndGetRemindName(false);
+        String remindName = insertAndGetRemindName(reminds, remind.getName(), false);
         if (remindName == null || remindName.isEmpty()) return;
         
-        remind.setName(remindName);
-        remind.setLastUpdateDate(LocalDateTime.now());
-        updateRemindList(reminds);
+        for (Remind rem : reminds) {
+            if (remind.getName().equals(rem.getName())) {
+                rem.setName(remindName);
+                rem.setLastUpdateDate(LocalDateTime.now());
+            }
+        }
+
+        updateRemindList();
     }
 
     public void editRemind(Remind remind) {
@@ -245,7 +309,11 @@ public final class RemindManager {
             return;
         
         remind.updateReming(updatedRemind);
-        updateRemindList(reminds);
+
+        // modifica lista
+        // update
+
+        updateRemindList();
     }
 
     public static LocalDateTime getnextExecutionByTimeInterval(TimeInterval timeInterval) {
@@ -337,6 +405,10 @@ public final class RemindManager {
         logger.info("Event --> copying reminder name to the clipboard");
 
         String remindName = getRemindNameByTableRow(table);
+        Remind remind = Remind.getRemindByName(remindName);
+
+        StringSelection selection = new StringSelection(remind.getName());
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
     }
 
     public void popupActive(javax.swing.JTable table) {
@@ -352,6 +424,7 @@ public final class RemindManager {
 
     public String[] getColumnTranslations() {
         String[] columnNames = {
+            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.ICON_COLUMN),
             TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NAME_COLUMN),
             TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_ACTIVE_COLUMN),
             TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_TOP_LEVEL_COLUMN),

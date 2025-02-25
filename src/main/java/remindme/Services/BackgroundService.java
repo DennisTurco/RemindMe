@@ -24,8 +24,10 @@ import javax.swing.JFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import remindme.Dialogs.ReminderDialog;
 import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
+import remindme.Entities.RemindNotification;
 import remindme.Enums.ConfigKey;
 import remindme.GUI.MainGUI;
 import remindme.Json.JSONConfigReader;
@@ -158,6 +160,7 @@ public class BackgroundService {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 for (Remind remind : reminds) {
                     // open notification
+                    new ReminderDialog(null, remind.isTopLevel(), new RemindNotification(remind), false).setVisible(true);
                 }
             });
         }

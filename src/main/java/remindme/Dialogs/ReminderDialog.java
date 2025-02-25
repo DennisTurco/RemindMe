@@ -1,13 +1,21 @@
 package remindme.Dialogs;
 
+import java.awt.Image;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import javax.swing.ImageIcon;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
+import remindme.Enums.ConfigKey;
+import remindme.Managers.RemindManager;
 import remindme.Managers.SoundPlayer;
+import remindme.Managers.ThemeManager;
 
 public class ReminderDialog extends javax.swing.JDialog {
     
@@ -15,10 +23,21 @@ public class ReminderDialog extends javax.swing.JDialog {
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     private final int maxLength = 30;
     
-    public ReminderDialog(java.awt.Dialog parent, boolean modal, RemindNotification remind) {
+    public ReminderDialog(java.awt.Dialog parent, boolean modal, RemindNotification remind, boolean preview) {
         super(parent, modal);
         initComponents();
         initDialog(remind);
+
+        ThemeManager.updateThemeDialog(this);
+
+        // logo application
+        Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
+        this.setIconImage(icon);
+
+        // update remind
+        if (!preview) {
+            updateRemindAfterShow(remind);
+        }
         
         descriptionEditor.setEditable(false);
         descriptionEditor.setOpaque(false);
@@ -34,8 +53,22 @@ public class ReminderDialog extends javax.swing.JDialog {
         
         timeLabel.setText(LocalDateTime.now().format(timeFormatter));
    }
+
+    private void updateRemindAfterShow(RemindNotification remind) {
+        RemindManager remindManager = new RemindManager();
+
+        for (Remind rem : RemindManager.reminds) {
+            if (remind.getName().equals(rem.getName())) {
+                rem.setLastExecution(LocalDateTime.now());
+                rem.setRemindCount(rem.getRemindCount()+1);
+                rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
+            }
+        }
+
+        remindManager.updateRemindList();
+    }
     
-    public void setNameLabelText(String text) {
+    private void setNameLabelText(String text) {
         if (text != null && text.length() > maxLength) {
             text = text.substring(0, maxLength) + "...";
         }

@@ -34,25 +34,27 @@
                   <Component id="activeCheckBox" alignment="0" max="32767" attributes="0"/>
                   <Component id="topLevelCheckBox" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="OkBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cancelBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="remindNameTextField" alignment="0" max="32767" attributes="0"/>
-                  <Component id="iconComboBox" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="iconComboBox" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="timeIntervalBtn" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" pref="170" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="soundComboBox" max="32767" attributes="0"/>
+                          <Component id="soundComboBox" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="soundPreviewBtn" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="soundPreviewBtn" min="-2" pref="41" max="-2" attributes="0"/>
+                          <Component id="iconRemindPreview" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -70,7 +72,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="remindNameTextField" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-              <Component id="iconComboBox" min="-2" pref="41" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="iconComboBox" pref="41" max="32767" attributes="0"/>
+                  <Component id="iconRemindPreview" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="soundComboBox" pref="41" max="32767" attributes="0"/>
@@ -194,11 +199,16 @@
       </Properties>
     </Component>
     <Component class="remindme.Svg.SVGButton" name="timeIntervalBtn">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timeIntervalBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="remindme.Svg.SVGButton" name="soundPreviewBtn">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="soundPreviewBtnActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="remindme.Svg.SVGLabel" name="iconRemindPreview">
     </Component>
   </SubComponents>
 </Form>

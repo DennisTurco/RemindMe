@@ -46,6 +46,7 @@ import remindme.Table.CheckboxCellRenderer;
 import remindme.Table.RemindTable;
 import remindme.Table.RemindTableModel;
 import remindme.Table.StripedRowRenderer;
+import remindme.Table.SvgImageRenderer;
 import remindme.Managers.RemindManager;
 
 /**
@@ -184,16 +185,19 @@ public final class MainGUI extends javax.swing.JFrame {
         // Populate the model with remind data
         for (Remind remind : reminds) {
             tempModel.addRow(new Object[]{
+                remind.getIcon().getIconPath(),
                 remind.getName(),
-                    remind.isActive(),
-                    remind.isTopLevel(),
-                    remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "",
-                    remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "",
-                    remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : ""
+                remind.isActive(),
+                remind.isTopLevel(),
+                remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "",
+                remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "",
+                remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : ""
             });
         }
-    
+        
         remindTable = new RemindTable(tempModel);
+
+        remindTable.getColumnModel().getColumn(0).setCellRenderer(new SvgImageRenderer(40, 40));
 
         // Add key bindings using InputMap and ActionMap
         InputMap inputMap = remindTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -208,7 +212,7 @@ public final class MainGUI extends javax.swing.JFrame {
                 if (selectedRow == -1) return;
 
                 logger.debug("Enter key pressed on row: " + selectedRow);
-                //TODO: OpenRemind((String) remindTable.getValueAt(selectedRow, 0));
+                //TODO: OpenRemind((String) remindTable.getValueAt(selectedRow, 1));
             }
         });
 
@@ -237,7 +241,7 @@ public final class MainGUI extends javax.swing.JFrame {
         TableColumnModel columnModel = remindTable.getColumnModel();
 
         for (int i = 0; i < columnModel.getColumnCount(); i++) {
-            if (i == 1 || i == 2) {
+            if (i == 2 || i == 3) {
                 columnModel.getColumn(i).setCellRenderer(new CheckboxCellRenderer());
                 columnModel.getColumn(i).setCellEditor(remindTable.getDefaultEditor(Boolean.class));
             } else {
@@ -451,14 +455,14 @@ public final class MainGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Active", "Top Level", "Last execution", "Next execution", "Time interval"
+                "Icon", "Name", "Active", "Top Level", "Last execution", "Next execution", "Time interval"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -750,7 +754,7 @@ public final class MainGUI extends javax.swing.JFrame {
             detailsLabel.setText(""); // clear the label
         } else {
             // get correct remind
-            String remindName = (String) remindTable.getValueAt(selectedRow, 0);
+            String remindName = (String) remindTable.getValueAt(selectedRow, 1);
             Remind remind = Remind.getRemindByName(new ArrayList<>(remindManager.getReminds()), remindName);
 
             logger.debug("Selected remind: " + remindName);

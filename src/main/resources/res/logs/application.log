@@ -1,137 +1,389 @@
-30-01-2025 23:12:36.899 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:12:36.917 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:12:36.921 [main] [INFO ] remindme.MainApp - Application started
-30-01-2025 23:12:36.922 [main] [DEBUG] remindme.MainApp - Background mode: false
-30-01-2025 23:16:52.739 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:16:52.757 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:16:52.762 [main] [INFO ] remindme.MainApp - Application started
-30-01-2025 23:16:52.762 [main] [DEBUG] remindme.MainApp - Background mode: false
-30-01-2025 23:16:55.584 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
-30-01-2025 23:16:55.730 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
-30-01-2025 23:16:55.730 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 3
-30-01-2025 23:16:55.731 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
-30-01-2025 23:16:58.475 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Test, IconName: Book closed, SoundName: Owu Woman Sound, Description: asdasdasdas dsadas
-d
-asd
-as
-da
-sd]
-30-01-2025 23:17:17.544 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
-30-01-2025 23:17:19.364 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
-30-01-2025 23:17:19.549 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
-30-01-2025 23:17:19.549 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 3
-30-01-2025 23:17:19.550 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
-30-01-2025 23:18:25.922 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:29.395 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:30.051 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:30.623 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:31.061 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:31.285 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:31.479 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:31.655 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:31.822 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:31.996 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:32.169 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:32.339 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:32.511 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:32.673 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:32.835 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:33.000 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:33.176 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:33.346 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:18:33.508 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:19:11.132 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:19:17.825 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello è Gay, IconName: Alert, SoundName: Owu Woman Sound, Description: A donatello piace il pisello.
-Lo abbiamo scoperto recentemente ma è vero.]
-30-01-2025 23:21:10.838 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:21:10.858 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:21:10.862 [main] [INFO ] remindme.MainApp - Application started
-30-01-2025 23:21:10.863 [main] [DEBUG] remindme.MainApp - Background mode: false
-30-01-2025 23:21:15.770 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
-30-01-2025 23:21:15.930 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
-30-01-2025 23:21:15.931 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 3
-30-01-2025 23:21:15.931 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
-30-01-2025 23:21:31.102 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
-30-01-2025 23:21:32.725 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
-30-01-2025 23:21:32.882 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
-30-01-2025 23:21:32.883 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 3
-30-01-2025 23:21:32.883 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
-30-01-2025 23:21:53.458 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Alert, SoundName: Owu Woman Sound, Description: Donatello è gay\ne sempre lo sarȧ]
-30-01-2025 23:30:57.952 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:30:57.972 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:30:57.976 [main] [INFO ] remindme.MainApp - Application started
-30-01-2025 23:30:57.977 [main] [DEBUG] remindme.MainApp - Background mode: false
-30-01-2025 23:30:58.498 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
-30-01-2025 23:30:58.499 [AWT-EventQueue-0] [WARN ] remindme.Json.JsonUser - User file doesn't exist or is empty
-30-01-2025 23:30:58.499 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Setting default language to: it
-30-01-2025 23:30:58.499 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Reloading preferences
-30-01-2025 23:30:58.602 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
-30-01-2025 23:30:58.602 [AWT-EventQueue-0] [WARN ] remindme.Json.JsonUser - User file doesn't exist or is empty
-30-01-2025 23:30:58.602 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Setting default language to: it
-30-01-2025 23:30:58.602 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Reloading preferences
-30-01-2025 23:31:31.760 [AWT-EventQueue-0] [INFO ] remindme.Json.JsonUser - User successfully written to JSON user file with data: Dennis Culo, pene@gmail.com, italiano (Italia)
-30-01-2025 23:31:31.764 [AWT-EventQueue-0] [INFO ] remindme.Email.EmailSender - User creation info email sent with user: Dennis Culo, pene@gmail.com, italiano (Italia)
-30-01-2025 23:31:31.765 [AWT-EventQueue-0] [INFO ] remindme.Email.EmailSender - Confirmation registration email sent to the user: Dennis Culo, pene@gmail.com, italiano (Italia)
-30-01-2025 23:32:19.968 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:32:19.986 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:32:19.990 [main] [INFO ] remindme.MainApp - Application started
-30-01-2025 23:32:19.991 [main] [DEBUG] remindme.MainApp - Background mode: false
-30-01-2025 23:32:20.519 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
-30-01-2025 23:32:20.521 [AWT-EventQueue-0] [WARN ] remindme.Json.JsonUser - User file doesn't exist or is empty
-30-01-2025 23:32:20.522 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Setting default language to: it
-30-01-2025 23:32:20.522 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Reloading preferences
-30-01-2025 23:32:20.637 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
-30-01-2025 23:32:20.638 [AWT-EventQueue-0] [WARN ] remindme.Json.JsonUser - User file doesn't exist or is empty
-30-01-2025 23:32:20.638 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Setting default language to: it
-30-01-2025 23:32:20.638 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Reloading preferences
-30-01-2025 23:32:34.717 [AWT-EventQueue-0] [INFO ] remindme.Json.JsonUser - User successfully written to JSON user file with data: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
-30-01-2025 23:32:34.721 [AWT-EventQueue-0] [INFO ] remindme.Email.EmailSender - User creation info email sent with user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
-30-01-2025 23:32:34.722 [AWT-EventQueue-0] [INFO ] remindme.Email.EmailSender - Confirmation registration email sent to the user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
-30-01-2025 23:35:41.483 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:35:41.502 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:35:41.506 [main] [INFO ] remindme.MainApp - Application started
-30-01-2025 23:35:41.506 [main] [DEBUG] remindme.MainApp - Background mode: false
-30-01-2025 23:35:42.108 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
-30-01-2025 23:35:42.119 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
-30-01-2025 23:35:42.182 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
-30-01-2025 23:35:42.183 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
-30-01-2025 23:37:05.397 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:37:05.417 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:37:05.420 [main] [INFO ] remindme.MainApp - Application started
-30-01-2025 23:37:05.421 [main] [DEBUG] remindme.MainApp - Background mode: false
-30-01-2025 23:37:05.962 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
-30-01-2025 23:37:05.976 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
-30-01-2025 23:42:45.806 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:42:45.824 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
-30-01-2025 23:42:45.828 [main] [INFO ] remindme.MainApp - Application started
-30-01-2025 23:42:45.829 [main] [DEBUG] remindme.MainApp - Background mode: false
-30-01-2025 23:42:46.372 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
-30-01-2025 23:42:46.383 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
-30-01-2025 23:42:53.950 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
-30-01-2025 23:42:54.975 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
-30-01-2025 23:42:55.343 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
-30-01-2025 23:42:55.673 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
-30-01-2025 23:42:56.022 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
-30-01-2025 23:42:56.787 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
-30-01-2025 23:42:57.081 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
-30-01-2025 23:42:58.033 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:06:39.335 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:06:39.361 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:06:39.368 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 10:06:39.368 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 10:06:39.984 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 10:06:40.001 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 10:06:41.188 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:06:41.597 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
+25-02-2025 10:06:42.411 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 10:06:43.139 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:06:44.425 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:06:45.334 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
+25-02-2025 10:06:46.541 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> adding new reminder
+25-02-2025 10:07:02.644 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> adding new reminder
+25-02-2025 10:08:13.872 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> history
+25-02-2025 10:08:23.050 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> opening preferences dialog
+25-02-2025 10:50:24.248 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:50:24.262 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:50:24.267 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 10:50:24.268 [main] [DEBUG] remindme.MainApp - Background mode: true
+25-02-2025 10:50:24.268 [main] [INFO ] remindme.MainApp - Backup service starting in the background
+25-02-2025 10:50:24.580 [main] [INFO ] remindme.Services.BackgroundService - TrayIcon added
+25-02-2025 10:50:24.582 [main] [INFO ] remindme.Json.JSONConfigReader - Time interval set to 5 seconds
+25-02-2025 10:50:24.583 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 10:50:24.587 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 10:50:24.745 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: uuuu, IconName: Alert, SoundName: No Sound, Description: ]
+25-02-2025 10:51:23.874 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:51:23.893 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:51:23.899 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 10:51:23.899 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 10:51:24.449 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 10:51:24.460 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 10:51:37.579 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
+25-02-2025 10:51:37.773 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
+25-02-2025 10:51:37.774 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 0
+25-02-2025 10:51:37.774 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 10:51:50.732 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
+25-02-2025 10:52:05.162 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
+25-02-2025 10:55:24.592 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 10:55:24.595 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 10:55:24.606 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: uuuu, IconName: Alert, SoundName: No Sound, Description: ]
+25-02-2025 10:56:44.137 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:56:44.155 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:56:44.159 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 10:56:44.159 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 10:56:44.736 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 10:56:44.746 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 10:57:41.494 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:57:41.511 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 10:57:41.514 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 10:57:41.515 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 10:57:42.151 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 10:57:42.162 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 10:57:44.096 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
+25-02-2025 10:57:44.903 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:57:45.261 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 10:57:45.581 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 10:57:45.880 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:57:46.324 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:57:46.608 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
+25-02-2025 10:57:48.508 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
+25-02-2025 10:57:49.140 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 10:57:50.828 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
+25-02-2025 10:57:54.123 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
+25-02-2025 10:57:54.953 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:57:57.508 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
+25-02-2025 10:57:57.829 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
+25-02-2025 10:57:57.830 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 0
+25-02-2025 10:57:57.830 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 10:58:03.618 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 10:58:10.556 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 10:58:10.921 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:11.064 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:11.065 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 4
+25-02-2025 10:58:11.065 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 10:58:14.434 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 10:58:15.592 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:16.486 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:16.638 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:16.639 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 4
+25-02-2025 10:58:16.639 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 10:58:22.619 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:22.773 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:22.774 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 4
+25-02-2025 10:58:22.774 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 10:58:33.373 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 10:58:33.373 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 3
+25-02-2025 10:58:33.374 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 10:58:40.221 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 10:58:42.217 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:42.217 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 2
+25-02-2025 10:58:42.217 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 10:58:48.182 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:48.182 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 2
+25-02-2025 10:58:49.855 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> removing reminder
+25-02-2025 10:58:52.732 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:54.084 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 10:58:54.084 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 2
+25-02-2025 10:58:56.728 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> backup renaming
+25-02-2025 11:00:24.592 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:00:24.594 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:00:24.602 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:05:09.045 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:05:09.062 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:05:09.066 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 11:05:09.066 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 11:05:09.584 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 11:05:09.594 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 11:05:12.627 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 11:05:12.798 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 11:05:12.798 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 2
+25-02-2025 11:05:13.886 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> remind renaming
+25-02-2025 11:05:16.571 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 11:05:19.914 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 11:05:21.511 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 11:05:21.512 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 2
+25-02-2025 11:05:23.833 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
+25-02-2025 11:05:24.044 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
+25-02-2025 11:05:24.044 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 1
+25-02-2025 11:05:24.597 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:05:24.599 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:05:24.611 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:05:30.689 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 11:05:30.856 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 11:05:30.857 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 4
+25-02-2025 11:05:30.857 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 11:05:44.018 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 11:09:03.160 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 11:09:03.345 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 11:09:03.345 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 3
+25-02-2025 11:09:03.345 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 11:09:12.583 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 11:09:17.641 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 11:09:17.771 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 11:09:17.772 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 3
+25-02-2025 11:09:17.772 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 11:10:24.588 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:10:24.590 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:10:24.599 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:12:26.171 [Thread-1] [DEBUG] remindme.Services.BackgroundService - Stopping remind service
+25-02-2025 11:12:26.171 [Thread-1] [INFO ] remindme.Services.BackgroundService - Background service stopped
+25-02-2025 11:12:39.534 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:12:39.548 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:12:39.552 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 11:12:39.553 [main] [DEBUG] remindme.MainApp - Background mode: true
+25-02-2025 11:12:39.553 [main] [INFO ] remindme.MainApp - Backup service starting in the background
+25-02-2025 11:12:39.850 [main] [INFO ] remindme.Services.BackgroundService - TrayIcon added
+25-02-2025 11:12:39.851 [main] [INFO ] remindme.Json.JSONConfigReader - Time interval set to 5 seconds
+25-02-2025 11:12:39.852 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:12:39.857 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:12:40.012 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:12:48.794 [Thread-1] [DEBUG] remindme.Services.BackgroundService - Stopping remind service
+25-02-2025 11:12:48.795 [Thread-1] [INFO ] remindme.Services.BackgroundService - Background service stopped
+25-02-2025 11:14:59.482 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:14:59.495 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:14:59.500 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 11:14:59.500 [main] [DEBUG] remindme.MainApp - Background mode: true
+25-02-2025 11:14:59.501 [main] [INFO ] remindme.MainApp - Backup service starting in the background
+25-02-2025 11:14:59.754 [main] [INFO ] remindme.Services.BackgroundService - TrayIcon added
+25-02-2025 11:14:59.756 [main] [INFO ] remindme.Json.JSONConfigReader - Time interval set to 5 seconds
+25-02-2025 11:14:59.757 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:14:59.761 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:14:59.856 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:15:03.239 [Thread-1] [DEBUG] remindme.Services.BackgroundService - Stopping remind service
+25-02-2025 11:15:03.240 [Thread-1] [INFO ] remindme.Services.BackgroundService - Background service stopped
+25-02-2025 11:15:15.144 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:15:15.158 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:15:15.162 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 11:15:15.163 [main] [DEBUG] remindme.MainApp - Background mode: true
+25-02-2025 11:15:15.163 [main] [INFO ] remindme.MainApp - Backup service starting in the background
+25-02-2025 11:15:15.378 [main] [INFO ] remindme.Services.BackgroundService - TrayIcon added
+25-02-2025 11:15:15.379 [main] [INFO ] remindme.Json.JSONConfigReader - Time interval set to 5 seconds
+25-02-2025 11:15:15.380 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:15:15.384 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:15:15.479 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:20:15.388 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:20:15.390 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:20:15.406 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:25:15.388 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:25:15.390 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:25:15.404 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:30:15.392 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:30:15.394 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:30:15.404 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:35:15.383 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:35:15.384 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:35:15.398 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:39:57.197 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:39:57.218 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 11:39:57.224 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 11:39:57.224 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 11:39:57.823 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 11:39:57.832 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 11:39:59.270 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 11:39:59.755 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 11:40:15.386 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:40:15.387 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:40:15.399 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:45:15.381 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:45:15.384 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:45:15.414 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:50:15.385 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:50:15.386 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:50:15.396 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 11:55:15.381 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 11:55:15.382 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 11:55:15.393 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:00:15.383 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:00:15.384 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:00:15.394 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:05:15.393 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:05:15.394 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:05:15.404 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:10:15.383 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:10:15.384 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:10:15.394 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:15:15.384 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:15:15.385 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:15:15.394 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:20:15.387 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:20:15.388 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:20:15.400 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:25:15.381 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:25:15.382 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:25:15.393 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:30:15.392 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:30:15.393 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:30:15.402 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:35:15.385 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:35:15.386 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:35:15.396 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:40:15.392 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:40:15.393 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:40:15.404 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:45:15.387 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:45:15.388 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:45:15.400 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:50:15.403 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:50:15.422 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:50:15.432 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:50:35.779 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 12:50:35.800 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 12:50:35.804 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 12:50:35.805 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 12:50:36.431 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 12:50:36.441 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 12:50:42.329 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 12:50:44.958 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
+25-02-2025 12:50:45.194 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: asdasd
+25-02-2025 12:50:45.195 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 1
+25-02-2025 12:50:46.216 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> remind renaming
+25-02-2025 12:50:49.028 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Updating remind list
+25-02-2025 12:50:49.033 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 12:50:51.037 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Culo
+25-02-2025 12:50:58.790 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Culo
+25-02-2025 12:50:58.790 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 1
+25-02-2025 12:51:01.121 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> duplicating reminder
+25-02-2025 12:51:02.157 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Culo
+25-02-2025 12:51:02.158 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 1
+25-02-2025 12:51:16.341 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 12:51:58.077 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Culo
+25-02-2025 12:51:58.077 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 1
+25-02-2025 12:55:15.391 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 12:55:15.392 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 12:55:15.403 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 12:58:09.910 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 12:58:09.913 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 4
+25-02-2025 12:58:14.583 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> remind renaming
+25-02-2025 12:58:17.941 [AWT-EventQueue-0] [WARN ] remindme.Managers.RemindManager - Remind name 'Culo' is already in use
+25-02-2025 12:58:22.956 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 12:58:22.957 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 4
+25-02-2025 12:58:24.440 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> removing reminder
+25-02-2025 13:00:15.384 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:00:15.385 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:00:15.395 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:05:15.391 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:05:15.392 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:05:15.401 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:06:32.775 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 13:06:32.795 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 13:06:32.800 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 13:06:32.800 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 13:06:33.380 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 13:06:33.390 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 13:06:34.451 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 13:06:35.353 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:06:36.759 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:06:36.759 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 3
+25-02-2025 13:06:58.609 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> duplicating reminder
+25-02-2025 13:10:15.382 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:10:15.383 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:10:15.393 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:15:15.389 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:15:15.390 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:15:15.403 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:19:02.204 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 13:19:02.221 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 13:19:02.225 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 13:19:02.226 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 13:19:02.793 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 13:19:02.807 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 13:20:06.230 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:20:06.230 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 3
+25-02-2025 13:20:15.389 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:20:15.391 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:20:15.399 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:22:57.116 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 13:22:57.564 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:22:57.980 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 13:22:58.514 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Culo
+25-02-2025 13:23:33.585 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:23:33.585 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 3
+25-02-2025 13:23:52.394 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 13:23:52.683 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Culo
+25-02-2025 13:23:53.034 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: uuuu
+25-02-2025 13:24:05.242 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Culo
+25-02-2025 13:24:05.782 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 13:24:06.200 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:24:06.644 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 13:24:07.170 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:24:07.506 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Test
+25-02-2025 13:24:07.869 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Culo
+25-02-2025 13:24:14.282 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:24:14.451 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:24:14.451 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 3
+25-02-2025 13:24:23.687 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> duplicating reminder
+25-02-2025 13:24:23.687 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Updating remind list
+25-02-2025 13:24:23.693 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 13:24:27.632 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:24:33.321 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:24:33.322 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 5
+25-02-2025 13:24:34.121 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:24:34.282 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:24:34.282 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Double-click on row: 5
+25-02-2025 13:24:34.283 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> editing reminder
+25-02-2025 13:24:36.231 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:24:36.231 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 5
+25-02-2025 13:24:37.556 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> remind renaming
+25-02-2025 13:24:40.680 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Updating remind list
+25-02-2025 13:24:40.683 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 13:24:42.103 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello_copy
+25-02-2025 13:24:43.011 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Delete key pressed on rows: [5]
+25-02-2025 13:25:15.392 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:25:15.394 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:25:15.403 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello_copy, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:25:46.426 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 13:25:46.444 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 13:25:46.453 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 13:25:46.454 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 13:25:47.001 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 13:25:47.011 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 13:25:48.065 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:25:48.423 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello
+25-02-2025 13:25:48.423 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 3
+25-02-2025 13:25:49.342 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> duplicating reminder
+25-02-2025 13:25:49.342 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Updating remind list
+25-02-2025 13:25:49.347 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 13:25:50.592 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello_copy
+25-02-2025 13:25:52.827 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello_copy
+25-02-2025 13:25:52.827 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 4
+25-02-2025 13:25:53.910 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> removing reminder
+25-02-2025 13:30:15.381 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:30:15.382 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:30:15.394 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:32:14.175 [main] [INFO ] remindme.Entities.Preferences - Preferences loaded from JSON file: language = eng.json, theme = Solarized light
+25-02-2025 13:32:14.195 [main] [INFO ] remindme.Entities.Preferences - Preferences updated to JSON file: language = eng.json, theme = Solarized light
+25-02-2025 13:32:14.199 [main] [INFO ] remindme.MainApp - Application started
+25-02-2025 13:32:14.200 [main] [DEBUG] remindme.MainApp - Background mode: false
+25-02-2025 13:32:14.788 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Checking for first access
+25-02-2025 13:32:14.797 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Current user: Dennis Turco, dennisturco@gmail.com, italiano (Italia)
+25-02-2025 13:32:24.144 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello_copy
+25-02-2025 13:32:24.328 [AWT-EventQueue-0] [DEBUG] remindme.GUI.MainGUI - Selected remind: Donatello_copy
+25-02-2025 13:32:24.328 [AWT-EventQueue-0] [INFO ] remindme.GUI.MainGUI - Right click on row: 4
+25-02-2025 13:32:25.042 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Event --> removing reminder
+25-02-2025 13:32:25.042 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Remind removed successfully: [Name: Donatello_copy, Description: Donatello è gay, IsActive: true, IsTopLevel: false, TimeInterval: 0.0:1]
+25-02-2025 13:32:25.043 [AWT-EventQueue-0] [INFO ] remindme.Managers.RemindManager - Updating remind list
+25-02-2025 13:32:25.047 [AWT-EventQueue-0] [DEBUG] remindme.Table.TableDataManager - updating remind list
+25-02-2025 13:35:15.388 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:35:15.390 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:35:15.399 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:40:15.382 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:40:15.383 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:40:15.392 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:45:15.385 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:45:15.386 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:45:15.396 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]
+25-02-2025 13:50:15.384 [pool-2-thread-1] [DEBUG] remindme.Services.BackgroundService - Checking for reminds...
+25-02-2025 13:50:15.385 [pool-2-thread-1] [INFO ] remindme.Services.BackgroundService - Start remind process.
+25-02-2025 13:50:15.395 [AWT-EventQueue-0] [INFO ] remindme.Dialogs.ReminderDialog - Reminder opened with values: [Name: Donatello, IconName: Man doind shopping, SoundName: Owu Woman Sound, Description: Donatello è gay]

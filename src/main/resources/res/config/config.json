@@ -1,5 +1,6 @@
 {
-  "LOG_FILE_STRING": "log_file.txt",
+  "LOG_FILE_STRING": "application.log",
+  "LOG_DIRECTORY_STRING": "src/main/resources/res/logs/",
   "REMIND_LIST_FILE_STRING": "remind_list",
   "CONFIG_FILE_STRING": "config.json",
   "PREFERENCES_FILE_STRING": "preferences.json",
@@ -9,7 +10,8 @@
   "RES_DIRECTORY_STRING": "src/main/resources/res/",
   "LANGUAGES_DIRECTORY_STRING": "src/main/resources/res/languages/",
   "CONFIG_DIRECTORY_STRING": "src/main/resources/res/config/",
-  "DONATE_PAGE_LINK": "https://buymeacoffee.com/denno",
+  "DONATE_BUYMEACOFFE_LINK": "https://buymeacoffee.com/denno",
+  "DONATE_PAYPAL_LINK": "https://www.paypal.com/donate/?hosted_button_id=M7CJXS929334U",
   "ISSUE_PAGE_LINK": "https://github.com/DennisTurco/RemindMe/issues",
   "INFO_PAGE_LINK": "https://github.com/DennisTurco/RemindMe",
   "SHARE_LINK": "https://github.com/DennisTurco/RemindMe/releases",
@@ -25,6 +27,8 @@
     "Preferences": true,
     "Clear": true,
     "Donate": true,
+    "PaypalDonate": true,
+    "BuymeacoffeeDonate": true,
     "History": true,
     "InfoPage": true,
     "New": true,
@@ -39,7 +43,7 @@
   },
 
   "ReminderService": {
-    "value": 5,
+    "value": 1,
     "type": "int",
     "description": "Interval in seconds to check for reminder"
   },

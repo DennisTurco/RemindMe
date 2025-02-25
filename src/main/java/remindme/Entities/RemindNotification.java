@@ -16,6 +16,13 @@ public class RemindNotification {
         this.sound = sound;
     }
 
+    public RemindNotification(Remind remind) {
+        this.name = remind.getName();
+        this.description = remind.getDescription();
+        this.icon = remind.getIcon();
+        this.sound = remind.getSound();
+    }
+
     @Override
     public String toString() {
         return String.format("[Name: %s, IconName: %s, SoundName: %s, Description: %s]",
@@ -57,7 +64,5 @@ public class RemindNotification {
     public void setSound(SoundsEnum sound) {
         this.sound = sound;
     }
-    
-    
     
 }

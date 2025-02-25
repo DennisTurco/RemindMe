@@ -23,6 +23,7 @@ public class TableDataManager {
 
             for (Remind remind : updatedReminds) {
                 MainGUI.model.addRow(new Object[]{
+                    remind.getIcon().getIconPath(),
                     remind.getName(),
                     remind.isActive(),
                     remind.isTopLevel(),
@@ -39,7 +40,7 @@ public class TableDataManager {
         if (table == null) throw new IllegalArgumentException("Table cannot be null");
 
         for (int i = 0; i < table.getRowCount(); i++) {
-            if (table.getValueAt(i, 0).equals(remind.getName())) { // first column holds unique remind names
+            if (table.getValueAt(i, 1).equals(remind.getName())) { // first column holds unique remind names
                 return i;
             }
         }

@@ -94,6 +94,7 @@ public class TranslationLoaderEnum {
         DUPLICATE_POPUP("DuplicatePopup", "Duplicate"),
         RENAME_POPUP("RenamePopup", "Rename"),
         COPY_NAME_POPUP("CopyNamePopup", "Copy remind name"),
+        ICON_COLUMN("IconColumn", "Icon"),
         NAME_COLUMN("NameColumn", "Name"),
         LAST_EXECUTION_COLUMN("LastExecutionColumn", "Last Execution"),
         NEXT_EXECUTION_COLUMN("NextExecutionColumn", "Next Execution"),
@@ -130,12 +131,12 @@ public class TranslationLoaderEnum {
 
         // TimePickerDialog
         TIME_INTERVAL_TITLE("TimeIntervalTitle", "Time interval for reminder"),
-        DESCRIPTION("Description", ""),
+        DESCRIPTION("Description", "Select how often to open the reminder \nby choosing the frequency in days, hours, and minutes."),
         DAYS("Days", "Days"),
         HOURS("Hours", "Hours"),
         MINUTES("Minutes", "Minutes"),
-        SECONDS("Seconds", "Seconds"),
         SPINNER_TOOLTIP("SpinnerTooltip", "Mouse wheel to adjust the value"),
+        FORMAT("Format", "dd.HH:mm"), 
 
         // PreferencesDialog
         PREFERENCES_TITLE("PreferencesTitle", "Preferences"),

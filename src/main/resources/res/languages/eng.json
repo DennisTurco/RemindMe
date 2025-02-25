@@ -37,6 +37,7 @@
         "ResearchBarPlaceholder": "Search..."
     },
     "RemindList": {
+        "IconColumn": "Icon",
         "NameColumn": "Name",
         "LastExecutionColumn": "Last Execution",
         "NextExecutionColumn": "Next Execution",
@@ -80,12 +81,12 @@
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Time interval for reminder",
-        "Description": " by \nchoosing the frequency in days, hours, minutes and seconds.",
+        "Description": "Select how often to open the reminder by \nchoosing the frequency in days, hours and minutes",
         "Days": "Days",
         "Hours": "Hours",
         "Minutes": "Minutes",
-        "Seconds": "Seconds",
-        "SpinnerTooltip": "Mouse wheel to adjust the value"
+        "SpinnerTooltip": "Mouse wheel to adjust the value",
+        "Format": "dd.HH:mm"
     },
     "TrayIcon": {
         "TrayTooltip": "Remind Service"
