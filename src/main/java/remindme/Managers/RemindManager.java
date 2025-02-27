@@ -408,12 +408,44 @@ public final class RemindManager {
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
     }
 
-    public void popupActive(javax.swing.JTable table) {
-        String remindName = getRemindNameByTableRow(table);
+    public void popupActive(javax.swing.JTable table, javax.swing.JCheckBoxMenuItem activePopupItem) {
+        boolean newState = activePopupItem.isSelected();
+        activePopupItem.setSelected(newState);
+        
+        logger.info("Event --> changing state for active popup to: " + newState);
+
+        Remind remind = Remind.getRemindByName(getRemindNameByTableRow(table));
+        for (Remind rem : reminds) {
+            if (remind.getName().equals(rem.getName())) {
+                rem.setIsActive(newState);
+
+                if (newState) {
+                    rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
+                } else {
+                    rem.setNextExecution(null);
+                    rem.setTimeInterval(null);
+                }
+
+                break;
+            }
+        }
+        updateRemindList();
     }
 
-    public void popupTopLevl(javax.swing.JTable table) {
-        String remindName = getRemindNameByTableRow(table);
+    public void popupTopLevl(javax.swing.JTable table, javax.swing.JCheckBoxMenuItem topLevelPopupItem) {
+        boolean newState = topLevelPopupItem.isSelected();
+        topLevelPopupItem.setSelected(newState);
+        
+        logger.info("Event --> changing state for top level popup to: " + newState);
+
+        Remind remind = Remind.getRemindByName(getRemindNameByTableRow(table));
+        for (Remind rem : reminds) {
+            if (remind.getName().equals(rem.getName())) {
+                rem.setIsTopLevel(newState);
+                break;
+            }
+        }
+        updateRemindList();
     }
 
     ///////////////////////////////////////////////////////////////////

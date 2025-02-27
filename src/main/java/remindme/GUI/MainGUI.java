@@ -870,11 +870,11 @@ public final class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tablePanelMouseClicked
 
     private void activePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activePopupItemActionPerformed
-        remindManager.popupActive(table);
+        remindManager.popupActive(table, activePopupItem);
     }//GEN-LAST:event_activePopupItemActionPerformed
 
     private void topLevelPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_topLevelPopupItemActionPerformed
-        remindManager.popupTopLevl(table);
+        remindManager.popupTopLevl(table, topLevelPopupItem);
     }//GEN-LAST:event_topLevelPopupItemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

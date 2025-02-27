@@ -26,7 +26,6 @@ public class ManageRemind extends javax.swing.JDialog {
         this.currentRemind = remind;
         this.create = false;
         this.timeInterval = remind.getTimeInterval();
-        jLabel1.setText(timeInterval.toString());
     }
 
     public ManageRemind(java.awt.Frame parent, boolean modal, String title, String confirmBtnName) {
@@ -35,7 +34,6 @@ public class ManageRemind extends javax.swing.JDialog {
         this.currentRemind = null;
         this.create = true;
         this.timeInterval = TimeInterval.getDefaultTimeInterval();
-        jLabel1.setText(timeInterval.toString());
     }
 
     private void initializeDialog(String title, String confirmBtnName) {
@@ -44,6 +42,7 @@ public class ManageRemind extends javax.swing.JDialog {
         setTitle(title);
         OkBtn.setText(confirmBtnName);
         this.closeOk = false;
+        jLabel1.setText(timeInterval.toString());
 
         setIcons();
         setSounds();
