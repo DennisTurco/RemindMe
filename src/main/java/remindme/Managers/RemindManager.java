@@ -168,10 +168,7 @@ public final class RemindManager {
         List<Remind> tempReminds = new ArrayList<>();
         
         for (Remind remind : reminds) {
-            if (remind.getName().contains(research) || 
-                    (remind.getLastExecution() != null && remind.getLastExecution().toString().contains(research)) ||
-                    (remind.getNextExecution() != null && remind.getNextExecution().toString().contains(research)) ||
-                    (remind.getTimeInterval() != null && remind.getTimeInterval().toString().contains(research))) {
+            if (remind.getName().toLowerCase().contains(research)) {
                 tempReminds.add(remind);
             }
         }
