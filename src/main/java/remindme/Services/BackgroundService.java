@@ -32,6 +32,7 @@ import remindme.Enums.ConfigKey;
 import remindme.GUI.MainGUI;
 import remindme.Json.JSONConfigReader;
 import remindme.Json.JSONReminder;
+import remindme.Managers.RemindManager;
 
 public class BackgroundService {
     private static final Logger logger = LoggerFactory.getLogger(BackgroundService.class);
@@ -41,6 +42,7 @@ public class BackgroundService {
     private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     private TrayIcon trayIcon = null;
     private MainGUI guiInstance = null;
+    private List<ReminderDialog> remindersDialogOpened = new ArrayList<>();
 
     public void startService() throws IOException {
         if (trayIcon == null) {
@@ -131,6 +133,7 @@ public class BackgroundService {
             logger.debug("Checking for reminds...");
             try {
                 List<Remind> reminds = json.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+                RemindManager.reminds = reminds;
                 List<Remind> needsRemind = getRemindsToDo(reminds, 1);
                 if (needsRemind != null && !needsRemind.isEmpty()) {
                     logger.info("Start remind process.");
@@ -160,9 +163,30 @@ public class BackgroundService {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 for (Remind remind : reminds) {
                     // open notification
-                    new ReminderDialog(null, remind.isTopLevel(), new RemindNotification(remind), false).setVisible(true);
+                    ReminderDialog dialog = new ReminderDialog(null, false, new RemindNotification(remind), false);
+                    dialog.setVisible(true);
+                    
+                    // remove old dialog if exists
+                    ReminderDialog oldDialog = alreadyDialogOpened(remind);
+                    if (oldDialog != null) {
+                        logger.debug("Removing old reminder dialog instance: " + dialog.toString());
+                        remindersDialogOpened.remove(oldDialog);
+                        oldDialog.dispose();
+                    }
+
+                    remindersDialogOpened.add(dialog);
                 }
             });
+        }
+
+        private ReminderDialog alreadyDialogOpened(Remind remind) {
+            for (ReminderDialog reminderDialog : remindersDialogOpened) {
+                if (reminderDialog.remindNotification.getName().equals(remind.getName())) {
+                    return reminderDialog;
+                }
+            }
+
+            return null;
         }
     }
 }

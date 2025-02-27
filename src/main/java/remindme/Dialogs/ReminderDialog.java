@@ -3,7 +3,6 @@ package remindme.Dialogs;
 import java.awt.Image;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -22,6 +21,7 @@ public class ReminderDialog extends javax.swing.JDialog {
     private static final Logger logger = LoggerFactory.getLogger(ReminderDialog.class);
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     private final int maxLength = 30;
+    public RemindNotification remindNotification;
     
     public ReminderDialog(java.awt.Dialog parent, boolean modal, RemindNotification remind, boolean preview) {
         super(parent, modal);
@@ -46,6 +46,9 @@ public class ReminderDialog extends javax.swing.JDialog {
     
     private void initDialog(RemindNotification remind) {
         logger.info("Reminder opened with values: " + remind.toString());
+
+        remindNotification = remind;
+
         setNameLabelText(remind.getName());
         descriptionEditor.setText(remind.getDescription());
         iconLabel.setSvgImage(remind.getIcon().getIconPath(), 50, 50);
@@ -73,6 +76,11 @@ public class ReminderDialog extends javax.swing.JDialog {
             text = text.substring(0, maxLength) + "...";
         }
         nameLabel.setText(text);
+    }
+
+    @Override
+    public String toString() {
+        return remindNotification.toString();
     }
 
     /**

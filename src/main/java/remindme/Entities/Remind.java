@@ -97,7 +97,7 @@ public class Remind {
     }
 
     public static String getCSVHeader() {
-        return "Name,Active,TopLevel,LastExecution,NextExecution,Interval (gg.HH:mm:ss)";
+        return "Name,Active,TopLevel,LastExecution,NextExecution,Interval (gg.HH:mm)";
     }
 
     public static Remind getRemindByName(List<Remind> reminds, String remindName) {
