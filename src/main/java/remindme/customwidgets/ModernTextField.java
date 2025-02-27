@@ -11,8 +11,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
@@ -20,6 +22,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 public class ModernTextField extends JTextField {
 
     private String labelText = "Label";
+    private String hintText = "Label";
     private Color lineColor = new Color(3, 155, 216);
     private final Animator animator;
     private boolean animateHinText = true;
@@ -119,7 +122,7 @@ public class ModernTextField extends JTextField {
         double textY = (height - r2.getHeight()) / 2;
         double size = animateHinText ? (show ? 18 * (1 - location) : 18 * location) : 18;
 
-        g2.drawString(labelText, in.right, (int) (in.top + textY + ft.getAscent() - size));
+        g2.drawString(hintText, in.right, (int) (in.top + textY + ft.getAscent() - size));
     }
 
     private void createLineStyle(Graphics2D g2) {
@@ -141,6 +144,11 @@ public class ModernTextField extends JTextField {
         if (wasEmpty != string.isEmpty()) {
             showing(string.isEmpty());
         }
+    }
+
+    public void setHintText(String string) {
+        this.hintText = string;
+        repaint();
     }
 
     // Getters and setters

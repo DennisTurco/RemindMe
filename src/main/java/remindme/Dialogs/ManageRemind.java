@@ -114,7 +114,7 @@ public class ManageRemind extends javax.swing.JDialog {
     }
 
     private void setTranslations() {
-        remindNameTextField.setText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.NAME_TEXT));
+        remindNameTextField.setHintText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.NAME_TEXT));
         activeCheckBox.setText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.ACTIVE_TEXT));
         topLevelCheckBox.setText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.TOP_LEVEL_TEXT));
         reminderPreviewBtn.setText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.PREVIEW_TEXT));
