@@ -23,7 +23,7 @@ public class MainApp {
         ConfigKey.loadFromJson(CONFIG);
 
         // load preferred language
-        try { 
+        try {
             Preferences.loadPreferencesFromJSON();
             TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
         } catch (IOException ex) {
@@ -37,10 +37,10 @@ public class MainApp {
             logger.warn("Argument \""+ args[0] +"\" not valid!");
             throw new IllegalArgumentException("Argument passed is not valid!");
         }
-        
+
         logger.info("Application started");
         logger.debug("Background mode: " + isBackgroundMode);
-        
+
         if (isBackgroundMode) {
             logger.info("Backup service starting in the background");
             BackgroundService service = new BackgroundService();

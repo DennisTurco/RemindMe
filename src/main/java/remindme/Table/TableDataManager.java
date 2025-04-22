@@ -15,9 +15,9 @@ public class TableDataManager {
 
     private static final Logger logger = LoggerFactory.getLogger(TableDataManager.class);
 
-    public static void updateTableWithNewRemindList(List<Remind> updatedReminds, DateTimeFormatter formatter) { 
+    public static void updateTableWithNewRemindList(List<Remind> updatedReminds, DateTimeFormatter formatter) {
         logger.debug("updating remind list");
-        
+
         SwingUtilities.invokeLater(() -> {
             MainGUI.model.setRowCount(0);
 
@@ -45,5 +45,5 @@ public class TableDataManager {
             }
         }
         return -1;
-    }   
+    }
 }

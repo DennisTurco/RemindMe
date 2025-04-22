@@ -131,14 +131,14 @@ class ImportExportManager {
             PdfWriter writer = new PdfWriter(fullPath);
             PdfDocument pdfDoc = new PdfDocument(writer);
             Document document = new Document(pdfDoc);
-            
+
             // insert pdf title
             document.add(new Paragraph(Preferences.getRemindList().getFile()).setFontSize(12f).setBold());
 
             // Create table
             String[] headerArray = headers.split(","); // Assuming headers are comma-separated
             Table table = new Table(headerArray.length);
-            
+
             // Add header cells
             for (String header : headerArray) {
                 table.addCell(new Cell().add(new Paragraph(header.trim())).setFontSize(8f)); // Wrap the header in a Paragraph
@@ -159,16 +159,16 @@ class ImportExportManager {
                     }
                 }
             }
-            
+
             // Add table to document
             document.add(table);
-            
+
             // Close document
             document.close();
-            
+
             // Notify success
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESSFULLY_EXPORTED_TO_PDF_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.SUCCESS_GENERIC_TITLE), JOptionPane.INFORMATION_MESSAGE);
-            
+
         } catch (IOException ex) {
             logger.error("Error exporting reminds to PDF: " + ex.getMessage(), ex);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_EXPORTING_TO_PDF) + ex.getMessage(), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
@@ -199,7 +199,7 @@ class ImportExportManager {
             logger.info("Exporting reminds to CSV cancelled due to invalid file name");
             return;
         }
-        
+
         // Build full path
         String fullPath = Paths.get(path, filename + ".csv").toString();
 

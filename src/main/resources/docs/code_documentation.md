@@ -1,6 +1,6 @@
 <center> <img src="../res/img/logo.png" height="150"> </center>
 
-# Backup Manager Documentation
+# Remind Me Documentation
 
 ## Usefull commands
 * To compile the project: `mvn package`

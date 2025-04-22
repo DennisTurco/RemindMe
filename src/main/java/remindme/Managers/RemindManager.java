@@ -333,9 +333,14 @@ public final class RemindManager {
         WebsiteManager.openWebSite(ConfigKey.SHARD_WEBSITE.getValue());
     }
 
-    public void menuDonate() {
-        logger.info("Event --> donate");
-        WebsiteManager.openWebSite(ConfigKey.DONATE_PAGE_LINK.getValue());
+    public void menuItemDonateViaBuymeacoffe() {
+        logger.info("Event --> buymeacoffe donation");
+        WebsiteManager.openWebSite(ConfigKey.DONATE_BUYMEACOFFE_LINK.getValue());
+    }
+
+    public void menuItemDonateViaPaypal() {
+        logger.info("Event --> paypal donation");
+        WebsiteManager.openWebSite(ConfigKey.DONATE_PAYPAL_LINK.getValue());
     }
 
     public void menuBugReport() {
@@ -369,7 +374,8 @@ public final class RemindManager {
     }
 
     public void menuInfoPage() {
-
+        logger.info("Event --> shard website");
+        WebsiteManager.openWebSite(ConfigKey.INFO_PAGE_LINK.getValue());
     }
 
     ///////////////////////////////////////////////////////////////////
