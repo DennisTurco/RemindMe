@@ -17,12 +17,12 @@ import remindme.Managers.SoundPlayer;
 import remindme.Managers.ThemeManager;
 
 public class ReminderDialog extends javax.swing.JDialog {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(ReminderDialog.class);
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     private final int maxLength = 30;
     public RemindNotification remindNotification;
-    
+
     public ReminderDialog(java.awt.Dialog parent, boolean modal, RemindNotification remind, boolean preview) {
         super(parent, modal);
         initComponents();
@@ -38,12 +38,12 @@ public class ReminderDialog extends javax.swing.JDialog {
         if (!preview) {
             updateRemindAfterShow(remind);
         }
-        
+
         descriptionEditor.setEditable(false);
         descriptionEditor.setOpaque(false);
         descriptionEditor.setBorder(null);
     }
-    
+
     private void initDialog(RemindNotification remind) {
         logger.info("Reminder opened with values: " + remind.toString());
 
@@ -53,7 +53,9 @@ public class ReminderDialog extends javax.swing.JDialog {
         descriptionEditor.setText(remind.getDescription());
         iconLabel.setSvgImage(remind.getIcon().getIconPath(), 50, 50);
         SoundPlayer.playSound(remind.getSound());
-        
+
+        setAlwaysOnTop(remind.isTopLevel());
+
         timeLabel.setText(LocalDateTime.now().format(timeFormatter));
    }
 
@@ -70,7 +72,7 @@ public class ReminderDialog extends javax.swing.JDialog {
 
         remindManager.updateRemindList();
     }
-    
+
     private void setNameLabelText(String text) {
         if (text != null && text.length() > maxLength) {
             text = text.substring(0, maxLength) + "...";

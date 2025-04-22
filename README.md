@@ -3,6 +3,10 @@
 # Remind Me
 ...
 
+# Commands
+* To create a new .jar file: `mvn clean package`
+* To run the background service: `java -jar ./target/RemindMe-1.0-SNAPSHOT-jar-with-dependencies.jar --background`
+
 ## Platforms
 
 | Platform | Availability |

@@ -55,17 +55,17 @@ import remindme.Managers.RemindManager;
 public final class MainGUI extends javax.swing.JFrame {
     private static final Logger logger = LoggerFactory.getLogger(MainGUI.class);
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
-    
+
     private Integer selectedRow;
     private final RemindManager remindManager;
 
     public static DefaultTableModel model;
     public static RemindTable remindTable;
     public static RemindTableModel tableModel;
-    
+
     public MainGUI() {
         ThemeManager.updateThemeFrame(this);
-        
+
         initComponents();
 
         remindManager = new RemindManager(this);
@@ -76,7 +76,7 @@ public final class MainGUI extends javax.swing.JFrame {
 
         // load Menu items
         setMenuItems();
-        
+
         // set app sizes
         setScreenSize();
 
@@ -87,7 +87,7 @@ public final class MainGUI extends javax.swing.JFrame {
 
         // translations
         setTranslations();
-        
+
         // set all svg images
         setSvgImages();
 

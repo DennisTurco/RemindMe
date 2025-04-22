@@ -8,12 +8,14 @@ public class RemindNotification {
     private String description;
     private IconsEnum icon;
     private SoundsEnum sound;
-    
-    public RemindNotification(String name, String description, IconsEnum icon, SoundsEnum sound) {
+    private boolean topLevel;
+
+    public RemindNotification(String name, String description, IconsEnum icon, SoundsEnum sound, boolean topLevel) {
         this.name = name;
         this.description = description;
         this.icon = icon;
         this.sound = sound;
+        this.topLevel = topLevel;
     }
 
     public RemindNotification(Remind remind) {
@@ -21,6 +23,7 @@ public class RemindNotification {
         this.description = remind.getDescription();
         this.icon = remind.getIcon();
         this.sound = remind.getSound();
+        this.topLevel = remind.isTopLevel();
     }
 
     @Override
@@ -49,6 +52,10 @@ public class RemindNotification {
         return sound;
     }
 
+    public boolean isTopLevel() {
+        return topLevel;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -64,5 +71,8 @@ public class RemindNotification {
     public void setSound(SoundsEnum sound) {
         this.sound = sound;
     }
-    
+
+    public void setTopLevel(boolean topLevel) {
+        this.topLevel = topLevel;
+    }
 }

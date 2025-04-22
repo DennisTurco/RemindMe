@@ -38,7 +38,7 @@ public final class RemindManager {
 
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    
+
     private JSONReminder JSON;
     private static MainGUI main; // static, cause i need only one for instance
     public static List<Remind> reminds; // static, cause i need only one for instance
@@ -56,7 +56,7 @@ public final class RemindManager {
         reminds = getReminds();
         JSON = new JSONReminder();
     }
-    
+
     public void openPreferences() {
         logger.info("Event --> opening preferences dialog");
 
@@ -75,7 +75,7 @@ public final class RemindManager {
             logger.error("An error occurred during reloading preferences operation: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
-        
+
         // load theme
         ThemeManager.updateThemeFrame(main);
         ThemeManager.refreshPopup(main.getTablePopup());
@@ -84,13 +84,13 @@ public final class RemindManager {
 
     public void updateRemindList() {
         logger.info("Updating remind list");
-         
+
         // update
         JSON.updateRemindListJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile(), reminds);
 
         // get from file
         getRemindList();
-        
+
         if (MainGUI.model != null)
             TableDataManager.updateTableWithNewRemindList(reminds, formatter);
     }
@@ -110,16 +110,16 @@ public final class RemindManager {
         while (true) {
             String remindName = JOptionPane.showInputDialog(null, 
                 TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_NAME_INPUT), oldName);
-    
+
             // If the user cancels the operation
             if (remindName == null || remindName.trim().isEmpty()) {
                 return null;
             }
-            
+
             Optional<Remind> existingBackup = reminds.stream()
                 .filter(b -> b.getName().equals(remindName))
                 .findFirst();
-    
+
             if (existingBackup.isPresent()) {
                 if (canOverwrite) {
                     int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_REMIND_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -140,9 +140,9 @@ public final class RemindManager {
 
     public static String pathSearchWithFileChooser(boolean allowFiles) {
         logger.info("Event --> File chooser");
-        
+
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        
+
         if (allowFiles)
             jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         else
@@ -166,13 +166,13 @@ public final class RemindManager {
 
     public void researchInTable(String research) {
         List<Remind> tempReminds = new ArrayList<>();
-        
+
         for (Remind remind : reminds) {
             if (remind.getName().toLowerCase().contains(research)) {
                 tempReminds.add(remind);
             }
         }
-        
+
         TableDataManager.updateTableWithNewRemindList(tempReminds, formatter);
     }
 
@@ -189,7 +189,7 @@ public final class RemindManager {
 
     public void addReminder() {
         logger.info("Event --> adding new reminder");
-        
+
         ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.CREATE_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.ADD_BUTTON));
         manage.setVisible(true);
         Remind remind = manage.getRemindInserted();
@@ -234,28 +234,28 @@ public final class RemindManager {
 
         LocalDateTime dateNow = LocalDateTime.now();
         Remind newRemind = new Remind(
-            remind.getName() + "_copy", 
-            remind.getDescription(), 
-            0, 
-            remind.isActive(), 
-            remind.isTopLevel(), 
-            remind.getLastExecution(), 
-            remind.getNextExecution(), 
-            dateNow, 
-            dateNow, 
-            remind.getTimeInterval(), 
-            remind.getIcon(), 
+            remind.getName() + "_copy",
+            remind.getDescription(),
+            0,
+            remind.isActive(),
+            remind.isTopLevel(),
+            remind.getLastExecution(),
+            remind.getNextExecution(),
+            dateNow,
+            dateNow,
+            remind.getTimeInterval(),
+            remind.getIcon(),
             remind.getSound()
         );
-        
-        reminds.add(newRemind); 
+
+        reminds.add(newRemind);
         updateRemindList();
     }
 
     public void importRemindListFromJSON() {
         logger.info("Event --> importing remind list from json");
         List<Remind> newReminds = ImportExportManager.importRemindListFromJson(main, JSON, dateForfolderNameFormatter);
-        
+
         // replace the current list with the imported one
         if (newReminds != null)
             reminds = newReminds;
@@ -281,10 +281,10 @@ public final class RemindManager {
 
     public void renameRemind(Remind remind) {
         logger.info("Event --> remind renaming");
-        
+
         String remindName = insertAndGetRemindName(reminds, remind.getName(), false);
         if (remindName == null || remindName.isEmpty()) return;
-        
+
         for (Remind rem : reminds) {
             if (remind.getName().equals(rem.getName())) {
                 rem.setName(remindName);
@@ -301,10 +301,10 @@ public final class RemindManager {
         ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EDIT_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON), remind);
         manage.setVisible(true);
         Remind updatedRemind = manage.getRemindInserted();
-        
+
         if (updatedRemind == null)
             return;
-        
+
         remind.updateReming(updatedRemind);
 
         // modifica lista

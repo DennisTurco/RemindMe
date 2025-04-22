@@ -18,22 +18,24 @@ public class ManageRemind extends javax.swing.JDialog {
     private boolean closeOk;
     private final Remind currentRemind;
     private TimeInterval timeInterval;
-    
+
     public ManageRemind(java.awt.Frame parent, boolean modal, String title, String confirmBtnName, Remind remind) {
         super(parent, modal);
-        initializeDialog(title, confirmBtnName);
-        insertRemindValues(remind);
+        this.timeInterval = remind.getTimeInterval();
         this.currentRemind = remind;
         this.create = false;
-        this.timeInterval = remind.getTimeInterval();
+
+        initializeDialog(title, confirmBtnName);
+        insertRemindValues(remind);
     }
 
     public ManageRemind(java.awt.Frame parent, boolean modal, String title, String confirmBtnName) {
         super(parent, modal);
-        initializeDialog(title, confirmBtnName);
+        this.timeInterval = TimeInterval.getDefaultTimeInterval();
         this.currentRemind = null;
         this.create = true;
-        this.timeInterval = TimeInterval.getDefaultTimeInterval();
+
+        initializeDialog(title, confirmBtnName);
     }
 
     private void initializeDialog(String title, String confirmBtnName) {
@@ -51,7 +53,7 @@ public class ManageRemind extends javax.swing.JDialog {
     }
 
     public Remind getRemindInserted() {
-        if (!closeOk) 
+        if (!closeOk)
             return null;
 
         String name = remindNameTextField.getText();
@@ -106,7 +108,7 @@ public class ManageRemind extends javax.swing.JDialog {
         iconComboBox.setSelectedItem(remind.getIcon().getIconName());
         soundComboBox.setSelectedItem(remind.getSound().getSoundName());
     }
-    
+
     public void setSvgImages() {
         soundPreviewBtn.setSvgImage("res/img/sound.svg", 35, 35);
         timeIntervalBtn.setSvgImage("res/img/timer.svg", 50, 50);
@@ -123,7 +125,7 @@ public class ManageRemind extends javax.swing.JDialog {
 
         timeIntervalBtn.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.TIME_INTERVAL_TITLE));
         jLabel1.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.FORMAT));
-        
+
         remindNameTextField.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.NAME_TOOLTIP));
         descriptionTextArea.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.DESCRIPTION_TOOLTIP));
         activeCheckBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.ACTIVE_TOOLTIP));
@@ -158,10 +160,10 @@ public class ManageRemind extends javax.swing.JDialog {
         iconComboBox.addItem(IconsEnum.PAUSE_CIRCLE.getIconName());
         iconComboBox.addItem(IconsEnum.WARNING.getIconName());
         iconComboBox.addItem(IconsEnum.WORK.getIconName());
-        
+
         iconComboBox.setSelectedItem(IconsEnum.getDefaultIcon());
     }
-    
+
     private void setSounds() {
         soundComboBox.removeAllItems();
 
@@ -179,7 +181,7 @@ public class ManageRemind extends javax.swing.JDialog {
         soundComboBox.addItem(SoundsEnum.Sound11.getSoundName());
         soundComboBox.addItem(SoundsEnum.Sound12.getSoundName());
         soundComboBox.addItem(SoundsEnum.Sound13.getSoundName());
-        
+
         soundComboBox.setSelectedItem(SoundsEnum.getDefaultSound());
     }
 
@@ -357,7 +359,7 @@ public class ManageRemind extends javax.swing.JDialog {
     }//GEN-LAST:event_OkBtnActionPerformed
 
     private void reminderPreviewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reminderPreviewBtnActionPerformed
-        RemindNotification remind = new RemindNotification(remindNameTextField.getText(), descriptionTextArea.getText(), IconsEnum.getIconbyName((String)iconComboBox.getSelectedItem()), SoundsEnum.getSoundbyName((String)soundComboBox.getSelectedItem()));
+        RemindNotification remind = new RemindNotification(remindNameTextField.getText(), descriptionTextArea.getText(), IconsEnum.getIconbyName((String)iconComboBox.getSelectedItem()), SoundsEnum.getSoundbyName((String)soundComboBox.getSelectedItem()), topLevelCheckBox.isSelected());
         ReminderDialog dialog = new ReminderDialog(this, false, remind, true);
         dialog.setVisible(true);
     }//GEN-LAST:event_reminderPreviewBtnActionPerformed

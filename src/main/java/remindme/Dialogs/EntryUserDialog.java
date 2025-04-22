@@ -21,10 +21,10 @@ public class EntryUserDialog extends javax.swing.JDialog {
         emailTextField.setDocument(new LimitDocument(32));
 
         user = null;
-        
+
         setTranslactions();
     }
-    
+
     private void setTranslactions() {
         setTitle(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_TITLE));
         nameLabel.setText(TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.USER_NAME));
@@ -141,7 +141,7 @@ public class EntryUserDialog extends javax.swing.JDialog {
         String name = nameTextField.getText();
         String surname = surnameTextField.getText();
         String email = emailTextField.getText();
-        
+
         if (name.isEmpty() || surname.isEmpty() || email.isEmpty()) {
             JOptionPane.showMessageDialog(this, TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_MISSING_DATA), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             return;
@@ -149,10 +149,10 @@ public class EntryUserDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_EMAIL), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         // save user to the file
         user = new User(name, surname, email);
-                
+
         this.dispose();
     }//GEN-LAST:event_okBtnActionPerformed
 

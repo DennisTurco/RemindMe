@@ -48,7 +48,7 @@ public class BackgroundService {
         if (trayIcon == null) {
             createHiddenIcon();
         }
-        
+
         scheduler = Executors.newSingleThreadScheduledExecutor();
         long interval = jsonConfig.readCheckForReminderTimeInterval();
         scheduler.scheduleAtFixedRate(new RemindTask(), 0, interval, TimeUnit.MINUTES);
@@ -112,7 +112,7 @@ public class BackgroundService {
 
     private void showMainGUI() {
         logger.info("Showing the GUI");
-        
+
         if (guiInstance == null) {
             guiInstance = new MainGUI();
             guiInstance.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -165,7 +165,7 @@ public class BackgroundService {
                     // open notification
                     ReminderDialog dialog = new ReminderDialog(null, false, new RemindNotification(remind), false);
                     dialog.setVisible(true);
-                    
+
                     // remove old dialog if exists
                     ReminderDialog oldDialog = alreadyDialogOpened(remind);
                     if (oldDialog != null) {
