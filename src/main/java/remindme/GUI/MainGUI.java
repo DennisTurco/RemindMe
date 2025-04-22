@@ -181,7 +181,7 @@ public final class MainGUI extends javax.swing.JFrame {
 
     private void displayRemindList(List<Remind> reminds) {
         RemindTableModel tempModel = new RemindTableModel(remindManager.getColumnTranslations(), 0);
-    
+
         // Populate the model with remind data
         for (Remind remind : reminds) {
             tempModel.addRow(new Object[]{
@@ -194,10 +194,10 @@ public final class MainGUI extends javax.swing.JFrame {
                 remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : ""
             });
         }
-        
+
         remindTable = new RemindTable(tempModel);
 
-        remindTable.getColumnModel().getColumn(0).setCellRenderer(new SvgImageRenderer(40, 40));
+        remindTable.getColumnModel().getColumn(0).setCellRenderer(new SvgImageRenderer(30, 30));
 
         // Add key bindings using InputMap and ActionMap
         InputMap inputMap = remindTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -223,7 +223,7 @@ public final class MainGUI extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 int[] selectedRows = remindTable.getSelectedRows();
                 if (selectedRows.length == 0) return;
-        
+
                 logger.debug("Delete key pressed on rows: " + Arrays.toString(selectedRows));
 
                 int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -240,7 +240,7 @@ public final class MainGUI extends javax.swing.JFrame {
         // Apply renderers for each column
         TableColumnModel columnModel = remindTable.getColumnModel();
 
-        for (int i = 0; i < columnModel.getColumnCount(); i++) {
+        for (int i = 1; i < columnModel.getColumnCount(); i++) {
             if (i == 2 || i == 3) {
                 columnModel.getColumn(i).setCellRenderer(new CheckboxCellRenderer());
                 columnModel.getColumn(i).setCellEditor(remindTable.getDefaultEditor(Boolean.class));
@@ -248,7 +248,7 @@ public final class MainGUI extends javax.swing.JFrame {
                 columnModel.getColumn(i).setCellRenderer(new StripedRowRenderer());
             }
         }
-            
+
         // Add the existing mouse listener to the new table
         remindTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -256,10 +256,10 @@ public final class MainGUI extends javax.swing.JFrame {
                 tableMouseClicked(evt); // Reuse the existing method
             }
         });
-    
+
         // Update the global model reference
         MainGUI.model = tempModel;
-    
+
         // Replace the existing table in the GUI
         JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
         table = remindTable; // Update the reference to the new table

@@ -369,14 +369,14 @@ public final class RemindManager {
     }
 
     public void menuInfoPage() {
-        
+
     }
 
     ///////////////////////////////////////////////////////////////////
 
     public void popupRename(javax.swing.JTable table) {
         String remindName = getRemindNameByTableRow(table);
-        if (remindName != null)        
+        if (remindName != null)
             renameRemind(Remind.getRemindByName(remindName));
     }
 
@@ -411,7 +411,7 @@ public final class RemindManager {
     public void popupActive(javax.swing.JTable table, javax.swing.JCheckBoxMenuItem activePopupItem) {
         boolean newState = activePopupItem.isSelected();
         activePopupItem.setSelected(newState);
-        
+
         logger.info("Event --> changing state for active popup to: " + newState);
 
         Remind remind = Remind.getRemindByName(getRemindNameByTableRow(table));
@@ -435,7 +435,7 @@ public final class RemindManager {
     public void popupTopLevl(javax.swing.JTable table, javax.swing.JCheckBoxMenuItem topLevelPopupItem) {
         boolean newState = topLevelPopupItem.isSelected();
         topLevelPopupItem.setSelected(newState);
-        
+
         logger.info("Event --> changing state for top level popup to: " + newState);
 
         Remind remind = Remind.getRemindByName(getRemindNameByTableRow(table));
@@ -449,7 +449,7 @@ public final class RemindManager {
     }
 
     ///////////////////////////////////////////////////////////////////
-    
+
 
     public String[] getColumnTranslations() {
         String[] columnNames = {

@@ -9,7 +9,7 @@ public class RemindTable extends JTable {
     public RemindTable(TableModel model) {
         super(model);
         setRowHeight(35);
-        
+
         //! TODO: I disable table sorting bacause indexes are not correct when is active
         //setAutoCreateRowSorter(true); // Enable column sorting
 
