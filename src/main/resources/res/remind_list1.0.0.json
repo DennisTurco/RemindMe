@@ -7,7 +7,7 @@
     "isTopLevel": false,
     "lastExecution": "2024-12-12T22:52:41.381624500",
     "creationDate": "2024-12-12T22:52:41.381624500",
-    "lastUpdateDate": "2025-02-25T12:50:49.028551800",
+    "lastUpdateDate": "2025-04-24T21:28:52.772947100",
     "icon": "Man with diet",
     "sound": "No Sound"
   },
@@ -64,6 +64,19 @@
     "creationDate": "2025-04-24T15:55:44.821353300",
     "lastUpdateDate": "2025-04-24T15:55:44.821353300",
     "icon": "Alert",
+    "sound": "No Sound"
+  },
+  {
+    "name": "Cul2",
+    "description": "",
+    "count": 0,
+    "isActive": true,
+    "isTopLevel": true,
+    "nextExecution": "2025-04-24T22:29:07.022740200",
+    "timeInterval": "0.1:0",
+    "creationDate": "2025-04-24T21:29:07.022740200",
+    "lastUpdateDate": "2025-04-24T21:29:07.022740200",
+    "icon": "Book",
     "sound": "No Sound"
   }
 ]

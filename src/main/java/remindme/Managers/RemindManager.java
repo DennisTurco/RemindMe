@@ -191,8 +191,7 @@ public final class RemindManager {
         logger.info("Event --> adding new reminder");
 
         ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.CREATE_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.ADD_BUTTON));
-        manage.setVisible(true);
-        Remind remind = manage.getRemindInserted();
+        Remind remind = retriveRemindInserteByDIalog(manage);
 
         if (remind == null)
             return;
@@ -200,6 +199,44 @@ public final class RemindManager {
         reminds.add(remind);
 
         updateRemindList();
+    }
+
+    public void editRemind(Remind remind) {
+        logger.info("Event --> editing reminder");
+
+        ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EDIT_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON), remind);
+        manage.setVisible(true);
+        Remind updatedRemind = manage.getRemindInserted();
+
+        if (updatedRemind == null)
+            return;
+
+        remind.updateReming(updatedRemind);
+
+        updateRemindList();
+    }
+
+    private Remind retriveRemindInserteByDIalog(ManageRemind dialog) {
+        Remind remind;
+        do {
+            dialog.setVisible(true);
+            remind = dialog.getRemindInserted();
+            if (remind == null)
+                return null;
+            if (isRemindNameDuplicated(remind.getName()) && dialog.isClosedOk()) {
+                JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_DUPLICATED_REMIND), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE), JOptionPane.ERROR_MESSAGE);
+            } else {
+                return remind;
+            }
+        } while (true);
+    }
+
+    private boolean isRemindNameDuplicated(String remindName) {
+        for (Remind remind : reminds) {
+            if (remind.getName().equals(remindName))
+                return true;
+        }
+        return false;
     }
 
     public void saveReminder() {
@@ -232,9 +269,15 @@ public final class RemindManager {
     public void duplicateReminder(Remind remind) {
         logger.info("Event --> duplicating reminder");
 
+        String remindName = remind.getName();
+        do {
+            remindName += "_copy";
+        } while (isRemindNameDuplicated(remindName));
+
+
         LocalDateTime dateNow = LocalDateTime.now();
         Remind newRemind = new Remind(
-            remind.getName() + "_copy",
+            remindName,
             remind.getDescription(),
             0,
             remind.isActive(),
@@ -263,19 +306,16 @@ public final class RemindManager {
 
     public void exportRemindListTOJSON() {
         logger.info("Event --> exporting remind list to json");
-
         ImportExportManager.exportRemindListToJson();
     }
 
     public void exportRemindListAsPDF() {
         logger.info("Event --> exporting remind list as pdf");
-
         ImportExportManager.exportRemindListAsPDF(reminds, Remind.getCSVHeader());
     }
 
     public void exportRemindListAsCSV() {
         logger.info("Event --> exporting remind list as csv");
-
         ImportExportManager.exportRemindListAsCSV(reminds, Remind.getCSVHeader());
     }
 
@@ -295,23 +335,7 @@ public final class RemindManager {
         updateRemindList();
     }
 
-    public void editRemind(Remind remind) {
-        logger.info("Event --> editing reminder");
-
-        ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EDIT_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON), remind);
-        manage.setVisible(true);
-        Remind updatedRemind = manage.getRemindInserted();
-
-        if (updatedRemind == null)
-            return;
-
-        remind.updateReming(updatedRemind);
-
-        // modifica lista
-        // update
-
-        updateRemindList();
-    }
+    
 
     public static LocalDateTime getnextExecutionByTimeInterval(TimeInterval timeInterval) {
         if (timeInterval == null) return null;

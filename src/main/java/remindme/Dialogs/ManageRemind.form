@@ -31,9 +31,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane2" alignment="1" max="32767" attributes="0"/>
-                  <Component id="activeCheckBox" alignment="0" max="32767" attributes="0"/>
-                  <Component id="topLevelCheckBox" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="OkBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cancelBtn" min="-2" max="-2" attributes="0"/>
@@ -55,6 +54,13 @@
                           <Component id="soundPreviewBtn" min="-2" pref="41" max="-2" attributes="0"/>
                           <Component id="iconRemindPreview" max="32767" attributes="0"/>
                       </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="activeCheckBox" alignment="0" max="32767" attributes="0"/>
+                          <Component id="topLevelCheckBox" alignment="0" pref="393" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>

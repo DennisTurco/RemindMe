@@ -182,6 +182,7 @@ public class TranslationLoaderEnum {
         ERROR_MESSAGE_NOT_SUPPORTED_EMAIL_GENERIC("ErrorMessageNotSupportedEmailGeneric", "Your system does not support sending emails."),
         ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE("ErrorMessageForWrongFileExtensionTitle", "Invalid File"),
         ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_MESSAGE("ErrorMessageForWrongFileExtensionMessage", "Error: Please select a valid JSON file."),
+        ERROR_MESSAGE_DUPLICATED_REMIND("ErrorMessageDuplicatedRedind", "Cannot create a reminder with this name because one already exists."),
         SHARE_LINK_COPIED_MESSAGE("ShareLinkCopiedMessage", "Share link copied to clipboard!"),
         SUCCESS_GENERIC_TITLE( "SuccessGenericTitle", "Success"),
         SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE("SuccessfullyExportedToCsvMessage", "Backups exported to CSV successfully!"),

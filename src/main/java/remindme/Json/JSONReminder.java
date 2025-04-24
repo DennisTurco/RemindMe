@@ -37,7 +37,7 @@ public class JSONReminder {
 
     public List<Remind> readRemindListFromJSON(String directoryPath, String filename) throws IOException {
         List<Remind> remindList = new ArrayList<>();
-    
+
         // Check if the directory is correct, otherwise reset to default
         File directory = new File(directoryPath);
         if (!directory.exists() || !directory.isDirectory()) {
@@ -46,10 +46,10 @@ public class JSONReminder {
             Preferences.updatePreferencesToJSON();
             directoryPath = Preferences.getRemindList().getDirectory();
         }
-    
+
         String filePath = directoryPath + filename;
         File file = new File(filePath);
-    
+
         // Check if the file exists and is not empty
         if (!file.exists()) {
             file.createNewFile();
@@ -64,13 +64,13 @@ public class JSONReminder {
                 throw e;
             }
         }
-    
+
         try (Reader reader = new FileReader(filePath)) {
             JsonArray remindArray = JsonParser.parseReader(reader).getAsJsonArray();
-    
+
             for (JsonElement element : remindArray) {
                 JsonObject remindObj = element.getAsJsonObject();
-    
+
                 String nameValue = getStringOrNull(remindObj, "name");
                 String descriptionValue = getStringOrNull(remindObj, "description");
                 String lastExecutionStr = getStringOrNull(remindObj, "lastExecution");
@@ -82,11 +82,11 @@ public class JSONReminder {
                 SoundsEnum sound = SoundsEnum.getSoundbyName(getStringOrNull(remindObj, "sound"));
 
                 int countValue = remindObj.has("count") ? remindObj.get("count").getAsInt() : 0;
-    
+
                 Boolean isActiveValue = remindObj.has("isActive") && !remindObj.get("isActive").isJsonNull() 
                     ? remindObj.get("isActive").getAsBoolean() 
                     : null;
-                
+
                 Boolean isTopLevelValue = remindObj.has("isTopLevel") && !remindObj.get("isTopLevel").isJsonNull() 
                     ? remindObj.get("isTopLevel").getAsBoolean() 
                     : null;
@@ -99,9 +99,9 @@ public class JSONReminder {
                 if (icon == null)
                     icon = IconsEnum.getDefaultIcon();
 
-                if (sound == null) 
+                if (sound == null)
                     sound = SoundsEnum.getDefaultSound();
-    
+
                 remindList.add(new Remind(
                     nameValue,
                     descriptionValue,
@@ -117,19 +117,19 @@ public class JSONReminder {
                     sound
                 ));
             }
-    
+
         } catch (IOException | JsonSyntaxException | NullPointerException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         return remindList;
     }
-    
+
     // Helper method to safely retrieve a string or null
     private String getStringOrNull(JsonObject obj, String property) {
         return obj.has(property) && !obj.get(property).isJsonNull() ? obj.get(property).getAsString() : null;
     }
-    
+
     public void updateRemindListJSON(String directoryPath, String filename, List<Remind> reminds) {
         String filePath = directoryPath + filename;
 
@@ -163,7 +163,7 @@ public class JSONReminder {
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
-    
+
     public void updateSingleRemindInJSON(String directoryPath, String filename, Remind updatedRemind) {
         String filePath = directoryPath + filename;
 
