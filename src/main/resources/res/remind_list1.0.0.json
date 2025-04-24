@@ -6,25 +6,10 @@
     "isActive": true,
     "isTopLevel": false,
     "lastExecution": "2024-12-12T22:52:41.381624500",
-    "timeInterval": "1.3:23",
     "creationDate": "2024-12-12T22:52:41.381624500",
     "lastUpdateDate": "2025-02-25T12:50:49.028551800",
     "icon": "Man with diet",
     "sound": "No Sound"
-  },
-  {
-    "name": "Test",
-    "description": "",
-    "count": 5,
-    "isActive": true,
-    "isTopLevel": false,
-    "lastExecution": "2025-04-22T10:10:56.890038900",
-    "nextExecution": "2025-04-23T13:33:56.890038900",
-    "timeInterval": "1.3:23",
-    "creationDate": "2024-12-12T22:52:41.381624500",
-    "lastUpdateDate": "2025-02-26T22:56:32.922024300",
-    "icon": "Alert",
-    "sound": "Owu Woman Sound"
   },
   {
     "name": "Donatello",
@@ -55,16 +40,30 @@
     "sound": "Owu Woman Sound"
   },
   {
-    "name": "Culo_copy",
+    "name": "Pisello_copy",
+    "description": "Ho il pisello piccolo piccolo\nMa sono contento lo stesso.... ",
+    "count": 0,
+    "isActive": true,
+    "isTopLevel": true,
+    "lastExecution": "2025-04-22T10:16:56.580812600",
+    "nextExecution": "2025-04-22T10:36:53.850287400",
+    "timeInterval": "0.0:1",
+    "creationDate": "2025-04-24T15:51:21.976123300",
+    "lastUpdateDate": "2025-04-24T15:51:21.976123300",
+    "icon": "Man",
+    "sound": "Owu Woman Sound"
+  },
+  {
+    "name": "Test",
     "description": "",
     "count": 0,
     "isActive": true,
-    "isTopLevel": false,
-    "lastExecution": "2024-12-12T22:52:41.381624500",
-    "timeInterval": "1.3:23",
-    "creationDate": "2025-02-26T22:46:18.941257100",
-    "lastUpdateDate": "2025-02-26T22:46:18.941257100",
-    "icon": "Man with diet",
+    "isTopLevel": true,
+    "nextExecution": "2025-04-24T16:55:44.821353300",
+    "timeInterval": "0.1:0",
+    "creationDate": "2025-04-24T15:55:44.821353300",
+    "lastUpdateDate": "2025-04-24T15:55:44.821353300",
+    "icon": "Alert",
     "sound": "No Sound"
   }
 ]

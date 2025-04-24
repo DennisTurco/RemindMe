@@ -159,7 +159,7 @@ public final class MainGUI extends javax.swing.JFrame {
 
         remindManager.reloadPreferences();
     }
-    
+
     public void showWindow() {
         setVisible(true);
         toFront();
@@ -270,6 +270,8 @@ public final class MainGUI extends javax.swing.JFrame {
         MenuBugReport.setVisible(configReader.isMenuItemEnabled(MenuItems.BugReport.name()));
         MenuPreferences.setVisible(configReader.isMenuItemEnabled(MenuItems.Preferences.name()));
         MenuDonate.setVisible(configReader.isMenuItemEnabled(MenuItems.Donate.name()));
+        MenuDonatePaypal.setVisible(configReader.isMenuItemEnabled(MenuItems.PaypalDonate.name()));
+        MenuDonateBuyMeACoffe.setVisible(configReader.isMenuItemEnabled(MenuItems.BuymeacoffeeDonate.name()));
         MenuHistory.setVisible(configReader.isMenuItemEnabled(MenuItems.History.name()));
         MenuInfoPage.setVisible(configReader.isMenuItemEnabled(MenuItems.InfoPage.name()));
         MenuNew.setVisible(configReader.isMenuItemEnabled(MenuItems.New.name()));
@@ -330,6 +332,8 @@ public final class MainGUI extends javax.swing.JFrame {
         MenuBugReport.setSvgImage("res/img/bug.svg", 16, 16);
         MenuHistory.setSvgImage("res/img/history.svg", 16, 16);
         MenuDonate.setSvgImage("res/img/donate.svg", 16, 16);
+        MenuDonatePaypal.setSvgImage("res/img/paypal.svg", 16, 16);
+        MenuDonateBuyMeACoffe.setSvgImage("res/img/buymeacoffee.svg", 16, 16);
         MenuPreferences.setSvgImage("res/img/settings.svg", 16, 16);
         MenuShare.setSvgImage("res/img/share.svg", 16, 16);
         MenuSupport.setSvgImage("res/img/support.svg", 16, 16);
@@ -387,7 +391,9 @@ public final class MainGUI extends javax.swing.JFrame {
         MenuWebsite = new remindme.Svg.SVGMenuItem();
         MenuInfoPage = new remindme.Svg.SVGMenuItem();
         MenuShare = new remindme.Svg.SVGMenuItem();
-        MenuDonate = new remindme.Svg.SVGMenuItem();
+        MenuDonate = new remindme.Svg.SVGMenu();
+        MenuDonatePaypal = new remindme.Svg.SVGMenuItem();
+        MenuDonateBuyMeACoffe = new remindme.Svg.SVGMenuItem();
         jMenu5 = new javax.swing.JMenu();
         MenuBugReport = new remindme.Svg.SVGMenuItem();
         MenuSupport = new remindme.Svg.SVGMenuItem();
@@ -656,11 +662,23 @@ public final class MainGUI extends javax.swing.JFrame {
         jMenu3.add(MenuShare);
 
         MenuDonate.setText("Donate");
-        MenuDonate.addActionListener(new java.awt.event.ActionListener() {
+
+        MenuDonatePaypal.setText("Paypal");
+        MenuDonatePaypal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuDonateActionPerformed(evt);
+                MenuDonatePaypalActionPerformed(evt);
             }
         });
+        MenuDonate.add(MenuDonatePaypal);
+
+        MenuDonateBuyMeACoffe.setText("Buy me a coffe");
+        MenuDonateBuyMeACoffe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuDonateBuyMeACoffeActionPerformed(evt);
+            }
+        });
+        MenuDonate.add(MenuDonateBuyMeACoffe);
+
         jMenu3.add(MenuDonate);
 
         jMenuBar1.add(jMenu3);
@@ -817,7 +835,7 @@ public final class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuExportActionPerformed
 
     private void MenuHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuHistoryActionPerformed
-        remindManager.menuHistory();
+        remindManager.menuItemHistory();
     }//GEN-LAST:event_MenuHistoryActionPerformed
 
     private void MenuQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitActionPerformed
@@ -835,10 +853,6 @@ public final class MainGUI extends javax.swing.JFrame {
     private void MenuShareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuShareActionPerformed
         remindManager.menuShare();
     }//GEN-LAST:event_MenuShareActionPerformed
-
-    private void MenuDonateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDonateActionPerformed
-        remindManager.menuDonate();
-    }//GEN-LAST:event_MenuDonateActionPerformed
 
     private void MenuBugReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBugReportActionPerformed
         remindManager.menuBugReport();
@@ -877,13 +891,23 @@ public final class MainGUI extends javax.swing.JFrame {
         remindManager.popupTopLevl(table, topLevelPopupItem);
     }//GEN-LAST:event_topLevelPopupItemActionPerformed
 
+    private void MenuDonatePaypalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDonatePaypalActionPerformed
+        remindManager.menuItemDonateViaPaypal();
+    }//GEN-LAST:event_MenuDonatePaypalActionPerformed
+
+    private void MenuDonateBuyMeACoffeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDonateBuyMeACoffeActionPerformed
+        remindManager.menuItemDonateViaBuymeacoffe();
+    }//GEN-LAST:event_MenuDonateBuyMeACoffeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem DeletePopupItem;
     private javax.swing.JMenuItem DuplicatePopupItem;
     private javax.swing.JMenuItem EditPoputItem;
     private javax.swing.JLabel ExportLabel;
     private remindme.Svg.SVGMenuItem MenuBugReport;
-    private remindme.Svg.SVGMenuItem MenuDonate;
+    private remindme.Svg.SVGMenu MenuDonate;
+    private remindme.Svg.SVGMenuItem MenuDonateBuyMeACoffe;
+    private remindme.Svg.SVGMenuItem MenuDonatePaypal;
     private remindme.Svg.SVGMenuItem MenuExport;
     private remindme.Svg.SVGMenuItem MenuHistory;
     private remindme.Svg.SVGMenuItem MenuImport;

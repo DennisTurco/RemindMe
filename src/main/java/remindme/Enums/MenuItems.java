@@ -5,6 +5,8 @@ public enum MenuItems {
     Preferences,
     Clear,
     Donate,
+    PaypalDonate,
+    BuymeacoffeeDonate,
     History,
     InfoPage,
     New,

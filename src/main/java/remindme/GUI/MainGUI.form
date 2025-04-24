@@ -170,14 +170,29 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuShareActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="remindme.Svg.SVGMenuItem" name="MenuDonate">
+            <Menu class="javax.swing.JMenu" name="MenuDonate">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Donate"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuDonateActionPerformed"/>
-              </Events>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="MenuDonatePaypal">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Paypal"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuDonatePaypalActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MenuDonateBuyMeACoffe">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Buy me a coffe"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuDonateBuyMeACoffeActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu5">

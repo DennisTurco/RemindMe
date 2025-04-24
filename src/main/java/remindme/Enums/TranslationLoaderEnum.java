@@ -27,22 +27,22 @@ public class TranslationLoaderEnum {
         MAIN_FRAME("MainFrame"),
         TRAY_ICON("TrayIcon"),
         DIALOGS("Dialogs");
-    
+
         private final String categoryName;
         private final Map<TranslationKey, String> translations = new HashMap<>();
-    
+
         TranslationCategory(String categoryName) {
             this.categoryName = categoryName;
         }
-    
+
         public String getCategoryName() {
             return categoryName;
         }
-    
+
         public void addTranslation(TranslationKey key, String value) {
             translations.put(key, value);
         }
-    
+
         // Updated getTranslation method
         public String getTranslation(TranslationKey key) {
             return translations.getOrDefault(key, key.getDefaultValue());

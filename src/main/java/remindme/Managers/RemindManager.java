@@ -358,12 +358,13 @@ public final class RemindManager {
         clipboardObj.setContents(stringSelectionObj, null);
     }
 
-    public void menuHistory() {
+    public void menuItemHistory() {
         logger.info("Event --> history");
         try {
-            new ProcessBuilder("notepad.exe", ConfigKey.RES_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue()).start();
+            logger.debug("Opening log file with path: " + ConfigKey.LOG_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue());
+            new ProcessBuilder("notepad.exe", ConfigKey.LOG_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue()).start();
         } catch (IOException e) {
-            logger.warn("Error opening history file");
+            logger.error("Error opening history file: " + e.getMessage(), e);
             JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_OPEN_HISTORY_FILE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
         }
     }
