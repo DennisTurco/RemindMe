@@ -246,7 +246,7 @@ public final class RemindManager {
     public void removeReminder(Remind remind, boolean d) {
         logger.info("Event --> removing reminder");
 
-        // backup list update
+        // remind list update
         for (Remind rem : reminds) {
             if (remind.getName().equals(rem.getName())) {
                 reminds.remove(rem);
@@ -254,6 +254,15 @@ public final class RemindManager {
                 break;
             }
         }
+
+        updateRemindList();
+    }
+
+    public void removeReminder(int row, boolean d) {
+        logger.info("Event --> removing reminder");
+
+        Remind remind = reminds.remove(row);
+        logger.info("Remind removed successfully: " + remind.toString());
 
         updateRemindList();
     }

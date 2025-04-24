@@ -232,7 +232,7 @@ public final class MainGUI extends javax.swing.JFrame {
                 }
 
                 for (int row : selectedRows) {
-                    //remindManager.removeReminder(row, false);
+                    remindManager.removeReminder(row, false);
                 }
             }
         });

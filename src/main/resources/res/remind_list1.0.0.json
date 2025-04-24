@@ -3,11 +3,13 @@
     "name": "Culo",
     "description": "",
     "count": 4,
-    "isActive": true,
+    "isActive": false,
     "isTopLevel": false,
     "lastExecution": "2024-12-12T22:52:41.381624500",
+    "nextExecution": "2025-04-24T22:39:54.062118600",
+    "timeInterval": "0.1:0",
     "creationDate": "2024-12-12T22:52:41.381624500",
-    "lastUpdateDate": "2025-04-24T21:28:52.772947100",
+    "lastUpdateDate": "2025-04-24T21:39:54.062118600",
     "icon": "Man with diet",
     "sound": "No Sound"
   },
@@ -40,20 +42,6 @@
     "sound": "Owu Woman Sound"
   },
   {
-    "name": "Pisello_copy",
-    "description": "Ho il pisello piccolo piccolo\nMa sono contento lo stesso.... ",
-    "count": 0,
-    "isActive": true,
-    "isTopLevel": true,
-    "lastExecution": "2025-04-22T10:16:56.580812600",
-    "nextExecution": "2025-04-22T10:36:53.850287400",
-    "timeInterval": "0.0:1",
-    "creationDate": "2025-04-24T15:51:21.976123300",
-    "lastUpdateDate": "2025-04-24T15:51:21.976123300",
-    "icon": "Man",
-    "sound": "Owu Woman Sound"
-  },
-  {
     "name": "Test",
     "description": "",
     "count": 0,
@@ -64,19 +52,6 @@
     "creationDate": "2025-04-24T15:55:44.821353300",
     "lastUpdateDate": "2025-04-24T15:55:44.821353300",
     "icon": "Alert",
-    "sound": "No Sound"
-  },
-  {
-    "name": "Cul2",
-    "description": "",
-    "count": 0,
-    "isActive": true,
-    "isTopLevel": true,
-    "nextExecution": "2025-04-24T22:29:07.022740200",
-    "timeInterval": "0.1:0",
-    "creationDate": "2025-04-24T21:29:07.022740200",
-    "lastUpdateDate": "2025-04-24T21:29:07.022740200",
-    "icon": "Book",
     "sound": "No Sound"
   }
 ]
