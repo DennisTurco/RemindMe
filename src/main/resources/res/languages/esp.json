@@ -30,6 +30,7 @@
         "Website": "Sitio web"
     },
     "MainFrame": {
+        "AddBackupTooltip": "Agregar nuevo recordatorio",
         "ExportAs": "Exportar como: ",
         "ExportAsPdfTooltip": "Exportar como PDF",
         "ExportAsCsvTooltip": "Exportar como CSV",
@@ -60,7 +61,10 @@
         "DeletePopup": "Eliminar",
         "DuplicatePopup": "Duplicar",
         "RenamePopup": "Renombrar",
-        "CopyNamePopup": "Copiar nombre del recordatorio"
+        "CopyNamePopup": "Copiar nombre del recordatorio",
+        "EnableDisablePopup": "Habilitar / deshabilitar",
+        "ActivePopup": "Activo",
+        "TopLevelPopup": "Mostrar en primer plano"
     },
     "ManageRemindDialog": {
         "EditTitle": "Editar recordatorio",

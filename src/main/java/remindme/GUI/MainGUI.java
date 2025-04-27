@@ -320,6 +320,9 @@ public final class MainGUI extends javax.swing.JFrame {
         DuplicatePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DUPLICATE_POPUP));
         EditPoputItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.EDIT_POPUP));
         renamePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.RENAME_POPUP));
+        jMenu6.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.ENABLE_DISABLE_POPUP));
+        activePopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.ACTIVE_POPUP));
+        topLevelPopupItem.setText(TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TOPLEVEL_POPUP));
     }
 
     public void setSvgImages() {

@@ -30,6 +30,7 @@
         "Website": "Webseite"
     },
     "MainFrame": {
+        "AddBackupTooltip": "Neue Erinnerung hinzufügen",
         "ExportAs": "Exportieren als: ",
         "ExportAsPdfTooltip": "Als PDF exportieren",
         "ExportAsCsvTooltip": "Als CSV exportieren",
@@ -60,7 +61,10 @@
         "DeletePopup": "Löschen",
         "DuplicatePopup": "Duplizieren",
         "RenamePopup": "Umbenennen",
-        "CopyNamePopup": "Namen des Erinnerungsstücks kopieren"
+        "CopyNamePopup": "Namen des Erinnerungsstücks kopieren",
+        "EnableDisablePopup": "Aktivieren / deaktivieren",
+        "ActivePopup": "Aktiv",
+        "TopLevelPopup": "Oben anzeigen"
     },
     "ManageRemindDialog": {
         "EditTitle": "Erinnerung bearbeiten",

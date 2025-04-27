@@ -30,6 +30,7 @@
         "Website": "Site web"
     },
     "MainFrame": {
+        "AddBackupTooltip": "Ajouter un nouveau rappel",
         "ExportAs": "Exporter en : ",
         "ExportAsPdfTooltip": "Exporter en PDF",
         "ExportAsCsvTooltip": "Exporter en CSV",
@@ -60,7 +61,10 @@
         "DeletePopup": "Supprimer",
         "DuplicatePopup": "Dupliquer",
         "RenamePopup": "Renommer",
-        "CopyNamePopup": "Copier le nom du rappel"
+        "CopyNamePopup": "Copier le nom du rappel",
+        "EnableDisablePopup": "Activer / désactiver",
+        "ActivePopup": "Actif",
+        "TopLevelPopup": "Afficher au premier plan"
     },
     "ManageRemindDialog": {
         "EditTitle": "Modifier le rappel",

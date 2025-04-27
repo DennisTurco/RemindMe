@@ -30,6 +30,7 @@
         "Website": "Website"
     },
     "MainFrame": {
+        "AddBackupTooltip": "Add new reminder",
         "ExportAs": "Export as: ",
         "ExportAsPdfTooltip": "Export as PDF",
         "ExportAsCsvTooltip": "Export as CSV",
@@ -60,7 +61,10 @@
         "DeletePopup": "Delete",
         "DuplicatePopup": "Duplicate",
         "RenamePopup": "Rename",
-        "CopyNamePopup": "Copy remind name"
+        "CopyNamePopup": "Copy remind name",
+        "EnableDisablePopup": "Enable / disable",
+        "ActivePopup": "Active",
+        "TopLevelPopup": "Show on top"
     },
     "ManageRemindDialog": {
         "EditTitle": "Edit reminder",

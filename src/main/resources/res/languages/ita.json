@@ -30,6 +30,7 @@
         "Website": "Sito Web"
     },
     "MainFrame": {
+        "AddBackupTooltip": "Aggiungi nuovo promemoria",
         "ExportAs": "Esporta come: ",
         "ExportAsPdfTooltip": "Esporta come PDF",
         "ExportAsCsvTooltip": "Esporta come CSV",
@@ -60,7 +61,10 @@
         "DeletePopup": "Elimina",
         "DuplicatePopup": "Duplica",
         "RenamePopup": "Rinomina",
-        "CopyNamePopup": "Copia nome promemoria"
+        "CopyNamePopup": "Copia nome promemoria",
+        "EnableDisablePopup": "Abilita / disabilita",
+        "ActivePopup": "Attivo",
+        "TopLevelPopup": "Mostra in primo piano"
     },
     "ManageRemindDialog": {
         "EditTitle": "Modifica promemoria",
