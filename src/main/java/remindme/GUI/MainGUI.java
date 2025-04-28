@@ -778,6 +778,13 @@ public final class MainGUI extends javax.swing.JFrame {
             // get correct remind
             String remindName = (String) remindTable.getValueAt(selectedRow, 1);
             Remind remind = Remind.getRemindByName(new ArrayList<>(remindManager.getReminds()), remindName);
+            boolean isActive = (Boolean) remindTable.getValueAt(selectedRow, 2);
+            boolean isTopLevel = (Boolean) remindTable.getValueAt(selectedRow, 3);
+
+            if (remind != null) {
+                topLevelPopupItem.setSelected(isTopLevel);
+                activePopupItem.setSelected(isActive);
+            }
 
             logger.debug("Selected remind: " + remindName);
 
