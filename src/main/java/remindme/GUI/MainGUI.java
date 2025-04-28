@@ -231,8 +231,9 @@ public final class MainGUI extends javax.swing.JFrame {
                     return;
                 }
 
-                for (int row : selectedRows) {
-                    remindManager.removeReminder(row, false);
+                Arrays.sort(selectedRows);
+                for (int i = selectedRows.length - 1; i >= 0; i--) {
+                    remindManager.removeReminder(selectedRows[i], false);
                 }
             }
         });
