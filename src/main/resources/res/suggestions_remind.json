@@ -1,0 +1,67 @@
+[
+  {
+    "name": "20-20-20 Break",
+    "description": "- Every 20 minutes, take a break from looking at your screen.\n- Look at something 20 feet away from you.\n- Do this for at least 20 seconds.",
+    "count": 0,
+    "isActive": true,
+    "isTopLevel": false,
+    "nextExecution": "2025-04-28T13:01:38.847640400",
+    "timeInterval": "0.0:20",
+    "creationDate": "2025-04-28T12:35:56.900023",
+    "lastUpdateDate": "2025-04-28T12:41:38.847144600",
+    "icon": "Eye",
+    "sound": "No Sound"
+  },
+  {
+    "name": "20 minutes break",
+    "description": "- Move Around: Stretch or walk around to get your blood flowing and ease muscle tension.\n- Relax: Take deep breaths, meditate, or do a mindfulness activity to clear your mind.\n- Change your Environment: If possible, step outside for a bit or move to a different space to refresh yourself.\n- Hydrate or Snack: Drink water or have a healthy snack to re-energize.",
+    "count": 0,
+    "isActive": true,
+    "isTopLevel": true,
+    "nextExecution": "2025-04-28T14:41:45.352081400",
+    "timeInterval": "0.2:0",
+    "creationDate": "2025-04-28T12:37:43.053364300",
+    "lastUpdateDate": "2025-04-28T12:41:45.352081400",
+    "icon": "Pause circle",
+    "sound": "Sound 12"
+  },
+  {
+    "name": "Drink water! Stay hydrated.",
+    "description": "It\u0027s essential for health and focus.",
+    "count": 0,
+    "isActive": true,
+    "isTopLevel": false,
+    "nextExecution": "2025-04-28T13:41:17.063004900",
+    "timeInterval": "0.1:0",
+    "creationDate": "2025-04-28T12:41:17.063004900",
+    "lastUpdateDate": "2025-04-28T12:41:17.063004900",
+    "icon": "Man with a beer",
+    "sound": "No Sound"
+  },
+  {
+    "name": "Focus Time!",
+    "description": "Focus on your task for the next 25 minutes.",
+    "count": 0,
+    "isActive": false,
+    "isTopLevel": false,
+    "nextExecution": "2025-04-28T13:50:27.033276500",
+    "timeInterval": "0.1:0",
+    "creationDate": "2025-04-28T12:50:27.033276500",
+    "lastUpdateDate": "2025-04-28T12:50:27.033276500",
+    "icon": "Man with a computer",
+    "sound": "Sound 5"
+  },
+  {
+    "name": "Stretch",
+    "description": "Stretch your legs and arms to relieve tension.",
+    "count": 0,
+    "isActive": false,
+    "isTopLevel": false,
+    "nextExecution": "2025-04-28T13:22:05.588431400",
+    "timeInterval": "0.0:30",
+    "creationDate": "2025-04-28T12:50:57.361649700",
+    "lastUpdateDate": "2025-04-28T12:52:05.588431400",
+    "icon": "Man doing jogging",
+    "sound": "Sound 5"
+  }
+]
