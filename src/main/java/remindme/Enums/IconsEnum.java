@@ -20,7 +20,19 @@ public enum IconsEnum {
     MUSIC2("Music 2", "res/img/remind/music2.svg"),
     PAUSE_CIRCLE("Pause circle", "res/img/remind/pause-circle.svg"),
     WARNING("Warning", "res/img/remind/warning.svg"),
-    WORK("Work", "res/img/remind/work.svg");
+    WORK("Work", "res/img/remind/work.svg"),
+    MEME_BABY_YODA("Meme - Baby Yoda", "res/img/remind/meme_baby_yoda.svg"),
+    MEME_DOGE("Meme - Doge", "res/img/remind/meme_doge.svg"),
+    MEME_FACEPALM("Meme - Facepalm", "res/img/remind/meme_facepalm.svg"),
+    MEME_HANDSOME_SQIDWARD("Meme - Handsome Squidward", "res/img/remind/meme_handsome_squidward.svg"),
+    MEME_LEONARDO_DICAPRIO("Meme - Leonardo Dicaprio", "res/img/remind/meme_leonardo_dicaprio_laughing.svg"),
+    MEME_POLITE_CAT("Meme - Polite Cat", "res/img/remind/meme_polite_cat.svg"),
+    MEME_ROLL_SAFE("Meme - Roll Safe", "res/img/remind/meme_roll_safe.svg"),
+    MEME_FINE_DOG("Meme - Fine Dog", "res/img/remind/meme_this_is_fine_dog.svg"),
+    MEME_LOOK_MONKEY("Meme - Look Monkey", "res/img/remind/meme_lookmonkey.svg"),
+    MEME_OLD_MAN("Meme - Old Man", "res/img/remind/meme_old_man.svg"),
+    MEME_WOMAN_YELLING("Meme - Woman Yelling", "res/img/remind/meme_woman_yelling.svg"),
+    MEME_HOMER_SIMPSON("Meme - Homer Simpson", "res/img/remind/meme_homer_simpson.svg");
 
     private final String iconName;
     private final String iconPath;

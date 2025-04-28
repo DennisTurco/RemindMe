@@ -170,6 +170,18 @@ public class ManageRemind extends javax.swing.JDialog {
         iconComboBox.addItem(IconsEnum.PAUSE_CIRCLE.getIconName());
         iconComboBox.addItem(IconsEnum.WARNING.getIconName());
         iconComboBox.addItem(IconsEnum.WORK.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_BABY_YODA.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_DOGE.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_FACEPALM.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_HANDSOME_SQIDWARD.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_LEONARDO_DICAPRIO.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_POLITE_CAT.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_ROLL_SAFE.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_FINE_DOG.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_LOOK_MONKEY.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_OLD_MAN.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_WOMAN_YELLING.getIconName());
+        iconComboBox.addItem(IconsEnum.MEME_HOMER_SIMPSON.getIconName());
 
         iconComboBox.setSelectedItem(IconsEnum.getDefaultIcon());
     }
@@ -190,7 +202,15 @@ public class ManageRemind extends javax.swing.JDialog {
         // soundComboBox.addItem(SoundsEnum.Sound10.getSoundName());
         soundComboBox.addItem(SoundsEnum.Sound11.getSoundName());
         soundComboBox.addItem(SoundsEnum.Sound12.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound13.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_OWU.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_BLUE_LOBSTER.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_FUS_RO_DAH.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_MANZ.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_METAL_PIPE.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_PERRO_SALCICCIA.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_SIUM.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_SPIN.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_TO_BE_CONTINUED.getSoundName());
 
         soundComboBox.setSelectedItem(SoundsEnum.getDefaultSound());
     }

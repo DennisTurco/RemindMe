@@ -14,7 +14,15 @@ public enum SoundsEnum {
     //Sound10("Sound 10", "src/main/resources/res/sounds/sound10.wav"),
     Sound11("Sound 11", "src/main/resources/res/sounds/sound11.wav"),
     Sound12("Sound 12", "src/main/resources/res/sounds/sound12.wav"),
-    Sound13("Owu Woman Sound", "src/main/resources/res/sounds/UwuSound.wav");
+    MEME_OWU("Meme - Owu", "src/main/resources/res/sounds/meme_owu.wav"),
+    MEME_BLUE_LOBSTER("Meme - Blue Lobster", "src/main/resources/res/sounds/meme_blue_lobster.wav"),
+    MEME_FUS_RO_DAH("Meme - Fus Ro Dah", "src/main/resources/res/sounds/meme_fus_ro_dah.wav"),
+    MEME_MANZ("Meme - Manz", "src/main/resources/res/sounds/meme_maanz.wav"),
+    MEME_METAL_PIPE("Meme - Metal Pipe", "src/main/resources/res/sounds/meme_metal_pipe.wav"),
+    MEME_PERRO_SALCICCIA("Meme - Perro Salciccia", "src/main/resources/res/sounds/meme_perro_salciccia.wav"),
+    MEME_SIUM("Meme - Sium", "src/main/resources/res/sounds/meme_sium.wav"),
+    MEME_SPIN("Meme - Spin", "src/main/resources/res/sounds/meme_spin.wav"),
+    MEME_TO_BE_CONTINUED("Meme - To Be Continued", "src/main/resources/res/sounds/meme_to_be_continued.wav");
 
     private final String soundName;
     private final String soundPath;

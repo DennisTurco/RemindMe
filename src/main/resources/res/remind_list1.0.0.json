@@ -23,7 +23,7 @@
     "creationDate": "2025-01-30T15:16:53.680887600",
     "lastUpdateDate": "2025-04-22T11:22:35.303895700",
     "icon": "Man with a beer",
-    "sound": "Owu Woman Sound"
+    "sound": "No Sound"
   },
   {
     "name": "Pisello",
@@ -37,7 +37,7 @@
     "creationDate": "2025-02-26T22:44:36.391318300",
     "lastUpdateDate": "2025-04-22T10:35:53.850287400",
     "icon": "Man",
-    "sound": "Owu Woman Sound"
+    "sound": "No Sound"
   },
   {
     "name": "Test",
@@ -51,5 +51,18 @@
     "lastUpdateDate": "2025-04-24T15:55:44.821353300",
     "icon": "Alert",
     "sound": "No Sound"
+  },
+  {
+    "name": "Meme",
+    "description": "culo",
+    "count": 0,
+    "isActive": true,
+    "isTopLevel": true,
+    "nextExecution": "2025-04-28T15:05:18.911395100",
+    "timeInterval": "0.1:0",
+    "creationDate": "2025-04-28T14:05:18.911395100",
+    "lastUpdateDate": "2025-04-28T14:05:18.911395100",
+    "icon": "Meme - Look Monkey",
+    "sound": "Meme - Sium"
   }
 ]
