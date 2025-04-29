@@ -202,7 +202,7 @@ public class ManageRemind extends javax.swing.JDialog {
         // soundComboBox.addItem(SoundsEnum.Sound10.getSoundName());
         soundComboBox.addItem(SoundsEnum.Sound11.getSoundName());
         soundComboBox.addItem(SoundsEnum.Sound12.getSoundName());
-        soundComboBox.addItem(SoundsEnum.MEME_OWU.getSoundName());
+        soundComboBox.addItem(SoundsEnum.MEME_UWU.getSoundName());
         soundComboBox.addItem(SoundsEnum.MEME_BLUE_LOBSTER.getSoundName());
         soundComboBox.addItem(SoundsEnum.MEME_FUS_RO_DAH.getSoundName());
         soundComboBox.addItem(SoundsEnum.MEME_MANZ.getSoundName());

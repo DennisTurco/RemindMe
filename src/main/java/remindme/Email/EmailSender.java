@@ -28,7 +28,7 @@ public class EmailSender {
 
     // Logger for sending critical error emails
     private static final Logger emailErrorLogger = LoggerFactory.getLogger("EMAIL_ERROR_LOGGER");
-    
+
     // Logger for sending informational emails
     private static final Logger emailInfoLogger = LoggerFactory.getLogger("EMAIL_INFO_LOGGER");
 
@@ -47,7 +47,7 @@ public class EmailSender {
             logger.warn("User is null, using a default user for the email");
             user = User.getDefaultUser();
         }
-        
+
         int rows = 300;
         String emailMessage = String.format(
             "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
@@ -84,21 +84,21 @@ public class EmailSender {
      */
     public static void sendConfirmEmailToUser(User user) {
         if (user == null) throw new IllegalArgumentException("User object cannot be null");
-    
+
         String subject = TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.EMAIL_CONFIRMATION_SUBJECT);
         String body = TranslationCategory.USER_DIALOG.getTranslation(TranslationKey.EMAIL_CONFIRMATION_BODY);
-    
+
         // Assicurati di assegnare il risultato della sostituzione
         body = body.replace("[UserName]", user.getUserCompleteName());
         body = body.replace("[SupportEmail]", ConfigKey.EMAIL.getValue());
-    
+
         String emailMessage = subject + "\n\n" + body;
 
         updateEmailRecipient(user.email);
-    
+
         // Should be info, but if you change it, it doesn't work
         emailConfirmationLogger.error(emailMessage); // Log the message as INFO, triggering the SMTPAppender
-    
+
         logger.info("Confirmation registration email sent to the user: " + user.toString());
     }
 
@@ -116,7 +116,7 @@ public class EmailSender {
 
         return null;
     }
-    
+
     public static String getTextFromLogFile(int rows) {
         File file = new File(ConfigKey.LOG_DIRECTORY_STRING.getValue() + ConfigKey.LOG_FILE_STRING.getValue());
 
@@ -154,6 +154,6 @@ public class EmailSender {
             smtpAppender.getToList().clear();
             smtpAppender.addTo(newRecipient);
         }
-    } 
+    }
 }
 

@@ -14,7 +14,7 @@ public enum SoundsEnum {
     //Sound10("Sound 10", "src/main/resources/res/sounds/sound10.wav"),
     Sound11("Sound 11", "src/main/resources/res/sounds/sound11.wav"),
     Sound12("Sound 12", "src/main/resources/res/sounds/sound12.wav"),
-    MEME_OWU("Meme - Owu", "src/main/resources/res/sounds/meme_owu.wav"),
+    MEME_UWU("Meme - Uwu", "src/main/resources/res/sounds/meme_uwu.wav"),
     MEME_BLUE_LOBSTER("Meme - Blue Lobster", "src/main/resources/res/sounds/meme_blue_lobster.wav"),
     MEME_FUS_RO_DAH("Meme - Fus Ro Dah", "src/main/resources/res/sounds/meme_fus_ro_dah.wav"),
     MEME_MANZ("Meme - Manz", "src/main/resources/res/sounds/meme_maanz.wav"),

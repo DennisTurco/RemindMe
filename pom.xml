@@ -32,7 +32,7 @@
         </dependency>
 
         <dependency> <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf-extras -->
-            <groupId>com.formdev</groupId> 
+            <groupId>com.formdev</groupId>
             <artifactId>flatlaf-extras</artifactId> <!-- for svg icons -->
             <version>3.5.4</version>
         </dependency>
@@ -102,8 +102,8 @@
             </configuration>
             <executions>
                 <execution>
-                    <id>make-assembly</id> 
-                    <phase>package</phase> 
+                    <id>make-assembly</id>
+                    <phase>package</phase>
                     <goals>
                         <goal>single</goal>
                     </goals>

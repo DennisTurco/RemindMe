@@ -1,12 +1,13 @@
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
 
-    <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />--> <!--Scan this configuration for errors-->
+    <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />--> <!--Scan this configuration for errors -->
+
+    <define name="smtpPassword" class="remindme.Email.EncryptedPasswordDefiner" />
 
     <!-- Properties -->
     <property resource="config.properties" />
     <property name="smtp.user" value="${smtp.user}" />
     <property name="smtp.from" value="${smtp.from}" />
-    <property name="smtp.password" value="${smtp.password}" />
     <property name="smtp.host" value="${smtp.smtp}" />
     <property name="smtp.email_confirmation_to" value="${smtp.email_confirmation_to}" />
     <property name="EMAIL_TO" value="test1@shardpc.it" /> <!--assistenza@shardpc.it-->
@@ -64,7 +65,7 @@
         <to>${EMAIL_TO}</to>
         <from>${smtp.from}</from>
         <username>${smtp.user}</username>
-        <password>${smtp.password}</password>
+        <password>${smtpPassword}</password>
         <subject>${EMAIL_ERROR_SUBJECT}</subject>
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
@@ -82,7 +83,7 @@
         <to>${EMAIL_TO}</to>
         <from>${smtp.from}</from>
         <username>${smtp.user}</username>
-        <password>${smtp.password}</password>
+        <password>${smtpPassword}</password>
         <subject>${EMAIL_INFO_SUBJECT}</subject>
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %logger{36} - %msg%n</pattern>
@@ -100,7 +101,7 @@
         <to>${EMAIL_TO}</to>
         <from>${smtp.from}</from>
         <username>${smtp.user}</username>
-        <password>${smtp.password}</password>
+        <password>${smtpPassword}</password>
         <subject>${EMAIL_CONFIRMATION_SUBJECT}</subject>
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>%msg%n</pattern>
