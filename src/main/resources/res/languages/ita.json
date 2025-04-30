@@ -56,6 +56,9 @@
         "CreationDateDetail": "DataCreazione",
         "LastUpdateDateDetail": "DataUltimaModifica",
         "TimeIntervalDetail": "IntervalloDiTempo",
+        "ExecutionMethodDetail": "MetodoEsecuzione",
+        "TimeFromDetail": "OraInizio",
+        "TimeToDetail": "OraFine",
 
         "EditPopup": "Modifica",
         "DeletePopup": "Elimina",
@@ -73,6 +76,8 @@
         "ActiveText": "Attivo",
         "TopLevelText": "Mostra in alto",
         "PreviewText": "Anteprima promemoria",
+        "DateFromText": "Da",
+        "DateToText": "A",
         "NamePlaceholder": "Inserisci il nome del promemoria",
         "DescriptionPlaceholder": "Inserisci una descrizione (opzionale)",
         "NameTooltip": "Inserisci un nome per il promemoria",
@@ -81,7 +86,8 @@
         "DescriptionTooltip": "Fornisci dettagli aggiuntivi per questo promemoria",
         "IconTooltip": "Scegli un'icona per la notifica del promemoria",
         "SoundTooltip": "Scegli un suono per la notifica del promemoria",
-        "SoundButtonTooltip": "Ascolta l'anteprima del suono selezionato"
+        "SoundButtonTooltip": "Ascolta l'anteprima del suono selezionato",
+        "ExecutionMethodTooltip": "Seleziona come deve essere attivato il promemoria. 'Avvio PC' esegue il promemoria quando il computer si avvia, ignorando gli intervalli di tempo. 'Intervallo di tempo personalizzato' lo attiva solo all'interno di una finestra temporale giornaliera definita."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Intervallo di tempo del promemoria",
@@ -127,6 +133,8 @@
         "ErrorMessageForWrongFileExtensionMessage": "Errore: seleziona un file JSON valido.",
         "ErrorGenericTitle": "Errore",
         "ErrorWrongTimeInterval": "L'intervallo di tempo non è corretto",
+        "ErrorMessageForEmptyRemindName": "Il nome del promemoria non può essere vuoto",
+        "ErrorMessageForWrongTimeRange": "L'intervallo di tempo non è valido",
         "SuccessGenericTitle": "Successo",
         "SuccessfullyExportedToCsvMessage": "Backup esportati in CSV con successo!",
         "SuccessfullyExportedToPdfMessage": "Backup esportati in PDF con successo!",

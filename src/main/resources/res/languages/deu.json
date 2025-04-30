@@ -56,6 +56,9 @@
         "CreationDateDetail": "Erstellungsdatum",
         "LastUpdateDateDetail": "LetzteAktualisierung",
         "TimeIntervalDetail": "Zeitintervall",
+        "ExecutionMethodDetail": "Ausführungsmethode",
+        "TimeFromDetail": "Startzeit",
+        "TimeToDetail": "Endzeit",
 
         "EditPopup": "Bearbeiten",
         "DeletePopup": "Löschen",
@@ -73,6 +76,8 @@
         "ActiveText": "Aktiv",
         "TopLevelText": "Oben anzeigen",
         "PreviewText": "Vorschau der Erinnerung",
+        "DateFromText": "Von",
+        "DateToText": "Bis",
         "NamePlaceholder": "Name der Erinnerung eingeben",
         "DescriptionPlaceholder": "Beschreibung eingeben (optional)",
         "NameTooltip": "Gib einen Namen für die Erinnerung ein",
@@ -81,7 +86,8 @@
         "DescriptionTooltip": "Gib zusätzliche Details zur Erinnerung an",
         "IconTooltip": "Symbol für die Benachrichtigung auswählen",
         "SoundTooltip": "Ton für die Benachrichtigung auswählen",
-        "SoundButtonTooltip": "Ausgewählten Ton anhören"
+        "SoundButtonTooltip": "Ausgewählten Ton anhören",
+        "ExecutionMethodTooltip": "Wählen Sie, wie der Erinnerung ausgelöst werden soll. 'PC-Start' führt die Erinnerung aus, wenn der Computer startet, und ignoriert Zeitintervalle. 'Benutzerdefinierter Zeitraum' löst sie nur innerhalb eines definierten täglichen Zeitfensters aus."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Zeitintervall für die Erinnerung",
@@ -127,6 +133,8 @@
         "ErrorMessageForWrongFileExtensionMessage": "Fehler: Bitte wähle eine gültige JSON-Datei aus.",
         "ErrorGenericTitle": "Fehler",
         "ErrorWrongTimeInterval": "Das Zeitintervall ist ungültig",
+        "ErrorMessageForEmptyRemindName": "Der Name der Erinnerung darf nicht leer sein",
+        "ErrorMessageForWrongTimeRange": "Der Zeitraum ist ungültig",
         "SuccessGenericTitle": "Erfolg",
         "SuccessfullyExportedToCsvMessage": "Backups erfolgreich als CSV exportiert!",
         "SuccessfullyExportedToPdfMessage": "Backups erfolgreich als PDF exportiert!",

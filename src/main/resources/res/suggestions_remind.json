@@ -10,7 +10,9 @@
     "creationDate": "2025-04-28T12:35:56.900023",
     "lastUpdateDate": "2025-04-28T12:41:38.847144600",
     "icon": "Eye",
-    "sound": "No Sound"
+    "sound": "No Sound",
+    "executionMethod": "Pc Startup",
+    "maxPerDay": 0
   },
   {
     "name": "20 minutes break",
@@ -23,7 +25,9 @@
     "creationDate": "2025-04-28T12:37:43.053364300",
     "lastUpdateDate": "2025-04-28T12:41:45.352081400",
     "icon": "Pause circle",
-    "sound": "Sound 12"
+    "sound": "Sound 12",
+    "executionMethod": "Pc Startup",
+    "maxPerDay": 0
   },
   {
     "name": "Drink water! Stay hydrated.",
@@ -36,7 +40,9 @@
     "creationDate": "2025-04-28T12:41:17.063004900",
     "lastUpdateDate": "2025-04-28T12:41:17.063004900",
     "icon": "Man with a beer",
-    "sound": "No Sound"
+    "sound": "No Sound",
+    "executionMethod": "Pc Startup",
+    "maxPerDay": 0
   },
   {
     "name": "Focus Time!",
@@ -49,7 +55,9 @@
     "creationDate": "2025-04-28T12:50:27.033276500",
     "lastUpdateDate": "2025-04-28T12:50:27.033276500",
     "icon": "Man with a computer",
-    "sound": "Sound 5"
+    "sound": "Sound 5",
+    "executionMethod": "Pc Startup",
+    "maxPerDay": 0
   },
   {
     "name": "Stretch",
@@ -62,6 +70,8 @@
     "creationDate": "2025-04-28T12:50:57.361649700",
     "lastUpdateDate": "2025-04-28T12:52:05.588431400",
     "icon": "Man doing jogging",
-    "sound": "Sound 5"
+    "sound": "Sound 5",
+    "executionMethod": "Pc Startup",
+    "maxPerDay": 0
   }
 ]

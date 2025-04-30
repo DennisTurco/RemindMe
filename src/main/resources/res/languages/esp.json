@@ -56,6 +56,9 @@
         "CreationDateDetail": "FechaDeCreación",
         "LastUpdateDateDetail": "ÚltimaActualización",
         "TimeIntervalDetail": "IntervaloDeTiempo",
+        "ExecutionMethodDetail": "MétodoEjecución",
+        "TimeFromDetail": "HoraInicio",
+        "TimeToDetail": "HoraFin",
 
         "EditPopup": "Editar",
         "DeletePopup": "Eliminar",
@@ -73,6 +76,8 @@
         "ActiveText": "Activo",
         "TopLevelText": "Mostrar arriba",
         "PreviewText": "Vista previa del recordatorio",
+        "DateFromText": "Desde",
+        "DateToText": "Hasta",
         "NamePlaceholder": "Introducir nombre del recordatorio",
         "DescriptionPlaceholder": "Introducir descripción (opcional)",
         "NameTooltip": "Introduce un nombre para el recordatorio",
@@ -81,7 +86,8 @@
         "DescriptionTooltip": "Proporciona detalles adicionales para este recordatorio",
         "IconTooltip": "Selecciona un icono para la notificación del recordatorio",
         "SoundTooltip": "Selecciona un sonido para la notificación del recordatorio",
-        "SoundButtonTooltip": "Previsualizar el sonido seleccionado"
+        "SoundButtonTooltip": "Previsualizar el sonido seleccionado",
+        "ExecutionMethodTooltip": "Selecciona cómo debe activarse el recordatorio. 'Inicio del PC' ejecuta el recordatorio cuando el ordenador se inicia, ignorando los intervalos de tiempo. 'Rango de tiempo personalizado' lo activa solo dentro de una ventana de tiempo diaria definida."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Intervalo de tiempo del recordatorio",
@@ -127,6 +133,8 @@
         "ErrorMessageForWrongFileExtensionMessage": "Error: Por favor selecciona un archivo JSON válido.",
         "ErrorGenericTitle": "Error",
         "ErrorWrongTimeInterval": "El intervalo de tiempo no es correcto",
+        "ErrorMessageForEmptyRemindName": "El nombre del recordatorio no puede estar vacío",
+        "ErrorMessageForWrongTimeRange": "El rango de tiempo no es válido",
         "SuccessGenericTitle": "Éxito",
         "SuccessfullyExportedToCsvMessage": "¡Copias de seguridad exportadas como CSV correctamente!",
         "SuccessfullyExportedToPdfMessage": "¡Copias de seguridad exportadas como PDF correctamente!",

@@ -1,10 +1,12 @@
 package remindme.Dialogs;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
 import remindme.Entities.TimeInterval;
+import remindme.Enums.ExecutionMethod;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
@@ -44,10 +46,11 @@ public class ManageRemind extends javax.swing.JDialog {
         setTitle(title);
         OkBtn.setText(confirmBtnName);
         this.closeOk = false;
-        jLabel1.setText((timeInterval != null ? timeInterval.toString() : TimeInterval.getDefaultTimeInterval().toString()));
+        timeFrequencyLabel.setText((timeInterval != null ? timeInterval.toString() : TimeInterval.getDefaultTimeInterval().toString()));
 
         setIcons();
         setSounds();
+        setExecutionMethods();
 
         if (!create)
             remindNameTextField.setEnabled(false);
@@ -68,10 +71,11 @@ public class ManageRemind extends javax.swing.JDialog {
         boolean topLevel = topLevelCheckBox.isSelected();
         IconsEnum icon = IconsEnum.getIconbyName((String) iconComboBox.getSelectedItem());
         SoundsEnum sound = SoundsEnum.getSoundbyName((String) soundComboBox.getSelectedItem());
-        LocalDateTime creationDate;
-        LocalDateTime lastUpdateDate;
-        LocalDateTime lastExecution;
-        int remindCount;
+        ExecutionMethod executionMethod = ExecutionMethod.getExecutionMethodbyName((String) executionMethodComboBox.getSelectedItem());
+        LocalDateTime creationDate, lastUpdateDate, lastExecution;
+        LocalTime timeFromLocalTime = null, timeToLocalTime = null;
+
+        int remindCount, maxExecutionsPerDay = 0;
         if (create) {
             creationDate = LocalDateTime.now();
             lastUpdateDate = creationDate;
@@ -85,11 +89,16 @@ public class ManageRemind extends javax.swing.JDialog {
             remindCount = currentRemind.getRemindCount();
         }
 
-        LocalDateTime nextExecution = RemindManager.getnextExecutionByTimeInterval(timeInterval);
+        LocalDateTime nextExecution;
+        if (executionMethod == ExecutionMethod.CUSTOM_TIME_RANGE && isTimeRangeValid()) {
+            timeFromLocalTime = LocalTime.parse(timeFrom.getText());
+            timeToLocalTime = LocalTime.parse(timeTo.getText());
+            nextExecution = RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(timeInterval, timeFromLocalTime);
+        } else {
+            nextExecution = RemindManager.getnextExecutionByTimeInterval(timeInterval);
+        }
 
-        //TODO: check correctness before retutn the new Remind
-
-        return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound);
+        return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound, executionMethod, timeFromLocalTime, timeToLocalTime, maxExecutionsPerDay);
     }
 
     public boolean isClosedOk() {
@@ -110,6 +119,23 @@ public class ManageRemind extends javax.swing.JDialog {
         return picker.getTimeInterval();
     }
 
+    public boolean isTimeRangeValid() {
+        if (ExecutionMethod.getExecutionMethodbyName(executionMethodComboBox.getSelectedItem().toString()) == ExecutionMethod.PC_STARTUP)
+            return true;
+
+        String fromText = timeFrom.getText();
+        String toText = timeTo.getText();
+
+        if (fromText == null || fromText.isEmpty() || toText == null || toText.isEmpty()) {
+            return false;
+        }
+
+        LocalTime from = LocalTime.parse(timeFrom.getText());
+        LocalTime to = LocalTime.parse(timeTo.getText());
+
+        return from.isBefore(to);
+    }
+
     private void insertRemindValues(Remind remind) {
         remindNameTextField.setText(remind.getName());
         descriptionTextArea.setText(remind.getDescription());
@@ -117,9 +143,12 @@ public class ManageRemind extends javax.swing.JDialog {
         topLevelCheckBox.setSelected(remind.isTopLevel());
         iconComboBox.setSelectedItem(remind.getIcon().getIconName());
         soundComboBox.setSelectedItem(remind.getSound().getSoundName());
+        executionMethodComboBox.setSelectedItem(remind.getExecutionMethod().getExecutionMethodName());
+        timeFrom.setText(remind.getTimeFrom() != null ? remind.getTimeFrom().toString() : "");
+        timeTo.setText(remind.getTimeTo() != null ? remind.getTimeTo().toString(): "");
     }
 
-    public void setSvgImages() {
+    private void setSvgImages() {
         soundPreviewBtn.setSvgImage("res/img/sound.svg", 35, 35);
         timeIntervalBtn.setSvgImage("res/img/timer.svg", 50, 50);
     }
@@ -129,12 +158,11 @@ public class ManageRemind extends javax.swing.JDialog {
         activeCheckBox.setText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.ACTIVE_TEXT));
         topLevelCheckBox.setText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.TOP_LEVEL_TEXT));
         reminderPreviewBtn.setText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.PREVIEW_TEXT));
-
-        // remindNameTextField.setPlaceholder(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.NAME_PLACEHOLDER));
-        // descriptionTextArea.setPlaceholder(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.DESCRIPTION_PLACEHOLDER));
+        fromLabel.setText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.DATE_FROM_TEXT) + ":");
+        toLabel.setText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.DATE_TO_TEXT) + ":");
 
         timeIntervalBtn.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.TIME_INTERVAL_TITLE));
-        jLabel1.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.FORMAT));
+        timeFrequencyLabel.setToolTipText(TranslationCategory.TIME_PICKER_DIALOG.getTranslation(TranslationKey.FORMAT));
 
         remindNameTextField.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.NAME_TOOLTIP));
         descriptionTextArea.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.DESCRIPTION_TOOLTIP));
@@ -143,6 +171,7 @@ public class ManageRemind extends javax.swing.JDialog {
         iconComboBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.ICON_TOOLTIP));
         soundComboBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.SOUND_TOOLTIP));
         soundPreviewBtn.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.SOUND_BUTTON_TOOLTIP));
+        executionMethodComboBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EXECUTION_METHOD_TOOLTIP));
     }
 
     private void setIcons() {
@@ -215,6 +244,15 @@ public class ManageRemind extends javax.swing.JDialog {
         soundComboBox.setSelectedItem(SoundsEnum.getDefaultSound());
     }
 
+    private void setExecutionMethods() {
+        executionMethodComboBox.removeAllItems();
+
+        executionMethodComboBox.addItem(ExecutionMethod.PC_STARTUP.getExecutionMethodName());
+        executionMethodComboBox.addItem(ExecutionMethod.CUSTOM_TIME_RANGE.getExecutionMethodName());
+
+        executionMethodComboBox.setSelectedItem(ExecutionMethod.getDefaultExecutionMethod());
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -234,10 +272,17 @@ public class ManageRemind extends javax.swing.JDialog {
         descriptionTextArea = new javax.swing.JTextArea();
         iconComboBox = new javax.swing.JComboBox<>();
         reminderPreviewBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        timeFrequencyLabel = new javax.swing.JLabel();
         timeIntervalBtn = new remindme.Svg.SVGButton();
         soundPreviewBtn = new remindme.Svg.SVGButton();
         iconRemindPreview = new remindme.Svg.SVGLabel();
+        executionMethodComboBox = new javax.swing.JComboBox<>();
+        timeFrom = new com.github.lgooddatepicker.components.TimePicker();
+        timeTo = new com.github.lgooddatepicker.components.TimePicker();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        toLabel = new javax.swing.JLabel();
+        fromLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(429, 400));
@@ -284,7 +329,7 @@ public class ManageRemind extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("jLabel1");
+        timeFrequencyLabel.setText("timeFrequencyLabel");
 
         timeIntervalBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -298,6 +343,26 @@ public class ManageRemind extends javax.swing.JDialog {
             }
         });
 
+        executionMethodComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        executionMethodComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                executionMethodComboBoxActionPerformed(evt);
+            }
+        });
+
+        timeFrom.setFocusable(false);
+        timeFrom.setRequestFocusEnabled(false);
+
+        timeTo.setFocusable(false);
+        timeTo.setRequestFocusEnabled(false);
+
+        toLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        toLabel.setText("To:");
+
+        fromLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        fromLabel.setText("From:");
+        fromLabel.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -305,12 +370,8 @@ public class ManageRemind extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(OkBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancelBtn))
                     .addComponent(remindNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -318,7 +379,13 @@ public class ManageRemind extends javax.swing.JDialog {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(timeIntervalBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(timeFrequencyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(114, 114, 114))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(reminderPreviewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(soundComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -329,12 +396,26 @@ public class ManageRemind extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(activeCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(topLevelCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(OkBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cancelBtn))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(executionMethodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fromLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(timeFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(toLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(timeTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(120, Short.MAX_VALUE)
-                .addComponent(reminderPreviewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(111, 111, 111))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,12 +437,24 @@ public class ManageRemind extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(executionMethodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(timeFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(toLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fromLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(timeTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timeFrequencyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(timeIntervalBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(reminderPreviewBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(OkBtn)
                     .addComponent(cancelBtn))
@@ -389,7 +482,6 @@ public class ManageRemind extends javax.swing.JDialog {
     private void OkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkBtnActionPerformed
         closeOk = true;
         this.dispose();
-
     }//GEN-LAST:event_OkBtnActionPerformed
 
     private void reminderPreviewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reminderPreviewBtnActionPerformed
@@ -406,23 +498,42 @@ public class ManageRemind extends javax.swing.JDialog {
         }
 
         timeInterval = newTimeInterval;
-        jLabel1.setText(timeInterval.toString());
+        timeFrequencyLabel.setText(timeInterval.toString());
     }//GEN-LAST:event_timeIntervalBtnActionPerformed
+
+    private void executionMethodComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executionMethodComboBoxActionPerformed
+        if (executionMethodComboBox.getSelectedItem() == null)
+            return;
+
+        boolean enable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.CUSTOM_TIME_RANGE.getExecutionMethodName());
+
+        timeFrom.setEnabled(enable);
+        timeTo.setEnabled(enable);
+        fromLabel.setEnabled(enable);
+        toLabel.setEnabled(enable);
+    }//GEN-LAST:event_executionMethodComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton OkBtn;
     private javax.swing.JCheckBox activeCheckBox;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JTextArea descriptionTextArea;
+    private javax.swing.JComboBox<String> executionMethodComboBox;
+    private javax.swing.JLabel fromLabel;
     private javax.swing.JComboBox<String> iconComboBox;
     private remindme.Svg.SVGLabel iconRemindPreview;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private remindme.customwidgets.ModernTextField remindNameTextField;
     private javax.swing.JButton reminderPreviewBtn;
     private javax.swing.JComboBox<String> soundComboBox;
     private remindme.Svg.SVGButton soundPreviewBtn;
+    private javax.swing.JLabel timeFrequencyLabel;
+    private com.github.lgooddatepicker.components.TimePicker timeFrom;
     private remindme.Svg.SVGButton timeIntervalBtn;
+    private com.github.lgooddatepicker.components.TimePicker timeTo;
+    private javax.swing.JLabel toLabel;
     private javax.swing.JCheckBox topLevelCheckBox;
     // End of variables declaration//GEN-END:variables
 }

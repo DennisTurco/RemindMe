@@ -16,13 +16,13 @@ public class User {
     }
 
     public String getUserCompleteName() {
-        return name + " " + surname; 
-    } 
-    
+        return name + " " + surname;
+    }
+
     @Override
     public String toString() {
         return name + " " + surname + ", " + email + ", " + language; 
-    } 
+    }
 
     public static User getDefaultUser() {
         return new User("Unregistered", "User", "");

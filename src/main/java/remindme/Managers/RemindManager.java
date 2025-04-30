@@ -5,7 +5,9 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,18 +69,9 @@ public final class RemindManager {
     public void reloadPreferences() {
         logger.info("Reloading preferences");
 
-        // load language
-        try {
-            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
-            main.setTranslations();
-        } catch (IOException ex) {
-            logger.error("An error occurred during reloading preferences operation: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
+        loadLanguage();
+        loadTheme();
 
-        // load theme
-        ThemeManager.updateThemeFrame(main);
-        ThemeManager.refreshPopup(main.getTablePopup());
         main.setSvgImages();
     }
 
@@ -185,48 +178,81 @@ public final class RemindManager {
         return null;
     }
 
+    private void loadLanguage() {
+        try {
+            TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
+            main.setTranslations();
+        } catch (IOException ex) {
+            logger.error("An error occurred during reloading preferences operation: " + ex.getMessage(), ex);
+            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        }
+    }
+
+    private void loadTheme() {
+        ThemeManager.updateThemeFrame(main);
+        ThemeManager.refreshPopup(main.getTablePopup());
+    }
+
     ///////////////////////////////////////////////////////////////////
 
     public void addReminder() {
         logger.info("Event --> adding new reminder");
 
-        ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.CREATE_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.ADD_BUTTON));
-        Remind remind = retriveRemindInserteByDIalog(manage);
+        ManageRemind manage = new ManageRemind(main, true,TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.CREATE_TITLE),TranslationCategory.GENERAL.getTranslation(TranslationKey.ADD_BUTTON));
 
-        if (remind == null)
-            return;
+        Remind remind = retriveRemindInsertedByDialog(manage);
+        if (remind == null) return;
 
         reminds.add(remind);
-
         updateRemindList();
     }
 
     public void editRemind(Remind remind) {
-        logger.info("Event --> editing reminder");
+        logger.info("Event --> editing reminder \"" + remind.getName() + "\"");
 
-        ManageRemind manage = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EDIT_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON), remind);
-        manage.setVisible(true);
-        Remind updatedRemind = manage.getRemindInserted();
+        ManageRemind dialog = new ManageRemind(main, true, TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EDIT_TITLE), TranslationCategory.GENERAL.getTranslation(TranslationKey.SAVE_BUTTON), remind);
 
-        if (updatedRemind == null)
-            return;
+        Remind updatedRemind = retriveRemindUpdatedByDialog(dialog);
+        if (updatedRemind == null) return;
 
         remind.updateReming(updatedRemind);
-
         updateRemindList();
     }
 
-    private Remind retriveRemindInserteByDIalog(ManageRemind dialog) {
+    private Remind retriveRemindInsertedByDialog(ManageRemind dialog) {
         Remind remind;
+
         do {
             dialog.setVisible(true);
             remind = dialog.getRemindInserted();
-            if (remind == null)
-                return null;
-            if (isRemindNameDuplicated(remind.getName()) && dialog.isClosedOk()) {
-                JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_DUPLICATED_REMIND), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE), JOptionPane.ERROR_MESSAGE);
+            if (remind == null) return null;
+
+            if (dialog.isClosedOk()) {
+                if (remind.getName().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_EMPTY_REMIND_NAME), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                } else if (isRemindNameDuplicated(remind.getName())) {
+                    JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_DUPLICATED_REMIND), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE), JOptionPane.ERROR_MESSAGE);
+                } else if (!dialog.isTimeRangeValid()) {
+                    JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_TIME_RANGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+                } else {
+                    return remind;
+                }
+            }
+        } while (true);
+    }
+
+    private Remind retriveRemindUpdatedByDialog(ManageRemind dialog) {
+        Remind updatedRemind;
+        do {
+            dialog.setVisible(true);
+            updatedRemind = dialog.getRemindInserted();
+
+            if (updatedRemind == null) return null;
+
+            if (!dialog.isTimeRangeValid() && dialog.isClosedOk()) {
+                JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_TIME_RANGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             } else {
-                return remind;
+                return updatedRemind;
             }
         } while (true);
     }
@@ -297,7 +323,11 @@ public final class RemindManager {
             dateNow,
             remind.getTimeInterval(),
             remind.getIcon(),
-            remind.getSound()
+            remind.getSound(),
+            remind.getExecutionMethod(),
+            remind.getTimeFrom(),
+            remind.getTimeTo(),
+            remind.getMaxExecutionsPerDay()
         );
 
         reminds.add(newRemind);
@@ -344,14 +374,29 @@ public final class RemindManager {
         updateRemindList();
     }
 
-    
-
     public static LocalDateTime getnextExecutionByTimeInterval(TimeInterval timeInterval) {
         if (timeInterval == null) return null;
 
         return LocalDateTime.now().plusDays(timeInterval.getDays())
             .plusHours(timeInterval.getHours())
             .plusMinutes(timeInterval.getMinutes());
+    }
+
+    public static LocalDateTime getnextExecutionByTimeIntervalFromSpecificTime(TimeInterval timeInterval, LocalTime timeFrom) {
+        if (timeInterval == null || timeFrom == null) return null;
+
+        // Base time: oggi alle timeFrom
+        LocalDateTime baseTime = LocalDateTime.of(LocalDate.now(), timeFrom)
+            .plusDays(timeInterval.getDays())
+            .plusHours(timeInterval.getHours())
+            .plusMinutes(timeInterval.getMinutes());
+
+        // Se la data risultante è già nel passato, posticipa di un giorno
+        if (baseTime.isBefore(LocalDateTime.now())) {
+            baseTime = baseTime.plusDays(1);
+        }
+
+        return baseTime;
     }
 
     ///////////////////////////////////////////////////////////////////

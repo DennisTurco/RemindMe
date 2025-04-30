@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,7 @@ import com.google.gson.reflect.TypeToken;
 import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
 import remindme.Entities.TimeInterval;
+import remindme.Enums.ExecutionMethod;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
 import remindme.Managers.ExceptionManager;
@@ -80,21 +82,27 @@ public class JSONReminder {
                 String timeIntervalStr = getStringOrNull(remindObj, "timeInterval");
                 IconsEnum icon = IconsEnum.getIconbyName(getStringOrNull(remindObj, "icon"));
                 SoundsEnum sound = SoundsEnum.getSoundbyName(getStringOrNull(remindObj, "sound"));
+                ExecutionMethod executionMethod = ExecutionMethod.getExecutionMethodbyName(getStringOrNull(remindObj, "executionMethod"));
+                String timeFromStr = getStringOrNull(remindObj, "timeFrom");
+                String timeToStr = getStringOrNull(remindObj, "timeTo");
 
                 int countValue = remindObj.has("count") ? remindObj.get("count").getAsInt() : 0;
+                int maxExecutionPerDayValue = remindObj.has("maxPerDay") ? remindObj.get("maxPerDay").getAsInt() : 0;
 
-                Boolean isActiveValue = remindObj.has("isActive") && !remindObj.get("isActive").isJsonNull() 
-                    ? remindObj.get("isActive").getAsBoolean() 
+                Boolean isActiveValue = remindObj.has("isActive") && !remindObj.get("isActive").isJsonNull()
+                    ? remindObj.get("isActive").getAsBoolean()
                     : null;
 
-                Boolean isTopLevelValue = remindObj.has("isTopLevel") && !remindObj.get("isTopLevel").isJsonNull() 
-                    ? remindObj.get("isTopLevel").getAsBoolean() 
+                Boolean isTopLevelValue = remindObj.has("isTopLevel") && !remindObj.get("isTopLevel").isJsonNull()
+                    ? remindObj.get("isTopLevel").getAsBoolean()
                     : null;
 
                 LocalDateTime lastExecutionValue = lastExecutionStr != null ? LocalDateTime.parse(lastExecutionStr) : null;
                 LocalDateTime nextExecutionValue = nextExecutionStr != null ? LocalDateTime.parse(nextExecutionStr) : null;
                 LocalDateTime creationDateValue = creationDateStr != null ? LocalDateTime.parse(creationDateStr) : null;
                 LocalDateTime lastUpdateDateValue = lastUpdateDateStr != null ? LocalDateTime.parse(lastUpdateDateStr) : null;
+                LocalTime timeFromValue = timeFromStr != null ? LocalTime.parse(timeFromStr) : null;
+                LocalTime timeToValue = timeToStr != null ? LocalTime.parse(timeToStr) : null;
 
                 if (icon == null)
                     icon = IconsEnum.getDefaultIcon();
@@ -114,7 +122,11 @@ public class JSONReminder {
                     lastUpdateDateValue,
                     TimeInterval.getTimeIntervalFromString(timeIntervalStr),
                     icon,
-                    sound
+                    sound,
+                    executionMethod,
+                    timeFromValue,
+                    timeToValue,
+                    maxExecutionPerDayValue
                 ));
             }
 
@@ -152,6 +164,10 @@ public class JSONReminder {
                 remindObject.addProperty("lastUpdateDate", remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().toString() : null);
                 remindObject.addProperty("icon", remind.getIcon().getIconName());
                 remindObject.addProperty("sound", remind.getSound().getSoundName());
+                remindObject.addProperty("executionMethod", remind.getExecutionMethod().getExecutionMethodName());
+                remindObject.addProperty("timeFrom", remind.getTimeFrom() != null ? remind.getTimeFrom().toString() : null);
+                remindObject.addProperty("timeTo", remind.getTimeTo() != null ? remind.getTimeTo().toString() : null);
+                remindObject.addProperty("maxPerDay", remind.getMaxExecutionsPerDay());
 
                 updatedRemindArray.add(remindObject);
             }
@@ -188,6 +204,10 @@ public class JSONReminder {
                     remindObject.addProperty("lastUpdateDate", updatedRemind.getLastUpdateDate() != null ? updatedRemind.getLastUpdateDate().toString() : null);
                     remindObject.addProperty("icon", updatedRemind.getIcon().getIconName());
                     remindObject.addProperty("sound", updatedRemind.getSound().getSoundName());
+                    remindObject.addProperty("executionMethod", updatedRemind.getExecutionMethod().getExecutionMethodName());
+                    remindObject.addProperty("timeFrom", updatedRemind.getTimeFrom() != null ? updatedRemind.getTimeFrom().toString() : null);
+                    remindObject.addProperty("timeTo", updatedRemind.getTimeTo() != null ? updatedRemind.getTimeTo().toString() : null);
+                    remindObject.addProperty("maxPerDay", updatedRemind.getMaxExecutionsPerDay());
                     break;
                 }
             }

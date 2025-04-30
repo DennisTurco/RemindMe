@@ -56,6 +56,9 @@
         "CreationDateDetail": "DateCréation",
         "LastUpdateDateDetail": "DernièreMiseÀJour",
         "TimeIntervalDetail": "IntervalleDeTemps",
+        "ExecutionMethodDetail": "MéthodeExécution",
+        "TimeFromDetail": "HeureDébut",
+        "TimeToDetail": "HeureFin",
 
         "EditPopup": "Modifier",
         "DeletePopup": "Supprimer",
@@ -73,6 +76,8 @@
         "ActiveText": "Actif",
         "TopLevelText": "Afficher en haut",
         "PreviewText": "Aperçu du rappel",
+        "DateFromText": "De",
+        "DateToText": "À",
         "NamePlaceholder": "Entrez le nom du rappel",
         "DescriptionPlaceholder": "Entrez une description (facultatif)",
         "NameTooltip": "Saisissez un nom pour le rappel",
@@ -81,7 +86,8 @@
         "DescriptionTooltip": "Ajoutez des détails supplémentaires pour ce rappel",
         "IconTooltip": "Choisissez une icône pour la notification du rappel",
         "SoundTooltip": "Choisissez un son pour la notification du rappel",
-        "SoundButtonTooltip": "Aperçu du son sélectionné"
+        "SoundButtonTooltip": "Aperçu du son sélectionné",
+        "ExecutionMethodTooltip": "Sélectionnez comment le rappel doit être déclenché. 'Démarrage du PC' exécute le rappel lorsque l'ordinateur démarre, en ignorant les intervalles de temps. 'Plage horaire personnalisée' ne le déclenche que dans une fenêtre horaire définie dans la journée."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Intervalle de temps pour le rappel",
@@ -127,6 +133,8 @@
         "ErrorMessageForWrongFileExtensionMessage": "Erreur : veuillez sélectionner un fichier JSON valide.",
         "ErrorGenericTitle":"Erreur",
         "ErrorWrongTimeInterval":"L'intervalle de temps n'est pas correct",
+        "ErrorMessageForEmptyRemindName": "Le nom du rappel ne peut pas être vide",
+        "ErrorMessageForWrongTimeRange": "L'intervalle de temps n'est pas valide",
         "SuccessGenericTitle":"Succès",
         "SuccessfullyExportedToCsvMessage":"Sauvegardes exportées en CSV avec succès !",
         "SuccessfullyExportedToPdfMessage":"Sauvegardes exportées en PDF avec succès !",

@@ -29,7 +29,7 @@ public class Preferences {
         try (FileReader reader = new FileReader(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.PREFERENCES_FILE_STRING.getValue())) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
-            
+
             language = getLanguageFromJson(jsonObject);
             theme = getThemeFromJson(jsonObject);
             remindList = getRemindListFromJson(jsonObject);

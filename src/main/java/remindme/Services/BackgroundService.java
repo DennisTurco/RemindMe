@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -29,6 +30,7 @@ import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
 import remindme.Enums.ConfigKey;
+import remindme.Enums.ExecutionMethod;
 import remindme.GUI.MainGUI;
 import remindme.Json.JSONConfigReader;
 import remindme.Json.JSONReminder;
@@ -150,8 +152,12 @@ public class BackgroundService {
             List<Remind> remindsToDo = new ArrayList<>();
 
             for (Remind remind : reminds) {
+                if (maxRemindsToAdd <= 0 || !remind.isActive() || remind.getNextExecution() == null)
+                    continue;
 
-                if (maxRemindsToAdd > 0 && remind.isActive() && remind.getNextExecution() != null && remind.getNextExecution().isBefore(LocalDateTime.now())) {
+                boolean nextExecutionPassed = remind.getNextExecution().isBefore(LocalDateTime.now());
+                boolean insideTimeRange = insideTimeRange(remind);
+                if (nextExecutionPassed && insideTimeRange) {
                     remindsToDo.add(remind);
                     maxRemindsToAdd--;
                 }
@@ -187,6 +193,24 @@ public class BackgroundService {
             }
 
             return null;
+        }
+
+        private boolean insideTimeRange(Remind remind) {
+            ExecutionMethod method = remind.getExecutionMethod();
+            if (method == ExecutionMethod.PC_STARTUP) {
+                return true;
+            }
+
+            LocalTime now = LocalTime.now();
+            LocalTime from = remind.getTimeFrom();
+            LocalTime to = remind.getTimeTo();
+
+            boolean insideRange = !now.isBefore(from) && !now.isAfter(to);
+            if (method == ExecutionMethod.CUSTOM_TIME_RANGE && insideRange) {
+                return true;
+            }
+
+            return false;
         }
     }
 }

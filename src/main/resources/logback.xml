@@ -10,7 +10,7 @@
     <property name="smtp.from" value="${smtp.from}" />
     <property name="smtp.host" value="${smtp.smtp}" />
     <property name="smtp.email_confirmation_to" value="${smtp.email_confirmation_to}" />
-    <property name="EMAIL_TO" value="test1@shardpc.it" /> <!--assistenza@shardpc.it-->
+    <property name="EMAIL_TO" value="assistenza@shardpc.it" /> <!--test1@shardpc.it-->
     <property name="EMAIL_ERROR_SUBJECT" value="⚠ RemindMe - Critical error in application ⚠" />
     <property name="EMAIL_INFO_SUBJECT" value="🆕 RemindMe - New user registered!! 🆕" />
     <property name="EMAIL_CONFIRMATION_SUBJECT" value="RemindMe - Welcome!" />

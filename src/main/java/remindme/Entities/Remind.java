@@ -2,6 +2,7 @@ package remindme.Entities;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import remindme.Json.JSONReminder;
+import remindme.Enums.ExecutionMethod;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
 import remindme.Managers.ExceptionManager;
@@ -28,6 +30,10 @@ public class Remind {
     private TimeInterval _timeInterval;
     private IconsEnum _icon;
     private SoundsEnum _sound;
+    private ExecutionMethod _executionMethod;
+    private LocalTime _timeFrom;
+    private LocalTime _timeTo;
+    private int _maxExecutionPerDay;
 
     public Remind() {
         this._name = "";
@@ -42,9 +48,13 @@ public class Remind {
         this._timeInterval = null;
         this._icon = IconsEnum.ALERT;
         this._sound = SoundsEnum.NoSound;
+        this._executionMethod = ExecutionMethod.PC_STARTUP;
+        this._timeFrom = null;
+        this._timeTo = null;
+        this._maxExecutionPerDay = 0;
     }
 
-    public Remind(String name, String description, int remindCount, boolean isActive, boolean isTopLevel, LocalDateTime lastExecution, LocalDateTime nextExecution, LocalDateTime creationDate, LocalDateTime lastUpdateDate, TimeInterval timeInterval, IconsEnum icon, SoundsEnum sound) {
+    public Remind(String name, String description, int remindCount, boolean isActive, boolean isTopLevel, LocalDateTime lastExecution, LocalDateTime nextExecution, LocalDateTime creationDate, LocalDateTime lastUpdateDate, TimeInterval timeInterval, IconsEnum icon, SoundsEnum sound, ExecutionMethod executionMethod, LocalTime timeFrom, LocalTime timeTo, int maxExecutionsPerDay) {
         this._name = name;
         this._description = description;
         this._remindCount = remindCount;
@@ -57,6 +67,10 @@ public class Remind {
         this._timeInterval = timeInterval;
         this._icon = icon;
         this._sound = sound;
+        this._executionMethod = executionMethod;
+        this._timeFrom = timeFrom;
+        this._timeTo = timeTo;
+        this._maxExecutionPerDay = maxExecutionsPerDay;
     }
 
     public void updateReming(Remind newRemind) {
@@ -72,32 +86,41 @@ public class Remind {
         this._timeInterval = newRemind.getTimeInterval();
         this._icon = newRemind.getIcon();
         this._sound = newRemind.getSound();
+        this._executionMethod = newRemind.getExecutionMethod();
+        this._timeFrom = newRemind.getTimeFrom();
+        this._timeTo = newRemind.getTimeTo();
     }
 
     @Override
     public String toString() {
-        return String.format("[Name: %s, Description: %s, IsActive: %s, IsTopLevel: %s, TimeInterval: %s]",
+        return String.format("[Name: %s, Description: %s, IsActive: %s, IsTopLevel: %s, TimeInterval: %s, ExecutionMethod: %s, TimeFrom: %s, TimeTo: %s]",
             this._name,
             this._description,
             this._isActive,
             this._isTopLevel,
-            this._timeInterval != null ? this._timeInterval.toString() : ""
+            this._timeInterval != null ? this._timeInterval.toString() : "",
+            this._executionMethod.getExecutionMethodName(),
+            this._timeFrom != null ? this._timeFrom.toString() : "",
+            this._timeTo != null ? this._timeTo.toString() : ""
         );
     }
 
     public String toCsvString() {
-        return String.format("%s,%s,%s,%s,%s,%s",
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
             this._name,
             this._isActive,
             this._isTopLevel,
             this._lastExecution != null ? _lastExecution.toString() : "",
             this._nextExecution != null ? _nextExecution.toString() : "",
-            this._timeInterval != null ? this._timeInterval.toString() : ""
+            this._timeInterval != null ? this._timeInterval.toString() : "",
+            this._executionMethod.getExecutionMethodName(),
+            this._timeFrom != null ? this._timeFrom.toString() : "",
+            this._timeTo != null ? this._timeTo.toString() : ""
         );
     }
 
     public static String getCSVHeader() {
-        return "Name,Active,TopLevel,LastExecution,NextExecution,Interval (gg.HH:mm)";
+        return "Name,Active,TopLevel,LastExecution,NextExecution,Interval (gg.HH:mm),ExecutionMethod,TimeFrom,TimeTo";
     }
 
     public static Remind getRemindByName(List<Remind> reminds, String remindName) {
@@ -162,6 +185,18 @@ public class Remind {
     public SoundsEnum getSound() {
         return _sound;
     }
+    public ExecutionMethod getExecutionMethod() {
+        return _executionMethod;
+    }
+    public LocalTime getTimeFrom() {
+        return _timeFrom;
+    }
+    public LocalTime getTimeTo() {
+        return _timeTo;
+    }
+    public int getMaxExecutionsPerDay() {
+        return _maxExecutionPerDay;
+    }
 
     public void setName(String name) {
         this._name = name;
@@ -198,5 +233,17 @@ public class Remind {
     }
     public void setSound(SoundsEnum sound) {
         this._sound = sound;
+    }
+    public void setExecutionMethod(ExecutionMethod executionMethod) {
+        this._executionMethod = executionMethod;
+    }
+    public void setTimeFrom(LocalTime timeFrom) {
+        this._timeFrom = timeFrom;
+    }
+    public void setTimeTo(LocalTime timeTo) {
+        this._timeTo = timeTo;
+    }
+    public void setMaxExecutionPerDay(int maxExecutionsPerDay) {
+        this._maxExecutionPerDay = maxExecutionsPerDay;
     }
 }

@@ -35,6 +35,7 @@ import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
 import remindme.Entities.User;
 import remindme.Enums.ConfigKey;
+import remindme.Enums.ExecutionMethod;
 import remindme.Enums.LanguagesEnum;
 import remindme.Enums.MenuItems;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
@@ -74,40 +75,19 @@ public final class MainGUI extends javax.swing.JFrame {
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
         this.setIconImage(icon);
 
-        // load Menu items
         setMenuItems();
 
-        // set app sizes
         setScreenSize();
 
         initializeTable();
 
-        // icons
         researchField.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON, new com.formdev.flatlaf.extras.FlatSVGIcon("res/img/search.svg", 16, 16));
 
-        // translations
         setTranslations();
 
-        // set all svg images
         setSvgImages();
 
         checkForFirstAccess();
-    }
-
-    private void createUser() {
-        // first access
-        EntryUserDialog userDialog = new EntryUserDialog(this, true);
-        userDialog.setVisible(true);
-        User newUser = userDialog.getUser();
-
-        if (newUser == null) {
-            return;
-        }
-
-        JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
-
-        EmailSender.sendUserCreationEmail(newUser);
-        EmailSender.sendConfirmEmailToUser(newUser);
     }
 
     private void checkForFirstAccess() {
@@ -120,15 +100,28 @@ public final class MainGUI extends javax.swing.JFrame {
                 return;
             }
 
-            // set language based on PC language
             setLanguageBasedOnPcLanguage();
 
-            // user creation
             createUser();
         } catch (IOException e) {
             logger.error("I/O error occurred during read user data: " + e.getMessage(), e);
             JsonUser.writeUserToJson(User.getDefaultUser(), ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
         }
+    }
+
+    private void createUser() {
+        EntryUserDialog userDialog = new EntryUserDialog(this, true);
+        userDialog.setVisible(true);
+        User newUser = userDialog.getUser();
+
+        if (newUser == null) {
+            return;
+        }
+
+        JsonUser.writeUserToJson(newUser, ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue()); 
+
+        EmailSender.sendUserCreationEmail(newUser);
+        EmailSender.sendConfirmEmailToUser(newUser);
     }
 
     private void setLanguageBasedOnPcLanguage() {
@@ -179,6 +172,47 @@ public final class MainGUI extends javax.swing.JFrame {
         displayRemindList(reminds);
     }
 
+    private void populateTableDetails(Remind remind) {
+        String remindNameStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NAME_DETAIL);
+        String descriptionStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DESCRIPTION_DETAIL);
+        String isActiveStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_ACTIVE_DETAIL);
+        String isTopLevelStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_TOP_LEVEL_DETAIL);
+        String lastExeutionStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.LAST_EXECUTION_DETAIL);
+        String nextExecutionStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NEXT_EXECUTION_DETAIL);
+        String timeIntervalStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_INTERVAL_DETAIL);
+        String creationDateStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.CREATION_DATE_DETAIL);
+        String lastUpdateDateStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.LAST_UPDATE_DATE_DETAIL);
+        String remindCountStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.COUNT_DETAIL);
+        String executionMethodStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.EXECUTION_METHOD_DETAIL);
+        String timeFromStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_FROM_DETAIL);
+        String timeToStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_TO_DETAIL);
+
+        StringBuilder body = new StringBuilder();
+        body.append(
+            "<html><b>" + remindNameStr + ":</b> " + remind.getName() + ", " +
+            "<b>" + descriptionStr + ":</b> " + remind.getDescription() + ", " +
+            "<b>" + isActiveStr + ":</b> " + remind.isActive() + ", " +
+            "<b>" + isTopLevelStr + ":</b> " + remind.isTopLevel() + ", " +
+            "<b>" + lastExeutionStr + ":</b> " + (remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "") + ", " +
+            "<b>" + nextExecutionStr + ":</b> " + (remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "_") + ", " +
+            "<b>" + timeIntervalStr + ":</b> " + (remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : "_") + ", " +
+            "<b>" + creationDateStr + ":</b> " + (remind.getCreationDate() != null ? remind.getCreationDate().format(RemindManager.formatter) : "_") + ", " +
+            "<b>" + lastUpdateDateStr + ":</b> " + (remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().format(RemindManager.formatter) : "_") + ", " +
+            "<b>" + remindCountStr + ":</b> " + (remind.getRemindCount()) + ", " +
+            "<b>" + executionMethodStr + ":</b> " + (remind.getExecutionMethod().getExecutionMethodName())
+        );
+        if (remind.getExecutionMethod() == ExecutionMethod.CUSTOM_TIME_RANGE) {
+            body.append(
+                ", <b>" + timeFromStr + ":</b> " + (remind.getTimeFrom()) + ", " +
+                "<b>" + timeToStr + ":</b> " + (remind.getTimeTo())
+            );
+        }
+        body.append("</html>");
+
+        detailsLabel.setContentType("text/html");
+        detailsLabel.setText(body.toString());
+    }
+
     private void displayRemindList(List<Remind> reminds) {
         RemindTableModel tempModel = new RemindTableModel(remindManager.getColumnTranslations(), 0);
 
@@ -212,7 +246,8 @@ public final class MainGUI extends javax.swing.JFrame {
                 if (selectedRow == -1) return;
 
                 logger.debug("Enter key pressed on row: " + selectedRow);
-                //TODO: OpenRemind((String) remindTable.getValueAt(selectedRow, 1));
+                Remind remind = Remind.getRemindByName((String)remindTable.getValueAt(selectedRow, 1));
+                remindManager.editRemind(remind);
             }
         });
 
@@ -577,6 +612,7 @@ public final class MainGUI extends javax.swing.JFrame {
 
         researchField.getAccessibleContext().setAccessibleName("");
 
+        detailsLabel.setEditable(false);
         jScrollPane3.setViewportView(detailsLabel);
 
         jMenu1.setText("File");
@@ -804,31 +840,7 @@ public final class MainGUI extends javax.swing.JFrame {
 
             // Handling single left mouse button click
             else if (SwingUtilities.isLeftMouseButton(evt)) {
-                String remindNameStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NAME_DETAIL);
-                String descriptionStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.DESCRIPTION_DETAIL);
-                String isActiveStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_ACTIVE_DETAIL);
-                String isTopLevelStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_TOP_LEVEL_DETAIL);
-                String lastExeutionStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.LAST_EXECUTION_DETAIL);
-                String nextExecutionStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NEXT_EXECUTION_DETAIL);
-                String timeIntervalStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_INTERVAL_DETAIL);
-                String creationDateStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.CREATION_DATE_DETAIL);
-                String lastUpdateDateStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.LAST_UPDATE_DATE_DETAIL);
-                String remindCountStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.COUNT_DETAIL);
-
-                detailsLabel.setContentType("text/html");
-                detailsLabel.setText(
-                    "<html><b>" + remindNameStr + ":</b> " + remind.getName() + ", " +
-                    "<b>" + descriptionStr + ":</b> " + remind.getDescription() + ", " +
-                    "<b>" + isActiveStr + ":</b> " + remind.isActive() + ", " +
-                    "<b>" + isTopLevelStr + ":</b> " + remind.isTopLevel() + ", " +
-                    "<b>" + lastExeutionStr + ":</b> " + (remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "") + ", " +
-                    "<b>" + nextExecutionStr + ":</b> " + (remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "_") + ", " +
-                    "<b>" + timeIntervalStr + ":</b> " + (remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : "_") + ", " +
-                    "<b>" + creationDateStr + ":</b> " + (remind.getCreationDate() != null ? remind.getCreationDate().format(RemindManager.formatter) : "_") + ", " +
-                    "<b>" + lastUpdateDateStr + ":</b> " + (remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().format(RemindManager.formatter) : "_") + ", " +
-                    "<b>" + remindCountStr + ":</b> " + (remind.getRemindCount()) + ", " +
-                    "</html>"
-                );
+                populateTableDetails(remind);
             }
         }
     }//GEN-LAST:event_tableMouseClicked

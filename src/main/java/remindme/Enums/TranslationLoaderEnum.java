@@ -114,6 +114,9 @@ public class TranslationLoaderEnum {
         CREATION_DATE_DETAIL("CreationDateDetail", "CreationDate"),
         LAST_UPDATE_DATE_DETAIL("LastUpdateDateDetail", "LastUpdateDate"),
         TIME_INTERVAL_DETAIL("TimeIntervalDetail", "TimeInterval"),
+        EXECUTION_METHOD_DETAIL("ExecutionMethodDetail", "ExecutionMethod"),
+        TIME_FROM_DETAIL("TimeFromDetail", "TimeFrom"),
+        TIME_TO_DETAIL("TimeToDetail", "TimeTo"),
 
         // ManageRemindDialog
         EDIT_TITLE("EditTitle", "Edit reminder"),
@@ -122,6 +125,8 @@ public class TranslationLoaderEnum {
         ACTIVE_TEXT("ActiveText", "Active"),
         TOP_LEVEL_TEXT("TopLevelText", "Show on Top"),
         PREVIEW_TEXT("PreviewText", "Reminder preview"),
+        DATE_FROM_TEXT("DateFromText", "From"),
+        DATE_TO_TEXT("DateToText", "To"),
         NAME_PLACEHOLDER("NamePlaceholder", "Enter reminder name"),
         DESCRIPTION_PLACEHOLDER("DescriptionPlaceholder", "Enter description (optional)"),
         NAME_TOOLTIP("NameTooltip", "Enter a name for the reminder"),
@@ -131,6 +136,7 @@ public class TranslationLoaderEnum {
         ICON_TOOLTIP("IconTooltip", "Choose an icon for the reminder notification"),
         SOUND_TOOLTIP("SoundTooltip", "Choose a sound for the reminder notification"),
         SOUND_BUTTON_TOOLTIP("SoundButtonTooltip", "Preview the selected sound"),
+        EXECUTION_METHOD_TOOLTIP("ExecutionMethodTooltip", "Select how the reminder should be triggered. 'PC Startup' runs the reminder when the computer starts, ignoring time intervals. 'Custom Time Range' triggers it only within a defined daily time window."),
 
         // TimePickerDialog
         TIME_INTERVAL_TITLE("TimeIntervalTitle", "Time interval for reminder"),
@@ -186,16 +192,18 @@ public class TranslationLoaderEnum {
         ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE("ErrorMessageForWrongFileExtensionTitle", "Invalid File"),
         ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_MESSAGE("ErrorMessageForWrongFileExtensionMessage", "Error: Please select a valid JSON file."),
         ERROR_MESSAGE_DUPLICATED_REMIND("ErrorMessageDuplicatedRedind", "Cannot create a reminder with this name because one already exists."),
+        ERROR_MESSAGE_FOR_EXPORTING_TO_CSV("ErrorMessageForExportingToCsv", "Error exporting backups to CSV: "),
+        ERROR_MESSAGE_FOR_EXPORTING_TO_PDF("ErrorMessageForExportingToPdf", "Error exporting backups to PDF: "),
+        ERROR_MESSAGE_FOR_EMPTY_REMIND_NAME("ErrorMessageForEmptyRemindName", "Remind name cannot be empty"),
+        ERROR_MESSAGE_FOR_WRONG_TIME_RANGE("ErrorMessageForWrongTimeRange", "Time range is not valid"),
+        ERROR_MESSAGE_INVALID_FILENAME("ErrorMessageInvalidFilename", "Invalid file name. Use only alphanumeric characters, dashes, and underscores."),
         SHARE_LINK_COPIED_MESSAGE("ShareLinkCopiedMessage", "Share link copied to clipboard!"),
         SUCCESS_GENERIC_TITLE( "SuccessGenericTitle", "Success"),
         SUCCESSFULLY_EXPORTED_TO_CSV_MESSAGE("SuccessfullyExportedToCsvMessage", "Backups exported to CSV successfully!"),
         SUCCESSFULLY_EXPORTED_TO_PDF_MESSAGE("SuccessfullyExportedToPdfMessage", "Backups exported to PDF successfully!"),
-        ERROR_MESSAGE_FOR_EXPORTING_TO_CSV("ErrorMessageForExportingToCsv", "Error exporting backups to CSV: "),
-        ERROR_MESSAGE_FOR_EXPORTING_TO_PDF("ErrorMessageForExportingToPdf", "Error exporting backups to PDF: "),
         CSV_NAME_MESSAGE_INPUT("CsvNameMessageInput", "Enter the name of the CSV file."),
         PDF_NAME_MESSAGE_INPUT("PdfNameMessageInput", "Enter the name of the PDF file."),
         DUPLICATED_FILE_NAME_MESSAGE("DuplicatedFileNameMessage", "File already exists. Overwrite?"),
-        ERROR_MESSAGE_INVALID_FILENAME("ErrorMessageInvalidFilename", "Invalid file name. Use only alphanumeric characters, dashes, and underscores."),
         CONFIRMATION_DELETION_TITLE("ConfirmationDeletionTitle", "Confirm Deletion"),
         CONFIRMATION_DELETION_MESSAGE("ConfirmationDeletionMessage", "Are you sure you want to delete the selected rows?");
 

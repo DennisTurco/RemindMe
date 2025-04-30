@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
 import remindme.Enums.ConfigKey;
+import remindme.Enums.ExecutionMethod;
 import remindme.Managers.RemindManager;
 import remindme.Managers.SoundPlayer;
 import remindme.Managers.ThemeManager;
@@ -34,7 +35,6 @@ public class ReminderDialog extends javax.swing.JDialog {
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
         this.setIconImage(icon);
 
-        // update remind
         if (!preview) {
             updateRemindAfterShow(remind);
         }
@@ -66,7 +66,11 @@ public class ReminderDialog extends javax.swing.JDialog {
             if (remind.getName().equals(rem.getName())) {
                 rem.setLastExecution(LocalDateTime.now());
                 rem.setRemindCount(rem.getRemindCount()+1);
-                rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
+                if (rem.getExecutionMethod() == ExecutionMethod.PC_STARTUP) {
+                    rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
+                } else {
+                    rem.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(rem.getTimeInterval(), rem.getTimeFrom()));
+                }
             }
         }
 

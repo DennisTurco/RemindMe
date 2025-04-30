@@ -56,6 +56,9 @@
         "CreationDateDetail": "CreationDate",
         "LastUpdateDateDetail": "LastUpdateDate",
         "TimeIntervalDetail": "TimeInterval",
+        "ExecutionMethodDetail": "ExecutionMethod",
+        "TimeFromDetail": "TimeFrom",
+        "TimeToDetail": "TimeTo",
 
         "EditPopup": "Edit",
         "DeletePopup": "Delete",
@@ -73,6 +76,8 @@
         "ActiveText": "Active",
         "TopLevelText": "Show on Top",
         "PreviewText": "Reminder preview",
+        "DateFromText": "From",
+        "DateToText": "To",
         "NamePlaceholder": "Enter reminder name",
         "DescriptionPlaceholder": "Enter description (optional)",
         "NameTooltip": "Enter a name for the reminder",
@@ -81,7 +86,8 @@
         "DescriptionTooltip": "Provide additional details for this reminder",
         "IconTooltip": "Choose an icon for the reminder notification",
         "SoundTooltip": "Choose a sound for the reminder notification",
-        "SoundButtonTooltip": "Preview the selected sound"
+        "SoundButtonTooltip": "Preview the selected sound",
+        "ExecutionMethodTooltip": "Select how the reminder should be triggered. 'PC Startup' runs the reminder when the computer starts, ignoring time intervals. 'Custom Time Range' triggers it only within a defined daily time window."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Time interval for reminder",
@@ -127,6 +133,8 @@
         "ErrorMessageForWrongFileExtensionMessage": "Error: Please select a valid JSON file.",
         "ErrorGenericTitle":"Error",
         "ErrorWrongTimeInterval":"The time interval is not correct",
+        "ErrorMessageForEmptyRemindName": "Remind name cannot be empty",
+        "ErrorMessageForWrongTimeRange": "Time range is not valid",
         "SuccessGenericTitle":"Success",
         "SuccessfullyExportedToCsvMessage":"Backups exported to CSV successfully!",
         "SuccessfullyExportedToPdfMessage":"Backups exported to PDF successfully!",

@@ -82,6 +82,13 @@
             <artifactId>jakarta.activation-api</artifactId>
             <version>2.1.0</version>
         </dependency>
+
+        <!-- For time picker -->
+        <dependency>
+            <groupId>com.github.lgooddatepicker</groupId>
+            <artifactId>LGoodDatePicker</artifactId>
+            <version>11.2.1</version>
+        </dependency>
     </dependencies>
 
     <build>
