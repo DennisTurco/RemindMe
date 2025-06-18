@@ -12,10 +12,10 @@ Ideal for task management, regular check-ins, medication schedules, or simply st
 * This program is set to run automatically at PC startup by default. If you disable it, automatic backups will no longer occur.
 
 # Screenshots
-[](./docs/imgs/screen1.png)
-[](./docs/imgs/screen2.png)
-[](./docs/imgs/screen4.png)
-[](./docs/imgs/screen5.png)
+![image1](./docs/imgs/screen1.png)
+![image2](./docs/imgs/screen2.png)
+![image3](./docs/imgs/screen3.png)
+![image4](./docs/imgs/screen4.png)
 
 # Commands
 * To create a new .jar file: `mvn clean package`
