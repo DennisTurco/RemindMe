@@ -1,4 +1,4 @@
-![logo](src/main/resources/res/img/logo.ico)
+![logo](src/main/resources/res/img/logo.png)
 
 # Remind Me
 **RemindMe** is a lightweight and intuitive application designed to help users schedule and execute custom, periodic reminders with ease. Whether it's hourly alerts, daily prompts, or weekly notifications, RemindMe offers full flexibility in defining when and how each reminder appears.
