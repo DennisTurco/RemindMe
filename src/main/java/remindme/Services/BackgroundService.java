@@ -53,8 +53,11 @@ public class BackgroundService {
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
         long interval = jsonConfig.readCheckForReminderTimeInterval();
-        scheduler.scheduleAtFixedRate(new RemindTask(), 0, interval, TimeUnit.MINUTES);
 
+        // first i have to edit all next executions starting from now
+        updateAllNextExecution();
+
+        scheduler.scheduleAtFixedRate(new RemindTask(), 0, interval, TimeUnit.MINUTES);
         Runtime.getRuntime().addShutdownHook(new Thread(this::stopService));
     }
 
@@ -126,6 +129,39 @@ public class BackgroundService {
             if (guiInstance.getState() == Frame.ICONIFIED) {
                 guiInstance.setState(Frame.NORMAL);
             }
+        }
+    }
+
+    // This method should be called only once at PC startup
+    private void updateAllNextExecution() {
+        try {
+            List<Remind> reminds = json.readRemindListFromJSON( Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+
+            LocalTime now = LocalTime.now();
+
+            for (Remind remind : reminds) {
+                if (!remind.isActive()) {
+                    continue;
+                }
+
+                switch (remind.getExecutionMethod()) {
+                    case PC_STARTUP -> remind.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), now));
+
+                    case CUSTOM_TIME_RANGE -> {
+                        LocalTime from = remind.getTimeFrom();
+                        LocalTime to = remind.getTimeTo();
+
+                        LocalTime referenceTime = (!now.isBefore(from) && !now.isAfter(to)) ? now : from;
+
+                        remind.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), referenceTime));
+                    }
+                }
+            }
+
+            json.updateRemindListJSON( Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile(), reminds);
+
+        } catch (IOException ex) {
+            logger.error("An error occurred: " + ex.getMessage(), ex);
         }
     }
 

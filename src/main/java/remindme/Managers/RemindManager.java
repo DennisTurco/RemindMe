@@ -265,10 +265,6 @@ public final class RemindManager {
         return false;
     }
 
-    public void saveReminder() {
-        logger.info("Event --> saving reminder");
-    }
-
     public void removeReminder(Remind remind, boolean d) {
         logger.info("Event --> removing reminder");
 
@@ -291,14 +287,6 @@ public final class RemindManager {
         logger.info("Remind removed successfully: " + remind.toString());
 
         updateRemindList();
-    }
-
-    public void updateReminder() {
-        logger.info("Event --> updating reminder");
-    }
-
-    public void copyReminderName() {
-        logger.info("Event --> cipying reminder name");
     }
 
     public void duplicateReminder(Remind remind) {
@@ -385,13 +373,13 @@ public final class RemindManager {
     public static LocalDateTime getnextExecutionByTimeIntervalFromSpecificTime(TimeInterval timeInterval, LocalTime timeFrom) {
         if (timeInterval == null || timeFrom == null) return null;
 
-        // Base time: oggi alle timeFrom
+        // Base time: timeFrom
         LocalDateTime baseTime = LocalDateTime.of(LocalDate.now(), timeFrom)
             .plusDays(timeInterval.getDays())
             .plusHours(timeInterval.getHours())
             .plusMinutes(timeInterval.getMinutes());
 
-        // Se la data risultante è già nel passato, posticipa di un giorno
+        // If the date is passed, posticipate by one day
         if (baseTime.isBefore(LocalDateTime.now())) {
             baseTime = baseTime.plusDays(1);
         }
