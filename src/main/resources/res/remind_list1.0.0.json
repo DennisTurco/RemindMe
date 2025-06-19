@@ -6,7 +6,7 @@
     "isActive": true,
     "isTopLevel": false,
     "lastExecution": "2024-12-12T22:52:41.381624500",
-    "nextExecution": "2025-06-19T19:44:13.868286300",
+    "nextExecution": "2025-06-19T19:53:17.888430",
     "timeInterval": "0.1:0",
     "creationDate": "2024-12-12T22:52:41.381624500",
     "lastUpdateDate": "2025-05-04T11:38:21.010388700",
@@ -47,6 +47,23 @@
     "executionMethod": "Custom Time Range",
     "timeFrom": "23:00",
     "timeTo": "23:30",
+    "maxPerDay": 0
+  },
+  {
+    "name": "test",
+    "description": "",
+    "count": 0,
+    "isActive": true,
+    "isTopLevel": true,
+    "nextExecution": "2025-06-19T23:03",
+    "timeInterval": "0.0:3",
+    "creationDate": "2025-06-19T18:59:25.814204100",
+    "lastUpdateDate": "2025-06-19T18:59:25.814204100",
+    "icon": "Alert",
+    "sound": "No Sound",
+    "executionMethod": "Custom Time Range",
+    "timeFrom": "23:00",
+    "timeTo": "23:10",
     "maxPerDay": 0
   }
 ]

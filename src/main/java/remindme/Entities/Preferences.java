@@ -83,7 +83,7 @@ public class Preferences {
         }
         return LanguagesEnum.ENG;
     }
-    
+
     private static ThemesEnum getThemeFromJson(JsonObject jsonObject) {
         if (jsonObject.has("Theme") && !jsonObject.get("Theme").isJsonNull()) {
             String themeName = jsonObject.get("Theme").getAsString();
@@ -95,7 +95,7 @@ public class Preferences {
         }
         return ThemesEnum.INTELLIJ;
     }
-    
+
     private static RemindListPath getRemindListFromJson(JsonObject jsonObject) {
         if (jsonObject.has("RemindList") && !jsonObject.get("RemindList").isJsonNull()) {
             JsonObject RemindListObject = jsonObject.getAsJsonObject("RemindList");
@@ -130,9 +130,6 @@ public class Preferences {
     }
     public static void setLanguage(LanguagesEnum language) {
         Preferences.language = language;
-    }
-    public static void setTheme(ThemesEnum theme) {
-        Preferences.theme = theme;
     }
     public static void setRemindList(RemindListPath remindList) {
         Preferences.remindList = remindList;

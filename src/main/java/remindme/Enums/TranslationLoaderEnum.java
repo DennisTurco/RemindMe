@@ -224,10 +224,6 @@ public class TranslationLoaderEnum {
             this.defaultValue = defaultValue;
         }
 
-        public String getKeyName() {
-            return keyName;
-        }
-
         public String getDefaultValue() {
             return defaultValue;
         }
@@ -270,11 +266,7 @@ public class TranslationLoaderEnum {
                     }
                 }
             }
-        } 
-    }
-
-    public static String getTranslation(TranslationCategory category, TranslationKey key) {
-        return category.translations.getOrDefault(key, key.getDefaultValue()); // Use default value if not found
+        }
     }
 
     // only for test

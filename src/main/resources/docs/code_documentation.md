@@ -1,4 +1,4 @@
-<center> <img src="../res/img/logo.png" height="150"> </center>
+<center> <img src="../res/img/banner.png" height="150"> </center>
 
 # Remind Me Documentation
 

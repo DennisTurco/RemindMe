@@ -55,24 +55,4 @@ public class RemindNotification {
     public boolean isTopLevel() {
         return topLevel;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setIcon(IconsEnum icon) {
-        this.icon = icon;
-    }
-
-    public void setSound(SoundsEnum sound) {
-        this.sound = sound;
-    }
-
-    public void setTopLevel(boolean topLevel) {
-        this.topLevel = topLevel;
-    }
 }

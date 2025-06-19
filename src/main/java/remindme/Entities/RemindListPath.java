@@ -15,10 +15,4 @@ public class RemindListPath {
     public String getFile() {
         return file;
     }
-    public void setDirectory(String directory) {
-        this.directory = directory;
-    }
-    public void setFile(String file) {
-        this.file = file;
-    }
 }
