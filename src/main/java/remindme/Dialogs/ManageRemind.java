@@ -91,8 +91,8 @@ public class ManageRemind extends javax.swing.JDialog {
 
         LocalDateTime nextExecution;
         if (executionMethod == ExecutionMethod.CUSTOM_TIME_RANGE && isTimeRangeValid()) {
-            timeFromLocalTime = LocalTime.parse(timeFrom.getText());
-            timeToLocalTime = LocalTime.parse(timeTo.getText());
+            timeFromLocalTime = timeFrom.getTime();
+            timeToLocalTime = timeTo.getTime();
             nextExecution = RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(timeInterval, timeFromLocalTime);
         } else {
             nextExecution = RemindManager.getnextExecutionByTimeInterval(timeInterval);
@@ -120,20 +120,18 @@ public class ManageRemind extends javax.swing.JDialog {
     }
 
     public boolean isTimeRangeValid() {
-        if (ExecutionMethod.getExecutionMethodbyName(executionMethodComboBox.getSelectedItem().toString()) == ExecutionMethod.PC_STARTUP)
+        if (ExecutionMethod.getExecutionMethodbyName(executionMethodComboBox.getSelectedItem().toString()) == ExecutionMethod.PC_STARTUP) {
             return true;
+        }
 
-        String fromText = timeFrom.getText();
-        String toText = timeTo.getText();
+        LocalTime fromTime = timeFrom.getTime();
+        LocalTime toTime = timeTo.getTime();
 
-        if (fromText == null || fromText.isEmpty() || toText == null || toText.isEmpty()) {
+        if (fromTime == null || toTime == null) {
             return false;
         }
 
-        LocalTime from = LocalTime.parse(timeFrom.getText());
-        LocalTime to = LocalTime.parse(timeTo.getText());
-
-        return from.isBefore(to);
+        return fromTime.isBefore(toTime);
     }
 
     private void insertRemindValues(Remind remind) {
