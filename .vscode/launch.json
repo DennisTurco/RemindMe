@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DecryptPassword",
+            "request": "launch",
+            "mainClass": "remindme.Email.DecryptPassword",
+            "projectName": "RemindMe"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
