@@ -99,7 +99,11 @@
         "Format": "jj.HH:mm"
     },
     "TrayIcon": {
-        "TrayTooltip": "Service RemindMe"
+        "TrayTooltip": "Remind Service",
+        "OpenAction": "Accès Rapide",
+        "PauseAction": "Pause",
+        "ResumeAction": "Reprendre",
+        "ExitAction": "Quitter"
     },
     "UserDialog": {
         "UserTitle": "Saisissez vos informations",

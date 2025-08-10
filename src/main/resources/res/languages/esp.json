@@ -99,7 +99,11 @@
         "Format": "dd.HH:mm"
     },
     "TrayIcon": {
-        "TrayTooltip": "Servicio de recordatorios"
+        "TrayTooltip": "Remind Service",
+        "OpenAction": "Acceso Rápido",
+        "PauseAction": "Pausar",
+        "ResumeAction": "Reanudar",
+        "ExitAction": "Salir"
     },
     "UserDialog": {
         "UserTitle": "Introduce tus datos",

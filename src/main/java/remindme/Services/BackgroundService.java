@@ -31,6 +31,8 @@ import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.ExecutionMethod;
+import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
+import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.GUI.MainGUI;
 import remindme.Json.JSONConfigReader;
 import remindme.Json.JSONReminder;
@@ -44,7 +46,8 @@ public class BackgroundService {
     private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     private TrayIcon trayIcon = null;
     private MainGUI guiInstance = null;
-    private List<ReminderDialog> remindersDialogOpened = new ArrayList<>();
+    private final List<ReminderDialog> remindersDialogOpened = new ArrayList<>();
+    private boolean paused = false;
 
     public void startService() throws IOException {
         if (trayIcon == null) {
@@ -63,7 +66,7 @@ public class BackgroundService {
 
     public void stopService() {
         logger.debug("Stopping remind service");
-        if (scheduler != null && !scheduler.isShutdown()) {
+        if (isSchedulerActive()) {
             scheduler.shutdownNow();
             logger.info("Background service stopped");
         }
@@ -71,6 +74,23 @@ public class BackgroundService {
             SystemTray.getSystemTray().remove(trayIcon);
             trayIcon = null;
         }
+    }
+
+    private void pauseService(MenuItem pauseItem, MenuItem resumeItem) {
+        logger.info("Background service paused");
+        paused = true;
+        switchMenuItemsEnable(pauseItem, resumeItem);
+    }
+
+    private void resumeService(MenuItem pauseItem, MenuItem resumeItem) {
+        logger.info("Background service resumed");
+        paused = false;
+        switchMenuItemsEnable(pauseItem, resumeItem);
+    }
+
+    private void switchMenuItemsEnable(MenuItem pauseItem, MenuItem resumeItem) {
+        pauseItem.setEnabled(!pauseItem.isEnabled());
+        resumeItem.setEnabled(!resumeItem.isEnabled());
     }
 
     private void createHiddenIcon() {
@@ -81,14 +101,8 @@ public class BackgroundService {
 
         Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource(ConfigKey.LOGO_IMG.getValue()));
         SystemTray tray = SystemTray.getSystemTray();
-        PopupMenu popup = new PopupMenu();
 
-        MenuItem exitItem = new MenuItem("Exit");
-        exitItem.addActionListener((ActionEvent e) -> {
-            stopService(); // close the backup service
-            System.exit(0);
-        });
-        popup.add(exitItem);
+        PopupMenu popup = setupAndGetPopupMenu();
 
         trayIcon = new TrayIcon(image, "Remind Service", popup);
         trayIcon.setImageAutoSize(true);
@@ -113,6 +127,42 @@ public class BackgroundService {
                 }
             }
         });
+    }
+
+    private PopupMenu setupAndGetPopupMenu() {
+        PopupMenu popup = new PopupMenu();
+        MenuItem quickAccessItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.OPEN_ACTION));
+        MenuItem pauseItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.PAUSE_ACTION));
+        MenuItem resumeItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.RESUME_ACTION));
+        MenuItem exitItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.EXIT_ACTION));
+
+        resumeItem.setEnabled(paused); // default status
+
+        popup.add(quickAccessItem);
+        popup.addSeparator();
+        popup.add(pauseItem);
+        popup.add(resumeItem);
+        popup.addSeparator();
+        popup.add(exitItem);
+
+        quickAccessItem.addActionListener((ActionEvent e) -> {
+            showMainGUI();
+        });
+
+        pauseItem.addActionListener((ActionEvent e) -> {
+            pauseService(pauseItem, resumeItem);
+        });
+
+        resumeItem.addActionListener((ActionEvent e) -> {
+            resumeService(pauseItem, resumeItem);
+        });
+
+        exitItem.addActionListener((ActionEvent e) -> {
+            stopService();
+            System.exit(0);
+        });
+
+        return popup;
     }
 
     private void showMainGUI() {
@@ -165,10 +215,20 @@ public class BackgroundService {
         }
     }
 
+    private boolean isSchedulerActive() {
+        return scheduler != null && !scheduler.isShutdown();
+    }
+
     class RemindTask implements Runnable {
         @Override
         public void run() {
             logger.debug("Checking for reminds...");
+
+            if (paused) {
+                logger.debug("Service is paused, skipping task.");
+                return;
+            }
+
             try {
                 List<Remind> reminds = json.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
                 RemindManager.reminds = reminds;

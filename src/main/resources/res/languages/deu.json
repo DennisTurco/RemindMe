@@ -99,7 +99,11 @@
         "Format": "tt.SS:mm"
     },
     "TrayIcon": {
-        "TrayTooltip": "Erinnerungsdienst"
+        "TrayTooltip": "Remind Service",
+        "OpenAction": "Schnellzugriff",
+        "PauseAction": "Pause",
+        "ResumeAction": "Fortsetzen",
+        "ExitAction": "Beenden"
     },
     "UserDialog": {
         "UserTitle": "Gib deine Daten ein",

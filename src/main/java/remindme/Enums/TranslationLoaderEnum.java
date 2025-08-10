@@ -145,7 +145,7 @@ public class TranslationLoaderEnum {
         HOURS("Hours", "Hours"),
         MINUTES("Minutes", "Minutes"),
         SPINNER_TOOLTIP("SpinnerTooltip", "Mouse wheel to adjust the value"),
-        FORMAT("Format", "dd.HH:mm"), 
+        FORMAT("Format", "dd.HH:mm"),
 
         // PreferencesDialog
         PREFERENCES_TITLE("PreferencesTitle", "Preferences"),
@@ -164,6 +164,10 @@ public class TranslationLoaderEnum {
 
         // TrayIcon
         TRAY_TOOLTIP("TrayTooltip", "Remind Service"),
+        OPEN_ACTION("OpenAction", "Quick Access"),
+        PAUSE_ACTION("PauseAction", "Pause"),
+        RESUME_ACTION("ResumeAction", "Resume"),
+        EXIT_ACTION("ExitAction", "Exit"),
 
         // Dialogs
         EXCEPTION_MESSAGE_TITLE("ExceptionMessageTitle", "Error..."),

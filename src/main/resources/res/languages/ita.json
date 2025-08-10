@@ -99,7 +99,11 @@
         "Format": "gg.OO:mm"
     },
     "TrayIcon": {
-        "TrayTooltip": "Servizio Remind"
+        "TrayTooltip": "Remind Service",
+        "OpenAction": "Accesso Rapido",
+        "PauseAction": "Pausa",
+        "ResumeAction": "Riprendi",
+        "ExitAction": "Esci"
     },
     "UserDialog": {
         "UserTitle": "Inserisci i tuoi dati",

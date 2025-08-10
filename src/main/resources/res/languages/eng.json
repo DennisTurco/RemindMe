@@ -99,7 +99,11 @@
         "Format": "dd.HH:mm"
     },
     "TrayIcon": {
-        "TrayTooltip": "Remind Service"
+        "TrayTooltip": "Remind Service",
+        "OpenAction": "Quick Access",
+        "PauseAction": "Pause",
+        "ResumeAction": "Resume",
+        "ExitAction": "Exit"
     },
     "UserDialog": {
         "UserTitle": "Insert your data",
