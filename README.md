@@ -15,6 +15,12 @@
 * 🧭 Real-time reminder management (view, edit, delete)
 * 🖥️ Runs silently in the background
 
+
+# Screenshots
+| ![image1](./docs/imgs/screen1.png) | ![image2](./docs/imgs/screen2.png) |
+| ------------------------ | ------------------------ |
+| ![image3](./docs/imgs/screen3.png) | ![image4](./docs/imgs/screen4.png) |
+
 # Publish
 This project is, of course, published here on GitHub, but it's also available on [itch.io](https://dennis-turco.itch.io/remind-me).
 <iframe frameborder="0" src="https://itch.io/embed/3654364?border_width=5&amp;bg_color=ffffff&amp;fg_color=222222&amp;link_color=fa5c5c&amp;border_color=766c6c" width="560" height="175">
@@ -26,11 +32,7 @@ This project is, of course, published here on GitHub, but it's also available on
 * If, for any reason, the setup program doesn't add the application to the startup registry (regedit), you can manually run "add_to_startup.bat" located in the installation folder by double-clicking it.
 * This program is set to run automatically at PC startup by default. If you disable it, automatic backups will no longer occur.
 
-# Screenshots
-![image1](./docs/imgs/screen1.png)
-![image2](./docs/imgs/screen2.png)
-![image3](./docs/imgs/screen3.png)
-![image4](./docs/imgs/screen4.png)
+
 
 # Commands
 * To create a new .jar file: `mvn clean package`
