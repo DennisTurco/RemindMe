@@ -46,7 +46,7 @@ public class JSONReminder {
             logger.info("Directory of the remind list file doesn't exist, reset to default value");
             Preferences.setRemindList(Preferences.getDefaultRemindList());
             Preferences.updatePreferencesToJSON();
-            directoryPath = Preferences.getRemindList().getDirectory();
+            directoryPath = Preferences.getRemindList().directory();
         }
 
         String filePath = directoryPath + filename;

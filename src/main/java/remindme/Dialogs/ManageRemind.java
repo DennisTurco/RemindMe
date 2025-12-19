@@ -93,7 +93,6 @@ public class ManageRemind extends javax.swing.JDialog {
         LocalDateTime nextExecution;
         if (executionMethod == ExecutionMethod.CUSTOM_TIME_RANGE && isTimeRangeValid()) {
             timeFromLocalTime = timeFrom.getTime();
-            timeToLocalTime = timeTo.getTime();
             nextExecution = RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(timeInterval, timeFromLocalTime);
         } 
         else if (executionMethod == ExecutionMethod.ONE_TIME_PER_DAY) {
@@ -530,7 +529,9 @@ public class ManageRemind extends javax.swing.JDialog {
         else if (oneTimePerDayEnable) {
             enableBasedOnExecutionMethod(true, false);
             timeIntervalBtn.setEnabled(false);
+            return;
         }
+        timeIntervalBtn.setEnabled(true);
     }//GEN-LAST:event_executionMethodComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

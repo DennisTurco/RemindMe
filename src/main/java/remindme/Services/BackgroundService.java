@@ -35,6 +35,7 @@ import remindme.Enums.ExecutionMethod;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.GUI.MainGUI;
+import remindme.Helpers.TimeRange;
 import remindme.Json.JSONConfigReader;
 import remindme.Json.JSONReminder;
 import remindme.Managers.RemindManager;
@@ -186,7 +187,7 @@ public class BackgroundService {
     // This method should be called only once at PC startup
     private void updateAllNextExecution() {
         try {
-            List<Remind> reminds = json.readRemindListFromJSON( Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+            List<Remind> reminds = json.readRemindListFromJSON( Preferences.getRemindList().directory(), Preferences.getRemindList().file());
 
             LocalTime now = LocalTime.now();
 
@@ -198,10 +199,8 @@ public class BackgroundService {
                 switch (remind.getExecutionMethod()) {
                     case PC_STARTUP -> remind.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), now));
                     case CUSTOM_TIME_RANGE -> {
-                        LocalTime from = remind.getTimeFrom();
-                        LocalTime to = remind.getTimeTo();
-
-                        LocalTime referenceTime = (!now.isBefore(from) && !now.isAfter(to)) ? now : from;
+                        TimeRange timeRange = TimeRange.of(remind.getTimeFrom(), remind.getTimeTo());
+                        LocalTime referenceTime = timeRange.contains(now) ? now : remind.getTimeFrom();
 
                         remind.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), referenceTime));
                     }
@@ -216,7 +215,7 @@ public class BackgroundService {
                 }
             }
 
-            json.updateRemindListJSON( Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile(), reminds);
+            json.updateRemindListJSON( Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
 
         } catch (IOException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
@@ -238,7 +237,7 @@ public class BackgroundService {
             }
 
             try {
-                List<Remind> reminds = json.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+                List<Remind> reminds = json.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
                 RemindManager.reminds = reminds;
                 List<Remind> needsRemind = getRemindsToDo(reminds, 1);
                 if (needsRemind != null && !needsRemind.isEmpty()) {
@@ -265,14 +264,14 @@ public class BackgroundService {
 
                 switch (remind.getExecutionMethod()) {
                     case ONE_TIME_PER_DAY -> {
-                        LocalTime from = remind.getTimeFrom();
-                        LocalTime fiveMinutesLater = nowTime.plusMinutes(5);
-                        if (!nowTime.isBefore(from) && !nowTime.isAfter(fiveMinutesLater)) {
+                        TimeRange timeRange = TimeRange.of(remind.getTimeFrom(), nowTime.plusMinutes(5));
+                        if (timeRange.contains(nowTime)) {
                             shouldRun = true;
                         }
                     }
                     case CUSTOM_TIME_RANGE -> {
-                        if (remind.getNextExecution().isBefore(now) && insideTimeRange(remind, nowTime)) {
+                        TimeRange timeRange = TimeRange.of(remind.getTimeFrom(), remind.getTimeTo());
+                        if (remind.getNextExecution().isBefore(now) && timeRange.contains(nowTime)) {
                             shouldRun = true;
                         }
                     }
@@ -316,23 +315,12 @@ public class BackgroundService {
 
         private ReminderDialog alreadyDialogOpened(Remind remind) {
             for (ReminderDialog reminderDialog : remindersDialogOpened) {
-                if (reminderDialog.remindNotification.getName().equals(remind.getName())) {
+                if (reminderDialog.remindNotification.name().equals(remind.getName())) {
                     return reminderDialog;
                 }
             }
 
             return null;
-        }
-
-        private boolean insideTimeRange(Remind remind, LocalTime now) {
-            if (remind.getExecutionMethod() != ExecutionMethod.CUSTOM_TIME_RANGE) {
-                return true;
-            }
-
-            LocalTime from = remind.getTimeFrom();
-            LocalTime to = remind.getTimeTo();
-
-            return !now.isBefore(from) && !now.isAfter(to);
         }
     }
 }

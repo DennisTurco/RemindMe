@@ -57,7 +57,7 @@ class ImportExportManager {
                 Preferences.updatePreferencesToJSON();
 
                 try {
-                    List<Remind> reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+                    List<Remind> reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
                     TableDataManager.updateTableWithNewRemindList(reminds, formatter);
                     JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_LIST_CORRECTLY_IMPORTED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_LIST_CORRECTLY_IMPORTED_TITLE), JOptionPane.INFORMATION_MESSAGE);
                     return reminds;
@@ -72,8 +72,8 @@ class ImportExportManager {
     }
 
     public static void exportRemindListToJson() {
-        Path desktopPath = Paths.get(System.getProperty("user.home"), "Desktop", Preferences.getRemindList().getFile());
-        Path sourcePath = Paths.get(Preferences.getRemindList().getDirectory() + Preferences.getRemindList().getFile());
+        Path desktopPath = Paths.get(System.getProperty("user.home"), "Desktop", Preferences.getRemindList().file());
+        Path sourcePath = Paths.get(Preferences.getRemindList().directory() + Preferences.getRemindList().file());
 
         try {
             Files.copy(sourcePath, desktopPath, StandardCopyOption.REPLACE_EXISTING);
@@ -133,7 +133,7 @@ class ImportExportManager {
             Document document = new Document(pdfDoc);
 
             // insert pdf title
-            document.add(new Paragraph(Preferences.getRemindList().getFile()).setFontSize(12f).setBold());
+            document.add(new Paragraph(Preferences.getRemindList().file()).setFontSize(12f).setBold());
 
             // Create table
             String[] headerArray = headers.split(","); // Assuming headers are comma-separated

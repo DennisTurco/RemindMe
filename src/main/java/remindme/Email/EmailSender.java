@@ -1,23 +1,22 @@
 package remindme.Email;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.net.SMTPAppender;
 import remindme.Entities.User;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.Json.JsonUser;
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.net.SMTPAppender;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Utility class for sending emails through logback SMTPAppender.
@@ -53,8 +52,8 @@ public class EmailSender {
             "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
             subject,
             user.getUserCompleteName(),
-            user.email,
-            user.language,
+            user.email(),
+            user.language(),
             body,
             rows,
             getTextFromLogFile(rows)
@@ -69,7 +68,7 @@ public class EmailSender {
      * Sends an informational email.
      */
     public static void sendUserCreationEmail(User user) {
-        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email + "\nLanguage: " + user.language;
+        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email() + "\nLanguage: " + user.language();
 
         String emailMessage = "\n\n" + userDetails;
 
@@ -94,7 +93,7 @@ public class EmailSender {
 
         String emailMessage = subject + "\n\n" + body;
 
-        updateEmailRecipient(user.email);
+        updateEmailRecipient(user.email());
 
         // Should be info, but if you change it, it doesn't work
         emailConfirmationLogger.error(emailMessage); // Log the message as INFO, triggering the SMTPAppender

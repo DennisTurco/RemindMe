@@ -2,11 +2,11 @@ package remindme.Dialogs;
 
 import javax.swing.JOptionPane;
 
-import remindme.LimitDocument;
 import remindme.Email.EmailValidator;
 import remindme.Entities.User;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
+import remindme.LimitDocument;
 
 public class EntryUserDialog extends javax.swing.JDialog {
 
@@ -59,10 +59,8 @@ public class EntryUserDialog extends javax.swing.JDialog {
         setResizable(false);
 
         okBtn.setText("Ok");
-        okBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okBtnActionPerformed(evt);
-            }
+        okBtn.addActionListener((java.awt.event.ActionEvent evt) -> {
+            okBtnActionPerformed(evt);
         });
 
         nameLabel.setText("Name");

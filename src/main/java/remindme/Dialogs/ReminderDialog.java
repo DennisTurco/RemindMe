@@ -48,12 +48,12 @@ public class ReminderDialog extends javax.swing.JDialog {
 
         remindNotification = remind;
 
-        setNameLabelText(remind.getName());
-        descriptionEditor.setText(remind.getDescription());
-        iconLabel.setSvgImage(remind.getIcon().getIconPath(), 50, 50);
-        SoundPlayer.playSound(remind.getSound());
+        setNameLabelText(remind.name());
+        descriptionEditor.setText(remind.description());
+        iconLabel.setSvgImage(remind.icon().getIconPath(), 50, 50);
+        SoundPlayer.playSound(remind.sound());
 
-        setAlwaysOnTop(remind.isTopLevel());
+        setAlwaysOnTop(remind.topLevel());
 
         timeLabel.setText(LocalDateTime.now().format(timeFormatter));
    }
@@ -62,7 +62,7 @@ public class ReminderDialog extends javax.swing.JDialog {
         RemindManager remindManager = new RemindManager();
 
         for (Remind rem : RemindManager.reminds) {
-            if (remind.getName().equals(rem.getName())) {
+            if (remind.name().equals(rem.getName())) {
                 rem.setLastExecution(LocalDateTime.now());
                 rem.setRemindCount(rem.getRemindCount()+1);
 

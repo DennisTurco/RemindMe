@@ -73,5 +73,21 @@
     "sound": "Sound 5",
     "executionMethod": "Pc Startup",
     "maxPerDay": 0
+  },
+  {
+    "name": "Bed Time!",
+    "description": "It\u0027s bed time!",
+    "count": 0,
+    "isActive": true,
+    "isTopLevel": true,
+    "nextExecution": "2025-12-19T22:30",
+    "timeInterval": "0.1:0",
+    "creationDate": "2025-12-19T20:56:16.024808900",
+    "lastUpdateDate": "2025-12-19T20:56:16.024808900",
+    "icon": "Man sleeping",
+    "sound": "Sound 12",
+    "executionMethod": "One Time Per Day",
+    "timeFrom": "22:30",
+    "maxPerDay": 0
   }
 ]

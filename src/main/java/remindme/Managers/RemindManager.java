@@ -79,7 +79,7 @@ public final class RemindManager {
         logger.info("Updating remind list");
 
         // update
-        JSON.updateRemindListJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile(), reminds);
+        JSON.updateRemindListJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
 
         // get from file
         getRemindList();
@@ -90,7 +90,7 @@ public final class RemindManager {
 
     public void getRemindList() {
         try {
-            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
         } catch (IOException e) {
             logger.error("An error occurred while trying to get the remind list from json file: " + e.getMessage(), e);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
@@ -543,16 +543,12 @@ public final class RemindManager {
 
     public List<Remind> retriveAndGetReminds() {
         try {
-            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
         } catch (IOException ex) {
             reminds = null;
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         return reminds;
-    }
-
-    public void setReminds(List<Remind> reminds) {
-        this.reminds = reminds;
     }
 }

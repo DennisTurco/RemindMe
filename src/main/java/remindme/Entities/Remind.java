@@ -9,10 +9,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import remindme.Json.JSONReminder;
 import remindme.Enums.ExecutionMethod;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
+import remindme.Json.JSONReminder;
 import remindme.Managers.ExceptionManager;
 
 public class Remind {
@@ -135,7 +135,7 @@ public class Remind {
     public static Remind getRemindByName(String remindName) {
         List<Remind> reminds;
         try {
-            reminds = new JSONReminder().readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+            reminds = new JSONReminder().readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
             for (Remind remind : reminds) {
                 if (remind.getName().equals(remindName)) {
                     return remind;

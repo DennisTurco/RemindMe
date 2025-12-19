@@ -67,40 +67,17 @@ public class ThemeManager {
             String selectedTheme = Preferences.getTheme().getThemeName();
 
             switch (selectedTheme.toLowerCase()) {
-                case "light":
-                    UIManager.setLookAndFeel(new FlatIntelliJLaf());
-                    break;
-                case "dark":
-                    UIManager.setLookAndFeel(new FlatDarculaLaf());
-                    break;
-                case "carbon":
-                    UIManager.setLookAndFeel(new FlatCarbonIJTheme());
-                    break;
-                case "arc - orange":
-                    UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
-                    break;
-                case "arc dark - orange":
-                    UIManager.setLookAndFeel(new FlatArcDarkOrangeIJTheme());
-                    break;
-                case "cyan light":
-                    UIManager.setLookAndFeel(new FlatCyanLightIJTheme());
-                    break;
-                case "nord":
-                    UIManager.setLookAndFeel(new FlatNordIJTheme());
-                    break;
-                case "high contrast":
-                    UIManager.setLookAndFeel(new FlatHighContrastIJTheme());
-                    break;
-                case "solarized dark":
-                    UIManager.setLookAndFeel(new FlatSolarizedDarkIJTheme());
-                    break;
-                case "solarized light":
-                    UIManager.setLookAndFeel(new FlatSolarizedLightIJTheme());
-                    break;
-                default:
-                    // If no match, apply the default theme
-                    UIManager.setLookAndFeel(new FlatIntelliJLaf());
-                    break;
+                case "light" -> UIManager.setLookAndFeel(new FlatIntelliJLaf());
+                case "dark" -> UIManager.setLookAndFeel(new FlatDarculaLaf());
+                case "carbon" -> UIManager.setLookAndFeel(new FlatCarbonIJTheme());
+                case "arc - orange" -> UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
+                case "arc dark - orange" -> UIManager.setLookAndFeel(new FlatArcDarkOrangeIJTheme());
+                case "cyan light" -> UIManager.setLookAndFeel(new FlatCyanLightIJTheme());
+                case "nord" -> UIManager.setLookAndFeel(new FlatNordIJTheme());
+                case "high contrast" -> UIManager.setLookAndFeel(new FlatHighContrastIJTheme());
+                case "solarized dark" -> UIManager.setLookAndFeel(new FlatSolarizedDarkIJTheme());
+                case "solarized light" -> UIManager.setLookAndFeel(new FlatSolarizedLightIJTheme());
+                default -> UIManager.setLookAndFeel(new FlatIntelliJLaf()); // If no match, apply the default theme
             }
         } catch (UnsupportedLookAndFeelException ex) {
             logger.error("Error setting LookAndFeel: " + ex.getMessage(), ex);

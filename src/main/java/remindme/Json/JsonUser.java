@@ -22,7 +22,6 @@ public class JsonUser {
     private static final Logger logger = LoggerFactory.getLogger(JsonUser.class);
 
     public static User readUserFromJson(String filename, String directoryPath) throws IOException {
-        User user = null;
         String filePath = directoryPath + File.separator + filename;
         File file = new File(filePath);
 
@@ -54,7 +53,7 @@ public class JsonUser {
             }
 
             // Create and return a User object
-            user = new User(name, surname, email);
+            User user = new User(name, surname, email);
             return user;
         } catch (JsonSyntaxException | NullPointerException ex) {
             logger.error("An error occurred while parsing the user JSON: " + ex.getMessage(), ex);
@@ -71,9 +70,9 @@ public class JsonUser {
             JsonObject jsonObject = new JsonObject();
 
             // Populate the JSON object
-            jsonObject.addProperty("name", user.name != null ? user.name : "");
-            jsonObject.addProperty("surname", user.surname != null ? user.surname : "");
-            jsonObject.addProperty("email", user.email != null ? user.email : "");
+            jsonObject.addProperty("name", user.name() != null ? user.name() : "");
+            jsonObject.addProperty("surname", user.surname() != null ? user.surname() : "");
+            jsonObject.addProperty("email", user.email() != null ? user.email() : "");
 
             // Write JSON to file
             writer.write(gson.toJson(jsonObject));
