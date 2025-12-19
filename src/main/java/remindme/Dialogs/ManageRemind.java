@@ -1,5 +1,6 @@
 package remindme.Dialogs;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -94,6 +95,10 @@ public class ManageRemind extends javax.swing.JDialog {
             timeFromLocalTime = timeFrom.getTime();
             timeToLocalTime = timeTo.getTime();
             nextExecution = RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(timeInterval, timeFromLocalTime);
+        } 
+        else if (executionMethod == ExecutionMethod.ONE_TIME_PER_DAY) {
+            timeFromLocalTime = timeFrom.getTime();
+            nextExecution = LocalDateTime.of(LocalDate.now(), timeFromLocalTime);
         } else {
             nextExecution = RemindManager.getnextExecutionByTimeInterval(timeInterval);
         }
@@ -121,6 +126,10 @@ public class ManageRemind extends javax.swing.JDialog {
 
     public boolean isTimeRangeValid() {
         if (ExecutionMethod.getExecutionMethodbyName(executionMethodComboBox.getSelectedItem().toString()) == ExecutionMethod.PC_STARTUP) {
+            return true;
+        }
+
+        if (ExecutionMethod.getExecutionMethodbyName(executionMethodComboBox.getSelectedItem().toString()) == ExecutionMethod.ONE_TIME_PER_DAY) {
             return true;
         }
 
@@ -170,6 +179,14 @@ public class ManageRemind extends javax.swing.JDialog {
         soundComboBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.SOUND_TOOLTIP));
         soundPreviewBtn.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.SOUND_BUTTON_TOOLTIP));
         executionMethodComboBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EXECUTION_METHOD_TOOLTIP));
+    }
+
+    private void enableBasedOnExecutionMethod(boolean fromEnable, boolean toEnable) {
+        fromLabel.setEnabled(fromEnable);
+        timeFrom.setEnabled(fromEnable);
+
+        toLabel.setEnabled(toEnable);
+        timeTo.setEnabled(toEnable);
     }
 
     private void setIcons() {
@@ -247,6 +264,7 @@ public class ManageRemind extends javax.swing.JDialog {
 
         executionMethodComboBox.addItem(ExecutionMethod.PC_STARTUP.getExecutionMethodName());
         executionMethodComboBox.addItem(ExecutionMethod.CUSTOM_TIME_RANGE.getExecutionMethodName());
+        executionMethodComboBox.addItem(ExecutionMethod.ONE_TIME_PER_DAY.getExecutionMethodName());
 
         executionMethodComboBox.setSelectedItem(ExecutionMethod.getDefaultExecutionMethod());
     }
@@ -503,12 +521,16 @@ public class ManageRemind extends javax.swing.JDialog {
         if (executionMethodComboBox.getSelectedItem() == null)
             return;
 
-        boolean enable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.CUSTOM_TIME_RANGE.getExecutionMethodName());
+        boolean customTimeEnable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.CUSTOM_TIME_RANGE.getExecutionMethodName());
+        boolean oneTimePerDayEnable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.ONE_TIME_PER_DAY.getExecutionMethodName());
 
-        timeFrom.setEnabled(enable);
-        timeTo.setEnabled(enable);
-        fromLabel.setEnabled(enable);
-        toLabel.setEnabled(enable);
+        if (customTimeEnable) {
+            enableBasedOnExecutionMethod(true, true);
+        }
+        else if (oneTimePerDayEnable) {
+            enableBasedOnExecutionMethod(true, false);
+            timeIntervalBtn.setEnabled(false);
+        }
     }//GEN-LAST:event_executionMethodComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

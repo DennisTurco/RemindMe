@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -196,7 +197,6 @@ public class BackgroundService {
 
                 switch (remind.getExecutionMethod()) {
                     case PC_STARTUP -> remind.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), now));
-
                     case CUSTOM_TIME_RANGE -> {
                         LocalTime from = remind.getTimeFrom();
                         LocalTime to = remind.getTimeTo();
@@ -204,6 +204,14 @@ public class BackgroundService {
                         LocalTime referenceTime = (!now.isBefore(from) && !now.isAfter(to)) ? now : from;
 
                         remind.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), referenceTime));
+                    }
+                    case ONE_TIME_PER_DAY -> {
+                        LocalTime from = remind.getTimeFrom();
+                        LocalDate today = LocalDate.now();
+                        LocalDate day = now.isBefore(from) ? today : today.plusDays(1);
+
+                        LocalDateTime excecuDateTime = LocalDateTime.of(day, from);
+                        remind.setNextExecution(excecuDateTime);
                     }
                 }
             }
@@ -246,18 +254,43 @@ public class BackgroundService {
 
         private List<Remind> getRemindsToDo(List<Remind> reminds, int maxRemindsToAdd) {
             List<Remind> remindsToDo = new ArrayList<>();
+            LocalDateTime now = LocalDateTime.now();
+            LocalTime nowTime = now.toLocalTime();
 
             for (Remind remind : reminds) {
-                if (maxRemindsToAdd <= 0 || !remind.isActive() || remind.getNextExecution() == null)
+                if (!remind.isActive() || remind.getNextExecution() == null)
                     continue;
 
-                boolean nextExecutionPassed = remind.getNextExecution().isBefore(LocalDateTime.now());
-                boolean insideTimeRange = insideTimeRange(remind);
-                if (nextExecutionPassed && insideTimeRange) {
+                boolean shouldRun = false;
+
+                switch (remind.getExecutionMethod()) {
+                    case ONE_TIME_PER_DAY -> {
+                        LocalTime from = remind.getTimeFrom();
+                        LocalTime fiveMinutesLater = nowTime.plusMinutes(5);
+                        if (!nowTime.isBefore(from) && !nowTime.isAfter(fiveMinutesLater)) {
+                            shouldRun = true;
+                        }
+                    }
+                    case CUSTOM_TIME_RANGE -> {
+                        if (remind.getNextExecution().isBefore(now) && insideTimeRange(remind, nowTime)) {
+                            shouldRun = true;
+                        }
+                    }
+                    case PC_STARTUP -> shouldRun = true;
+                }
+
+                if (shouldRun) {
                     remindsToDo.add(remind);
-                    maxRemindsToAdd--;
                 }
             }
+            
+            if (!remindsToDo.isEmpty()) {
+                remindsToDo.sort((r1, r2) -> {
+                    return ExecutionMethod.executionMethodPriority(r1.getExecutionMethod()) - ExecutionMethod.executionMethodPriority(r2.getExecutionMethod());
+                });
+                return remindsToDo.subList(0, Math.min(maxRemindsToAdd, remindsToDo.size()));
+            }
+
             return remindsToDo;
         }
 
@@ -291,22 +324,15 @@ public class BackgroundService {
             return null;
         }
 
-        private boolean insideTimeRange(Remind remind) {
-            ExecutionMethod method = remind.getExecutionMethod();
-            if (method == ExecutionMethod.PC_STARTUP) {
+        private boolean insideTimeRange(Remind remind, LocalTime now) {
+            if (remind.getExecutionMethod() != ExecutionMethod.CUSTOM_TIME_RANGE) {
                 return true;
             }
 
-            LocalTime now = LocalTime.now();
             LocalTime from = remind.getTimeFrom();
             LocalTime to = remind.getTimeTo();
 
-            boolean insideRange = !now.isBefore(from) && !now.isAfter(to);
-            if (method == ExecutionMethod.CUSTOM_TIME_RANGE && insideRange) {
-                return true;
-            }
-
-            return false;
+            return !now.isBefore(from) && !now.isAfter(to);
         }
     }
 }

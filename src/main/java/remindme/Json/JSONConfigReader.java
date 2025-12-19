@@ -1,12 +1,14 @@
 package remindme.Json;
 
-import com.google.gson.*;
-
 import java.io.FileReader;
 import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class JSONConfigReader {
     private static final Logger logger = LoggerFactory.getLogger(JSONConfigReader.class);
@@ -44,10 +46,10 @@ public class JSONConfigReader {
             // if the interval is null, set to default of 5 minutes
             int timeInterval = (interval != null) ? interval.getAsInt() : 5;
 
-            logger.info("Time interval set to " + timeInterval + " seconds");
+            logger.info("Time interval set to " + timeInterval + " minutes");
             return timeInterval;
         } catch (NullPointerException e) {
-            logger.error("Error retrieving remind time interval, defaulting to 5 seconds: " + e.getMessage(), e);
+            logger.error("Error retrieving remind time interval, defaulting to 5 minutes: " + e.getMessage(), e);
             return 5; // Default to 5 minutes
         }
     }

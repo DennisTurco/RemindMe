@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
 import remindme.Enums.ConfigKey;
-import remindme.Enums.ExecutionMethod;
 import remindme.Managers.RemindManager;
 import remindme.Managers.SoundPlayer;
 import remindme.Managers.ThemeManager;
@@ -66,10 +65,12 @@ public class ReminderDialog extends javax.swing.JDialog {
             if (remind.getName().equals(rem.getName())) {
                 rem.setLastExecution(LocalDateTime.now());
                 rem.setRemindCount(rem.getRemindCount()+1);
-                if (rem.getExecutionMethod() == ExecutionMethod.PC_STARTUP) {
-                    rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
-                } else {
-                    rem.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(rem.getTimeInterval(), rem.getTimeFrom()));
+
+                switch (rem.getExecutionMethod()) {
+                    case ONE_TIME_PER_DAY -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeFrom()));
+                    case CUSTOM_TIME_RANGE -> rem.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(rem.getTimeInterval(), rem.getTimeFrom()));
+                    case PC_STARTUP -> rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
+                    default -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeFrom()));
                 }
             }
         }

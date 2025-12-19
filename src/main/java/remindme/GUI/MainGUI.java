@@ -188,24 +188,65 @@ public final class MainGUI extends javax.swing.JFrame {
         String timeToStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_TO_DETAIL);
 
         StringBuilder body = new StringBuilder();
-        body.append(
-            "<html><b>" + remindNameStr + ":</b> " + remind.getName() + ", " +
-            "<b>" + descriptionStr + ":</b> " + remind.getDescription() + ", " +
-            "<b>" + isActiveStr + ":</b> " + remind.isActive() + ", " +
-            "<b>" + isTopLevelStr + ":</b> " + remind.isTopLevel() + ", " +
-            "<b>" + lastExeutionStr + ":</b> " + (remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "") + ", " +
-            "<b>" + nextExecutionStr + ":</b> " + (remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "_") + ", " +
-            "<b>" + timeIntervalStr + ":</b> " + (remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : "_") + ", " +
-            "<b>" + creationDateStr + ":</b> " + (remind.getCreationDate() != null ? remind.getCreationDate().format(RemindManager.formatter) : "_") + ", " +
-            "<b>" + lastUpdateDateStr + ":</b> " + (remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().format(RemindManager.formatter) : "_") + ", " +
-            "<b>" + remindCountStr + ":</b> " + (remind.getRemindCount()) + ", " +
-            "<b>" + executionMethodStr + ":</b> " + (remind.getExecutionMethod().getExecutionMethodName())
-        );
+        body.append("<html><b>")
+            .append(remindNameStr)
+            .append(":</b> ")
+            .append(remind.getName())
+            .append(", <b>")
+            .append(descriptionStr)
+            .append(":</b> ")
+            .append(remind.getDescription())
+            .append(", <b>")
+            .append(isActiveStr)
+            .append(":</b> ")
+            .append(remind.isActive())
+            .append(", <b>")
+            .append(isTopLevelStr)
+            .append(":</b> ")
+            .append(remind.isTopLevel())
+            .append(", <b>")
+            .append(lastExeutionStr)
+            .append(":</b> ")
+            .append(remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "")
+            .append(", <b>")
+            .append(nextExecutionStr)
+            .append(":</b> ")
+            .append(remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "_")
+            .append(", <b>")
+            .append(timeIntervalStr)
+            .append(":</b> ")
+            .append(remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : "_")
+            .append(", <b>")
+            .append(creationDateStr)
+            .append(":</b> ")
+            .append(remind.getCreationDate() != null ? remind.getCreationDate().format(RemindManager.formatter) : "_")
+            .append(", <b>")
+            .append(lastUpdateDateStr)
+            .append(":</b> ")
+            .append(remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().format(RemindManager.formatter) : "_")
+            .append(", <b>")
+            .append(remindCountStr)
+            .append(":</b> ")
+            .append(remind.getRemindCount())
+            .append(", <b>")
+            .append(executionMethodStr)
+            .append(":</b> ")
+            .append(remind.getExecutionMethod().getExecutionMethodName());
         if (remind.getExecutionMethod() == ExecutionMethod.CUSTOM_TIME_RANGE) {
-            body.append(
-                ", <b>" + timeFromStr + ":</b> " + (remind.getTimeFrom()) + ", " +
-                "<b>" + timeToStr + ":</b> " + (remind.getTimeTo())
-            );
+            body.append(", <b>")
+                .append(timeFromStr)
+                .append(":</b> ")
+                .append(remind.getTimeFrom())
+                .append(", <b>")
+                .append(timeToStr)
+                .append(":</b> ")
+                .append(remind.getTimeTo());
+        }
+        if (remind.getExecutionMethod() == ExecutionMethod.ONE_TIME_PER_DAY) {
+            body.append(", <b>")
+                .append(timeFromStr)
+                .append(":</b> ")
+                .append(remind.getTimeFrom());
         }
         body.append("</html>");
 
