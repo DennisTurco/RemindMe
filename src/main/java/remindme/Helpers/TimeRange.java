@@ -6,9 +6,9 @@ import java.time.LocalTime;
 public record TimeRange (LocalTime start, LocalTime end) {
 
     public TimeRange(LocalTime start, LocalTime end) {
-        if (end.isBefore(start)) {
-            throw new IllegalArgumentException("End time must be after start time");
-        }
+        if (start == null) throw new NullPointerException("Start time cannot be null");
+        if (end == null) throw new NullPointerException("End time cannot be null");
+        if (end.isBefore(start)) throw new IllegalArgumentException("End time must be after start time");
         this.start = start;
         this.end = end;
     }
@@ -18,7 +18,8 @@ public record TimeRange (LocalTime start, LocalTime end) {
     }
 
     public boolean contains(LocalTime localTime) {
-        return localTime.isAfter(start) && localTime.isBefore(end);
+        return (localTime == start || localTime.isAfter(start)) &&
+               (localTime == end || localTime.isBefore(end));
     }
 
     public boolean containsExclusive(LocalTime localTime) {

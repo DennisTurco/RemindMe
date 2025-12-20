@@ -78,10 +78,8 @@ public final class RemindManager {
     public void updateRemindList() {
         logger.info("Updating remind list");
 
-        // update
         JSON.updateRemindListJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
 
-        // get from file
         getRemindList();
 
         if (MainGUI.model != null)
@@ -370,7 +368,7 @@ public final class RemindManager {
             .plusMinutes(timeInterval.getMinutes());
     }
 
-    public static LocalDateTime getnextExecutionByTimeIntervalFromSpecificTime(TimeInterval timeInterval, LocalTime timeFrom) {
+    public static LocalDateTime getNextExecutionByTimeIntervalFromSpecificTime(TimeInterval timeInterval, LocalTime timeFrom) {
         if (timeInterval == null || timeFrom == null) return null;
 
         // Base time: timeFrom

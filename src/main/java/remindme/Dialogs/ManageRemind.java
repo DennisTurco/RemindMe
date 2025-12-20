@@ -12,6 +12,7 @@ import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
+import remindme.Helpers.TimeRange;
 import remindme.Managers.RemindManager;
 import remindme.Managers.SoundPlayer;
 
@@ -93,7 +94,7 @@ public class ManageRemind extends javax.swing.JDialog {
         LocalDateTime nextExecution;
         if (executionMethod == ExecutionMethod.CUSTOM_TIME_RANGE && isTimeRangeValid()) {
             timeFromLocalTime = timeFrom.getTime();
-            nextExecution = RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(timeInterval, timeFromLocalTime);
+            nextExecution = RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(timeInterval, timeFromLocalTime);
         } 
         else if (executionMethod == ExecutionMethod.ONE_TIME_PER_DAY) {
             timeFromLocalTime = timeFrom.getTime();
@@ -132,14 +133,14 @@ public class ManageRemind extends javax.swing.JDialog {
             return true;
         }
 
-        LocalTime fromTime = timeFrom.getTime();
-        LocalTime toTime = timeTo.getTime();
-
-        if (fromTime == null || toTime == null) {
+        try {
+            // if the object creeation fails it means that the times 
+            TimeRange.of(timeFrom.getTime(), timeTo.getTime());
+        } catch (Exception e) {
             return false;
         }
 
-        return fromTime.isBefore(toTime);
+        return true;
     }
 
     private void insertRemindValues(Remind remind) {

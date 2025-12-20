@@ -1,7 +1,7 @@
 package test;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -14,15 +14,15 @@ import remindme.Helpers.TimeRange;
 
 public class TimeRangeTest {
 
-    private final LocalDateTime start = LocalDateTime.of(2025, 1, 1, 10, 0);
-    private final LocalDateTime end   = LocalDateTime.of(2025, 1, 1, 12, 0);
+    private final LocalTime start = LocalTime.of(10, 0);
+    private final LocalTime end   = LocalTime.of(12, 0);
     private final TimeRange range = new TimeRange(start, end);
 
     // ---- Constructor & factory ----
 
     @Test
     public void constructor_shouldThrowException_whenEndIsBeforeStart() {
-        LocalDateTime invalidEnd = start.minusHours(1);
+        LocalTime invalidEnd = start.minusHours(1);
 
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
@@ -47,13 +47,13 @@ public class TimeRangeTest {
     }
 
     @Test
-    public void contains_shouldReturnTrue_forDateInsideRange() {
-        LocalDateTime inside = start.plusMinutes(30);
+    public void contains_shouldReturnTrue_forTimeInsideRange() {
+        LocalTime inside = start.plusMinutes(30);
         assertTrue(range.contains(inside));
     }
 
     @Test
-    public void contains_shouldReturnFalse_forDateOutsideRange() {
+    public void contains_shouldReturnFalse_forTimeOutsideRange() {
         assertFalse(range.contains(start.minusSeconds(1)));
         assertFalse(range.contains(end.plusSeconds(1)));
     }
@@ -67,8 +67,8 @@ public class TimeRangeTest {
     }
 
     @Test
-    public void containsExclusive_shouldReturnTrue_forDateStrictlyInside() {
-        LocalDateTime inside = start.plusMinutes(1);
+    public void containsExclusive_shouldReturnTrue_forTimeStrictlyInside() {
+        LocalTime inside = start.plusMinutes(1);
         assertTrue(range.containsExclusive(inside));
     }
 
@@ -108,7 +108,7 @@ public class TimeRangeTest {
 
     @Test
     public void duration_shouldReturnCorrectDuration() {
-        Duration expected = Duration.ofHours(2);
+        Duration expected = Duration.between(start, end);
         assertEquals(expected, range.duration());
     }
 
@@ -143,4 +143,55 @@ public class TimeRangeTest {
         assertEquals(start, range.start());
         assertEquals(end, range.end());
     }
+
+    // ---- null inputs ----
+
+    @Test
+    public void constructor_shouldThrowException_whenStartIsNull() {
+        LocalTime nullStart = null;
+
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> new TimeRange(nullStart, end)
+        );
+
+        assertEquals("Start time cannot be null", ex.getMessage());
+    }
+
+    @Test
+    public void constructor_shouldThrowException_whenEndIsNull() {
+        LocalTime nullEnd = null;
+
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> new TimeRange(start, nullEnd)
+        );
+
+        assertEquals("End time cannot be null", ex.getMessage());
+    }
+
+    @Test
+    public void contains_shouldThrowException_whenInputIsNull() {
+        LocalTime nullTime = null;
+
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> range.contains(nullTime)
+        );
+
+        assertEquals("Time to check cannot be null", ex.getMessage());
+    }
+
+    @Test
+    public void containsExclusive_shouldThrowException_whenInputIsNull() {
+        LocalTime nullTime = null;
+
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> range.containsExclusive(nullTime)
+        );
+
+        assertEquals("Time to check cannot be null", ex.getMessage());
+    }
+
 }

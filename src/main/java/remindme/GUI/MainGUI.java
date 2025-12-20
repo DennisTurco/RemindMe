@@ -131,23 +131,12 @@ public final class MainGUI extends javax.swing.JFrame {
         logger.info("Setting default language to: " + language);
 
         switch (language) {
-            case "en":
-                Preferences.setLanguage(LanguagesEnum.ENG);
-                break;
-            case "it":
-                Preferences.setLanguage(LanguagesEnum.ITA);
-                break;
-            case "es":
-                Preferences.setLanguage(LanguagesEnum.ESP);
-                break;
-            case "de":
-                Preferences.setLanguage(LanguagesEnum.DEU);
-                break;
-            case "fr":
-                Preferences.setLanguage(LanguagesEnum.FRA);
-                break;
-            default:
-                Preferences.setLanguage(LanguagesEnum.ENG);
+            case "en" -> Preferences.setLanguage(LanguagesEnum.ENG);
+            case "it" -> Preferences.setLanguage(LanguagesEnum.ITA);
+            case "es" -> Preferences.setLanguage(LanguagesEnum.ESP);
+            case "de" -> Preferences.setLanguage(LanguagesEnum.DEU);
+            case "fr" -> Preferences.setLanguage(LanguagesEnum.FRA);
+            default -> Preferences.setLanguage(LanguagesEnum.ENG);
         }
 
         remindManager.reloadPreferences();
