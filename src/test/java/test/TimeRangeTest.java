@@ -179,7 +179,7 @@ public class TimeRangeTest {
                 () -> range.contains(nullTime)
         );
 
-        assertEquals("Time to check cannot be null", ex.getMessage());
+        assertEquals("Cannot invoke \"java.time.LocalTime.isAfter(java.time.LocalTime)\" because \"localTime\" is null", ex.getMessage());
     }
 
     @Test
@@ -191,7 +191,7 @@ public class TimeRangeTest {
                 () -> range.containsExclusive(nullTime)
         );
 
-        assertEquals("Time to check cannot be null", ex.getMessage());
+        assertEquals("Cannot invoke \"java.time.LocalTime.isAfter(java.time.LocalTime)\" because \"localTime\" is null", ex.getMessage());
     }
 
 }
