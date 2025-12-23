@@ -27,10 +27,8 @@ public class AppController {
     private AppController() throws IOException {
         logger.info("Starting RemindMe application");
 
-        // Services
         this.backgroundService = new BackgroundService();
 
-        // Controllers
         this.trayController = new TrayController(
             this::openGui,
             backgroundService::pause,
@@ -38,8 +36,8 @@ public class AppController {
             this::exitApp
         );
 
-        // Start background logic
         backgroundService.start();
+        trayController.start();
     }
 
     private void openGui() {

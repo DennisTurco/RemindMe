@@ -201,9 +201,6 @@ public class Remind {
     public void setName(String name) {
         this._name = name;
     }
-    public void setDescription(String description) {
-        this._description = description;
-    }
     public void setRemindCount(int remindCount) {
         this._remindCount = remindCount;
     }
@@ -219,31 +216,13 @@ public class Remind {
     public void setNextExecution(LocalDateTime nextExecution) {
         this._nextExecution = nextExecution;
     }
-    public void setCreationDate(LocalDateTime creationDate) {
-        this._creationDate = creationDate;
-    }
     public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
         this._lastUpdateDate = lastUpdateDate;
     }
     public void setTimeInterval(TimeInterval timeInterval) {
         this._timeInterval = timeInterval;
     }
-    public void setIcon(IconsEnum icon) {
-        this._icon = icon;
-    }
-    public void setSound(SoundsEnum sound) {
-        this._sound = sound;
-    }
-    public void setExecutionMethod(ExecutionMethod executionMethod) {
-        this._executionMethod = executionMethod;
-    }
-    public void setTimeFrom(LocalTime timeFrom) {
-        this._timeFrom = timeFrom;
-    }
-    public void setTimeTo(LocalTime timeTo) {
-        this._timeTo = timeTo;
-    }
-    public void setMaxExecutionPerDay(int maxExecutionsPerDay) {
-        this._maxExecutionPerDay = maxExecutionsPerDay;
+    public void setMaxExecutionPerDay(int _maxExecutionPerDay) {
+        this._maxExecutionPerDay = _maxExecutionPerDay;
     }
 }

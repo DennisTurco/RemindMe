@@ -41,7 +41,9 @@ public class TrayController {
         this.onPause = onPause;
         this.onResume = onResume;
         this.onExit = onExit;
+    }
 
+    public void start() {
         createHiddenIcon();
     }
 
