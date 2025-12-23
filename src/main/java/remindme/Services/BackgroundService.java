@@ -1,27 +1,18 @@
 package remindme.Services;
 
-import java.awt.AWTException;
-import java.awt.Frame;
-import java.awt.Image;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.SystemTray;
-import java.awt.Toolkit;
-import java.awt.TrayIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import javax.swing.JFrame;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,164 +21,76 @@ import remindme.Dialogs.ReminderDialog;
 import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
-import remindme.Enums.ConfigKey;
 import remindme.Enums.ExecutionMethod;
-import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
-import remindme.Enums.TranslationLoaderEnum.TranslationKey;
-import remindme.GUI.MainGUI;
 import remindme.Helpers.TimeRange;
 import remindme.Json.JSONConfigReader;
 import remindme.Json.JSONReminder;
 import remindme.Managers.RemindManager;
 
 public class BackgroundService {
+
     private static final Logger logger = LoggerFactory.getLogger(BackgroundService.class);
 
     private ScheduledExecutorService scheduler;
-    private final JSONReminder json = new JSONReminder();
-    private final JSONConfigReader jsonConfig = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
-    private TrayIcon trayIcon = null;
-    private MainGUI guiInstance = null;
-    private final List<ReminderDialog> remindersDialogOpened = new ArrayList<>();
-    private boolean paused = false;
 
-    public void startService() throws IOException {
-        if (trayIcon == null) {
-            createHiddenIcon();
-        }
+    private final JSONReminder jsonReminder = new JSONReminder();
+    private final JSONConfigReader jsonConfigReader = new JSONConfigReader(remindme.Enums.ConfigKey.CONFIG_FILE_STRING.getValue(), remindme.Enums.ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
+    private final AtomicBoolean paused = new AtomicBoolean(false);
+    private final Map<String, ReminderDialog> openedDialogs = new ConcurrentHashMap<>();
 
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        long interval = jsonConfig.readCheckForReminderTimeInterval();
-
-        // first i have to edit all next executions starting from now
-        updateAllNextExecution();
-
-        scheduler.scheduleAtFixedRate(new RemindTask(), 0, interval, TimeUnit.MINUTES);
-        Runtime.getRuntime().addShutdownHook(new Thread(this::stopService));
-    }
-
-    public void stopService() {
-        logger.debug("Stopping remind service");
-        if (isSchedulerActive()) {
-            scheduler.shutdownNow();
-            logger.info("Background service stopped");
-        }
-        if (trayIcon != null) {
-            SystemTray.getSystemTray().remove(trayIcon);
-            trayIcon = null;
-        }
-    }
-
-    private void pauseService(MenuItem pauseItem, MenuItem resumeItem) {
-        logger.info("Background service paused");
-        paused = true;
-        switchMenuItemsEnable(pauseItem, resumeItem);
-    }
-
-    private void resumeService(MenuItem pauseItem, MenuItem resumeItem) {
-        logger.info("Background service resumed");
-        paused = false;
-        switchMenuItemsEnable(pauseItem, resumeItem);
-    }
-
-    private void switchMenuItemsEnable(MenuItem pauseItem, MenuItem resumeItem) {
-        pauseItem.setEnabled(!pauseItem.isEnabled());
-        resumeItem.setEnabled(!resumeItem.isEnabled());
-    }
-
-    private void createHiddenIcon() {
-        if (!SystemTray.isSupported()) {
-            logger.warn("System tray is not supported!");
+    public void start() throws IOException {
+        if (isRunning()) {
+            logger.warn("BackgroundService already running");
             return;
         }
 
-        Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource(ConfigKey.LOGO_IMG.getValue()));
-        SystemTray tray = SystemTray.getSystemTray();
+        scheduler = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "Remind-Background-Service"));
 
-        PopupMenu popup = setupAndGetPopupMenu();
+        updateAllNextExecutions();
 
-        trayIcon = new TrayIcon(image, "Remind Service", popup);
-        trayIcon.setImageAutoSize(true);
+        long intervalMinutes = jsonConfigReader.readCheckForReminderTimeInterval();
 
-        try {
-            tray.add(trayIcon);
-            logger.info("TrayIcon added");
-        } catch (AWTException e) {
-            logger.error("TrayIcon could not be added: " + e.getMessage(), e);
+        scheduler.scheduleAtFixedRate(new RemindTask(), 0, intervalMinutes, TimeUnit.MINUTES);
+
+        logger.info("BackgroundService started");
+    }
+
+    public void stop() {
+        if (scheduler != null) {
+            scheduler.shutdownNow();
+            scheduler = null;
+            logger.info("BackgroundService stopped");
         }
 
-        // Listener for click to tray icon
-        trayIcon.addActionListener((ActionEvent e) -> {
-            javax.swing.SwingUtilities.invokeLater(this::showMainGUI); // show the GUI
-        });
-
-        trayIcon.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    showMainGUI(); // left button mouse
-                }
-            }
-        });
+        openedDialogs.values().forEach(ReminderDialog::dispose);
+        openedDialogs.clear();
     }
 
-    private PopupMenu setupAndGetPopupMenu() {
-        PopupMenu popup = new PopupMenu();
-        MenuItem quickAccessItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.OPEN_ACTION));
-        MenuItem pauseItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.PAUSE_ACTION));
-        MenuItem resumeItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.RESUME_ACTION));
-        MenuItem exitItem = new MenuItem(TranslationCategory.TRAY_ICON.getTranslation(TranslationKey.EXIT_ACTION));
-
-        resumeItem.setEnabled(paused); // default status
-
-        popup.add(quickAccessItem);
-        popup.addSeparator();
-        popup.add(pauseItem);
-        popup.add(resumeItem);
-        popup.addSeparator();
-        popup.add(exitItem);
-
-        quickAccessItem.addActionListener((ActionEvent e) -> {
-            showMainGUI();
-        });
-
-        pauseItem.addActionListener((ActionEvent e) -> {
-            pauseService(pauseItem, resumeItem);
-        });
-
-        resumeItem.addActionListener((ActionEvent e) -> {
-            resumeService(pauseItem, resumeItem);
-        });
-
-        exitItem.addActionListener((ActionEvent e) -> {
-            stopService();
-            System.exit(0);
-        });
-
-        return popup;
+    public void pause() {
+        paused.set(true);
+        logger.info("BackgroundService paused");
     }
 
-    private void showMainGUI() {
-        logger.info("Showing the GUI");
-
-        if (guiInstance == null) {
-            guiInstance = new MainGUI();
-            guiInstance.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            guiInstance.setVisible(true);
-        } else {
-            guiInstance.setVisible(true);
-            guiInstance.toFront();
-            guiInstance.requestFocus();
-            if (guiInstance.getState() == Frame.ICONIFIED) {
-                guiInstance.setState(Frame.NORMAL);
-            }
-        }
+    public void resume() {
+        paused.set(false);
+        logger.info("BackgroundService resumed");
     }
 
-    // This method should be called only once at PC startup
-    private void updateAllNextExecution() {
+    public boolean isPaused() {
+        return paused.get();
+    }
+
+    private boolean isRunning() {
+        return scheduler != null && !scheduler.isShutdown();
+    }
+
+    /**
+     * Called once at application startup
+     */
+    private void updateAllNextExecutions() {
+        logger.debug("Updating all next executions time...");
         try {
-            List<Remind> reminds = json.readRemindListFromJSON( Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+            List<Remind> reminds = jsonReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
 
             LocalTime now = LocalTime.now();
 
@@ -197,130 +100,127 @@ public class BackgroundService {
                 }
 
                 switch (remind.getExecutionMethod()) {
-                    case PC_STARTUP -> remind.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), now));
+                    case PC_STARTUP -> {
+                        remind.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), now));
+                    }
                     case CUSTOM_TIME_RANGE -> {
-                        TimeRange timeRange = TimeRange.of(remind.getTimeFrom(), remind.getTimeTo());
-                        LocalTime referenceTime = timeRange.contains(now) ? now : remind.getTimeFrom();
+                        TimeRange range = TimeRange.of(remind.getTimeFrom(), remind.getTimeTo());
 
-                        remind.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), referenceTime));
+                        LocalTime reference = range.contains(now) ? now : remind.getTimeFrom();
+
+                        remind.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), reference));
                     }
                     case ONE_TIME_PER_DAY -> {
-                        LocalTime from = remind.getTimeFrom();
                         LocalDate today = LocalDate.now();
-                        LocalDate day = now.isBefore(from) ? today : today.plusDays(1);
+                        LocalDate day = now.isBefore(remind.getTimeFrom()) ? today : today.plusDays(1);
 
-                        LocalDateTime excecuDateTime = LocalDateTime.of(day, from);
-                        remind.setNextExecution(excecuDateTime);
+                        remind.setNextExecution(LocalDateTime.of(day, remind.getTimeFrom()));
                     }
                 }
             }
 
-            json.updateRemindListJSON( Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
+            jsonReminder.updateRemindListJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
 
-        } catch (IOException ex) {
-            logger.error("An error occurred: " + ex.getMessage(), ex);
+            logger.debug("Next executions time updated succesfully");
+
+        } catch (IOException e) {
+            logger.error("Failed to update next executions", e);
         }
     }
 
-    private boolean isSchedulerActive() {
-        return scheduler != null && !scheduler.isShutdown();
-    }
+    private class RemindTask implements Runnable {
 
-    class RemindTask implements Runnable {
         @Override
         public void run() {
-            logger.debug("Checking for reminds...");
 
-            if (paused) {
-                logger.debug("Service is paused, skipping task.");
+            logger.debug("Background service task started");
+
+            if (paused.get()) {
+                logger.debug("Service paused, skipping execution");
                 return;
             }
 
             try {
-                List<Remind> reminds = json.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+                List<Remind> reminds = jsonReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+
                 RemindManager.reminds = reminds;
-                List<Remind> needsRemind = getRemindsToDo(reminds, 1);
-                if (needsRemind != null && !needsRemind.isEmpty()) {
-                    logger.info("Start remind process.");
-                    executeReminds(needsRemind);
+
+                List<Remind> toExecute = getRemindsToExecute(reminds, 1);
+
+                if (!toExecute.isEmpty()) {
+                    executeReminds(toExecute);
                 } else {
-                    logger.debug("No remind needed at this time.");
+                    logger.debug("No remind needed at this time");
                 }
-            } catch (IOException ex) {
-                logger.error("An error occurred: " + ex.getMessage(), ex);
+
+            } catch (IOException e) {
+                logger.error("Error during remind check", e);
             }
         }
 
-        private List<Remind> getRemindsToDo(List<Remind> reminds, int maxRemindsToAdd) {
-            List<Remind> remindsToDo = new ArrayList<>();
+        private List<Remind> getRemindsToExecute(List<Remind> reminds, int max) {
+            logger.debug("Checking for reminds...");
+            List<Remind> result = new ArrayList<>();
             LocalDateTime now = LocalDateTime.now();
-            LocalTime nowTime = now.toLocalTime();
 
             for (Remind remind : reminds) {
-                if (!remind.isActive() || remind.getNextExecution() == null)
-                    continue;
-
-                boolean shouldRun = false;
-
-                switch (remind.getExecutionMethod()) {
-                    case ONE_TIME_PER_DAY -> {
-                        TimeRange timeRange = TimeRange.of(remind.getTimeFrom(), nowTime.plusMinutes(5));
-                        if (timeRange.contains(nowTime)) {
-                            shouldRun = true;
-                        }
-                    }
-                    case CUSTOM_TIME_RANGE -> {
-                        TimeRange timeRange = TimeRange.of(remind.getTimeFrom(), remind.getTimeTo());
-                        if (remind.getNextExecution().isBefore(now) && timeRange.contains(nowTime)) {
-                            shouldRun = true;
-                        }
-                    }
-                    case PC_STARTUP -> shouldRun = true;
-                }
-
-                if (shouldRun) {
-                    remindsToDo.add(remind);
+                if (shouldRun(remind, now)) {
+                    logger.debug("Remind found to be executed: " + remind.getName());
+                    result.add(remind);
                 }
             }
-            
-            if (!remindsToDo.isEmpty()) {
-                remindsToDo.sort((r1, r2) -> {
-                    return ExecutionMethod.executionMethodPriority(r1.getExecutionMethod()) - ExecutionMethod.executionMethodPriority(r2.getExecutionMethod());
-                });
-                return remindsToDo.subList(0, Math.min(maxRemindsToAdd, remindsToDo.size()));
+
+            if (result.isEmpty()) {
+                return result;
             }
 
-            return remindsToDo;
+            result.sort(Comparator.comparingInt(r -> ExecutionMethod.executionMethodPriority(r.getExecutionMethod())));
+
+            return result.subList(0, Math.min(max, result.size()));
+        }
+
+        private boolean shouldRun(Remind remind, LocalDateTime now) {
+            if (!remind.isActive() || remind.getNextExecution() == null) {
+                return false;
+            }
+
+            LocalTime nowTime = now.toLocalTime();
+
+            switch (remind.getExecutionMethod()) {
+                case ONE_TIME_PER_DAY -> {
+                    LocalTime from = remind.getTimeFrom();
+                    TimeRange range = TimeRange.of(from, from.plusMinutes(5));
+                    return range.contains(nowTime);
+                }
+                case CUSTOM_TIME_RANGE -> {
+                    TimeRange range = TimeRange.of(remind.getTimeFrom(), remind.getTimeTo());
+                    return remind.getNextExecution().isBefore(now) && range.contains(nowTime);
+                }
+                case PC_STARTUP -> {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void executeReminds(List<Remind> reminds) {
             javax.swing.SwingUtilities.invokeLater(() -> {
                 for (Remind remind : reminds) {
-                    // open notification
-                    ReminderDialog dialog = new ReminderDialog(null, false, new RemindNotification(remind), false);
-                    dialog.setVisible(true);
 
-                    // remove old dialog if exists
-                    ReminderDialog oldDialog = alreadyDialogOpened(remind);
-                    if (oldDialog != null) {
-                        logger.debug("Removing old reminder dialog instance: " + dialog.toString());
-                        remindersDialogOpened.remove(oldDialog);
-                        oldDialog.dispose();
+                    String key = remind.getName();
+
+                    ReminderDialog old = openedDialogs.remove(key);
+                    if (old != null) {
+                        old.dispose();
                     }
 
-                    remindersDialogOpened.add(dialog);
+                    ReminderDialog dialog = new ReminderDialog(null, false, new RemindNotification(remind), false);
+
+                    dialog.setVisible(true);
+                    openedDialogs.put(key, dialog);
                 }
             });
-        }
-
-        private ReminderDialog alreadyDialogOpened(Remind remind) {
-            for (ReminderDialog reminderDialog : remindersDialogOpened) {
-                if (reminderDialog.remindNotification.name().equals(remind.getName())) {
-                    return reminderDialog;
-                }
-            }
-
-            return null;
         }
     }
 }

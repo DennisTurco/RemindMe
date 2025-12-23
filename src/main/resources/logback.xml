@@ -126,7 +126,7 @@
     </logger>
 
     <!-- Root logger -->
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="ASYNC" />
         <appender-ref ref="ERROR_FILE" />
