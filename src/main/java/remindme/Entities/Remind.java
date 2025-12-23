@@ -18,104 +18,104 @@ import remindme.Managers.ExceptionManager;
 public class Remind {
     private static final Logger logger = LoggerFactory.getLogger(Remind.class);
 
-    private String _name;
-    private String _description;
-    private int _remindCount;
-    private boolean _isActive;
-    private boolean _isTopLevel;
-    private LocalDateTime _lastExecution;
-    private LocalDateTime _nextExecution;
-    private LocalDateTime _creationDate;
-    private LocalDateTime _lastUpdateDate;
-    private TimeInterval _timeInterval;
-    private IconsEnum _icon;
-    private SoundsEnum _sound;
-    private ExecutionMethod _executionMethod;
-    private LocalTime _timeFrom;
-    private LocalTime _timeTo;
-    private int _maxExecutionPerDay;
+    private String name;
+    private String description;
+    private int remindCount;
+    private boolean isActive;
+    private boolean isTopLevel;
+    private LocalDateTime lastExecution;
+    private LocalDateTime nextExecution;
+    private LocalDateTime creationDate;
+    private LocalDateTime lastUpdateDate;
+    private TimeInterval timeInterval;
+    private IconsEnum icon;
+    private SoundsEnum sound;
+    private ExecutionMethod executionMethod;
+    private LocalTime timeFrom;
+    private LocalTime timeTo;
+    private int maxExecutionPerDay;
 
     public Remind() {
-        this._name = "";
-        this._description = "";
-        this._remindCount = 0;
-        this._isActive = false;
-        this._isTopLevel = false;
-        this._lastExecution = null;
-        this._nextExecution = null;
-        this._creationDate = null;
-        this._lastUpdateDate = null;
-        this._timeInterval = null;
-        this._icon = IconsEnum.ALERT;
-        this._sound = SoundsEnum.NoSound;
-        this._executionMethod = ExecutionMethod.PC_STARTUP;
-        this._timeFrom = null;
-        this._timeTo = null;
-        this._maxExecutionPerDay = 0;
+        this.name = "";
+        this.description = "";
+        this.remindCount = 0;
+        this.isActive = false;
+        this.isTopLevel = false;
+        this.lastExecution = null;
+        this.nextExecution = null;
+        this.creationDate = null;
+        this.lastUpdateDate = null;
+        this.timeInterval = null;
+        this.icon = IconsEnum.ALERT;
+        this.sound = SoundsEnum.NO_SOUND;
+        this.executionMethod = ExecutionMethod.PC_STARTUP;
+        this.timeFrom = null;
+        this.timeTo = null;
+        this.maxExecutionPerDay = 0;
     }
 
     public Remind(String name, String description, int remindCount, boolean isActive, boolean isTopLevel, LocalDateTime lastExecution, LocalDateTime nextExecution, LocalDateTime creationDate, LocalDateTime lastUpdateDate, TimeInterval timeInterval, IconsEnum icon, SoundsEnum sound, ExecutionMethod executionMethod, LocalTime timeFrom, LocalTime timeTo, int maxExecutionsPerDay) {
-        this._name = name;
-        this._description = description;
-        this._remindCount = remindCount;
-        this._isActive = isActive;
-        this._isTopLevel = isTopLevel;
-        this._lastExecution = lastExecution;
-        this._nextExecution = nextExecution;
-        this._creationDate = creationDate;
-        this._lastUpdateDate = lastUpdateDate;
-        this._timeInterval = timeInterval;
-        this._icon = icon;
-        this._sound = sound;
-        this._executionMethod = executionMethod;
-        this._timeFrom = timeFrom;
-        this._timeTo = timeTo;
-        this._maxExecutionPerDay = maxExecutionsPerDay;
+        this.name = name;
+        this.description = description;
+        this.remindCount = remindCount;
+        this.isActive = isActive;
+        this.isTopLevel = isTopLevel;
+        this.lastExecution = lastExecution;
+        this.nextExecution = nextExecution;
+        this.creationDate = creationDate;
+        this.lastUpdateDate = lastUpdateDate;
+        this.timeInterval = timeInterval;
+        this.icon = icon;
+        this.sound = sound;
+        this.executionMethod = executionMethod;
+        this.timeFrom = timeFrom;
+        this.timeTo = timeTo;
+        this.maxExecutionPerDay = maxExecutionsPerDay;
     }
 
     public void updateReming(Remind newRemind) {
-        this._name = newRemind.getName();
-        this._description = newRemind.getDescription();
-        this._remindCount = newRemind.getRemindCount();
-        this._isActive = newRemind.isActive();
-        this._isTopLevel = newRemind.isTopLevel();
-        this._lastExecution = newRemind.getLastExecution();
-        this._nextExecution = newRemind.getNextExecution();
-        this._creationDate = newRemind.getCreationDate();
-        this._lastUpdateDate = newRemind.getLastUpdateDate();
-        this._timeInterval = newRemind.getTimeInterval();
-        this._icon = newRemind.getIcon();
-        this._sound = newRemind.getSound();
-        this._executionMethod = newRemind.getExecutionMethod();
-        this._timeFrom = newRemind.getTimeFrom();
-        this._timeTo = newRemind.getTimeTo();
+        this.name = newRemind.getName();
+        this.description = newRemind.getDescription();
+        this.remindCount = newRemind.getRemindCount();
+        this.isActive = newRemind.isActive();
+        this.isTopLevel = newRemind.isTopLevel();
+        this.lastExecution = newRemind.getLastExecution();
+        this.nextExecution = newRemind.getNextExecution();
+        this.creationDate = newRemind.getCreationDate();
+        this.lastUpdateDate = newRemind.getLastUpdateDate();
+        this.timeInterval = newRemind.getTimeInterval();
+        this.icon = newRemind.getIcon();
+        this.sound = newRemind.getSound();
+        this.executionMethod = newRemind.getExecutionMethod();
+        this.timeFrom = newRemind.getTimeFrom();
+        this.timeTo = newRemind.getTimeTo();
     }
 
     @Override
     public String toString() {
         return String.format("[Name: %s, Description: %s, IsActive: %s, IsTopLevel: %s, TimeInterval: %s, ExecutionMethod: %s, TimeFrom: %s, TimeTo: %s]",
-            this._name,
-            this._description,
-            this._isActive,
-            this._isTopLevel,
-            this._timeInterval != null ? this._timeInterval.toString() : "",
-            this._executionMethod.getExecutionMethodName(),
-            this._timeFrom != null ? this._timeFrom.toString() : "",
-            this._timeTo != null ? this._timeTo.toString() : ""
+            this.name,
+            this.description,
+            this.isActive,
+            this.isTopLevel,
+            this.timeInterval != null ? this.timeInterval.toString() : "",
+            this.executionMethod.getExecutionMethodName(),
+            this.timeFrom != null ? this.timeFrom.toString() : "",
+            this.timeTo != null ? this.timeTo.toString() : ""
         );
     }
 
     public String toCsvString() {
         return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
-            this._name,
-            this._isActive,
-            this._isTopLevel,
-            this._lastExecution != null ? _lastExecution.toString() : "",
-            this._nextExecution != null ? _nextExecution.toString() : "",
-            this._timeInterval != null ? this._timeInterval.toString() : "",
-            this._executionMethod.getExecutionMethodName(),
-            this._timeFrom != null ? this._timeFrom.toString() : "",
-            this._timeTo != null ? this._timeTo.toString() : ""
+            this.name,
+            this.isActive,
+            this.isTopLevel,
+            this.lastExecution != null ? lastExecution.toString() : "",
+            this.nextExecution != null ? nextExecution.toString() : "",
+            this.timeInterval != null ? this.timeInterval.toString() : "",
+            this.executionMethod.getExecutionMethodName(),
+            this.timeFrom != null ? this.timeFrom.toString() : "",
+            this.timeTo != null ? this.timeTo.toString() : ""
         );
     }
 
@@ -150,79 +150,79 @@ public class Remind {
     }
 
     public String getName() {
-        return _name;
+        return name;
     }
     public String getDescription() {
-        return _description;
+        return description;
     }
     public int getRemindCount() {
-        return _remindCount;
+        return remindCount;
     }
     public boolean isActive() {
-        return _isActive;
+        return isActive;
     }
     public boolean isTopLevel() {
-        return _isTopLevel;
+        return isTopLevel;
     }
     public LocalDateTime getLastExecution() {
-        return _lastExecution;
+        return lastExecution;
     }
     public LocalDateTime getNextExecution() {
-        return _nextExecution;
+        return nextExecution;
     }
     public LocalDateTime getCreationDate() {
-        return _creationDate;
+        return creationDate;
     }
     public LocalDateTime getLastUpdateDate() {
-        return _lastUpdateDate;
+        return lastUpdateDate;
     }
     public TimeInterval getTimeInterval() {
-        return _timeInterval;
+        return timeInterval;
     }
     public IconsEnum getIcon() {
-        return _icon;
+        return icon != null ? icon : IconsEnum.getDefaultIcon();
     }
     public SoundsEnum getSound() {
-        return _sound;
+        return sound != null ? sound : SoundsEnum.getDefaultSound();
     }
     public ExecutionMethod getExecutionMethod() {
-        return _executionMethod;
+        return executionMethod != null ? executionMethod : ExecutionMethod.getDefaultExecutionMethod();
     }
     public LocalTime getTimeFrom() {
-        return _timeFrom;
+        return timeFrom;
     }
     public LocalTime getTimeTo() {
-        return _timeTo;
+        return timeTo;
     }
     public int getMaxExecutionsPerDay() {
-        return _maxExecutionPerDay;
+        return maxExecutionPerDay;
     }
 
     public void setName(String name) {
-        this._name = name;
+        this.name = name;
     }
     public void setRemindCount(int remindCount) {
-        this._remindCount = remindCount;
+        this.remindCount = remindCount;
     }
     public void setIsActive(boolean isActive) {
-        this._isActive = isActive;
+        this.isActive = isActive;
     }
     public void setIsTopLevel(boolean isTopLevel) {
-        this._isTopLevel = isTopLevel;
+        this.isTopLevel = isTopLevel;
     }
     public void setLastExecution(LocalDateTime lastExecution) {
-        this._lastExecution = lastExecution;
+        this.lastExecution = lastExecution;
     }
     public void setNextExecution(LocalDateTime nextExecution) {
-        this._nextExecution = nextExecution;
+        this.nextExecution = nextExecution;
     }
     public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
-        this._lastUpdateDate = lastUpdateDate;
+        this.lastUpdateDate = lastUpdateDate;
     }
     public void setTimeInterval(TimeInterval timeInterval) {
-        this._timeInterval = timeInterval;
+        this.timeInterval = timeInterval;
     }
-    public void setMaxExecutionPerDay(int _maxExecutionPerDay) {
-        this._maxExecutionPerDay = _maxExecutionPerDay;
+    public void setMaxExecutionPerDay(int maxExecutionPerDay) {
+        this.maxExecutionPerDay = maxExecutionPerDay;
     }
 }

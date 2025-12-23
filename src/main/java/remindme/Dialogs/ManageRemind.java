@@ -233,19 +233,19 @@ public class ManageRemind extends javax.swing.JDialog {
     private void setSounds() {
         soundComboBox.removeAllItems();
 
-        soundComboBox.addItem(SoundsEnum.NoSound.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound1.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound2.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound3.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound4.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound5.getSoundName());
-        // soundComboBox.addItem(SoundsEnum.Sound6.getSoundName());
-        // soundComboBox.addItem(SoundsEnum.Sound7.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound8.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound9.getSoundName());
-        // soundComboBox.addItem(SoundsEnum.Sound10.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound11.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound12.getSoundName());
+        soundComboBox.addItem(SoundsEnum.NO_SOUND.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND1.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND2.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND3.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND4.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND5.getSoundName());
+        // soundComboBox.addItem(SoundsEnum.SOUND6.getSoundName());
+        // soundComboBox.addItem(SoundsEnum.SOUND7.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND8.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND9.getSoundName());
+        // soundComboBox.addItem(SoundsEnum.SOUND10.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND11.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND12.getSoundName());
         soundComboBox.addItem(SoundsEnum.MEME_UWU.getSoundName());
         soundComboBox.addItem(SoundsEnum.MEME_BLUE_LOBSTER.getSoundName());
         soundComboBox.addItem(SoundsEnum.MEME_FUS_RO_DAH.getSoundName());
