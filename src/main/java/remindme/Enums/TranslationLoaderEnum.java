@@ -272,16 +272,4 @@ public class TranslationLoaderEnum {
             }
         }
     }
-
-    // only for test
-    public static void main(String[] args) {
-        try {
-            loadTranslations("src/main/resources/res/languages/ita.json");
-
-            System.out.println(TranslationCategory.MENU.getTranslation(TranslationKey.FILE));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

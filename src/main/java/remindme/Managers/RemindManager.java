@@ -363,9 +363,9 @@ public final class RemindManager {
     public static LocalDateTime getnextExecutionByTimeInterval(TimeInterval timeInterval) {
         if (timeInterval == null) return null;
 
-        return LocalDateTime.now().plusDays(timeInterval.getDays())
-            .plusHours(timeInterval.getHours())
-            .plusMinutes(timeInterval.getMinutes());
+        return LocalDateTime.now().plusDays(timeInterval.days())
+            .plusHours(timeInterval.hours())
+            .plusMinutes(timeInterval.minutes());
     }
 
     public static LocalDateTime getNextExecutionByTimeIntervalFromSpecificTime(TimeInterval timeInterval, LocalTime timeFrom) {
@@ -373,9 +373,9 @@ public final class RemindManager {
 
         // Base time: timeFrom
         LocalDateTime baseTime = LocalDateTime.of(LocalDate.now(), timeFrom)
-            .plusDays(timeInterval.getDays())
-            .plusHours(timeInterval.getHours())
-            .plusMinutes(timeInterval.getMinutes());
+            .plusDays(timeInterval.days())
+            .plusHours(timeInterval.hours())
+            .plusMinutes(timeInterval.minutes());
 
         // If the date is passed, posticipate by one day
         if (baseTime.isBefore(LocalDateTime.now())) {

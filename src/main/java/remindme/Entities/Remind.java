@@ -119,6 +119,20 @@ public class Remind {
         );
     }
 
+    public String[] toCsvArray() {
+        return new String[] {
+            name,
+            String.valueOf(isActive),
+            String.valueOf(isTopLevel),
+            lastExecution != null ? lastExecution.toString() : "",
+            nextExecution != null ? nextExecution.toString() : "",
+            timeInterval != null ? timeInterval.toString() : "",
+            executionMethod.getExecutionMethodName(),
+            timeFrom != null ? timeFrom.toString() : "",
+            timeTo != null ? timeTo.toString() : ""
+        };
+    }
+
     public static String getCSVHeader() {
         return "Name,Active,TopLevel,LastExecution,NextExecution,Interval (gg.HH:mm),ExecutionMethod,TimeFrom,TimeTo";
     }

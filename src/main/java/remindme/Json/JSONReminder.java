@@ -41,7 +41,6 @@ public class JSONReminder {
 
 
     public List<Remind> readRemindListFromJSON(String directoryPath, String filename) throws IOException {
-
         directoryPath = validateOrResetDirectoryPath(directoryPath);
         String filePath = Paths.get(directoryPath, filename).toString();
 
@@ -62,7 +61,6 @@ public class JSONReminder {
     }
 
     public void updateRemindListJSON(String directoryPath, String filename, List<Remind> reminds) {
-
         String filePath = Paths.get(directoryPath, filename).toString();
 
         try (Writer writer = new FileWriter(filePath)) {
