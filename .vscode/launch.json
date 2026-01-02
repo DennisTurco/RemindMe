@@ -6,26 +6,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "DecryptPassword",
-            "request": "launch",
-            "mainClass": "remindme.Email.DecryptPassword",
-            "projectName": "RemindMe"
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "TranslationLoaderEnum",
-            "request": "launch",
-            "mainClass": "remindme.Enums.TranslationLoaderEnum",
-            "projectName": "RemindMe"
-        },
-        {
-            "type": "java",
             "name": "MainApp",
             "request": "launch",
             "mainClass": "remindme.MainApp",
@@ -38,6 +18,19 @@
             "mainClass": "remindme.MainApp",
             "projectName": "RemindMe",
             "args": "--background"
+        },
+        {
+            "type": "java",
+            "name": "DecryptPassword",
+            "request": "launch",
+            "mainClass": "remindme.Email.DecryptPassword",
+            "projectName": "RemindMe"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
         }
     ]
 }

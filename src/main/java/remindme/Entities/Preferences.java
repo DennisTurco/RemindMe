@@ -55,8 +55,8 @@ public class Preferences {
             jsonObject.addProperty("Theme", theme.getThemeName());
 
             JsonObject RemindListObject = new JsonObject();
-            RemindListObject.addProperty("Directory", remindList.getDirectory());
-            RemindListObject.addProperty("File", remindList.getFile());  
+            RemindListObject.addProperty("Directory", remindList.directory());
+            RemindListObject.addProperty("File", remindList.file());  
 
             jsonObject.add("RemindList", RemindListObject);
 

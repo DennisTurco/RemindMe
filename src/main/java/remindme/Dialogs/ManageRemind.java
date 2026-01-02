@@ -1,5 +1,6 @@
 package remindme.Dialogs;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -11,6 +12,7 @@ import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
+import remindme.Helpers.TimeRange;
 import remindme.Managers.RemindManager;
 import remindme.Managers.SoundPlayer;
 
@@ -73,7 +75,9 @@ public class ManageRemind extends javax.swing.JDialog {
         SoundsEnum sound = SoundsEnum.getSoundbyName((String) soundComboBox.getSelectedItem());
         ExecutionMethod executionMethod = ExecutionMethod.getExecutionMethodbyName((String) executionMethodComboBox.getSelectedItem());
         LocalDateTime creationDate, lastUpdateDate, lastExecution;
-        LocalTime timeFromLocalTime = null, timeToLocalTime = null;
+        LocalTime timeFromLocalTime = executionMethod == ExecutionMethod.PC_STARTUP ? null : timeFrom.getTime();
+        LocalTime timeToLocalTime = executionMethod == ExecutionMethod.PC_STARTUP ? null : timeTo.getTime();
+        TimeRange range = null;
 
         int remindCount, maxExecutionsPerDay = 0;
         if (create) {
@@ -89,16 +93,17 @@ public class ManageRemind extends javax.swing.JDialog {
             remindCount = currentRemind.getRemindCount();
         }
 
-        LocalDateTime nextExecution;
-        if (executionMethod == ExecutionMethod.CUSTOM_TIME_RANGE && isTimeRangeValid()) {
-            timeFromLocalTime = timeFrom.getTime();
-            timeToLocalTime = timeTo.getTime();
-            nextExecution = RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(timeInterval, timeFromLocalTime);
-        } else {
-            nextExecution = RemindManager.getnextExecutionByTimeInterval(timeInterval);
+        if (executionMethod == ExecutionMethod.ONE_TIME_PER_DAY) {
+            timeToLocalTime = timeFromLocalTime;
         }
 
-        return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound, executionMethod, timeFromLocalTime, timeToLocalTime, maxExecutionsPerDay);
+        if (executionMethod != ExecutionMethod.PC_STARTUP) {
+            range = TimeRange.of(timeFromLocalTime, timeToLocalTime);
+        }
+
+        LocalDateTime nextExecution = RemindManager.getNextExecutionBasedOnMethod(executionMethod, range, timeInterval);
+
+        return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound, executionMethod, range, maxExecutionsPerDay);
     }
 
     public boolean isClosedOk() {
@@ -124,14 +129,23 @@ public class ManageRemind extends javax.swing.JDialog {
             return true;
         }
 
-        LocalTime fromTime = timeFrom.getTime();
-        LocalTime toTime = timeTo.getTime();
-
-        if (fromTime == null || toTime == null) {
-            return false;
+        if (ExecutionMethod.getExecutionMethodbyName(executionMethodComboBox.getSelectedItem().toString()) == ExecutionMethod.ONE_TIME_PER_DAY) {
+            return true;
         }
 
-        return fromTime.isBefore(toTime);
+        isTimeRangeValid(timeFrom.getTime(), timeTo.getTime());
+
+        return true;
+    }
+
+    public static boolean isTimeRangeValid(LocalTime timeFrom, LocalTime timeTo) {
+        try {
+            // if the object creeation fails it means that the times
+            TimeRange.of(timeFrom, timeTo);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void insertRemindValues(Remind remind) {
@@ -142,8 +156,8 @@ public class ManageRemind extends javax.swing.JDialog {
         iconComboBox.setSelectedItem(remind.getIcon().getIconName());
         soundComboBox.setSelectedItem(remind.getSound().getSoundName());
         executionMethodComboBox.setSelectedItem(remind.getExecutionMethod().getExecutionMethodName());
-        timeFrom.setText(remind.getTimeFrom() != null ? remind.getTimeFrom().toString() : "");
-        timeTo.setText(remind.getTimeTo() != null ? remind.getTimeTo().toString(): "");
+        timeFrom.setText(remind.getTimeFromString());
+        timeTo.setText(remind.getTimeToString());
     }
 
     private void setSvgImages() {
@@ -170,6 +184,14 @@ public class ManageRemind extends javax.swing.JDialog {
         soundComboBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.SOUND_TOOLTIP));
         soundPreviewBtn.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.SOUND_BUTTON_TOOLTIP));
         executionMethodComboBox.setToolTipText(TranslationCategory.MANAGE_REMIND_DIALOG.getTranslation(TranslationKey.EXECUTION_METHOD_TOOLTIP));
+    }
+
+    private void enableBasedOnExecutionMethod(boolean fromEnable, boolean toEnable) {
+        fromLabel.setEnabled(fromEnable);
+        timeFrom.setEnabled(fromEnable);
+
+        toLabel.setEnabled(toEnable);
+        timeTo.setEnabled(toEnable);
     }
 
     private void setIcons() {
@@ -216,19 +238,19 @@ public class ManageRemind extends javax.swing.JDialog {
     private void setSounds() {
         soundComboBox.removeAllItems();
 
-        soundComboBox.addItem(SoundsEnum.NoSound.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound1.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound2.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound3.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound4.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound5.getSoundName());
-        // soundComboBox.addItem(SoundsEnum.Sound6.getSoundName());
-        // soundComboBox.addItem(SoundsEnum.Sound7.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound8.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound9.getSoundName());
-        // soundComboBox.addItem(SoundsEnum.Sound10.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound11.getSoundName());
-        soundComboBox.addItem(SoundsEnum.Sound12.getSoundName());
+        soundComboBox.addItem(SoundsEnum.NO_SOUND.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND1.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND2.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND3.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND4.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND5.getSoundName());
+        // soundComboBox.addItem(SoundsEnum.SOUND6.getSoundName());
+        // soundComboBox.addItem(SoundsEnum.SOUND7.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND8.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND9.getSoundName());
+        // soundComboBox.addItem(SoundsEnum.SOUND10.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND11.getSoundName());
+        soundComboBox.addItem(SoundsEnum.SOUND12.getSoundName());
         soundComboBox.addItem(SoundsEnum.MEME_UWU.getSoundName());
         soundComboBox.addItem(SoundsEnum.MEME_BLUE_LOBSTER.getSoundName());
         soundComboBox.addItem(SoundsEnum.MEME_FUS_RO_DAH.getSoundName());
@@ -247,6 +269,7 @@ public class ManageRemind extends javax.swing.JDialog {
 
         executionMethodComboBox.addItem(ExecutionMethod.PC_STARTUP.getExecutionMethodName());
         executionMethodComboBox.addItem(ExecutionMethod.CUSTOM_TIME_RANGE.getExecutionMethodName());
+        executionMethodComboBox.addItem(ExecutionMethod.ONE_TIME_PER_DAY.getExecutionMethodName());
 
         executionMethodComboBox.setSelectedItem(ExecutionMethod.getDefaultExecutionMethod());
     }
@@ -503,12 +526,22 @@ public class ManageRemind extends javax.swing.JDialog {
         if (executionMethodComboBox.getSelectedItem() == null)
             return;
 
-        boolean enable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.CUSTOM_TIME_RANGE.getExecutionMethodName());
+        boolean customTimeEnable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.CUSTOM_TIME_RANGE.getExecutionMethodName());
+        boolean oneTimePerDayEnable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.ONE_TIME_PER_DAY.getExecutionMethodName());
+        boolean pcStartupEnable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.PC_STARTUP.getExecutionMethodName());
 
-        timeFrom.setEnabled(enable);
-        timeTo.setEnabled(enable);
-        fromLabel.setEnabled(enable);
-        toLabel.setEnabled(enable);
+        if (customTimeEnable) {
+            enableBasedOnExecutionMethod(true, true);
+        }
+        else if (oneTimePerDayEnable) {
+            enableBasedOnExecutionMethod(true, false);
+            timeIntervalBtn.setEnabled(false);
+            return;
+        }
+        else if (pcStartupEnable) {
+            enableBasedOnExecutionMethod(false, false);
+        }
+        timeIntervalBtn.setEnabled(true);
     }//GEN-LAST:event_executionMethodComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

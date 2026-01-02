@@ -1,9 +1,6 @@
 package remindme.Entities;
 
-public class TimeInterval {
-    private int days;
-    private int hours;
-    private int minutes;
+public record TimeInterval (int days, int hours, int minutes) {
 
     public TimeInterval(int days, int hours, int minutes) {
         if (days < 0) throw new IllegalArgumentException("Days cannot be negative");
@@ -49,17 +46,5 @@ public class TimeInterval {
 
     public static TimeInterval getDefaultTimeInterval() {
         return new TimeInterval(0, 1, 0);
-    }
-
-    public int getDays() {
-        return days;
-    }
-
-    public int getHours() {
-        return hours;
-    }
-
-    public int getMinutes() {
-        return minutes;
     }
 }

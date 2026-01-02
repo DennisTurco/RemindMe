@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -61,8 +62,7 @@ public final class MainGUI extends javax.swing.JFrame {
     private final RemindManager remindManager;
 
     public static DefaultTableModel model;
-    public static RemindTable remindTable;
-    public static RemindTableModel tableModel;
+    private RemindTable remindTable;
 
     public MainGUI() {
         ThemeManager.updateThemeFrame(this);
@@ -131,23 +131,12 @@ public final class MainGUI extends javax.swing.JFrame {
         logger.info("Setting default language to: " + language);
 
         switch (language) {
-            case "en":
-                Preferences.setLanguage(LanguagesEnum.ENG);
-                break;
-            case "it":
-                Preferences.setLanguage(LanguagesEnum.ITA);
-                break;
-            case "es":
-                Preferences.setLanguage(LanguagesEnum.ESP);
-                break;
-            case "de":
-                Preferences.setLanguage(LanguagesEnum.DEU);
-                break;
-            case "fr":
-                Preferences.setLanguage(LanguagesEnum.FRA);
-                break;
-            default:
-                Preferences.setLanguage(LanguagesEnum.ENG);
+            case "en" -> Preferences.setLanguage(LanguagesEnum.ENG);
+            case "it" -> Preferences.setLanguage(LanguagesEnum.ITA);
+            case "es" -> Preferences.setLanguage(LanguagesEnum.ESP);
+            case "de" -> Preferences.setLanguage(LanguagesEnum.DEU);
+            case "fr" -> Preferences.setLanguage(LanguagesEnum.FRA);
+            default -> Preferences.setLanguage(LanguagesEnum.ENG);
         }
 
         remindManager.reloadPreferences();
@@ -188,135 +177,70 @@ public final class MainGUI extends javax.swing.JFrame {
         String timeToStr = TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_TO_DETAIL);
 
         StringBuilder body = new StringBuilder();
-        body.append(
-            "<html><b>" + remindNameStr + ":</b> " + remind.getName() + ", " +
-            "<b>" + descriptionStr + ":</b> " + remind.getDescription() + ", " +
-            "<b>" + isActiveStr + ":</b> " + remind.isActive() + ", " +
-            "<b>" + isTopLevelStr + ":</b> " + remind.isTopLevel() + ", " +
-            "<b>" + lastExeutionStr + ":</b> " + (remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "") + ", " +
-            "<b>" + nextExecutionStr + ":</b> " + (remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "_") + ", " +
-            "<b>" + timeIntervalStr + ":</b> " + (remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : "_") + ", " +
-            "<b>" + creationDateStr + ":</b> " + (remind.getCreationDate() != null ? remind.getCreationDate().format(RemindManager.formatter) : "_") + ", " +
-            "<b>" + lastUpdateDateStr + ":</b> " + (remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().format(RemindManager.formatter) : "_") + ", " +
-            "<b>" + remindCountStr + ":</b> " + (remind.getRemindCount()) + ", " +
-            "<b>" + executionMethodStr + ":</b> " + (remind.getExecutionMethod().getExecutionMethodName())
-        );
+        body.append("<html><b>")
+            .append(remindNameStr)
+            .append(":</b> ")
+            .append(remind.getName())
+            .append(", <b>")
+            .append(descriptionStr)
+            .append(":</b> ")
+            .append(remind.getDescription())
+            .append(", <b>")
+            .append(isActiveStr)
+            .append(":</b> ")
+            .append(remind.isActive())
+            .append(", <b>")
+            .append(isTopLevelStr)
+            .append(":</b> ")
+            .append(remind.isTopLevel())
+            .append(", <b>")
+            .append(lastExeutionStr)
+            .append(":</b> ")
+            .append(remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "")
+            .append(", <b>")
+            .append(nextExecutionStr)
+            .append(":</b> ")
+            .append(remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "_")
+            .append(", <b>")
+            .append(timeIntervalStr)
+            .append(":</b> ")
+            .append(remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : "_")
+            .append(", <b>")
+            .append(creationDateStr)
+            .append(":</b> ")
+            .append(remind.getCreationDate() != null ? remind.getCreationDate().format(RemindManager.formatter) : "_")
+            .append(", <b>")
+            .append(lastUpdateDateStr)
+            .append(":</b> ")
+            .append(remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().format(RemindManager.formatter) : "_")
+            .append(", <b>")
+            .append(remindCountStr)
+            .append(":</b> ")
+            .append(remind.getRemindCount())
+            .append(", <b>")
+            .append(executionMethodStr)
+            .append(":</b> ")
+            .append(remind.getExecutionMethod().getExecutionMethodName());
         if (remind.getExecutionMethod() == ExecutionMethod.CUSTOM_TIME_RANGE) {
-            body.append(
-                ", <b>" + timeFromStr + ":</b> " + (remind.getTimeFrom()) + ", " +
-                "<b>" + timeToStr + ":</b> " + (remind.getTimeTo())
-            );
+            body.append(", <b>")
+                .append(timeFromStr)
+                .append(":</b> ")
+                .append(remind.getTimeRange().start())
+                .append(", <b>")
+                .append(timeToStr)
+                .append(":</b> ")
+                .append(remind.getTimeRange().end());
+        }
+        if (remind.getExecutionMethod() == ExecutionMethod.ONE_TIME_PER_DAY) {
+            body.append(", <b>")
+                .append(timeFromStr)
+                .append(":</b> ")
+                .append(remind.getTimeRange().start());
         }
         body.append("</html>");
 
         detailsLabel.setContentType("text/html");
         detailsLabel.setText(body.toString());
-    }
-
-    private void displayRemindList(List<Remind> reminds) {
-        RemindTableModel tempModel = new RemindTableModel(remindManager.getColumnTranslations(), 0);
-
-        // Populate the model with remind data
-        for (Remind remind : reminds) {
-            tempModel.addRow(new Object[]{
-                remind.getIcon().getIconPath(),
-                remind.getName(),
-                remind.isActive(),
-                remind.isTopLevel(),
-                remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "",
-                remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "",
-                remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : ""
-            });
-        }
-
-        remindTable = new RemindTable(tempModel);
-
-        remindTable.getColumnModel().getColumn(0).setCellRenderer(new SvgImageRenderer(30, 30));
-
-        // Add key bindings using InputMap and ActionMap
-        InputMap inputMap = remindTable.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        ActionMap actionMap = remindTable.getActionMap();
-
-        // Handle Enter key
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enterKey");
-        actionMap.put("enterKey", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = remindTable.getSelectedRow();
-                if (selectedRow == -1) return;
-
-                logger.debug("Enter key pressed on row: " + selectedRow);
-                Remind remind = Remind.getRemindByName((String)remindTable.getValueAt(selectedRow, 1));
-                remindManager.editRemind(remind);
-            }
-        });
-
-        // Handle Delete key
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteKey");
-        actionMap.put("deleteKey", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int[] selectedRows = remindTable.getSelectedRows();
-                if (selectedRows.length == 0) return;
-
-                logger.debug("Delete key pressed on rows: " + Arrays.toString(selectedRows));
-
-                int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (response != JOptionPane.YES_OPTION) {
-                    return;
-                }
-
-                Arrays.sort(selectedRows);
-                for (int i = selectedRows.length - 1; i >= 0; i--) {
-                    remindManager.removeReminder(selectedRows[i], false);
-                }
-            }
-        });
-
-        // Apply renderers for each column
-        TableColumnModel columnModel = remindTable.getColumnModel();
-
-        for (int i = 1; i < columnModel.getColumnCount(); i++) {
-            if (i == 2 || i == 3) {
-                columnModel.getColumn(i).setCellRenderer(new CheckboxCellRenderer());
-                columnModel.getColumn(i).setCellEditor(remindTable.getDefaultEditor(Boolean.class));
-            } else {
-                columnModel.getColumn(i).setCellRenderer(new StripedRowRenderer());
-            }
-        }
-
-        // Add the existing mouse listener to the new table
-        remindTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableMouseClicked(evt); // Reuse the existing method
-            }
-        });
-
-        // Update the global model reference
-        MainGUI.model = tempModel;
-
-        // Replace the existing table in the GUI
-        JScrollPane scrollPane = (JScrollPane) table.getParent().getParent();
-        table = remindTable; // Update the reference to the new table
-        scrollPane.setViewportView(table); // Replace the table in the scroll pane
-    }
-
-    public void setMenuItems() {
-        MenuBugReport.setVisible(configReader.isMenuItemEnabled(MenuItems.BugReport.name()));
-        MenuPreferences.setVisible(configReader.isMenuItemEnabled(MenuItems.Preferences.name()));
-        MenuDonate.setVisible(configReader.isMenuItemEnabled(MenuItems.Donate.name()));
-        MenuDonatePaypal.setVisible(configReader.isMenuItemEnabled(MenuItems.PaypalDonate.name()));
-        MenuDonateBuyMeACoffe.setVisible(configReader.isMenuItemEnabled(MenuItems.BuymeacoffeeDonate.name()));
-        MenuHistory.setVisible(configReader.isMenuItemEnabled(MenuItems.History.name()));
-        MenuInfoPage.setVisible(configReader.isMenuItemEnabled(MenuItems.InfoPage.name()));
-        MenuNew.setVisible(configReader.isMenuItemEnabled(MenuItems.New.name()));
-        MenuQuit.setVisible(configReader.isMenuItemEnabled(MenuItems.Quit.name()));
-        MenuShare.setVisible(configReader.isMenuItemEnabled(MenuItems.Share.name()));
-        MenuSupport.setVisible(configReader.isMenuItemEnabled(MenuItems.Support.name()));
-        MenuWebsite.setVisible(configReader.isMenuItemEnabled(MenuItems.Website.name()));
-        MenuImport.setVisible(configReader.isMenuItemEnabled(MenuItems.Import.name()));
-        MenuExport.setVisible(configReader.isMenuItemEnabled(MenuItems.Export.name()));
     }
 
     public void setTranslations() {
@@ -383,6 +307,139 @@ public final class MainGUI extends javax.swing.JFrame {
 
     public JPopupMenu getTablePopup() {
         return TablePopup;
+    }
+
+    private void setMenuItems() {
+        MenuBugReport.setVisible(configReader.isMenuItemEnabled(MenuItems.BugReport.name()));
+        MenuPreferences.setVisible(configReader.isMenuItemEnabled(MenuItems.Preferences.name()));
+        MenuDonate.setVisible(configReader.isMenuItemEnabled(MenuItems.Donate.name()));
+        MenuDonatePaypal.setVisible(configReader.isMenuItemEnabled(MenuItems.PaypalDonate.name()));
+        MenuDonateBuyMeACoffe.setVisible(configReader.isMenuItemEnabled(MenuItems.BuymeacoffeeDonate.name()));
+        MenuHistory.setVisible(configReader.isMenuItemEnabled(MenuItems.History.name()));
+        MenuInfoPage.setVisible(configReader.isMenuItemEnabled(MenuItems.InfoPage.name()));
+        MenuNew.setVisible(configReader.isMenuItemEnabled(MenuItems.New.name()));
+        MenuQuit.setVisible(configReader.isMenuItemEnabled(MenuItems.Quit.name()));
+        MenuShare.setVisible(configReader.isMenuItemEnabled(MenuItems.Share.name()));
+        MenuSupport.setVisible(configReader.isMenuItemEnabled(MenuItems.Support.name()));
+        MenuWebsite.setVisible(configReader.isMenuItemEnabled(MenuItems.Website.name()));
+        MenuImport.setVisible(configReader.isMenuItemEnabled(MenuItems.Import.name()));
+        MenuExport.setVisible(configReader.isMenuItemEnabled(MenuItems.Export.name()));
+    }
+
+    private void displayRemindList(List<Remind> reminds) {
+        RemindTableModel tempModel = createRemindTableModel(reminds);
+        RemindTable newTable = createRemindTable(tempModel);
+
+        bindEnterKey(newTable);
+        bindDeleteKey(newTable);
+        configureColumnRenderers(newTable);
+        attachMouseListener(newTable);
+
+        MainGUI.model = tempModel;
+        replaceTableInScrollPane(newTable);
+    }
+
+    private RemindTableModel createRemindTableModel(List<Remind> reminds) {
+        RemindTableModel tempModel = new RemindTableModel(remindManager.getColumnTranslations(), 0);
+
+        for (Remind remind : reminds) {
+            tempModel.addRow(new Object[]{
+                remind.getIcon().getIconPath(),
+                remind.getName(),
+                remind.isActive(),
+                remind.isTopLevel(),
+                remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "",
+                remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "",
+                remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : ""
+            });
+        }
+
+        return tempModel;
+    }
+
+    private RemindTable createRemindTable(RemindTableModel tempModel) {
+        remindTable = new RemindTable(tempModel);
+        remindTable.getColumnModel().getColumn(0).setCellRenderer(new SvgImageRenderer(30, 30));
+        return remindTable;
+    }
+
+    private void bindEnterKey(RemindTable table) {
+        bindKey(table, KeyEvent.VK_ENTER, () -> {
+            selectedRow = table.getSelectedRow();
+            if (selectedRow == -1) return;
+
+            logger.debug("Enter key pressed on row: {}", selectedRow);
+            Remind remind = Remind.getRemindByName(
+                    (String) table.getValueAt(selectedRow, 1)
+            );
+            remindManager.editRemind(remind);
+        });
+    }
+
+    private void bindDeleteKey(RemindTable table) {
+        bindKey(table, KeyEvent.VK_DELETE, () -> {
+            int[] selectedRows = table.getSelectedRows();
+            if (selectedRows.length == 0) return;
+
+            logger.debug("Delete key pressed on rows: {}", Arrays.toString(selectedRows));
+
+            if (!confirmDeletion()) return;
+
+            Arrays.sort(selectedRows);
+            for (int i = selectedRows.length - 1; i >= 0; i--) {
+                remindManager.removeReminder(selectedRows[i], false);
+            }
+        });
+    }
+
+    private void bindKey(JTable table, int keyCode, Runnable action) {
+        InputMap inputMap = table.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        ActionMap actionMap = table.getActionMap();
+
+        String actionKey = "key_" + keyCode;
+        inputMap.put(KeyStroke.getKeyStroke(keyCode, 0), actionKey);
+        actionMap.put(actionKey, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                action.run();
+            }
+        });
+    }
+
+    private void configureColumnRenderers(RemindTable table) {
+        TableColumnModel columnModel = table.getColumnModel();
+
+        for (int i = 1; i < columnModel.getColumnCount(); i++) {
+            if (isCheckboxColumn(i)) {
+                columnModel.getColumn(i).setCellRenderer(new CheckboxCellRenderer());
+                columnModel.getColumn(i).setCellEditor(table.getDefaultEditor(Boolean.class));
+            } else {
+                columnModel.getColumn(i).setCellRenderer(new StripedRowRenderer());
+            }
+        }
+    }
+
+    private boolean isCheckboxColumn(int index) {
+        return index == 2 || index == 3;
+    }
+
+    private boolean confirmDeletion() {
+        int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return response == JOptionPane.YES_OPTION;
+    }
+
+    private void replaceTableInScrollPane(RemindTable newTable) {
+        table = newTable;
+        jScrollPane1.setViewportView(table);
+    }
+
+    private void attachMouseListener(RemindTable table) {
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
     }
 
     /**

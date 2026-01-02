@@ -24,14 +24,14 @@ public class TimePicker extends javax.swing.JDialog {
 
         this.timeInterval = timeInterval;
         if (timeInterval != null) {
-            daysSpinner.setValue(timeInterval.getDays());
-            hoursSpinner.setValue(timeInterval.getHours());
-            minutesSpinner.setValue(timeInterval.getMinutes());
+            daysSpinner.setValue(timeInterval.days());
+            hoursSpinner.setValue(timeInterval.hours());
+            minutesSpinner.setValue(timeInterval.minutes());
         }
 
         // logo application
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
-        this.setIconImage(icon); 
+        this.setIconImage(icon);
 
         setTranslations();
     }

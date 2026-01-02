@@ -23,7 +23,7 @@ public class ModernTextField extends JTextField {
 
     private String labelText = "Label";
     private String hintText = "Label";
-    private Color lineColor = new Color(3, 155, 216);
+    private final Color lineColor = new Color(3, 155, 216);
     private final Animator animator;
     private boolean animateHinText = true;
     private float location;

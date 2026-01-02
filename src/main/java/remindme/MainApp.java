@@ -6,12 +6,12 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import remindme.Controllers.AppController;
 import remindme.Entities.Preferences;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum;
 import remindme.GUI.MainGUI;
 import remindme.Managers.ExceptionManager;
-import remindme.Services.BackgroundService;
 
 public class MainApp {
 
@@ -55,9 +55,8 @@ public class MainApp {
 
     private static void runBackgroundProcess() {
         logger.info("Backup service starting in the background");
-        BackgroundService service = new BackgroundService();
         try {
-            service.startService();
+            AppController.startBackgroundProcess();
         } catch (IOException ex) {
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));

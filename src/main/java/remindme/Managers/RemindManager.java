@@ -27,10 +27,12 @@ import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
 import remindme.Entities.TimeInterval;
 import remindme.Enums.ConfigKey;
+import remindme.Enums.ExecutionMethod;
 import remindme.Enums.TranslationLoaderEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.GUI.MainGUI;
+import remindme.Helpers.TimeRange;
 import remindme.Json.JSONReminder;
 import remindme.Table.TableDataManager;
 
@@ -78,10 +80,8 @@ public final class RemindManager {
     public void updateRemindList() {
         logger.info("Updating remind list");
 
-        // update
-        JSON.updateRemindListJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile(), reminds);
+        JSON.updateRemindListJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
 
-        // get from file
         getRemindList();
 
         if (MainGUI.model != null)
@@ -90,7 +90,7 @@ public final class RemindManager {
 
     public void getRemindList() {
         try {
-            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
         } catch (IOException e) {
             logger.error("An error occurred while trying to get the remind list from json file: " + e.getMessage(), e);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
@@ -313,8 +313,7 @@ public final class RemindManager {
             remind.getIcon(),
             remind.getSound(),
             remind.getExecutionMethod(),
-            remind.getTimeFrom(),
-            remind.getTimeTo(),
+            remind.getTimeRange(),
             remind.getMaxExecutionsPerDay()
         );
 
@@ -362,22 +361,34 @@ public final class RemindManager {
         updateRemindList();
     }
 
-    public static LocalDateTime getnextExecutionByTimeInterval(TimeInterval timeInterval) {
-        if (timeInterval == null) return null;
-
-        return LocalDateTime.now().plusDays(timeInterval.getDays())
-            .plusHours(timeInterval.getHours())
-            .plusMinutes(timeInterval.getMinutes());
+    public static LocalDateTime getNextExecutionBasedOnMethod(ExecutionMethod method, TimeRange range, TimeInterval interval) {
+        if (method == ExecutionMethod.CUSTOM_TIME_RANGE && ManageRemind.isTimeRangeValid(range.start(), range.end())) {
+            return RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(interval, range.start());
+        }
+        else if (method == ExecutionMethod.ONE_TIME_PER_DAY)  {
+            return LocalDateTime.of(LocalDate.now(), range.start());
+        }
+        else {
+            return RemindManager.getNextExecutionByTimeInterval(interval);
+        }
     }
 
-    public static LocalDateTime getnextExecutionByTimeIntervalFromSpecificTime(TimeInterval timeInterval, LocalTime timeFrom) {
+    public static LocalDateTime getNextExecutionByTimeInterval(TimeInterval timeInterval) {
+        if (timeInterval == null) return null;
+
+        return LocalDateTime.now().plusDays(timeInterval.days())
+            .plusHours(timeInterval.hours())
+            .plusMinutes(timeInterval.minutes());
+    }
+
+    public static LocalDateTime getNextExecutionByTimeIntervalFromSpecificTime(TimeInterval timeInterval, LocalTime timeFrom) {
         if (timeInterval == null || timeFrom == null) return null;
 
         // Base time: timeFrom
         LocalDateTime baseTime = LocalDateTime.of(LocalDate.now(), timeFrom)
-            .plusDays(timeInterval.getDays())
-            .plusHours(timeInterval.getHours())
-            .plusMinutes(timeInterval.getMinutes());
+            .plusDays(timeInterval.days())
+            .plusHours(timeInterval.hours())
+            .plusMinutes(timeInterval.minutes());
 
         // If the date is passed, posticipate by one day
         if (baseTime.isBefore(LocalDateTime.now())) {
@@ -493,10 +504,10 @@ public final class RemindManager {
                 rem.setIsActive(newState);
 
                 if (newState) {
-                    rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
+                    LocalDateTime nextExecution = getNextExecutionBasedOnMethod(remind.getExecutionMethod(), remind.getTimeRange(), remind.getTimeInterval());
+                    rem.setNextExecution(nextExecution);
                 } else {
                     rem.setNextExecution(null);
-                    rem.setTimeInterval(null);
                 }
 
                 break;
@@ -543,16 +554,12 @@ public final class RemindManager {
 
     public List<Remind> retriveAndGetReminds() {
         try {
-            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().getDirectory(), Preferences.getRemindList().getFile());
+            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
         } catch (IOException ex) {
             reminds = null;
             logger.error("An error occurred: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
         return reminds;
-    }
-
-    public void setReminds(List<Remind> reminds) {
-        this.reminds = reminds;
     }
 }

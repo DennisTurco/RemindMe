@@ -2,6 +2,7 @@ package remindme.Dialogs;
 
 import java.awt.Image;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
 import remindme.Enums.ConfigKey;
-import remindme.Enums.ExecutionMethod;
 import remindme.Managers.RemindManager;
 import remindme.Managers.SoundPlayer;
 import remindme.Managers.ThemeManager;
@@ -49,12 +49,12 @@ public class ReminderDialog extends javax.swing.JDialog {
 
         remindNotification = remind;
 
-        setNameLabelText(remind.getName());
-        descriptionEditor.setText(remind.getDescription());
-        iconLabel.setSvgImage(remind.getIcon().getIconPath(), 50, 50);
-        SoundPlayer.playSound(remind.getSound());
+        setNameLabelText(remind.name());
+        descriptionEditor.setText(remind.description());
+        iconLabel.setSvgImage(remind.icon().getIconPath(), 50, 50);
+        SoundPlayer.playSound(remind.sound());
 
-        setAlwaysOnTop(remind.isTopLevel());
+        setAlwaysOnTop(remind.topLevel());
 
         timeLabel.setText(LocalDateTime.now().format(timeFormatter));
    }
@@ -63,13 +63,15 @@ public class ReminderDialog extends javax.swing.JDialog {
         RemindManager remindManager = new RemindManager();
 
         for (Remind rem : RemindManager.reminds) {
-            if (remind.getName().equals(rem.getName())) {
+            if (remind.name().equals(rem.getName())) {
                 rem.setLastExecution(LocalDateTime.now());
                 rem.setRemindCount(rem.getRemindCount()+1);
-                if (rem.getExecutionMethod() == ExecutionMethod.PC_STARTUP) {
-                    rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
-                } else {
-                    rem.setNextExecution(RemindManager.getnextExecutionByTimeIntervalFromSpecificTime(rem.getTimeInterval(), rem.getTimeFrom()));
+
+                switch (rem.getExecutionMethod()) {
+                    case ONE_TIME_PER_DAY -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeRange().start()));
+                    case CUSTOM_TIME_RANGE -> rem.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(rem.getTimeInterval(), rem.getTimeRange().start()));
+                    case PC_STARTUP -> rem.setNextExecution(RemindManager.getNextExecutionByTimeInterval(rem.getTimeInterval()));
+                    default -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeRange().start()));
                 }
             }
         }
