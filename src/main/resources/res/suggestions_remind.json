@@ -87,7 +87,10 @@
     "icon": "MAN_SLEEPING",
     "sound": "SOUND12",
     "executionMethod": "ONE_TIME_PER_DAY",
-    "timeFrom": "22:30",
+    "timeRange": {
+      "start": "22:30",
+      "end": "22:30"
+    },
     "maxExecutionPerDay": 0
   }
 ]

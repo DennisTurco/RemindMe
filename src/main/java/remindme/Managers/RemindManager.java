@@ -32,6 +32,7 @@ import remindme.Enums.TranslationLoaderEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.GUI.MainGUI;
+import remindme.Helpers.TimeRange;
 import remindme.Json.JSONReminder;
 import remindme.Table.TableDataManager;
 
@@ -312,8 +313,7 @@ public final class RemindManager {
             remind.getIcon(),
             remind.getSound(),
             remind.getExecutionMethod(),
-            remind.getTimeFrom(),
-            remind.getTimeTo(),
+            remind.getTimeRange(),
             remind.getMaxExecutionsPerDay()
         );
 
@@ -361,12 +361,12 @@ public final class RemindManager {
         updateRemindList();
     }
 
-    public static LocalDateTime getNextExecutionBasedOnMethod(ExecutionMethod method, LocalTime from, LocalTime to, TimeInterval interval) {
-        if (method == ExecutionMethod.CUSTOM_TIME_RANGE && ManageRemind.isTimeRangeValid(from, to)) {
-            return RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(interval, from);
+    public static LocalDateTime getNextExecutionBasedOnMethod(ExecutionMethod method, TimeRange range, TimeInterval interval) {
+        if (method == ExecutionMethod.CUSTOM_TIME_RANGE && ManageRemind.isTimeRangeValid(range.start(), range.end())) {
+            return RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(interval, range.start());
         }
         else if (method == ExecutionMethod.ONE_TIME_PER_DAY)  {
-            return LocalDateTime.of(LocalDate.now(), from);
+            return LocalDateTime.of(LocalDate.now(), range.start());
         }
         else {
             return RemindManager.getNextExecutionByTimeInterval(interval);
@@ -504,7 +504,7 @@ public final class RemindManager {
                 rem.setIsActive(newState);
 
                 if (newState) {
-                    LocalDateTime nextExecution = getNextExecutionBasedOnMethod(remind.getExecutionMethod(), remind.getTimeFrom(), remind.getTimeTo(), remind.getTimeInterval());
+                    LocalDateTime nextExecution = getNextExecutionBasedOnMethod(remind.getExecutionMethod(), remind.getTimeRange(), remind.getTimeInterval());
                     rem.setNextExecution(nextExecution);
                 } else {
                     rem.setNextExecution(null);

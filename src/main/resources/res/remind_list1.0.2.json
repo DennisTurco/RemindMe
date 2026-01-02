@@ -6,15 +6,17 @@
     "isActive": true,
     "isTopLevel": false,
     "lastExecution": "2024-12-12T22:52:41.381624500",
-    "nextExecution": "2025-12-24T02:30",
+    "nextExecution": "2026-01-03T03:00",
     "creationDate": "2024-12-12T22:52:41.381624500",
-    "lastUpdateDate": "2025-05-04T11:38:21.010388700",
+    "lastUpdateDate": "2026-01-02T13:21:31.273175",
     "timeInterval": "0.1:0",
     "icon": "MAN_WITH_DIETARY",
     "sound": "NO_SOUND",
     "executionMethod": "CUSTOM_TIME_RANGE",
-    "timeFrom": "01:30",
-    "timeTo": "21:30",
+    "timeRange": {
+      "start": "02:00",
+      "end": "23:00"
+    },
     "maxExecutionPerDay": 0
   },
   {
@@ -47,7 +49,10 @@
     "icon": "MEME_LOOK_MONKEY",
     "sound": "NO_SOUND",
     "executionMethod": "ONE_TIME_PER_DAY",
-    "timeFrom": "23:10",
+    "timeRange": {
+      "start": "02:00",
+      "end": "02:00"
+    },
     "maxExecutionPerDay": 0
   },
   {
@@ -71,93 +76,35 @@
     "isActive": true,
     "isTopLevel": true,
     "lastExecution": "2025-12-19T16:25:15.558483400",
-    "nextExecution": "2026-01-01T16:00",
+    "nextExecution": "2026-01-02T02:30",
     "creationDate": "2025-12-18T14:46:38.410063400",
-    "lastUpdateDate": "2026-01-01T10:51:09.906870900",
+    "lastUpdateDate": "2026-01-02T13:21:22.899975400",
     "icon": "ALERT",
     "sound": "SOUND1",
     "executionMethod": "ONE_TIME_PER_DAY",
-    "timeFrom": "16:00",
+    "timeRange": {
+      "start": "02:30",
+      "end": "02:30"
+    },
     "maxExecutionPerDay": 0
   },
   {
-    "name": "boh",
-    "description": "ASDasdsad",
-    "remindCount": 0,
-    "isActive": true,
-    "isTopLevel": true,
-    "creationDate": "2025-12-24T00:34:20.801534500",
-    "lastUpdateDate": "2026-01-01T10:50:30.950391600",
-    "icon": "BOOK_CLOSED",
-    "sound": "SOUND2",
-    "executionMethod": "ONE_TIME_PER_DAY",
-    "timeFrom": "00:30",
-    "maxExecutionPerDay": 0
-  },
-  {
-    "name": "Meme_copy",
-    "description": "culetto",
-    "remindCount": 0,
-    "isActive": false,
-    "isTopLevel": true,
-    "lastExecution": "2025-04-30T19:32:41.466150800",
-    "nextExecution": "2026-01-02T00:30",
-    "creationDate": "2026-01-02T11:09:14.334050600",
-    "lastUpdateDate": "2026-01-02T11:17:44.787479600",
-    "timeInterval": "1.0:0",
-    "icon": "MEME_LOOK_MONKEY",
-    "sound": "NO_SOUND",
-    "executionMethod": "ONE_TIME_PER_DAY",
-    "timeFrom": "00:30",
-    "maxExecutionPerDay": 0
-  },
-  {
-    "name": "ciao",
+    "name": "asdasddas",
     "description": "",
     "remindCount": 0,
     "isActive": true,
     "isTopLevel": true,
-    "nextExecution": "2026-01-02T15:18:36.716374700",
-    "creationDate": "2026-01-02T12:18:01.007233400",
-    "lastUpdateDate": "2026-01-02T12:18:01.007233400",
-    "timeInterval": "0.3:0",
-    "icon": "ALERT",
-    "sound": "NO_SOUND",
-    "executionMethod": "PC_STARTUP",
-    "maxExecutionPerDay": 0
-  },
-  {
-    "name": "ciao2",
-    "description": "",
-    "remindCount": 0,
-    "isActive": true,
-    "isTopLevel": true,
-    "nextExecution": "2026-01-03T02:00",
-    "creationDate": "2026-01-02T12:18:52.129830100",
-    "lastUpdateDate": "2026-01-02T12:18:52.129830100",
+    "nextExecution": "2026-01-02T01:00",
+    "creationDate": "2026-01-02T13:18:51.670314400",
+    "lastUpdateDate": "2026-01-02T13:18:51.670314400",
     "timeInterval": "0.1:0",
     "icon": "ALERT",
     "sound": "NO_SOUND",
-    "executionMethod": "CUSTOM_TIME_RANGE",
-    "timeFrom": "01:00",
-    "timeTo": "03:00",
-    "maxExecutionPerDay": 0
-  },
-  {
-    "name": "ciao3",
-    "description": "",
-    "remindCount": 0,
-    "isActive": true,
-    "isTopLevel": true,
-    "nextExecution": "2026-01-03T02:30",
-    "creationDate": "2026-01-02T12:44:00.807847800",
-    "lastUpdateDate": "2026-01-02T12:44:50.052045900",
-    "timeInterval": "0.1:0",
-    "icon": "ALERT",
-    "sound": "NO_SOUND",
-    "executionMethod": "CUSTOM_TIME_RANGE",
-    "timeFrom": "01:30",
-    "timeTo": "03:30",
+    "executionMethod": "ONE_TIME_PER_DAY",
+    "timeRange": {
+      "start": "01:00",
+      "end": "01:00"
+    },
     "maxExecutionPerDay": 0
   }
 ]

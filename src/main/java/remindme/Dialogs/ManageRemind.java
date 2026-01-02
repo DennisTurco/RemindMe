@@ -92,9 +92,14 @@ public class ManageRemind extends javax.swing.JDialog {
             remindCount = currentRemind.getRemindCount();
         }
 
-        LocalDateTime nextExecution = RemindManager.getNextExecutionBasedOnMethod(executionMethod, timeFromLocalTime, timeToLocalTime, timeInterval);
+        if (executionMethod == ExecutionMethod.ONE_TIME_PER_DAY) {
+            timeToLocalTime = timeFromLocalTime;
+        }
 
-        return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound, executionMethod, timeFromLocalTime, timeToLocalTime, maxExecutionsPerDay);
+        TimeRange range = TimeRange.of(timeFromLocalTime, timeToLocalTime);
+        LocalDateTime nextExecution = RemindManager.getNextExecutionBasedOnMethod(executionMethod, range, timeInterval);
+
+        return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound, executionMethod, range, maxExecutionsPerDay);
     }
 
     public boolean isClosedOk() {
@@ -147,8 +152,8 @@ public class ManageRemind extends javax.swing.JDialog {
         iconComboBox.setSelectedItem(remind.getIcon().getIconName());
         soundComboBox.setSelectedItem(remind.getSound().getSoundName());
         executionMethodComboBox.setSelectedItem(remind.getExecutionMethod().getExecutionMethodName());
-        timeFrom.setText(remind.getTimeFrom() != null ? remind.getTimeFrom().toString() : "");
-        timeTo.setText(remind.getTimeTo() != null ? remind.getTimeTo().toString(): "");
+        timeFrom.setText(remind.getTimeFromString());
+        timeTo.setText(remind.getTimeToString());
     }
 
     private void setSvgImages() {

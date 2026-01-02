@@ -2,6 +2,7 @@ package remindme.Dialogs;
 
 import java.awt.Image;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;
@@ -66,11 +67,12 @@ public class ReminderDialog extends javax.swing.JDialog {
                 rem.setLastExecution(LocalDateTime.now());
                 rem.setRemindCount(rem.getRemindCount()+1);
 
+                LocalTime fromTime = rem.getTimeRange().start();
                 switch (rem.getExecutionMethod()) {
-                    case ONE_TIME_PER_DAY -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeFrom()));
-                    case CUSTOM_TIME_RANGE -> rem.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(rem.getTimeInterval(), rem.getTimeFrom()));
+                    case ONE_TIME_PER_DAY -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), fromTime));
+                    case CUSTOM_TIME_RANGE -> rem.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(rem.getTimeInterval(), fromTime));
                     case PC_STARTUP -> rem.setNextExecution(RemindManager.getNextExecutionByTimeInterval(rem.getTimeInterval()));
-                    default -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeFrom()));
+                    default -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), fromTime));
                 }
             }
         }

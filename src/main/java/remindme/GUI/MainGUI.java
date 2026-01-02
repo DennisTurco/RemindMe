@@ -225,17 +225,17 @@ public final class MainGUI extends javax.swing.JFrame {
             body.append(", <b>")
                 .append(timeFromStr)
                 .append(":</b> ")
-                .append(remind.getTimeFrom())
+                .append(remind.getTimeRange().start())
                 .append(", <b>")
                 .append(timeToStr)
                 .append(":</b> ")
-                .append(remind.getTimeTo());
+                .append(remind.getTimeRange().end());
         }
         if (remind.getExecutionMethod() == ExecutionMethod.ONE_TIME_PER_DAY) {
             body.append(", <b>")
                 .append(timeFromStr)
                 .append(":</b> ")
-                .append(remind.getTimeFrom());
+                .append(remind.getTimeRange().start());
         }
         body.append("</html>");
 

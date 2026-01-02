@@ -2,7 +2,6 @@ package remindme.Entities;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import remindme.Enums.ExecutionMethod;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
+import remindme.Helpers.TimeRange;
 import remindme.Json.JSONReminder;
 import remindme.Managers.ExceptionManager;
 
@@ -31,8 +31,7 @@ public class Remind {
     private IconsEnum icon;
     private SoundsEnum sound;
     private ExecutionMethod executionMethod;
-    private LocalTime timeFrom;
-    private LocalTime timeTo;
+    private TimeRange timeRange;
     private int maxExecutionPerDay;
 
     public Remind() {
@@ -49,12 +48,11 @@ public class Remind {
         this.icon = IconsEnum.ALERT;
         this.sound = SoundsEnum.NO_SOUND;
         this.executionMethod = ExecutionMethod.PC_STARTUP;
-        this.timeFrom = null;
-        this.timeTo = null;
+        this.timeRange = null;
         this.maxExecutionPerDay = 0;
     }
 
-    public Remind(String name, String description, int remindCount, boolean isActive, boolean isTopLevel, LocalDateTime lastExecution, LocalDateTime nextExecution, LocalDateTime creationDate, LocalDateTime lastUpdateDate, TimeInterval timeInterval, IconsEnum icon, SoundsEnum sound, ExecutionMethod executionMethod, LocalTime timeFrom, LocalTime timeTo, int maxExecutionsPerDay) {
+    public Remind(String name, String description, int remindCount, boolean isActive, boolean isTopLevel, LocalDateTime lastExecution, LocalDateTime nextExecution, LocalDateTime creationDate, LocalDateTime lastUpdateDate, TimeInterval timeInterval, IconsEnum icon, SoundsEnum sound, ExecutionMethod executionMethod, TimeRange timeRange, int maxExecutionsPerDay) {
         this.name = name;
         this.description = description;
         this.remindCount = remindCount;
@@ -68,8 +66,7 @@ public class Remind {
         this.icon = icon;
         this.sound = sound;
         this.executionMethod = executionMethod;
-        this.timeFrom = timeFrom;
-        this.timeTo = timeTo;
+        this.timeRange = timeRange;
         this.maxExecutionPerDay = maxExecutionsPerDay;
     }
 
@@ -87,8 +84,7 @@ public class Remind {
         this.icon = newRemind.getIcon();
         this.sound = newRemind.getSound();
         this.executionMethod = newRemind.getExecutionMethod();
-        this.timeFrom = newRemind.getTimeFrom();
-        this.timeTo = newRemind.getTimeTo();
+        this.timeRange = newRemind.getTimeRange();
     }
 
     @Override
@@ -100,8 +96,8 @@ public class Remind {
             this.isTopLevel,
             this.timeInterval != null ? this.timeInterval.toString() : "",
             this.executionMethod.getExecutionMethodName(),
-            this.timeFrom != null ? this.timeFrom.toString() : "",
-            this.timeTo != null ? this.timeTo.toString() : ""
+            getTimeFromString(),
+            getTimeToString()
         );
     }
 
@@ -114,8 +110,8 @@ public class Remind {
             nextExecution != null ? nextExecution.toString() : "",
             timeInterval != null ? timeInterval.toString() : "",
             executionMethod.getExecutionMethodName(),
-            timeFrom != null ? timeFrom.toString() : "",
-            timeTo != null ? timeTo.toString() : ""
+            getTimeFromString(),
+            getTimeToString()
         };
     }
 
@@ -188,11 +184,15 @@ public class Remind {
     public ExecutionMethod getExecutionMethod() {
         return executionMethod != null ? executionMethod : ExecutionMethod.getDefaultExecutionMethod();
     }
-    public LocalTime getTimeFrom() {
-        return timeFrom;
+    public TimeRange getTimeRange() {
+        return timeRange;
     }
-    public LocalTime getTimeTo() {
-        return timeTo;
+    public String getTimeFromString() {
+        return (timeRange != null && timeRange.start() != null ? timeRange.start().toString() : "");
+    }
+
+    public String getTimeToString() {
+        return (timeRange != null && timeRange.end() != null ? timeRange.end().toString() : "");
     }
     public int getMaxExecutionsPerDay() {
         return maxExecutionPerDay;

@@ -99,22 +99,21 @@ public class BackgroundService {
                     continue;
                 }
 
+                TimeRange range = remind.getTimeRange();
                 switch (remind.getExecutionMethod()) {
                     case PC_STARTUP -> {
                         remind.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), now));
                     }
                     case CUSTOM_TIME_RANGE -> {
-                        TimeRange range = TimeRange.of(remind.getTimeFrom(), remind.getTimeTo());
-
-                        LocalTime reference = range.contains(now) ? now : remind.getTimeFrom();
+                        LocalTime reference = range.contains(now) ? now : range.start();
 
                         remind.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), reference));
                     }
                     case ONE_TIME_PER_DAY -> {
                         LocalDate today = LocalDate.now();
-                        LocalDate day = now.isBefore(remind.getTimeFrom()) ? today : today.plusDays(1);
+                        LocalDate day = now.isBefore(range.start()) ? today : today.plusDays(1);
 
-                        remind.setNextExecution(LocalDateTime.of(day, remind.getTimeFrom()));
+                        remind.setNextExecution(LocalDateTime.of(day, range.start()));
                     }
                 }
             }
@@ -186,15 +185,15 @@ public class BackgroundService {
 
             LocalTime nowTime = now.toLocalTime();
 
+            TimeRange remindRange = remind.getTimeRange();
             switch (remind.getExecutionMethod()) {
                 case ONE_TIME_PER_DAY -> {
-                    LocalTime from = remind.getTimeFrom();
+                    LocalTime from = remindRange.start();
                     TimeRange range = TimeRange.of(from, from.plusMinutes(5));
                     return range.contains(nowTime);
                 }
                 case CUSTOM_TIME_RANGE -> {
-                    TimeRange range = TimeRange.of(remind.getTimeFrom(), remind.getTimeTo());
-                    return remind.getNextExecution().isBefore(now) && range.contains(nowTime);
+                    return remind.getNextExecution().isBefore(now) && remindRange.contains(nowTime);
                 }
                 case PC_STARTUP -> {
                     return true;
