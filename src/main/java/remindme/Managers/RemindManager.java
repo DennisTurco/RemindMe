@@ -27,6 +27,7 @@ import remindme.Entities.Preferences;
 import remindme.Entities.Remind;
 import remindme.Entities.TimeInterval;
 import remindme.Enums.ConfigKey;
+import remindme.Enums.ExecutionMethod;
 import remindme.Enums.TranslationLoaderEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
@@ -360,7 +361,19 @@ public final class RemindManager {
         updateRemindList();
     }
 
-    public static LocalDateTime getnextExecutionByTimeInterval(TimeInterval timeInterval) {
+    public static LocalDateTime getNextExecutionBasedOnMethod(ExecutionMethod method, LocalTime from, LocalTime to, TimeInterval interval) {
+        if (method == ExecutionMethod.CUSTOM_TIME_RANGE && ManageRemind.isTimeRangeValid(from, to)) {
+            return RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(interval, from);
+        }
+        else if (method == ExecutionMethod.ONE_TIME_PER_DAY)  {
+            return LocalDateTime.of(LocalDate.now(), from);
+        }
+        else {
+            return RemindManager.getNextExecutionByTimeInterval(interval);
+        }
+    }
+
+    public static LocalDateTime getNextExecutionByTimeInterval(TimeInterval timeInterval) {
         if (timeInterval == null) return null;
 
         return LocalDateTime.now().plusDays(timeInterval.days())
@@ -491,10 +504,10 @@ public final class RemindManager {
                 rem.setIsActive(newState);
 
                 if (newState) {
-                    rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
+                    LocalDateTime nextExecution = getNextExecutionBasedOnMethod(remind.getExecutionMethod(), remind.getTimeFrom(), remind.getTimeTo(), remind.getTimeInterval());
+                    rem.setNextExecution(nextExecution);
                 } else {
                     rem.setNextExecution(null);
-                    rem.setTimeInterval(null);
                 }
 
                 break;

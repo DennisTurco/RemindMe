@@ -424,15 +424,7 @@ public final class MainGUI extends javax.swing.JFrame {
     }
 
     private boolean confirmDeletion() {
-        int response = JOptionPane.showConfirmDialog(
-                null,
-                TranslationCategory.DIALOGS.getTranslation(
-                        TranslationKey.CONFIRMATION_DELETION_MESSAGE),
-                TranslationCategory.DIALOGS.getTranslation(
-                        TranslationKey.CONFIRMATION_DELETION_TITLE),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
+        int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_DELETION_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         return response == JOptionPane.YES_OPTION;
     }
 

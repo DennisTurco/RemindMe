@@ -69,7 +69,7 @@ public class ReminderDialog extends javax.swing.JDialog {
                 switch (rem.getExecutionMethod()) {
                     case ONE_TIME_PER_DAY -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeFrom()));
                     case CUSTOM_TIME_RANGE -> rem.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(rem.getTimeInterval(), rem.getTimeFrom()));
-                    case PC_STARTUP -> rem.setNextExecution(RemindManager.getnextExecutionByTimeInterval(rem.getTimeInterval()));
+                    case PC_STARTUP -> rem.setNextExecution(RemindManager.getNextExecutionByTimeInterval(rem.getTimeInterval()));
                     default -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeFrom()));
                 }
             }

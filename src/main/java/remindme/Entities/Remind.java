@@ -105,21 +105,7 @@ public class Remind {
         );
     }
 
-    public String toCsvString() {
-        return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
-            this.name,
-            this.isActive,
-            this.isTopLevel,
-            this.lastExecution != null ? lastExecution.toString() : "",
-            this.nextExecution != null ? nextExecution.toString() : "",
-            this.timeInterval != null ? this.timeInterval.toString() : "",
-            this.executionMethod.getExecutionMethodName(),
-            this.timeFrom != null ? this.timeFrom.toString() : "",
-            this.timeTo != null ? this.timeTo.toString() : ""
-        );
-    }
-
-    public String[] toCsvArray() {
+    public String[] toArrayString() {
         return new String[] {
             name,
             String.valueOf(isActive),

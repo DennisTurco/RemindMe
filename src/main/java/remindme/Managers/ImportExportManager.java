@@ -128,7 +128,7 @@ class ImportExportManager {
 
                 if (reminds != null) {
                     for (Remind remind : reminds) {
-                        for (String value : remind.toCsvArray()) {
+                        for (String value : remind.toArrayString()) {
                             table.addCell(new Cell().add(new Paragraph(wrapText(value.trim(), 25))).setFontSize(5f));
                         }
                     }
@@ -170,7 +170,7 @@ class ImportExportManager {
 
             if (reminds != null) {
                 for (Remind remind : reminds) {
-                    writer.append(Arrays.stream(remind.toCsvArray())
+                    writer.append(Arrays.stream(remind.toArrayString())
                             .map(ImportExportManager::escapeCsv)
                             .collect(Collectors.joining(",")))
                           .append("\n");

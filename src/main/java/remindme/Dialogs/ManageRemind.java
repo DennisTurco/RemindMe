@@ -75,7 +75,8 @@ public class ManageRemind extends javax.swing.JDialog {
         SoundsEnum sound = SoundsEnum.getSoundbyName((String) soundComboBox.getSelectedItem());
         ExecutionMethod executionMethod = ExecutionMethod.getExecutionMethodbyName((String) executionMethodComboBox.getSelectedItem());
         LocalDateTime creationDate, lastUpdateDate, lastExecution;
-        LocalTime timeFromLocalTime = null, timeToLocalTime = null;
+        LocalTime timeFromLocalTime = executionMethod == ExecutionMethod.PC_STARTUP ? null : timeFrom.getTime();
+        LocalTime timeToLocalTime = executionMethod == ExecutionMethod.PC_STARTUP ? null : timeTo.getTime();
 
         int remindCount, maxExecutionsPerDay = 0;
         if (create) {
@@ -91,17 +92,7 @@ public class ManageRemind extends javax.swing.JDialog {
             remindCount = currentRemind.getRemindCount();
         }
 
-        LocalDateTime nextExecution;
-        if (executionMethod == ExecutionMethod.CUSTOM_TIME_RANGE && isTimeRangeValid()) {
-            timeFromLocalTime = timeFrom.getTime();
-            nextExecution = RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(timeInterval, timeFromLocalTime);
-        } 
-        else if (executionMethod == ExecutionMethod.ONE_TIME_PER_DAY) {
-            timeFromLocalTime = timeFrom.getTime();
-            nextExecution = LocalDateTime.of(LocalDate.now(), timeFromLocalTime);
-        } else {
-            nextExecution = RemindManager.getnextExecutionByTimeInterval(timeInterval);
-        }
+        LocalDateTime nextExecution = RemindManager.getNextExecutionBasedOnMethod(executionMethod, timeFromLocalTime, timeToLocalTime, timeInterval);
 
         return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound, executionMethod, timeFromLocalTime, timeToLocalTime, maxExecutionsPerDay);
     }
@@ -133,14 +124,19 @@ public class ManageRemind extends javax.swing.JDialog {
             return true;
         }
 
+        isTimeRangeValid(timeFrom.getTime(), timeTo.getTime());
+
+        return true;
+    }
+
+    public static boolean isTimeRangeValid(LocalTime timeFrom, LocalTime timeTo) {
         try {
-            // if the object creeation fails it means that the times 
-            TimeRange.of(timeFrom.getTime(), timeTo.getTime());
+            // if the object creeation fails it means that the times
+            TimeRange.of(timeFrom, timeTo);
+            return true;
         } catch (Exception e) {
             return false;
         }
-
-        return true;
     }
 
     private void insertRemindValues(Remind remind) {
@@ -523,6 +519,7 @@ public class ManageRemind extends javax.swing.JDialog {
 
         boolean customTimeEnable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.CUSTOM_TIME_RANGE.getExecutionMethodName());
         boolean oneTimePerDayEnable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.ONE_TIME_PER_DAY.getExecutionMethodName());
+        boolean pcStartupEnable = executionMethodComboBox.getSelectedItem().equals(ExecutionMethod.PC_STARTUP.getExecutionMethodName());
 
         if (customTimeEnable) {
             enableBasedOnExecutionMethod(true, true);
@@ -531,6 +528,9 @@ public class ManageRemind extends javax.swing.JDialog {
             enableBasedOnExecutionMethod(true, false);
             timeIntervalBtn.setEnabled(false);
             return;
+        }
+        else if (pcStartupEnable) {
+            enableBasedOnExecutionMethod(false, false);
         }
         timeIntervalBtn.setEnabled(true);
     }//GEN-LAST:event_executionMethodComboBoxActionPerformed
