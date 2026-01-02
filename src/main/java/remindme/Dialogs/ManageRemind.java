@@ -77,6 +77,7 @@ public class ManageRemind extends javax.swing.JDialog {
         LocalDateTime creationDate, lastUpdateDate, lastExecution;
         LocalTime timeFromLocalTime = executionMethod == ExecutionMethod.PC_STARTUP ? null : timeFrom.getTime();
         LocalTime timeToLocalTime = executionMethod == ExecutionMethod.PC_STARTUP ? null : timeTo.getTime();
+        TimeRange range = null;
 
         int remindCount, maxExecutionsPerDay = 0;
         if (create) {
@@ -96,7 +97,10 @@ public class ManageRemind extends javax.swing.JDialog {
             timeToLocalTime = timeFromLocalTime;
         }
 
-        TimeRange range = TimeRange.of(timeFromLocalTime, timeToLocalTime);
+        if (executionMethod != ExecutionMethod.PC_STARTUP) {
+            range = TimeRange.of(timeFromLocalTime, timeToLocalTime);
+        }
+
         LocalDateTime nextExecution = RemindManager.getNextExecutionBasedOnMethod(executionMethod, range, timeInterval);
 
         return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound, executionMethod, range, maxExecutionsPerDay);
