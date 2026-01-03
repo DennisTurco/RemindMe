@@ -145,7 +145,7 @@ public class BackgroundService {
                 case ONE_TIME_PER_DAY -> {
                     LocalTime from = remindRange.start();
                     TimeRange range = TimeRange.of(from, from.plusMinutes(5));
-                    return range.contains(nowTime);
+                    return remind.getNextExecution().isBefore(now) && range.contains(nowTime);
                 }
                 case CUSTOM_TIME_RANGE -> {
                     return remind.getNextExecution().isBefore(now) && remindRange.contains(nowTime);
