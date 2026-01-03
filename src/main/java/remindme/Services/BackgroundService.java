@@ -1,7 +1,6 @@
 package remindme.Services;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -33,7 +32,6 @@ public class BackgroundService {
 
     private ScheduledExecutorService scheduler;
 
-    private final JSONReminder jsonReminder = new JSONReminder();
     private final JSONConfigReader jsonConfigReader = new JSONConfigReader(remindme.Enums.ConfigKey.CONFIG_FILE_STRING.getValue(), remindme.Enums.ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
     private final AtomicBoolean paused = new AtomicBoolean(false);
     private final Map<String, ReminderDialog> openedDialogs = new ConcurrentHashMap<>();
@@ -46,7 +44,7 @@ public class BackgroundService {
 
         scheduler = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "Remind-Background-Service"));
 
-        updateAllNextExecutions();
+        RemindManager.updateAllNextExecutions();
 
         long intervalMinutes = jsonConfigReader.readCheckForReminderTimeInterval();
 
@@ -84,49 +82,6 @@ public class BackgroundService {
         return scheduler != null && !scheduler.isShutdown();
     }
 
-    /**
-     * Called once at application startup
-     */
-    private void updateAllNextExecutions() {
-        logger.debug("Updating all next executions time...");
-        try {
-            List<Remind> reminds = jsonReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
-
-            LocalTime now = LocalTime.now();
-
-            for (Remind remind : reminds) {
-                if (!remind.isActive()) {
-                    continue;
-                }
-
-                TimeRange range = remind.getTimeRange();
-                switch (remind.getExecutionMethod()) {
-                    case PC_STARTUP -> {
-                        remind.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), now));
-                    }
-                    case CUSTOM_TIME_RANGE -> {
-                        LocalTime reference = range.contains(now) ? now : range.start();
-
-                        remind.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), reference));
-                    }
-                    case ONE_TIME_PER_DAY -> {
-                        LocalDate today = LocalDate.now();
-                        LocalDate day = now.isBefore(range.start()) ? today : today.plusDays(1);
-
-                        remind.setNextExecution(LocalDateTime.of(day, range.start()));
-                    }
-                }
-            }
-
-            jsonReminder.updateRemindListJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
-
-            logger.debug("Next executions time updated succesfully");
-
-        } catch (IOException e) {
-            logger.error("Failed to update next executions", e);
-        }
-    }
-
     private class RemindTask implements Runnable {
 
         @Override
@@ -140,7 +95,7 @@ public class BackgroundService {
             }
 
             try {
-                List<Remind> reminds = jsonReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+                List<Remind> reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
 
                 RemindManager.reminds = reminds;
 

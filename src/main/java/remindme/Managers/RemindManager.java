@@ -43,7 +43,6 @@ public final class RemindManager {
     public static final DateTimeFormatter dateForfolderNameFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH.mm.ss");
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    private JSONReminder JSON;
     private static MainGUI main; // static, cause i need only one for instance
     public static List<Remind> reminds; // static, cause i need only one for instance
 
@@ -58,7 +57,6 @@ public final class RemindManager {
 
     private void initManager() {
         reminds = getReminds();
-        JSON = new JSONReminder();
     }
 
     public void openPreferences() {
@@ -80,7 +78,7 @@ public final class RemindManager {
     public void updateRemindList() {
         logger.info("Updating remind list");
 
-        JSON.updateRemindListJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
+        JSONReminder.updateRemindListJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
 
         getRemindList();
 
@@ -90,7 +88,7 @@ public final class RemindManager {
 
     public void getRemindList() {
         try {
-            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+            reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
         } catch (IOException e) {
             logger.error("An error occurred while trying to get the remind list from json file: " + e.getMessage(), e);
             ExceptionManager.openExceptionMessage(e.getMessage(), Arrays.toString(e.getStackTrace()));
@@ -99,10 +97,50 @@ public final class RemindManager {
         }
     }
 
+    /**
+     * Called once at application startup
+     */
+    public static void updateAllNextExecutions() {
+        logger.debug("Updating all next executions time...");
+        try {
+            reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+
+            LocalTime now = LocalTime.now();
+
+            for (Remind remind : reminds) {
+                if (!remind.isActive()) {
+                    continue;
+                }
+
+                TimeRange range = remind.getTimeRange();
+                switch (remind.getExecutionMethod()) {
+                    case PC_STARTUP -> {
+                        remind.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), now));
+                    }
+                    case CUSTOM_TIME_RANGE -> {
+                        LocalTime reference = range.contains(now) ? now : range.start();
+                        remind.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(remind.getTimeInterval(), reference));
+                    }
+                    case ONE_TIME_PER_DAY -> {
+                        LocalDate today = LocalDate.now();
+                        LocalDate day = now.isBefore(range.start()) ? today : today.plusDays(1);
+                        remind.setNextExecution(LocalDateTime.of(day, range.start()));
+                    }
+                }
+            }
+
+            JSONReminder.updateRemindListJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file(), reminds);
+
+            logger.debug("Next executions time updated succesfully");
+
+        } catch (IOException e) {
+            logger.error("Failed to update next executions", e);
+        }
+    }
+
     private String insertAndGetRemindName(List<Remind> reminds, String oldName, boolean canOverwrite) {
         while (true) {
-            String remindName = JOptionPane.showInputDialog(null, 
-                TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_NAME_INPUT), oldName);
+            String remindName = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_NAME_INPUT), oldName);
 
             // If the user cancels the operation
             if (remindName == null || remindName.trim().isEmpty()) {
@@ -117,10 +155,10 @@ public final class RemindManager {
                 if (canOverwrite) {
                     int response = JOptionPane.showConfirmDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.DUPLICATED_REMIND_NAME_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.CONFIRMATION_REQUIRED_TITLE), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-                if (response == JOptionPane.YES_OPTION) {
-                    reminds.remove(existingBackup.get());
-                    return remindName;
-                }
+                    if (response == JOptionPane.YES_OPTION) {
+                        reminds.remove(existingBackup.get());
+                        return remindName;
+                    }
                 } else {
                     logger.warn("Remind name '{}' is already in use", remindName);
                     JOptionPane.showMessageDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_NAME_ALREADY_USED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
@@ -323,11 +361,14 @@ public final class RemindManager {
 
     public void importRemindListFromJSON() {
         logger.info("Event --> importing remind list from json");
-        List<Remind> newReminds = ImportExportManager.importRemindListFromJson(main, JSON, dateForfolderNameFormatter);
+        List<Remind> newReminds = ImportExportManager.importRemindListFromJson(main, dateForfolderNameFormatter);
 
         // replace the current list with the imported one
-        if (newReminds != null)
+        if (newReminds != null) {
             reminds = newReminds;
+            updateAllNextExecutions();
+            updateRemindList();
+        }
     }
 
     public void exportRemindListTOJSON() {
@@ -554,7 +595,7 @@ public final class RemindManager {
 
     public List<Remind> retriveAndGetReminds() {
         try {
-            reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+            reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
         } catch (IOException ex) {
             reminds = null;
             logger.error("An error occurred: " + ex.getMessage(), ex);

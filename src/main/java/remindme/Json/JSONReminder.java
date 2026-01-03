@@ -39,8 +39,7 @@ public class JSONReminder {
         .setPrettyPrinting()
         .create();
 
-
-    public List<Remind> readRemindListFromJSON(String directoryPath, String filename) throws IOException {
+    public static List<Remind> readRemindListFromJSON(String directoryPath, String filename) throws IOException {
         directoryPath = validateOrResetDirectoryPath(directoryPath);
         String filePath = Paths.get(directoryPath, filename).toString();
 
@@ -60,7 +59,7 @@ public class JSONReminder {
         }
     }
 
-    public void updateRemindListJSON(String directoryPath, String filename, List<Remind> reminds) {
+    public static void updateRemindListJSON(String directoryPath, String filename, List<Remind> reminds) {
         String filePath = Paths.get(directoryPath, filename).toString();
 
         try (Writer writer = new FileWriter(filePath)) {
@@ -71,7 +70,7 @@ public class JSONReminder {
         }
     }
 
-    private String validateOrResetDirectoryPath(String directoryPath) {
+    private static String validateOrResetDirectoryPath(String directoryPath) {
         File directory = new File(directoryPath);
         if (!directory.exists() || !directory.isDirectory()) {
             logger.info("Directory of the remind list file doesn't exist, reset to default value");
@@ -82,7 +81,7 @@ public class JSONReminder {
         return directoryPath;
     }
 
-    private void checkIfFileExistsAndNotEmpty(String filePath) throws IOException {
+    private static void checkIfFileExistsAndNotEmpty(String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
             file.createNewFile();

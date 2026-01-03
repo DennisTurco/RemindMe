@@ -2,7 +2,6 @@ package remindme.Dialogs;
 
 import java.awt.Image;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;

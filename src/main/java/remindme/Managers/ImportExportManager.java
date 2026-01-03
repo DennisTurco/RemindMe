@@ -40,7 +40,7 @@ class ImportExportManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ImportExportManager.class);
 
-    public static List<Remind> importRemindListFromJson(MainGUI main, JSONReminder JSON, DateTimeFormatter formatter) {
+    public static List<Remind> importRemindListFromJson(MainGUI main, DateTimeFormatter formatter) {
         JFileChooser jfc = new JFileChooser(ConfigKey.RES_DIRECTORY_STRING.getValue());
         jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jfc.setFileFilter(new FileNameExtensionFilter("JSON Files (*.json)", "json"));
@@ -56,7 +56,7 @@ class ImportExportManager {
                 Preferences.updatePreferencesToJSON();
 
                 try {
-                    List<Remind> reminds = JSON.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+                    List<Remind> reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
                     TableDataManager.updateTableWithNewRemindList(reminds, formatter);
 
                     JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_LIST_CORRECTLY_IMPORTED_MESSAGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.REMIND_LIST_CORRECTLY_IMPORTED_TITLE), JOptionPane.INFORMATION_MESSAGE);

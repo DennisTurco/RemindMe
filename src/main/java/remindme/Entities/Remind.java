@@ -131,7 +131,7 @@ public class Remind {
     public static Remind getRemindByName(String remindName) {
         List<Remind> reminds;
         try {
-            reminds = new JSONReminder().readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+            reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
             for (Remind remind : reminds) {
                 if (remind.getName().equals(remindName)) {
                     return remind;
