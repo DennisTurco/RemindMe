@@ -59,6 +59,22 @@ This project is, of course, published here on GitHub, but it's also available on
 | German | ✅ |
 | French | ✅ |
 
+## Tecnical Documentation
+
+### Protect the SMTP password
+
+To protect the SMTP password, it needs to be encrypted.
+The following steps should be performed during the initial setup:
+
+1. Create a file named config.txt in the root directory.
+2. Add the password inside the file in this format:
+
+   ```txt
+   SMTP_PASSWORD=PasswordToEncrypt
+   ```
+
+3. Run remindme.Email.EncryptConfigFile to encrypt the .txt file and generate the corresponding .enc file.
+
 ## Licence
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)

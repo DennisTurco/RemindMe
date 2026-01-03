@@ -196,7 +196,7 @@ public class BackgroundService {
                     return remind.getNextExecution().isBefore(now) && remindRange.contains(nowTime);
                 }
                 case PC_STARTUP -> {
-                    return true;
+                    return remind.getNextExecution().isBefore(now);
                 }
             }
 
