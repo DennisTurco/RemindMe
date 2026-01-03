@@ -42,9 +42,17 @@ public class Preferences {
             logger.error("Preferences file not found. Using default preferences." + e.getMessage(), e);
             updatePreferencesToJSON(); // Create the JSON file with default preferences
         } catch (Exception ex) {
-            logger.error("An error occurred while loading preferences: " + ex.getMessage(), ex);
+            logger.error("Failed to load preference JSON file: ", ex.getMessage());
+            setDefaultPreferences();
+            updatePreferencesToJSON();
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
+    }
+
+    private static void setDefaultPreferences() {
+        language = LanguagesEnum.ENG;
+        theme = ThemesEnum.INTELLIJ;
+        remindList = getDefaultRemindList();
     }
 
     public static void updatePreferencesToJSON() {
@@ -56,7 +64,7 @@ public class Preferences {
 
             JsonObject RemindListObject = new JsonObject();
             RemindListObject.addProperty("Directory", remindList.directory());
-            RemindListObject.addProperty("File", remindList.file());  
+            RemindListObject.addProperty("File", remindList.file());
 
             jsonObject.add("RemindList", RemindListObject);
 

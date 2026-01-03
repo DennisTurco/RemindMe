@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ConfigReader",
+            "request": "launch",
+            "mainClass": "remindme.Email.ConfigReader",
+            "projectName": "RemindMe"
+        },
+        {
+            "type": "java",
+            "name": "EncryptConfigFile",
+            "request": "launch",
+            "mainClass": "remindme.Email.EncryptConfigFile",
+            "projectName": "RemindMe"
+        },
+        {
+            "type": "java",
             "name": "MainApp",
             "request": "launch",
             "mainClass": "remindme.MainApp",
@@ -18,13 +32,6 @@
             "mainClass": "remindme.MainApp",
             "projectName": "RemindMe",
             "args": "--background"
-        },
-        {
-            "type": "java",
-            "name": "DecryptPassword",
-            "request": "launch",
-            "mainClass": "remindme.Email.DecryptPassword",
-            "projectName": "RemindMe"
         },
         {
             "type": "java",

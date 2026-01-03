@@ -1,2 +1,7 @@
 /target/
 /src/main/resources/res/logs/*
+/jre/
+RemindMe.exe
+/Output
+config.enc
+config.txt
