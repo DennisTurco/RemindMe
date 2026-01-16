@@ -49,11 +49,12 @@ public class EmailSender {
 
         int rows = 300;
         String emailMessage = String.format(
-            "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
+            "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \nInstalled Version: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
             subject,
             user.getUserCompleteName(),
             user.email(),
             user.language(),
+            ConfigKey.VERSION.getValue(),
             body,
             rows,
             getTextFromLogFile(rows)
