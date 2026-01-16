@@ -49,11 +49,12 @@ public class EmailSender {
 
         int rows = 300;
         String emailMessage = String.format(
-            "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
+            "Subject: %s\n\nUser: %s \nEmail: %s \nLanguage: %s \nInstalled Version: %s \n\nHas encountered the following error:\n%s \n\nLast %d rows of the application.log file:\n%s",
             subject,
             user.getUserCompleteName(),
             user.email(),
             user.language(),
+            ConfigKey.VERSION.getValue(),
             body,
             rows,
             getTextFromLogFile(rows)
@@ -68,7 +69,7 @@ public class EmailSender {
      * Sends an informational email.
      */
     public static void sendUserCreationEmail(User user) {
-        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email() + "\nLanguage: " + user.language();
+        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email() + "\nLanguage: " + user.language() + "\nInstalled version: " + ConfigKey.VERSION.getValue();
 
         String emailMessage = "\n\n" + userDetails;
 

@@ -44,6 +44,9 @@ public class BackgroundService {
 
         scheduler = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "Remind-Background-Service"));
 
+        // If the app crashes during write, a .tmp file may remain.
+        JSONReminder.deleteTempFileIfExist(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
+
         RemindManager.updateAllNextExecutions();
 
         long intervalMinutes = jsonConfigReader.readCheckForReminderTimeInterval();
@@ -97,7 +100,7 @@ public class BackgroundService {
             try {
                 List<Remind> reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
 
-                RemindManager.reminds = reminds;
+                RemindManager.reminds = List.copyOf(reminds);
 
                 List<Remind> toExecute = getRemindsToExecute(reminds, 1);
 

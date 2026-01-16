@@ -6,7 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import remindme.Managers.ExceptionManager;
 
 public class JSONReminder {
 
+    private static final Object FILE_LOCK = new Object();
     private static final Logger logger = LoggerFactory.getLogger(JSONReminder.class);
 
     private static final Gson GSON = new GsonBuilder()
@@ -40,33 +44,58 @@ public class JSONReminder {
         .create();
 
     public static List<Remind> readRemindListFromJSON(String directoryPath, String filename) throws IOException {
-        directoryPath = validateOrResetDirectoryPath(directoryPath);
-        String filePath = Paths.get(directoryPath, filename).toString();
+        synchronized (FILE_LOCK) {
 
-        checkIfFileExistsAndNotEmpty(filePath);
+            directoryPath = validateOrResetDirectoryPath(directoryPath);
+            String filePath = Paths.get(directoryPath, filename).toString();
 
-        try (Reader reader = new FileReader(filePath)) {
+            checkIfFileExistsAndNotEmpty(filePath);
 
-            var type = new com.google.gson.reflect.TypeToken<List<Remind>>() {}.getType();
-            List<Remind> reminds = GSON.fromJson(reader, type);
-
-            return reminds != null ? reminds : new ArrayList<>();
-
-        } catch (JsonSyntaxException ex) {
-            logger.error("Invalid JSON format", ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-            return new ArrayList<>();
+            try (Reader reader = new FileReader(filePath)) {
+                var type = new com.google.gson.reflect.TypeToken<List<Remind>>() {}.getType();
+                List<Remind> reminds = GSON.fromJson(reader, type);
+                return reminds != null ? reminds : new ArrayList<>();
+            } catch (JsonSyntaxException ex) {
+                logger.error("Invalid JSON format", ex);
+                return new ArrayList<>();
+            }
         }
     }
 
     public static void updateRemindListJSON(String directoryPath, String filename, List<Remind> reminds) {
-        String filePath = Paths.get(directoryPath, filename).toString();
+        Path target = Paths.get(directoryPath, filename);
+        Path temp = Paths.get(directoryPath, filename + ".tmp");
 
-        try (Writer writer = new FileWriter(filePath)) {
-            GSON.toJson(reminds, writer);
-        } catch (IOException ex) {
-            logger.error("Error writing remind list", ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+        synchronized (FILE_LOCK) {
+            try {
+                // Write to temp file first
+                try (Writer writer = Files.newBufferedWriter(temp)) {
+                    GSON.toJson(reminds, writer);
+                }
+
+                // Atomically replace original file
+                Files.move(
+                    temp,
+                    target,
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.ATOMIC_MOVE
+                );
+
+                logger.debug("Remind list written atomically");
+
+            } catch (IOException ex) {
+                logger.error("Error writing remind list atomically", ex);
+                ExceptionManager.openExceptionMessage(
+                    ex.getMessage(),
+                    Arrays.toString(ex.getStackTrace())
+                );
+            }
+        }
+    }
+
+    public static void deleteTempFileIfExist(String directoryPath, String filename) throws IOException {
+        synchronized (FILE_LOCK) {
+            Files.deleteIfExists(Paths.get(directoryPath, filename + ".tmp"));
         }
     }
 
