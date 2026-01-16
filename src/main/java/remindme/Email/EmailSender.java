@@ -69,7 +69,7 @@ public class EmailSender {
      * Sends an informational email.
      */
     public static void sendUserCreationEmail(User user) {
-        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email() + "\nLanguage: " + user.language();
+        String userDetails = "New user registered. \n\nName: " + user.getUserCompleteName()+ "\nEmail: " + user.email() + "\nLanguage: " + user.language() + "\nInstalled version: " + ConfigKey.VERSION.getValue();
 
         String emailMessage = "\n\n" + userDetails;
 
