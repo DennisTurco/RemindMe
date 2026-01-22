@@ -104,11 +104,7 @@ public class EmailSender {
 
     private static User getCurrentUser() {
         try {
-            User user = JsonUser.readUserFromJson(
-                ConfigKey.USER_FILE_STRING.getValue(),
-                ConfigKey.CONFIG_DIRECTORY_STRING.getValue()
-            );
-
+            User user = JsonUser.readUserFromJson(ConfigKey.USER_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
             return user;
         } catch (IOException e) {
             logger.error("Unable to retrieve user details for the email: " + e.getMessage(), e);

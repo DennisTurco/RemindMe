@@ -23,11 +23,11 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v4
 
-    # Step 2: Set up JDK 19
-    - name: Set up JDK 19
+    # Step 2: Set up JDK 25
+    - name: Set up JDK 25
       uses: actions/setup-java@v4
       with:
-        java-version: '19'
+        java-version: '25'
         distribution: 'temurin'  # Use the Temurin distribution for OpenJDK
         cache: maven  # Cache Maven dependencies to speed up subsequent builds
 
@@ -40,11 +40,11 @@ jobs:
       run: mvn test --file pom.xml  # Run the tests to ensure the code works as expected
 
     # Step 5: Upload the built JAR file as an artifact
-    - name: Upload JAR Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: backupmanager-jar  # Name of the artifact
-        path: target/BackupManager-1.0-SNAPSHOT-jar-with-dependencies.jar  # Path to the JAR file
+    # - name: Upload JAR Artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: remindme-jar  # Name of the artifact
+    #     path: target/RemindMe-1.0-SNAPSHOT-jar-with-dependencies.jar  # Path to the JAR file
 
     # Step 6: Static Code Analysis with SpotBugs (optional)
     - name: Static Code Analysis with SpotBugs

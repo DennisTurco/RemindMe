@@ -25,7 +25,7 @@ public class Preferences {
     private static ThemesEnum theme;
     private static RemindListPath remindList;
 
-    public static void loadPreferencesFromJSON() {
+    public static void loadPreferencesFromJson() {
         try (FileReader reader = new FileReader(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.PREFERENCES_FILE_STRING.getValue())) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -36,15 +36,15 @@ public class Preferences {
 
             logger.info("Preferences loaded from JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
 
-            updatePreferencesToJSON();
+            updatePreferencesToJson();
 
         } catch (FileNotFoundException e) {
             logger.error("Preferences file not found. Using default preferences." + e.getMessage(), e);
-            updatePreferencesToJSON(); // Create the JSON file with default preferences
+            updatePreferencesToJson(); // Create the JSON file with default preferences
         } catch (Exception ex) {
             logger.error("Failed to load preference JSON file: ", ex.getMessage());
             setDefaultPreferences();
-            updatePreferencesToJSON();
+            updatePreferencesToJson();
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
@@ -55,8 +55,12 @@ public class Preferences {
         remindList = getDefaultRemindList();
     }
 
-    public static void updatePreferencesToJSON() {
-        try (FileWriter writer = new FileWriter(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.PREFERENCES_FILE_STRING.getValue())) {
+    public static void updatePreferencesToJson() {
+        updatePreferencesToJson(ConfigKey.CONFIG_DIRECTORY_STRING.getValue(), ConfigKey.PREFERENCES_FILE_STRING.getValue());
+    }
+
+    public static void updatePreferencesToJson(String directory, String filename) {
+        try (FileWriter writer = new FileWriter(directory + filename)) {
             JsonObject jsonObject = new JsonObject();
 
             jsonObject.addProperty("Language", language.getFileName());

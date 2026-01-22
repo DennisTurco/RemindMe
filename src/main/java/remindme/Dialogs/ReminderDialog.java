@@ -9,10 +9,9 @@ import javax.swing.ImageIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import remindme.Entities.Remind;
 import remindme.Entities.RemindNotification;
 import remindme.Enums.ConfigKey;
-import remindme.Managers.RemindManager;
+import remindme.GUI.Controllers.MainController;
 import remindme.Managers.SoundPlayer;
 import remindme.Managers.ThemeManager;
 
@@ -58,24 +57,8 @@ public class ReminderDialog extends javax.swing.JDialog {
         timeLabel.setText(LocalDateTime.now().format(timeFormatter));
    }
 
-    private void updateRemindAfterShow(RemindNotification remind) {
-        RemindManager remindManager = new RemindManager();
-
-        for (Remind rem : RemindManager.reminds) {
-            if (remind.name().equals(rem.getName())) {
-                rem.setLastExecution(LocalDateTime.now());
-                rem.setRemindCount(rem.getRemindCount()+1);
-
-                switch (rem.getExecutionMethod()) {
-                    case ONE_TIME_PER_DAY -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeRange().start()));
-                    case CUSTOM_TIME_RANGE -> rem.setNextExecution(RemindManager.getNextExecutionByTimeIntervalFromSpecificTime(rem.getTimeInterval(), rem.getTimeRange().start()));
-                    case PC_STARTUP -> rem.setNextExecution(RemindManager.getNextExecutionByTimeInterval(rem.getTimeInterval()));
-                    default -> rem.setNextExecution(LocalDateTime.of(LocalDateTime.now().toLocalDate().plusDays(1), rem.getTimeRange().start()));
-                }
-            }
-        }
-
-        remindManager.updateRemindList();
+    private static void updateRemindAfterShow(RemindNotification remind) {
+        MainController.updateRemindAfterShow(remind.name());
     }
 
     private void setNameLabelText(String text) {

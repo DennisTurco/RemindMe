@@ -31,12 +31,7 @@ public class TrayController {
 
     private boolean paused = false;
 
-    public TrayController(
-        Runnable onOpen,
-        Runnable onPause,
-        Runnable onResume,
-        Runnable onExit
-    ) {
+    public TrayController(Runnable onOpen, Runnable onPause, Runnable onResume, Runnable onExit) {
         this.onOpen = onOpen;
         this.onPause = onPause;
         this.onResume = onResume;

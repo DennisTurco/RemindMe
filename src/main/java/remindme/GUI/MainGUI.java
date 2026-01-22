@@ -41,15 +41,20 @@ import remindme.Enums.LanguagesEnum;
 import remindme.Enums.MenuItems;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
+import remindme.GUI.Controllers.MainController;
+import remindme.GUI.Controllers.MainImportExportController;
+import remindme.GUI.Controllers.MainItemController;
+import remindme.GUI.Controllers.MainPopupController;
 import remindme.Json.JSONConfigReader;
 import remindme.Json.JsonUser;
 import remindme.Managers.ThemeManager;
+import remindme.Services.RemindService;
 import remindme.Table.CheckboxCellRenderer;
 import remindme.Table.RemindTable;
 import remindme.Table.RemindTableModel;
 import remindme.Table.StripedRowRenderer;
 import remindme.Table.SvgImageRenderer;
-import remindme.Managers.RemindManager;
+import remindme.Table.TableDataManager;
 
 /**
  * @author Dennis Turco
@@ -59,17 +64,20 @@ public final class MainGUI extends javax.swing.JFrame {
     private static final JSONConfigReader configReader = new JSONConfigReader(ConfigKey.CONFIG_FILE_STRING.getValue(), ConfigKey.CONFIG_DIRECTORY_STRING.getValue());
 
     private Integer selectedRow;
-    private final RemindManager remindManager;
 
     public static DefaultTableModel model;
     private RemindTable remindTable;
+
+    private final RemindService remindService;
+    private final MainController mainController;
 
     public MainGUI() {
         ThemeManager.updateThemeFrame(this);
 
         initComponents();
 
-        remindManager = new RemindManager(this);
+        remindService = new RemindService();
+        mainController = new MainController(this, remindService);
 
         // logo application
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
@@ -139,7 +147,7 @@ public final class MainGUI extends javax.swing.JFrame {
             default -> Preferences.setLanguage(LanguagesEnum.ENG);
         }
 
-        remindManager.reloadPreferences();
+        mainController.reloadPreferences();
     }
 
     public void showWindow() {
@@ -157,8 +165,7 @@ public final class MainGUI extends javax.swing.JFrame {
     }
 
     public void initializeTable() {
-        List<Remind> reminds = remindManager.retriveAndGetReminds();
-        displayRemindList(reminds);
+        displayRemindList(RemindService.getReminds());
     }
 
     private void populateTableDetails(Remind remind) {
@@ -196,11 +203,11 @@ public final class MainGUI extends javax.swing.JFrame {
             .append(", <b>")
             .append(lastExeutionStr)
             .append(":</b> ")
-            .append(remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "")
+            .append(remind.getLastExecution() != null ? remind.getLastExecution().format(RemindService.formatter) : "")
             .append(", <b>")
             .append(nextExecutionStr)
             .append(":</b> ")
-            .append(remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "_")
+            .append(remind.getNextExecution() != null ? remind.getNextExecution().format(RemindService.formatter) : "_")
             .append(", <b>")
             .append(timeIntervalStr)
             .append(":</b> ")
@@ -208,11 +215,11 @@ public final class MainGUI extends javax.swing.JFrame {
             .append(", <b>")
             .append(creationDateStr)
             .append(":</b> ")
-            .append(remind.getCreationDate() != null ? remind.getCreationDate().format(RemindManager.formatter) : "_")
+            .append(remind.getCreationDate() != null ? remind.getCreationDate().format(RemindService.formatter) : "_")
             .append(", <b>")
             .append(lastUpdateDateStr)
             .append(":</b> ")
-            .append(remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().format(RemindManager.formatter) : "_")
+            .append(remind.getLastUpdateDate() != null ? remind.getLastUpdateDate().format(RemindService.formatter) : "_")
             .append(", <b>")
             .append(remindCountStr)
             .append(":</b> ")
@@ -340,7 +347,7 @@ public final class MainGUI extends javax.swing.JFrame {
     }
 
     private RemindTableModel createRemindTableModel(List<Remind> reminds) {
-        RemindTableModel tempModel = new RemindTableModel(remindManager.getColumnTranslations(), 0);
+        RemindTableModel tempModel = new RemindTableModel(mainController.getColumnTranslations(), 0);
 
         for (Remind remind : reminds) {
             tempModel.addRow(new Object[]{
@@ -348,8 +355,8 @@ public final class MainGUI extends javax.swing.JFrame {
                 remind.getName(),
                 remind.isActive(),
                 remind.isTopLevel(),
-                remind.getLastExecution() != null ? remind.getLastExecution().format(RemindManager.formatter) : "",
-                remind.getNextExecution() != null ? remind.getNextExecution().format(RemindManager.formatter) : "",
+                remind.getLastExecution() != null ? remind.getLastExecution().format(RemindService.formatter) : "",
+                remind.getNextExecution() != null ? remind.getNextExecution().format(RemindService.formatter) : "",
                 remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : ""
             });
         }
@@ -372,7 +379,7 @@ public final class MainGUI extends javax.swing.JFrame {
             Remind remind = Remind.getRemindByName(
                     (String) table.getValueAt(selectedRow, 1)
             );
-            remindManager.editRemind(remind);
+            mainController.editRemindViaDialog(remind);
         });
     }
 
@@ -387,7 +394,7 @@ public final class MainGUI extends javax.swing.JFrame {
 
             Arrays.sort(selectedRows);
             for (int i = selectedRows.length - 1; i >= 0; i--) {
-                remindManager.removeReminder(selectedRows[i], false);
+                mainController.removeReminder(selectedRows[i], false);
             }
         });
     }
@@ -842,23 +849,24 @@ public final class MainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPreferencesActionPerformed
-        remindManager.openPreferences();
+        mainController.openPreferencesDialog();
     }//GEN-LAST:event_MenuPreferencesActionPerformed
 
     private void addBackupEntryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBackupEntryButtonActionPerformed
-        remindManager.addReminder();
+        mainController.addReminderViaDialog();
     }//GEN-LAST:event_addBackupEntryButtonActionPerformed
 
     private void exportAsPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsPdfBtnActionPerformed
-        remindManager.exportRemindListAsPDF();
+        MainImportExportController.exportRemindListAsPDF(mainController);
     }//GEN-LAST:event_exportAsPdfBtnActionPerformed
 
     private void exportAsCsvBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportAsCsvBtnActionPerformed
-        remindManager.exportRemindListAsCSV();
+        MainImportExportController.exportRemindListAsCSV(mainController);
     }//GEN-LAST:event_exportAsCsvBtnActionPerformed
 
     private void researchFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_researchFieldKeyTyped
-        remindManager.researchInTable(researchField.getText());
+        List<Remind> filteredReminds = remindService.getSubListWithFilterResearchByString(researchField.getText());
+        TableDataManager.updateTableWithNewRemindList(filteredReminds, RemindService.formatter);
     }//GEN-LAST:event_researchFieldKeyTyped
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -870,7 +878,7 @@ public final class MainGUI extends javax.swing.JFrame {
         } else {
             // get correct remind
             String remindName = (String) remindTable.getValueAt(selectedRow, 1);
-            Remind remind = Remind.getRemindByName(new ArrayList<>(remindManager.getReminds()), remindName);
+            Remind remind = Remind.getRemindByName(new ArrayList<>(RemindService.getReminds()), remindName);
             boolean isActive = (Boolean) remindTable.getValueAt(selectedRow, 2);
             boolean isTopLevel = (Boolean) remindTable.getValueAt(selectedRow, 3);
 
@@ -892,7 +900,7 @@ public final class MainGUI extends javax.swing.JFrame {
             else if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
                 logger.info("Double-click on row: " + selectedRow);
 
-                remindManager.editRemind(remind);
+                mainController.editRemindViaDialog(remind);
             }
 
             // Handling single left mouse button click
@@ -903,59 +911,59 @@ public final class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void MenuNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuNewActionPerformed
-        remindManager.addReminder();
+        mainController.addReminderViaDialog();
     }//GEN-LAST:event_MenuNewActionPerformed
 
     private void MenuImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuImportActionPerformed
-        remindManager.importRemindListFromJSON();
+        MainImportExportController.importRemindListFromJSON(mainController);
     }//GEN-LAST:event_MenuImportActionPerformed
 
     private void MenuExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuExportActionPerformed
-        remindManager.exportRemindListTOJSON();
+        MainImportExportController.exportRemindListTOJSON();
     }//GEN-LAST:event_MenuExportActionPerformed
 
     private void MenuHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuHistoryActionPerformed
-        remindManager.menuItemHistory();
+        MainItemController.menuItemHistory();
     }//GEN-LAST:event_MenuHistoryActionPerformed
 
     private void MenuQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitActionPerformed
-        remindManager.menuQuit();
+        MainItemController.menuQuit();
     }//GEN-LAST:event_MenuQuitActionPerformed
 
     private void MenuWebsiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuWebsiteActionPerformed
-        remindManager.menuWebsite();
+        MainItemController.menuWebsite();
     }//GEN-LAST:event_MenuWebsiteActionPerformed
 
     private void MenuInfoPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuInfoPageActionPerformed
-        remindManager.menuInfoPage();
+        MainItemController.menuInfoPage();
     }//GEN-LAST:event_MenuInfoPageActionPerformed
 
     private void MenuShareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuShareActionPerformed
-        remindManager.menuShare();
+        MainItemController.menuShare();
     }//GEN-LAST:event_MenuShareActionPerformed
 
     private void MenuBugReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBugReportActionPerformed
-        remindManager.menuBugReport();
+        MainItemController.menuBugReport();
     }//GEN-LAST:event_MenuBugReportActionPerformed
 
     private void MenuSupportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuSupportActionPerformed
-        remindManager.menuSupport();
+        MainItemController.menuSupport();
     }//GEN-LAST:event_MenuSupportActionPerformed
 
     private void EditPoputItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPoputItemActionPerformed
-        remindManager.popupEdit(table);
+        MainPopupController.popupEdit(mainController, table);
     }//GEN-LAST:event_EditPoputItemActionPerformed
 
     private void DeletePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePopupItemActionPerformed
-        remindManager.popupDelete(table);
+        MainPopupController.popupDelete(mainController, table);
     }//GEN-LAST:event_DeletePopupItemActionPerformed
 
     private void DuplicatePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DuplicatePopupItemActionPerformed
-        remindManager.popupDuplicate(table);
+        MainPopupController.popupDuplicate(mainController, table);
     }//GEN-LAST:event_DuplicatePopupItemActionPerformed
 
     private void renamePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renamePopupItemActionPerformed
-        remindManager.popupRename(table);
+        MainPopupController.popupRename(mainController, table);
     }//GEN-LAST:event_renamePopupItemActionPerformed
 
     private void tablePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePanelMouseClicked
@@ -964,19 +972,19 @@ public final class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tablePanelMouseClicked
 
     private void activePopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activePopupItemActionPerformed
-        remindManager.popupActive(table, activePopupItem);
+        MainPopupController.popupActive(mainController, table, activePopupItem);
     }//GEN-LAST:event_activePopupItemActionPerformed
 
     private void topLevelPopupItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_topLevelPopupItemActionPerformed
-        remindManager.popupTopLevl(table, topLevelPopupItem);
+        MainPopupController.popupTopLevl(mainController, table, topLevelPopupItem);
     }//GEN-LAST:event_topLevelPopupItemActionPerformed
 
     private void MenuDonatePaypalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDonatePaypalActionPerformed
-        remindManager.menuItemDonateViaPaypal();
+        MainItemController.menuItemDonateViaPaypal();
     }//GEN-LAST:event_MenuDonatePaypalActionPerformed
 
     private void MenuDonateBuyMeACoffeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDonateBuyMeACoffeActionPerformed
-        remindManager.menuItemDonateViaBuymeacoffe();
+        MainItemController.menuItemDonateViaBuymeacoffe();
     }//GEN-LAST:event_MenuDonateBuyMeACoffeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

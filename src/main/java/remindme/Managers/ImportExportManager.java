@@ -32,11 +32,13 @@ import remindme.Entities.RemindListPath;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
+import remindme.GUI.Controllers.MainController;
 import remindme.GUI.MainGUI;
 import remindme.Json.JSONReminder;
+import remindme.Services.RemindService;
 import remindme.Table.TableDataManager;
 
-class ImportExportManager {
+public class ImportExportManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ImportExportManager.class);
 
@@ -53,7 +55,7 @@ class ImportExportManager {
                 logger.info("File imported: " + selectedFile);
 
                 Preferences.setRemindList(new RemindListPath(selectedFile.getParent() + File.separator, selectedFile.getName()));
-                Preferences.updatePreferencesToJSON();
+                Preferences.updatePreferencesToJson();
 
                 try {
                     List<Remind> reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
@@ -92,10 +94,10 @@ class ImportExportManager {
         }
     }
 
-    public static void exportRemindListAsPDF(List<Remind> reminds, String headers) {
+    public static void exportRemindListAsPDF(MainController mainController, String headers) {
         logger.info("Exporting reminds to PDF");
 
-        String path = RemindManager.pathSearchWithFileChooser(false);
+        String path = mainController.pathSearchWithFileChooser(false);
         if (path == null) return;
 
         String filename = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.PDF_NAME_MESSAGE_INPUT));
@@ -126,6 +128,7 @@ class ImportExportManager {
                     table.addCell(new Cell().add(new Paragraph(header.trim())).setFontSize(8f));
                 }
 
+                List<Remind> reminds = RemindService.getReminds();
                 if (reminds != null) {
                     for (Remind remind : reminds) {
                         for (String value : remind.toArrayString()) {
@@ -145,10 +148,10 @@ class ImportExportManager {
         }
     }
 
-    public static void exportRemindListAsCSV(List<Remind> reminds, String header) {
+    public static void exportRemindListAsCSV(MainController mainController, String header) {
         logger.info("Exporting reminds to CSV");
 
-        String path = RemindManager.pathSearchWithFileChooser(false);
+        String path = mainController.pathSearchWithFileChooser(false);
         if (path == null) return;
 
         String filename = JOptionPane.showInputDialog(null, TranslationCategory.DIALOGS.getTranslation(TranslationKey.CSV_NAME_MESSAGE_INPUT));
@@ -168,6 +171,7 @@ class ImportExportManager {
         try (FileWriter writer = new FileWriter(fullPath)) {
             if (header != null && !header.isEmpty()) writer.append(header).append("\n");
 
+            List<Remind> reminds = RemindService.getReminds();
             if (reminds != null) {
                 for (Remind remind : reminds) {
                     writer.append(Arrays.stream(remind.toArrayString())

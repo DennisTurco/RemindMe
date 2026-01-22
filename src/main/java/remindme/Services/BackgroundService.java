@@ -24,7 +24,6 @@ import remindme.Enums.ExecutionMethod;
 import remindme.Helpers.TimeRange;
 import remindme.Json.JSONConfigReader;
 import remindme.Json.JSONReminder;
-import remindme.Managers.RemindManager;
 
 public class BackgroundService {
 
@@ -47,7 +46,7 @@ public class BackgroundService {
         // If the app crashes during write, a .tmp file may remain.
         JSONReminder.deleteTempFileIfExist(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
 
-        RemindManager.updateAllNextExecutions();
+        RemindService.updateAllNextExecutions();
 
         long intervalMinutes = jsonConfigReader.readCheckForReminderTimeInterval();
 
@@ -100,7 +99,7 @@ public class BackgroundService {
             try {
                 List<Remind> reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
 
-                RemindManager.reminds = List.copyOf(reminds);
+                RemindService.setReminds(reminds);
 
                 List<Remind> toExecute = getRemindsToExecute(reminds, 1);
 
