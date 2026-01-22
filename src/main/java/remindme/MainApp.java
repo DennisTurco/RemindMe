@@ -39,7 +39,7 @@ public class MainApp {
 
     private static void loadPreferredLanguage() {
         try {
-            Preferences.loadPreferencesFromJSON();
+            Preferences.loadPreferencesFromJson();
             TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
         } catch (IOException ex) {
             logger.error("An error occurred during loading preferences: " + ex.getMessage(), ex);

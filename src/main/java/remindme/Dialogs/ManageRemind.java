@@ -12,8 +12,8 @@ import remindme.Enums.SoundsEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
 import remindme.Helpers.TimeRange;
-import remindme.Managers.RemindManager;
 import remindme.Managers.SoundPlayer;
+import remindme.Services.TimeIntervalService;
 
 public class ManageRemind extends javax.swing.JDialog {
 
@@ -100,7 +100,7 @@ public class ManageRemind extends javax.swing.JDialog {
             range = TimeRange.of(timeFromLocalTime, timeToLocalTime);
         }
 
-        LocalDateTime nextExecution = RemindManager.getNextExecutionBasedOnMethod(executionMethod, range, timeInterval);
+        LocalDateTime nextExecution = TimeIntervalService.getNextExecutionBasedOnMethod(executionMethod, range, timeInterval);
 
         return new Remind(name, description, remindCount, active, topLevel, lastExecution, nextExecution, creationDate, lastUpdateDate, timeInterval, icon, sound, executionMethod, range, maxExecutionsPerDay);
     }

@@ -70,7 +70,7 @@ public class Remind {
         this.maxExecutionPerDay = maxExecutionsPerDay;
     }
 
-    public void updateReming(Remind newRemind) {
+    public void updateRemind(Remind newRemind) {
         this.name = newRemind.getName();
         this.description = newRemind.getDescription();
         this.remindCount = newRemind.getRemindCount();

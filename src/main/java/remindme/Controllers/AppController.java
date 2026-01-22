@@ -22,7 +22,7 @@ public class AppController {
 
     public static AppController startBackgroundProcess() throws IOException {
         return new AppController();
-    } 
+    }
 
     private AppController() throws IOException {
         logger.info("Starting RemindMe application");

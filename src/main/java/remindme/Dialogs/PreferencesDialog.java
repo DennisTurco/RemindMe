@@ -7,6 +7,7 @@ import remindme.Enums.ThemesEnum;
 import remindme.Enums.TranslationLoaderEnum;
 import remindme.Enums.TranslationLoaderEnum.TranslationCategory;
 import remindme.Enums.TranslationLoaderEnum.TranslationKey;
+import remindme.GUI.Controllers.MainController;
 import remindme.Managers.ThemeManager;
 
 import java.awt.Image;
@@ -19,22 +20,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import remindme.Managers.ExceptionManager;
-import remindme.Managers.RemindManager;
 
 public class PreferencesDialog extends javax.swing.JDialog {
 
     private static final Logger logger = LoggerFactory.getLogger(PreferencesDialog.class);
-    private final RemindManager remindManager;
 
-    public PreferencesDialog(java.awt.Frame parent, boolean modal, RemindManager remindManager) {
+    private final MainController mainController;
+
+    public PreferencesDialog(java.awt.Frame parent, boolean modal, MainController mainController) {
         super(parent, modal);
-        this.remindManager = remindManager;
+        this.mainController = mainController;
 
         initComponents();
 
         // logo application
         Image icon = new ImageIcon(this.getClass().getResource(ConfigKey.LOGO_IMG.getValue())).getImage();
-        this.setIconImage(icon); 
+        this.setIconImage(icon);
 
         ThemeManager.updateThemeDialog(this);
         setLanguages();
@@ -152,8 +153,8 @@ public class PreferencesDialog extends javax.swing.JDialog {
             ThemeManager.updateThemeDialog(this);
 
             // update globally
-            Preferences.updatePreferencesToJSON();
-            remindManager.reloadPreferences();
+            Preferences.updatePreferencesToJson();
+            mainController.reloadPreferences();
         } catch (IOException ex) {
             logger.error("An error occurred during applying preferences: " + ex.getMessage(), ex);
             ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
