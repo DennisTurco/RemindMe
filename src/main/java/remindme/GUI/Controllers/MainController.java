@@ -144,23 +144,21 @@ public final class MainController {
     }
 
     private static Remind retriveRemindInsertedByDialog(ManageRemind dialog) {
-        Remind remind;
-
         do {
             dialog.setVisible(true);
-            remind = dialog.getRemindInserted();
-            if (remind == null) return null;
 
-            if (dialog.isClosedOk()) {
-                if (remind.getName().trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_EMPTY_REMIND_NAME), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                } else if (remindService.isRemindNameDuplicated(remind.getName())) {
-                    JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_DUPLICATED_REMIND), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE), JOptionPane.ERROR_MESSAGE);
-                } else if (!dialog.isTimeRangeValid()) {
-                    JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_TIME_RANGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
-                } else {
-                    return remind;
-                }
+            if (!dialog.isClosedOk()) return null;
+
+            String name = dialog.getRemindName();
+
+            if (name.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_EMPTY_REMIND_NAME), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            } else if (remindService.isRemindNameDuplicated(name)) {
+                JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_DUPLICATED_REMIND), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_FILE_EXTENSION_TITLE), JOptionPane.ERROR_MESSAGE);
+            } else if (!dialog.isTimeRangeValid()) {
+                JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_TIME_RANGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
+            } else {
+                return dialog.getRemindInserted();
             }
         } while (true);
     }
@@ -173,7 +171,8 @@ public final class MainController {
             TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.IS_TOP_LEVEL_COLUMN),
             TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.LAST_EXECUTION_COLUMN),
             TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.NEXT_EXECUTION_COLUMN),
-            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN)
+            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.TIME_INTERVAL_COLUMN),
+            TranslationCategory.REMIND_LIST.getTranslation(TranslationKey.EXECUTION_METHOD_COLUMN)
         };
         return columnNames;
     }
@@ -209,17 +208,15 @@ public final class MainController {
     }
 
     private static Remind retriveRemindUpdatedByDialog(ManageRemind dialog) {
-        Remind updatedRemind;
         do {
             dialog.setVisible(true);
-            updatedRemind = dialog.getRemindInserted();
 
-            if (updatedRemind == null) return null;
+            if (!dialog.isClosedOk()) return null;
 
-            if (!dialog.isTimeRangeValid() && dialog.isClosedOk()) {
+            if (!dialog.isTimeRangeValid()) {
                 JOptionPane.showMessageDialog(main, TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_MESSAGE_FOR_WRONG_TIME_RANGE), TranslationCategory.DIALOGS.getTranslation(TranslationKey.ERROR_GENERIC_TITLE), JOptionPane.ERROR_MESSAGE);
             } else {
-                return updatedRemind;
+                return dialog.getRemindInserted();
             }
         } while (true);
     }

@@ -132,9 +132,17 @@ public class ManageRemind extends javax.swing.JDialog {
             return true;
         }
 
-        isTimeRangeValid(timeFrom.getTime(), timeTo.getTime());
+        return isTimeRangeValid(timeFrom.getTime(), timeTo.getTime());
+    }
 
-        return true;
+    public String getRemindName() {
+        return remindNameTextField.getText();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        if (visible) closeOk = false;
+        super.setVisible(visible);
     }
 
     public static boolean isTimeRangeValid(LocalTime timeFrom, LocalTime timeTo) {
@@ -203,14 +211,12 @@ public class ManageRemind extends javax.swing.JDialog {
         iconComboBox.addItem(IconsEnum.EYE_CLOSED.getIconName());
         iconComboBox.addItem(IconsEnum.MAN.getIconName());
         iconComboBox.addItem(IconsEnum.MAN_BEER.getIconName());
-        iconComboBox.addItem(IconsEnum.MAN.getIconName());
         iconComboBox.addItem(IconsEnum.MAN_CALCULATOR.getIconName());
         iconComboBox.addItem(IconsEnum.MAN_COMPUTER.getIconName());
         iconComboBox.addItem(IconsEnum.MAN_JOGGING.getIconName());
         iconComboBox.addItem(IconsEnum.MAN_SHOPPING.getIconName());
         iconComboBox.addItem(IconsEnum.MAN_SLEEPING.getIconName());
         iconComboBox.addItem(IconsEnum.MAN_WEARING_TIE.getIconName());
-        iconComboBox.addItem(IconsEnum.MAN_WITH_DIETARY.getIconName());
         iconComboBox.addItem(IconsEnum.MAN_WITH_DIETARY.getIconName());
         iconComboBox.addItem(IconsEnum.MAN_YOGA.getIconName());
         iconComboBox.addItem(IconsEnum.MUSIC1.getIconName());
@@ -535,12 +541,14 @@ public class ManageRemind extends javax.swing.JDialog {
         else if (oneTimePerDayEnable) {
             enableBasedOnExecutionMethod(true, false);
             timeIntervalBtn.setEnabled(false);
+            timeFrequencyLabel.setText("N/A");
             return;
         }
         else if (pcStartupEnable) {
             enableBasedOnExecutionMethod(false, false);
         }
         timeIntervalBtn.setEnabled(true);
+        timeFrequencyLabel.setText(timeInterval != null ? timeInterval.toString() : TimeInterval.getDefaultTimeInterval().toString());
     }//GEN-LAST:event_executionMethodComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

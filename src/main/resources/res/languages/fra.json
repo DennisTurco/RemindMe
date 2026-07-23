@@ -45,6 +45,7 @@
         "IsActiveColumn": "Actif",
         "IsTopLevelColumn": "Afficher en haut",
         "TimeIntervalColumn": "Intervalle de temps",
+        "ExecutionMethodColumn": "Méthode d'exécution",
 
         "NameDetail": "Nom",
         "DescriptionDetail": "Description",

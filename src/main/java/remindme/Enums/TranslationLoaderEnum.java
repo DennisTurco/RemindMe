@@ -104,6 +104,7 @@ public class TranslationLoaderEnum {
         IS_ACTIVE_COLUMN("IsActiveColumn", "Active"),
         IS_TOP_LEVEL_COLUMN("IsTopLevelColumn", "Show On Top"),
         TIME_INTERVAL_COLUMN("TimeIntervalColumn", "Time Interval"),
+        EXECUTION_METHOD_COLUMN("ExecutionMethodColumn", "Execution Method"),
         NAME_DETAIL("NameDetail", "Name"),
         DESCRIPTION_DETAIL("DescriptionDetail", "Description"),
         COUNT_DETAIL("CountDetail", "Count"),
