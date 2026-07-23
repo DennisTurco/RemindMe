@@ -26,7 +26,7 @@ public class RemindTable extends JTable {
 
         if (col == 6) {
             Object value = getValueAt(row, col);
-            return value != null ? "dd.HH:mm" : null;
+            return (value != null && !"N/A".equals(value.toString())) ? "dd.HH:mm" : null;
         }
         return null;
     }

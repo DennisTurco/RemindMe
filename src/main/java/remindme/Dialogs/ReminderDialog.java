@@ -49,7 +49,7 @@ public class ReminderDialog extends javax.swing.JDialog {
 
         setNameLabelText(remind.name());
         descriptionEditor.setText(remind.description());
-        iconLabel.setSvgImage(remind.icon().getIconPath(), 50, 50);
+        iconLabel.setSvgImage(remind.icon().getIconPath(), 60, 60);
         SoundPlayer.playSound(remind.sound());
 
         setAlwaysOnTop(remind.topLevel());
@@ -93,55 +93,61 @@ public class ReminderDialog extends javax.swing.JDialog {
         setTitle("Remind Me");
         setResizable(false);
 
-        descriptionEditor.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        // Header: icon + name with bottom separator
+        iconLabel.setPreferredSize(new java.awt.Dimension(60, 60));
+        iconLabel.setMinimumSize(new java.awt.Dimension(60, 60));
+
+        nameLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 17));
+        nameLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 6, 0, 0));
+
+        javax.swing.JPanel headerInner = new javax.swing.JPanel(new java.awt.BorderLayout(8, 0));
+        headerInner.setBorder(javax.swing.BorderFactory.createEmptyBorder(14, 14, 14, 14));
+        headerInner.add(iconLabel, java.awt.BorderLayout.WEST);
+        headerInner.add(nameLabel, java.awt.BorderLayout.CENTER);
+
+        javax.swing.JPanel headerPanel = new javax.swing.JPanel(new java.awt.BorderLayout());
+        headerPanel.add(headerInner, java.awt.BorderLayout.CENTER);
+        headerPanel.add(new javax.swing.JSeparator(), java.awt.BorderLayout.SOUTH);
+
+        // Description
+        descriptionEditor.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
         descriptionEditor.setFocusable(false);
         descriptionEditor.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(descriptionEditor);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(380, 80));
 
-        nameLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        nameLabel.setText("jLabel1");
+        javax.swing.JPanel contentPanel = new javax.swing.JPanel(new java.awt.BorderLayout());
+        contentPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 14, 12, 14));
+        contentPanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        // Footer: time label + OK button with top separator
+        timeLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 11));
 
         okBtn.setText("Ok");
+        okBtn.setPreferredSize(new java.awt.Dimension(80, 30));
         okBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okBtnActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(okBtn)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(okBtn)
-                    .addComponent(timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        javax.swing.JPanel footerInner = new javax.swing.JPanel(new java.awt.BorderLayout());
+        footerInner.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 14, 14, 14));
+        footerInner.add(timeLabel, java.awt.BorderLayout.WEST);
+        footerInner.add(okBtn, java.awt.BorderLayout.EAST);
 
+        javax.swing.JPanel footerPanel = new javax.swing.JPanel(new java.awt.BorderLayout());
+        footerPanel.add(new javax.swing.JSeparator(), java.awt.BorderLayout.NORTH);
+        footerPanel.add(footerInner, java.awt.BorderLayout.CENTER);
+
+        // Assemble main layout
+        getContentPane().setLayout(new java.awt.BorderLayout());
+        getContentPane().add(headerPanel, java.awt.BorderLayout.NORTH);
+        getContentPane().add(contentPanel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(footerPanel, java.awt.BorderLayout.SOUTH);
+
+        setMinimumSize(new java.awt.Dimension(400, 200));
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents

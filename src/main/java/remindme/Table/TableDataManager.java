@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import remindme.Entities.Remind;
+import remindme.Enums.ExecutionMethod;
 import remindme.GUI.MainGUI;
 
 public class TableDataManager {
@@ -29,7 +30,8 @@ public class TableDataManager {
                     remind.isTopLevel(),
                     remind.getLastExecution() != null ? remind.getLastExecution().format(formatter) : "",
                     remind.getNextExecution() != null ? remind.getNextExecution().format(formatter) : "",
-                    remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : ""
+                    remind.getExecutionMethod() == ExecutionMethod.ONE_TIME_PER_DAY ? "N/A" : (remind.getTimeInterval() != null ? remind.getTimeInterval().toString() : ""),
+                    remind.getExecutionMethod() != null ? remind.getExecutionMethod().getExecutionMethodName() : ""
                 });
             }
         });
