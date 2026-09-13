@@ -38,6 +38,20 @@
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
+        },
+        {
+            "type": "node-terminal",
+            "name": "RemindMe App (Electron dev)",
+            "request": "launch",
+            "command": "npm run dev",
+            "cwd": "${workspaceFolder}/app"
+        },
+        {
+            "type": "node-terminal",
+            "name": "RemindMe App (tests)",
+            "request": "launch",
+            "command": "npm test",
+            "cwd": "${workspaceFolder}/app"
         }
     ]
 }

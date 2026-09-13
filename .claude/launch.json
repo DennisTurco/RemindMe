@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "remindme-app",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:vite-only"],
+      "port": 5173
+    }
+  ]
+}

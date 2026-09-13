@@ -1,0 +1,67 @@
+{
+  "name": "remindme",
+  "private": true,
+  "version": "1.2.2",
+  "type": "module",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"npm:dev:electron\"",
+    "dev:electron": "wait-on tcp:5173 && npm run build:electron-main && electron dist-electron/main.js",
+    "dev:vite-only": "vite",
+    "build:electron-main": "tsc -p electron/tsconfig.json && node -e \"require('fs').writeFileSync('dist-electron/package.json', JSON.stringify({type:'commonjs'}))\"",
+    "build": "tsc -b && vite build && npm run build:electron-main",
+    "build:electron": "npm run build && electron-builder",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p electron/tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "auto-launch": "^5.0.6",
+    "nodemailer": "^6.9.15",
+    "pdfkit": "^0.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.26.2",
+    "remark-gfm": "^4.0.0",
+    "sql.js": "^1.11.0"
+  },
+  "devDependencies": {
+    "@types/auto-launch": "^5.0.5",
+    "@types/node": "^22.7.4",
+    "@types/sql.js": "^1.4.9",
+    "@types/nodemailer": "^6.4.16",
+    "@types/pdfkit": "^0.13.4",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^9.0.1",
+    "electron": "^32.1.2",
+    "electron-builder": "^25.0.5",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8",
+    "vitest": "^2.1.1",
+    "wait-on": "^8.0.0"
+  },
+  "build": {
+    "appId": "it.dennisturco.remindme",
+    "productName": "RemindMe",
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "res",
+        "to": "res"
+      }
+    ],
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    }
+  }
+}

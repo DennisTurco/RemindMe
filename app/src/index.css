@@ -1,0 +1,507 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --border: #d9d9d9;
+  --accent: #3b82f6;
+  --row-even: #dfdef3;
+  --row-odd: #ffffff;
+  --row-selected: #b8c9f5;
+  --panel-bg: #f7f7f9;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1e1f22;
+    --fg: #e6e6e6;
+    --border: #3a3b3e;
+    --row-even: #2a2b30;
+    --row-odd: #1e1f22;
+    --row-selected: #3a4a7a;
+    --panel-bg: #26272b;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #1e1f22;
+  --fg: #e6e6e6;
+  --border: #3a3b3e;
+  --row-even: #2a2b30;
+  --row-odd: #1e1f22;
+  --row-selected: #3a4a7a;
+  --panel-bg: #26272b;
+}
+
+/*
+ * `color-scheme` drives native form controls (checkboxes) and the scrollbar,
+ * not just our own CSS variables. Without pinning it per explicit theme,
+ * an explicit light/dark choice (data-theme) would still render native
+ * widgets using the OS/browser default instead of following the toggle.
+ */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.main-page {
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar {
+  flex: 1;
+  max-width: 320px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.toolbar-label {
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+.remind-table-wrapper {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  outline: none;
+}
+
+.remind-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.remind-table th,
+.remind-table td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.remind-table thead th {
+  background: var(--panel-bg);
+  position: sticky;
+  top: 0;
+}
+
+.remind-table tbody tr {
+  cursor: pointer;
+}
+
+.remind-table tr.row-even {
+  background: var(--row-even);
+}
+
+.remind-table tr.row-odd {
+  background: var(--row-odd);
+}
+
+.remind-table tr.row-selected {
+  background: var(--row-selected) !important;
+}
+
+.checkbox-cell {
+  text-align: center;
+}
+
+.empty-row {
+  text-align: center;
+  color: #888;
+}
+
+.details-panel {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  background: var(--panel-bg);
+}
+
+.details-panel h3 {
+  margin: 0 0 6px;
+}
+
+.details-description {
+  color: #888;
+  margin: 0 0 8px;
+}
+
+.markdown-content p {
+  margin: 0 0 6px;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin: 0 0 6px;
+  padding-left: 20px;
+}
+
+.markdown-content code {
+  background: var(--panel-bg);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.markdown-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 16px;
+  margin: 0;
+}
+
+.details-grid dt {
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.details-grid dd {
+  margin: 0;
+}
+
+/* Context menu */
+.context-menu {
+  position: fixed;
+  z-index: 1000;
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  min-width: 200px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.context-menu li {
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.context-menu li:hover {
+  background: var(--panel-bg);
+}
+
+.context-menu-submenu-label {
+  opacity: 0.6;
+  font-size: 0.85em;
+  cursor: default !important;
+}
+
+.context-menu-checkbox {
+  padding-left: 24px !important;
+}
+
+.context-menu-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+}
+
+.modal {
+  background: var(--bg);
+  color: var(--fg);
+  border-radius: 8px;
+  padding: 20px 24px;
+  min-width: 320px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal-description {
+  opacity: 0.75;
+  font-size: 0.9em;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+}
+
+.field span {
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+
+.field-label-with-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  font-size: 0.75em;
+  font-style: italic;
+  font-family: Georgia, "Times New Roman", serif;
+  opacity: 1;
+  cursor: help;
+}
+
+.field-error {
+  color: #e5484d;
+  font-size: 0.9em;
+}
+
+.field-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.field-row .field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+fieldset.field {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+fieldset.field legend {
+  font-size: 0.85em;
+  opacity: 0.75;
+  padding: 0 4px;
+}
+
+.time-picker-fields {
+  display: flex;
+  gap: 12px;
+}
+
+.time-picker-fields .field {
+  flex: 1;
+}
+
+.time-frequency-label {
+  font-variant-numeric: tabular-nums;
+}
+
+.reminder-form {
+  width: 480px;
+}
+
+.reminder-form-actions {
+  justify-content: space-between;
+}
+
+.modal-actions-right {
+  display: flex;
+  gap: 10px;
+}
+
+.reminder-preview {
+  width: 420px;
+}
+
+.reminder-preview-top-level {
+  border: 2px solid var(--accent);
+}
+
+.reminder-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reminder-preview-name {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.reminder-preview-description {
+  margin-top: 10px;
+  max-height: 120px;
+  overflow: auto;
+  font-size: 0.85em;
+  line-height: 1.35;
+}
+
+.reminder-preview-description p,
+.reminder-preview-description ul,
+.reminder-preview-description ol {
+  margin: 0 0 4px;
+}
+
+.reminder-preview-footer {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reminder-preview-time {
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+.onboarding-panel {
+  width: 420px;
+  position: relative;
+  text-align: center;
+}
+
+.onboarding-skip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  font-size: 0.85em;
+}
+
+.onboarding-icon {
+  font-size: 42px;
+  margin-top: 8px;
+}
+
+.onboarding-title {
+  margin: 8px 0 4px;
+}
+
+.onboarding-body {
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.onboarding-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 16px 0 4px;
+}
+
+.onboarding-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.onboarding-dot.active {
+  background: var(--accent);
+}
+
+.onboarding-actions {
+  justify-content: space-between;
+}
+
+.icon-preview {
+  border-radius: 4px;
+}
+
+.btn {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+  font: inherit;
+}
+
+.btn:hover {
+  background: var(--panel-bg);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}

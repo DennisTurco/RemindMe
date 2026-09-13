@@ -1,0 +1,26 @@
+{
+  "SupportEmail": "assistenza@shardpc.it",
+  "Links": {
+    "Website": "https://www.shardpc.it/",
+    "InfoPage": "https://github.com/DennisTurco/RemindMe",
+    "IssuePage": "https://github.com/DennisTurco/RemindMe/issues",
+    "SharePage": "https://github.com/DennisTurco/RemindMe/releases",
+    "DonatePaypal": "https://www.paypal.com/donate/?hosted_button_id=M7CJXS929334U",
+    "DonateBuyMeACoffee": "https://buymeacoffee.com/denno"
+  },
+  "MenuItems": {
+    "New": true,
+    "Import": true,
+    "Export": true,
+    "Preferences": true,
+    "Quit": true,
+    "Website": true,
+    "InfoPage": true,
+    "Share": true,
+    "Donate": true,
+    "PaypalDonate": true,
+    "BuymeacoffeeDonate": true,
+    "BugReport": true,
+    "Support": true
+  }
+}
