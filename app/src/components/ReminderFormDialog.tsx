@@ -130,6 +130,8 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
           />
         </label>
 
+        <hr className="form-section" />
+
         <div className="field-row">
           <label className="field">
             <span>{t("General", "IconText", "Icona")}</span>
@@ -174,6 +176,8 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
           </button>
         </div>
 
+        <hr className="form-section" />
+
         <div className="field-row">
           <label className="checkbox-field">
             <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
@@ -194,6 +198,8 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
             </span>
           </label>
         </div>
+
+        <hr className="form-section" />
 
         <label className="field">
           <span>{t("General", "ExecutionMethodText", "Metodo di esecuzione")}</span>

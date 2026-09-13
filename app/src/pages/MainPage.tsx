@@ -192,12 +192,14 @@ export function MainPage() {
         />
         <span className="toolbar-spacer" />
         <span className="toolbar-label">{t("MainFrame", "ExportAs", "Esporta come: ")}</span>
-        <button className="btn btn-icon" title={t("MainFrame", "ExportAsCsvTooltip", "Esporta come CSV")} onClick={handleExportCsv}>
-          CSV
-        </button>
-        <button className="btn btn-icon" title={t("MainFrame", "ExportAsPdfTooltip", "Esporta come PDF")} onClick={handleExportPdf}>
-          PDF
-        </button>
+        <div className="toolbar-group">
+          <button className="btn" title={t("MainFrame", "ExportAsCsvTooltip", "Esporta come CSV")} onClick={handleExportCsv}>
+            CSV
+          </button>
+          <button className="btn" title={t("MainFrame", "ExportAsPdfTooltip", "Esporta come PDF")} onClick={handleExportPdf}>
+            PDF
+          </button>
+        </div>
         <button
           className="btn btn-icon"
           title={theme === "dark" ? "Passa al tema chiaro" : "Passa al tema scuro"}
@@ -260,10 +262,14 @@ export function MainPage() {
           <h3>{selected.name}</h3>
           {selected.description && <MarkdownContent className="details-description" text={selected.description} />}
           <dl className="details-grid">
-            <dt>{t("RemindList", "IsActiveDetail", "Attivo")}</dt>
-            <dd>{selected.isActive ? "Sì" : "No"}</dd>
-            <dt>{t("RemindList", "IsTopLevelDetail", "Mostra in alto")}</dt>
-            <dd>{selected.isTopLevel ? "Sì" : "No"}</dd>
+            <dt>{t("RemindList", "IsActiveColumn", "Attivo")}</dt>
+            <dd>
+              <span className={`badge ${selected.isActive ? "badge-on" : ""}`}>{selected.isActive ? "Sì" : "No"}</span>
+            </dd>
+            <dt>{t("RemindList", "IsTopLevelColumn", "Mostra in alto")}</dt>
+            <dd>
+              <span className={`badge ${selected.isTopLevel ? "badge-on" : ""}`}>{selected.isTopLevel ? "Sì" : "No"}</span>
+            </dd>
             <dt>{t("RemindList", "LastExecutionColumn", "Ultima esecuzione")}</dt>
             <dd>{formatDate(selected.lastExecution)}</dd>
             <dt>{t("RemindList", "NextExecutionColumn", "Prossima esecuzione")}</dt>
@@ -301,8 +307,16 @@ export function MainPage() {
       {contextMenu && (
         <ul className="context-menu" style={{ top: contextMenu.y, left: contextMenu.x }} onClick={(e) => e.stopPropagation()}>
           <li onClick={() => setEditingRemind(contextMenu.remind)}>{t("RemindList", "EditPopup", "Modifica")}</li>
-          <li onClick={() => handleDeleteNoConfirm(contextMenu.remind)}>{t("RemindList", "DeletePopup", "Elimina")}</li>
           <li onClick={() => handleDuplicate(contextMenu.remind)}>{t("RemindList", "DuplicatePopup", "Duplica")}</li>
+          <li
+            onClick={() => {
+              setRenamingRemind(contextMenu.remind);
+              setContextMenu(null);
+            }}
+          >
+            {t("RemindList", "RenamePopup", "Rinomina")}
+          </li>
+          <li className="context-menu-separator" />
           <li className="context-menu-submenu-label">{t("RemindList", "EnableDisablePopup", "Abilita / disabilita")}</li>
           <li className="context-menu-checkbox">
             <label>
@@ -324,13 +338,9 @@ export function MainPage() {
               {t("RemindList", "TopLevelPopup", "Mostra in primo piano")}
             </label>
           </li>
-          <li
-            onClick={() => {
-              setRenamingRemind(contextMenu.remind);
-              setContextMenu(null);
-            }}
-          >
-            {t("RemindList", "RenamePopup", "Rinomina")}
+          <li className="context-menu-separator" />
+          <li className="context-menu-item-danger" onClick={() => handleDeleteNoConfirm(contextMenu.remind)}>
+            {t("RemindList", "DeletePopup", "Elimina")}
           </li>
         </ul>
       )}

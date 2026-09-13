@@ -8,6 +8,7 @@ export interface ExportResult {
 
 export interface RemindMeBridge {
   getAll(): Promise<Remind[]>;
+  getByName(name: string): Promise<Remind | null>;
   search(query: string): Promise<Remind[]>;
   create(remind: Remind): Promise<Remind>;
   update(currentName: string, remind: Remind): Promise<Remind>;
@@ -33,6 +34,7 @@ function subscribe(channel: string, callback: () => void): () => void {
 
 const bridge: RemindMeBridge = {
   getAll: () => ipcRenderer.invoke("reminders:getAll"),
+  getByName: (name) => ipcRenderer.invoke("reminders:getByName", name),
   search: (query) => ipcRenderer.invoke("reminders:search", query),
   create: (remind) => ipcRenderer.invoke("reminders:create", remind),
   update: (currentName, remind) => ipcRenderer.invoke("reminders:update", currentName, remind),

@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ import com.google.gson.JsonParser;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.LanguagesEnum;
 import remindme.Enums.ThemesEnum;
-import remindme.Managers.ExceptionManager;
 
 public class Preferences {
     private static final Logger logger = LoggerFactory.getLogger(Preferences.class);
@@ -44,9 +42,7 @@ public class Preferences {
         } catch (Exception ex) {
             logger.error("Failed to load preference JSON file: ", ex.getMessage());
             setDefaultPreferences();
-            updatePreferencesToJson();
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
+            updatePreferencesToJson();        }
     }
 
     private static void setDefaultPreferences() {
@@ -79,9 +75,7 @@ public class Preferences {
             logger.info("Preferences updated to JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
 
         } catch (IOException ex) {
-            logger.error("An error occurred during updating preferences to json operation: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
+            logger.error("An error occurred during updating preferences to json operation: " + ex.getMessage(), ex);        }
     }
 
     private static LanguagesEnum getLanguageFromJson(JsonObject jsonObject) {
@@ -157,9 +151,7 @@ public class Preferences {
             }
             logger.warn("Invalid language name: " + selectedLanguage);
         } catch (Exception ex) {
-            logger.error("An error occurred during setting language operation: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
+            logger.error("An error occurred during setting language operation: " + ex.getMessage(), ex);        }
     }
     public static void setTheme(String selectedTheme) {
         try {
@@ -172,8 +164,6 @@ public class Preferences {
             }
             logger.warn("Invalid theme name: " + selectedTheme);
         } catch (Exception ex) {
-            logger.error("An error occurred during setting theme operation: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
+            logger.error("An error occurred during setting theme operation: " + ex.getMessage(), ex);        }
     }
 }

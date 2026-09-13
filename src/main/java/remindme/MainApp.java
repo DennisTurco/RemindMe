@@ -1,18 +1,26 @@
 package remindme;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import remindme.Controllers.AppController;
+import remindme.Api.ApiServer;
+import remindme.Api.ReminderController;
 import remindme.Entities.Preferences;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.TranslationLoaderEnum;
-import remindme.GUI.MainGUI;
-import remindme.Managers.ExceptionManager;
+import remindme.Services.SuggestionsSeeder;
+import remindme.Sqlite.Database;
+import remindme.Sqlite.ReminderRepository;
 
+/**
+ * Entry point for the headless API backend (remindme.Api.ApiServer),
+ * consumed by the Electron/React frontend (app/). The old Swing GUI and its
+ * background-service/tray mode have been retired now that Electron owns the
+ * UI and tray entirely; this class only ever starts the API server.
+ */
 public class MainApp {
 
     private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
@@ -23,17 +31,42 @@ public class MainApp {
 
         loadPreferredLanguage();
 
-        boolean isBackgroundMode = args.length > 0 && args[0].equalsIgnoreCase("--background");
-
-        checkArgument(isBackgroundMode, args);
+        boolean isServeMode = args.length > 0 && args[0].equalsIgnoreCase("--serve");
+        if (!isServeMode) {
+            logger.warn("Usage: java -jar RemindMe.jar --serve");
+            throw new IllegalArgumentException("Expected --serve argument");
+        }
 
         logger.info("Application started");
-        logger.debug("Background mode: " + isBackgroundMode);
+        runApiServer();
+    }
 
-        if (isBackgroundMode) {
-            runBackgroundProcess();
-        } else {
-            runGui();
+    private static void runApiServer() {
+        try {
+            String resDirectory = ConfigKey.RES_DIRECTORY_STRING.getValue();
+            String dbPath = resDirectory + "reminders.db";
+
+            ReminderRepository repository = new ReminderRepository(Database.open(dbPath));
+            repository.recomputeAllNextExecutions();
+
+            Preferences.loadPreferencesFromJson();
+            var legacyList = Preferences.getRemindList();
+            if (repository.getAll().isEmpty()) {
+                try {
+                    repository.insertMany(remindme.Json.JSONReminder.readRemindListFromJSON(legacyList.directory(), legacyList.file()));
+                } catch (IOException ex) {
+                    logger.info("No legacy remind list to migrate: " + ex.getMessage());
+                }
+            }
+
+            SuggestionsSeeder.seedIfEmpty(repository, resDirectory, "suggestions_remind.json");
+
+            ApiServer server = new ApiServer(new ReminderController(repository));
+            server.start(ApiServer.DEFAULT_PORT);
+
+            Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
+        } catch (SQLException ex) {
+            logger.error("Failed to start API server: " + ex.getMessage(), ex);
         }
     }
 
@@ -44,29 +77,5 @@ public class MainApp {
         } catch (IOException ex) {
             logger.error("An error occurred during loading preferences: " + ex.getMessage(), ex);
         }
-    }
-
-    private static void checkArgument(boolean isBackgroundMode, String[] args) {
-        if (!isBackgroundMode && args.length > 0) {
-            logger.warn("Argument \"" + args[0] + "\" not valid!");
-            throw new IllegalArgumentException("Argument passed is not valid!");
-        }
-    }
-
-    private static void runBackgroundProcess() {
-        logger.info("Backup service starting in the background");
-        try {
-            AppController.startBackgroundProcess();
-        } catch (IOException ex) {
-            logger.error("An error occurred: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
-    }
-
-    private static void runGui() {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            MainGUI gui = new MainGUI();
-            gui.showWindow();
-        });
     }
 }

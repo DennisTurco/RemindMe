@@ -1,14 +1,15 @@
 import { BrowserWindow, Menu, MenuItemConstructorOptions, clipboard, dialog, shell } from "electron";
+import * as fs from "fs/promises";
+import { apiClient } from "./apiClient";
 import type { AppConfig } from "./services/appConfigService";
 import { t, type Translations } from "./services/i18nService";
-import { exportRemindListToJson, readRemindListFromJson } from "./services/jsonListIO";
-import type { ReminderRepository } from "./services/reminderRepository";
+import type { Remind } from "./types";
 
 export interface AppMenuContext {
   getMainWindow: () => BrowserWindow | null;
-  getRepository: () => ReminderRepository;
   config: AppConfig;
   translations: Translations | null;
+  quit: () => void;
 }
 
 /**
@@ -17,8 +18,10 @@ export interface AppMenuContext {
  * driven by config.json's MenuItems flags, same as MainGUI#setMenuItems in
  * the Java app; labels come from the selected language's Menu/Dialogs
  * translations (res/languages/*.json), same source as the Java app used.
+ * Import/Export go through the Java backend's API (apiClient), not a local
+ * file store.
  */
-export function buildAppMenu({ getMainWindow, getRepository, config, translations }: AppMenuContext): Menu {
+export function buildAppMenu({ getMainWindow, config, translations, quit }: AppMenuContext): Menu {
   const flags = config.menuItems;
   const links = config.links;
   const m = (key: string, fallback: string) => t(translations, "Menu", key, fallback);
@@ -58,8 +61,11 @@ export function buildAppMenu({ getMainWindow, getRepository, config, translation
         if (canceled || !filePaths[0]) return;
 
         try {
-          const reminds = await readRemindListFromJson(filePaths[0]);
-          getRepository().replaceAll(reminds);
+          const content = await fs.readFile(filePaths[0], "utf-8");
+          const reminds = JSON.parse(content);
+          if (!Array.isArray(reminds)) throw new Error("Not an array");
+
+          await apiClient.importJson(reminds as Remind[]);
           win.webContents.send("reminders:changed");
           notify(d("RemindListCorrectlyImportedMessage", "Elenco promemoria importato con successo!"));
         } catch {
@@ -81,7 +87,8 @@ export function buildAppMenu({ getMainWindow, getRepository, config, translation
         });
         if (canceled || !filePath) return;
 
-        await exportRemindListToJson(getRepository().getAll(), filePath);
+        const reminds = await apiClient.exportJson();
+        await fs.writeFile(filePath, JSON.stringify(reminds, null, 2), "utf-8");
         notify(d("RemindListCorrectlyExportedMessage", "Elenco promemoria esportato con successo!"));
       },
     });
@@ -99,7 +106,7 @@ export function buildAppMenu({ getMainWindow, getRepository, config, translation
     optionsItems.push({
       label: m("Quit", "Esci"),
       accelerator: process.platform === "darwin" ? "Cmd+Q" : "Alt+F4",
-      click: () => getMainWindow()?.close(),
+      click: () => quit(),
     });
   }
 

@@ -4,14 +4,25 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import remindme.Dialogs.ManageRemind;
 import remindme.Entities.TimeInterval;
 import remindme.Enums.ExecutionMethod;
 import remindme.Helpers.TimeRange;
 
 public class TimeIntervalService {
+
+    /**
+     * A time range is valid when its start is strictly before its end.
+     * Previously this delegated to Dialogs.ManageRemind#isTimeRangeValid,
+     * which pulled in a Swing dependency and (due to a bug there) always
+     * returned true regardless of the actual range; inlined here as a pure
+     * check so this class has no GUI dependency and the check is meaningful.
+     */
+    public static boolean isTimeRangeValid(TimeRange range) {
+        return range != null && range.start().isBefore(range.end());
+    }
+
     public static LocalDateTime getNextExecutionBasedOnMethod(ExecutionMethod method, TimeRange range, TimeInterval interval) {
-        if (method == ExecutionMethod.CUSTOM_TIME_RANGE && ManageRemind.isTimeRangeValid(range.start(), range.end())) {
+        if (method == ExecutionMethod.CUSTOM_TIME_RANGE && isTimeRangeValid(range)) {
             return getNextExecutionByTimeIntervalFromSpecificTime(interval, range.start());
         }
         else if (method == ExecutionMethod.ONE_TIME_PER_DAY)  {

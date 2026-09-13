@@ -35,6 +35,14 @@
         },
         {
             "type": "java",
+            "name": "MainApp Serve",
+            "request": "launch",
+            "mainClass": "remindme.MainApp",
+            "projectName": "RemindMe",
+            "args": "--serve"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -45,13 +53,13 @@
             "request": "launch",
             "command": "npm run dev",
             "cwd": "${workspaceFolder}/app"
-        },
+        }
+    ],
+    "compounds": [
         {
-            "type": "node-terminal",
-            "name": "RemindMe App (tests)",
-            "request": "launch",
-            "command": "npm test",
-            "cwd": "${workspaceFolder}/app"
+            "name": "RemindMe (Full Stack Dev)",
+            "configurations": ["MainApp Serve", "RemindMe App (Electron dev)"],
+            "stopAll": true
         }
     ]
 }

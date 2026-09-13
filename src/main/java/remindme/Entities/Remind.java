@@ -1,22 +1,13 @@
 package remindme.Entities;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import remindme.Enums.ExecutionMethod;
 import remindme.Enums.IconsEnum;
 import remindme.Enums.SoundsEnum;
 import remindme.Helpers.TimeRange;
-import remindme.Json.JSONReminder;
-import remindme.Managers.ExceptionManager;
 
 public class Remind {
-    private static final Logger logger = LoggerFactory.getLogger(Remind.class);
 
     private String name;
     private String description;
@@ -119,32 +110,6 @@ public class Remind {
         return "Name,Active,TopLevel,LastExecution,NextExecution,Interval (gg.HH:mm),ExecutionMethod,TimeFrom,TimeTo";
     }
 
-    public static Remind getRemindByName(List<Remind> reminds, String remindName) {
-        for (Remind rem : reminds) {
-            if (rem.getName().equals(remindName)) {
-                return rem;
-            }
-        }
-        return null;
-    }
-
-    public static Remind getRemindByName(String remindName) {
-        List<Remind> reminds;
-        try {
-            reminds = JSONReminder.readRemindListFromJSON(Preferences.getRemindList().directory(), Preferences.getRemindList().file());
-            for (Remind remind : reminds) {
-                if (remind.getName().equals(remindName)) {
-                    return remind;
-                }
-            }
-        } catch (IOException ex) {
-            logger.error("An error occurred: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-        }
-
-        return null;
-    }
-
     public String getName() {
         return name;
     }
@@ -218,6 +183,9 @@ public class Remind {
     }
     public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
     public void setTimeInterval(TimeInterval timeInterval) {
         this.timeInterval = timeInterval;

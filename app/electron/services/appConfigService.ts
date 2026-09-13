@@ -26,6 +26,8 @@ export interface MenuItemFlags {
 
 export interface AppConfig {
   supportEmail: string;
+  /** Mirrors config.json's ReminderService.value in the Java app: how often the scheduler checks for due reminders. */
+  schedulerIntervalMinutes: number;
   links: {
     website: string;
     infoPage: string;
@@ -39,6 +41,7 @@ export interface AppConfig {
 
 const DEFAULT_CONFIG: AppConfig = {
   supportEmail: "assistenza@shardpc.it",
+  schedulerIntervalMinutes: 1,
   links: {
     website: "https://www.shardpc.it/",
     infoPage: "https://github.com/DennisTurco/RemindMe",
@@ -66,6 +69,7 @@ const DEFAULT_CONFIG: AppConfig = {
 
 interface RawConfigJson {
   SupportEmail?: string;
+  SchedulerIntervalMinutes?: number;
   Links?: Partial<{
     Website: string;
     InfoPage: string;
@@ -88,6 +92,7 @@ export async function loadAppConfig(configJsonPath: string): Promise<AppConfig> 
 
   return {
     supportEmail: raw.SupportEmail ?? DEFAULT_CONFIG.supportEmail,
+    schedulerIntervalMinutes: raw.SchedulerIntervalMinutes ?? DEFAULT_CONFIG.schedulerIntervalMinutes,
     links: {
       website: raw.Links?.Website ?? DEFAULT_CONFIG.links.website,
       infoPage: raw.Links?.InfoPage ?? DEFAULT_CONFIG.links.infoPage,

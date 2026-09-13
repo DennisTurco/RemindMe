@@ -1,5 +1,6 @@
 /target/
 /src/main/resources/res/logs/*
+/src/main/resources/res/reminders.db*
 /jre/
 RemindMe.exe
 /Output

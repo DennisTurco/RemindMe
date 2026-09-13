@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import remindme.Entities.User;
-import remindme.Managers.ExceptionManager;
 
 public class JsonUser {
     private static final Logger logger = LoggerFactory.getLogger(JsonUser.class);
@@ -79,7 +77,6 @@ public class JsonUser {
             logger.info("User successfully written to JSON user file with data: " + user.toString());
         } catch (IOException ex) {
             logger.error("An error occurred while writing the user JSON: " + ex.getMessage(), ex);
-            ExceptionManager.openExceptionMessage(ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
     }
 }

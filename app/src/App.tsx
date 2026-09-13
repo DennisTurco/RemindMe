@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { OnboardingWizard } from "./components/OnboardingWizard";
 import { hasSeenOnboarding, markOnboardingSeen, onOnboardingTrigger } from "./lib/onboarding";
 import { MainPage } from "./pages/MainPage";
+import { ReminderPopupPage } from "./pages/ReminderPopupPage";
 
-export function App() {
+function MainAppShell() {
   const [showOnboarding, setShowOnboarding] = useState(() => !hasSeenOnboarding());
 
   useEffect(() => onOnboardingTrigger(() => setShowOnboarding(true)), []);
@@ -18,5 +20,16 @@ export function App() {
       <MainPage />
       {showOnboarding && <OnboardingWizard onFinish={finishOnboarding} />}
     </>
+  );
+}
+
+export function App() {
+  return (
+    <HashRouter>
+      <Routes>
+        <Route path="/popup/reminder" element={<ReminderPopupPage />} />
+        <Route path="*" element={<MainAppShell />} />
+      </Routes>
+    </HashRouter>
   );
 }

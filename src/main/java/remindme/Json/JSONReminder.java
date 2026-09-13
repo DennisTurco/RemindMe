@@ -13,7 +13,6 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -29,7 +28,6 @@ import remindme.Entities.TimeInterval;
 import remindme.Json.Adapters.LocalDateTimeAdapter;
 import remindme.Json.Adapters.LocalTimeAdapter;
 import remindme.Json.Adapters.TimeIntervalAdapter;
-import remindme.Managers.ExceptionManager;
 
 public class JSONReminder {
 
@@ -85,10 +83,6 @@ public class JSONReminder {
 
             } catch (IOException ex) {
                 logger.error("Error writing remind list atomically", ex);
-                ExceptionManager.openExceptionMessage(
-                    ex.getMessage(),
-                    Arrays.toString(ex.getStackTrace())
-                );
             }
         }
     }

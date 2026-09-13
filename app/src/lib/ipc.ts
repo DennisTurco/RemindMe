@@ -7,6 +7,7 @@ export interface ExportResult {
 
 export interface RemindMeBridge {
   getAll(): Promise<Remind[]>;
+  getByName(name: string): Promise<Remind | null>;
   search(query: string): Promise<Remind[]>;
   create(remind: Remind): Promise<Remind>;
   update(currentName: string, remind: Remind): Promise<Remind>;
@@ -38,6 +39,7 @@ function createBrowserFallbackBridge(): RemindMeBridge {
   let reminds: Remind[] = [];
   return {
     getAll: async () => reminds,
+    getByName: async (name) => reminds.find((r) => r.name === name) ?? null,
     search: async (query) => reminds.filter((r) => r.name.toLowerCase().includes(query.toLowerCase())),
     create: async (remind) => {
       reminds = [...reminds, remind];

@@ -1,39 +1,27 @@
 import { app, BrowserWindow, Menu, dialog, ipcMain, nativeTheme } from "electron";
+import { spawn, type ChildProcess } from "child_process";
+import * as fs from "fs/promises";
 import * as path from "path";
+import { apiClient } from "./apiClient";
 import { buildAppMenu } from "./appMenu";
 import { loadAppConfig } from "./services/appConfigService";
-import { formatLocalDateTime } from "./services/dateTime";
-import { openDatabase } from "./services/database";
-import { exportToCsv, exportToPdf } from "./services/exportService";
 import { DEFAULT_LANGUAGE, loadTranslations } from "./services/i18nService";
 import type { LanguageCode, Translations } from "./services/i18nService";
-import { importLegacyJsonIfEmpty } from "./services/legacyImport";
-import { ReminderRepository } from "./services/reminderRepository";
-import { seedSuggestionsIfEmpty } from "./services/seedSuggestions";
-import { getNextExecutionBasedOnMethod } from "./services/timeIntervalService";
+import { setupTray, showAndFocus } from "./tray";
+import type { AppTray } from "./tray";
 import type { Remind } from "./types";
-import { createDefaultRemind } from "./types";
-
-/**
- * Mirrors ManageRemind#getRemindInserted: nextExecution is (re)computed
- * whenever a reminder is created or edited via the form, regardless of the
- * active flag.
- */
-function withComputedNextExecution(remind: Remind, now: Date = new Date()): Remind {
-  const nextExecution = getNextExecutionBasedOnMethod(remind.executionMethod, remind.timeRange, remind.timeInterval, now);
-  return { ...remind, nextExecution: nextExecution ? formatLocalDateTime(nextExecution) : null };
-}
 
 const isDev = !app.isPackaged;
 
 let mainWindow: BrowserWindow | null = null;
-let repository: ReminderRepository;
+let poller: DuePoller;
+let appTray: AppTray | null = null;
 let currentLanguage: LanguageCode = DEFAULT_LANGUAGE;
 let currentTranslations: Translations | null = null;
+let isQuitting = false;
+let backendProcess: ChildProcess | null = null;
 
-function getUserDataResDir(): string {
-  return path.join(app.getPath("userData"), "res");
-}
+const openPopups = new Map<string, BrowserWindow>();
 
 /** Directory of resources bundled with the app itself (read-only, not user data). */
 function getBundledResDir(): string {
@@ -44,39 +32,98 @@ function getLanguagesDir(): string {
   return path.join(getBundledResDir(), "languages");
 }
 
-async function rebuildMenu(config: Awaited<ReturnType<typeof loadAppConfig>>): Promise<void> {
+async function refreshTranslations(): Promise<void> {
   try {
     currentTranslations = await loadTranslations(getLanguagesDir(), currentLanguage);
   } catch {
     currentTranslations = null;
   }
+}
+
+function quitApp(): void {
+  isQuitting = true;
+  app.quit();
+}
+
+async function rebuildMenuAndTray(config: Awaited<ReturnType<typeof loadAppConfig>>): Promise<void> {
+  await refreshTranslations();
   Menu.setApplicationMenu(
     buildAppMenu({
       getMainWindow: () => mainWindow,
-      getRepository: () => repository,
       config,
       translations: currentTranslations,
+      quit: quitApp,
     }),
   );
+  appTray?.refresh();
 }
 
-async function initDatabase(): Promise<void> {
-  const dbPath = path.join(getUserDataResDir(), "reminders.db");
-  repository = new ReminderRepository(await openDatabase(dbPath));
-  repository.recomputeAllNextExecutions();
+/**
+ * Polls the Java backend's GET /reminders/due on a fixed interval, replacing
+ * the old in-process SchedulerService now that scheduling logic lives
+ * server-side (remindme.Services.SchedulingService). Mirrors DailyPill's
+ * checkSchedules/checkDailyFact polling pattern in its Electron main.ts.
+ */
+class DuePoller {
+  private timer: ReturnType<typeof setInterval> | null = null;
+  private paused = false;
 
-  // Best-effort one-time import from a pre-existing Java-era remind list, if present.
-  const legacyJsonPath = path.join(getUserDataResDir(), "remind_list1.2.2.json");
-  await importLegacyJsonIfEmpty(repository, legacyJsonPath);
+  constructor(
+    private readonly intervalMs: number,
+    private readonly onDue: (remind: Remind) => void,
+  ) {}
 
-  // Brand-new install with no legacy data: seed the curated example reminders instead of an empty list.
-  const suggestionsJsonPath = path.join(getBundledResDir(), "suggestions_remind.json");
-  await seedSuggestionsIfEmpty(repository, suggestionsJsonPath);
+  start(): void {
+    if (this.timer) return;
+    void this.tick();
+    this.timer = setInterval(() => void this.tick(), this.intervalMs);
+  }
+
+  stop(): void {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+  }
+
+  pause(): void {
+    this.paused = true;
+  }
+
+  resume(): void {
+    this.paused = false;
+  }
+
+  isPaused(): boolean {
+    return this.paused;
+  }
+
+  private async tick(): Promise<void> {
+    if (this.paused) return;
+    try {
+      const due = await apiClient.getDue();
+      due.forEach((remind) => this.onDue(remind));
+    } catch {
+      // Backend not reachable yet (e.g. still starting up in dev); try again next tick.
+    }
+  }
 }
 
 /** Mirrors MainGUI's minimum window size (750x450). */
 const MIN_WIDTH = 750;
 const MIN_HEIGHT = 450;
+
+function getAppIconPath(): string {
+  return path.join(getBundledResDir(), "img", process.platform === "win32" ? "logo.ico" : "logo.png");
+}
+
+function loadRoute(win: BrowserWindow, hash: string): void {
+  if (isDev) {
+    win.loadURL(`http://localhost:5173/#${hash}`);
+  } else {
+    win.loadFile(path.join(__dirname, "../dist/index.html"), { hash });
+  }
+}
 
 function createMainWindow(): void {
   mainWindow = new BrowserWindow({
@@ -84,6 +131,7 @@ function createMainWindow(): void {
     height: 715,
     minWidth: MIN_WIDTH,
     minHeight: MIN_HEIGHT,
+    icon: getAppIconPath(),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -91,59 +139,94 @@ function createMainWindow(): void {
     },
   });
 
-  if (isDev) {
-    mainWindow.loadURL("http://localhost:5173");
-  } else {
-    mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
-  }
+  loadRoute(mainWindow, "/");
+
+  // Closing the window hides it instead of quitting: RemindMe keeps checking
+  // for due reminders in the background, mirroring the Java app's tray-driven
+  // background service (see execute_background_service.bat / "MainApp Background").
+  mainWindow.on("close", (event) => {
+    if (!isQuitting) {
+      event.preventDefault();
+      mainWindow?.hide();
+    }
+  });
 
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
 }
 
+/** Opens (or refocuses) the notification popup for a due reminder. Mirrors ReminderDialog + BackgroundService's openedDialogs map. */
+function openReminderPopup(remind: Remind): void {
+  const existing = openPopups.get(remind.name);
+  if (existing && !existing.isDestroyed()) {
+    existing.close();
+    openPopups.delete(remind.name);
+  }
+
+  const popup = new BrowserWindow({
+    width: 420,
+    height: 280,
+    resizable: false,
+    alwaysOnTop: remind.isTopLevel,
+    autoHideMenuBar: true,
+    icon: getAppIconPath(),
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+
+  loadRoute(popup, `/popup/reminder?name=${encodeURIComponent(remind.name)}`);
+
+  popup.on("closed", () => openPopups.delete(remind.name));
+  openPopups.set(remind.name, popup);
+}
+
+/**
+ * Launches the Java backend as a child process in production, mirroring
+ * DailyPill's spawnBackend(): in dev the backend is expected to already be
+ * running (started manually or via the ".vscode/launch.json" "MainApp Serve"
+ * config), same as DailyPill's `dotnet run` during development.
+ */
+function spawnBackend(): void {
+  if (isDev) return;
+
+  const javaExe = path.join(process.resourcesPath, "jre", "bin", process.platform === "win32" ? "java.exe" : "java");
+  const jarPath = path.join(process.resourcesPath, "backend", "RemindMe.jar");
+  const cwd = path.join(process.resourcesPath, "backend");
+
+  backendProcess = spawn(javaExe, ["-jar", jarPath, "--serve"], { cwd, windowsHide: true });
+  backendProcess.stdout?.on("data", (chunk) => console.log(`[backend] ${chunk}`));
+  backendProcess.stderr?.on("data", (chunk) => console.error(`[backend] ${chunk}`));
+}
+
 function registerIpcHandlers(config: Awaited<ReturnType<typeof loadAppConfig>>): void {
-  ipcMain.handle("reminders:getAll", (): Remind[] => repository.getAll());
+  ipcMain.handle("reminders:getAll", () => apiClient.getAll());
 
-  ipcMain.handle("reminders:search", (_event, query: string): Remind[] => repository.search(query));
+  ipcMain.handle("reminders:getByName", (_event, name: string) => apiClient.getByName(name));
 
-  ipcMain.handle("reminders:create", (_event, remind: Remind): Remind => {
-    const now = formatLocalDateTime(new Date());
-    const toInsert: Remind = withComputedNextExecution({
-      ...createDefaultRemind(),
-      ...remind,
-      creationDate: remind.creationDate ?? now,
-      lastUpdateDate: now,
-    });
-    repository.insert(toInsert);
-    return toInsert;
-  });
+  ipcMain.handle("reminders:search", (_event, query: string) => apiClient.search(query));
 
-  ipcMain.handle("reminders:update", (_event, currentName: string, remind: Remind): Remind => {
-    const updated: Remind = withComputedNextExecution({
-      ...remind,
-      lastUpdateDate: formatLocalDateTime(new Date()),
-    });
-    repository.update(currentName, updated);
-    return updated;
-  });
+  ipcMain.handle("reminders:create", (_event, remind: Remind) => apiClient.create(remind));
 
-  ipcMain.handle("reminders:remove", (_event, name: string): void => repository.remove(name));
-
-  ipcMain.handle("reminders:duplicate", (_event, name: string): Remind | null => repository.duplicate(name));
-
-  ipcMain.handle("reminders:rename", (_event, currentName: string, newName: string): void =>
-    repository.rename(currentName, newName),
+  ipcMain.handle("reminders:update", (_event, currentName: string, remind: Remind) =>
+    apiClient.update(currentName, remind),
   );
 
-  ipcMain.handle(
-    "reminders:setActive",
-    (_event, name: string, isActive: boolean): void => repository.setActiveState(name, isActive),
+  ipcMain.handle("reminders:remove", (_event, name: string) => apiClient.remove(name));
+
+  ipcMain.handle("reminders:duplicate", (_event, name: string) => apiClient.duplicate(name));
+
+  ipcMain.handle("reminders:rename", (_event, currentName: string, newName: string) =>
+    apiClient.rename(currentName, newName),
   );
 
-  ipcMain.handle(
-    "reminders:setTopLevel",
-    (_event, name: string, isTopLevel: boolean): void => repository.setTopLevelState(name, isTopLevel),
+  ipcMain.handle("reminders:setActive", (_event, name: string, isActive: boolean) => apiClient.setActive(name, isActive));
+
+  ipcMain.handle("reminders:setTopLevel", (_event, name: string, isTopLevel: boolean) =>
+    apiClient.setTopLevel(name, isTopLevel),
   );
 
   ipcMain.handle("reminders:exportCsv", async (): Promise<{ canceled: boolean; path?: string }> => {
@@ -157,7 +240,8 @@ function registerIpcHandlers(config: Awaited<ReturnType<typeof loadAppConfig>>):
     });
     if (canceled || !filePath) return { canceled: true };
 
-    exportToCsv(repository.getAll(), filePath);
+    const csv = await apiClient.exportCsv();
+    await fs.writeFile(filePath, csv, "utf-8");
     return { canceled: false, path: filePath };
   });
 
@@ -172,7 +256,8 @@ function registerIpcHandlers(config: Awaited<ReturnType<typeof loadAppConfig>>):
     });
     if (canceled || !filePath) return { canceled: true };
 
-    await exportToPdf(repository.getAll(), filePath, path.basename(filePath));
+    const pdf = await apiClient.exportPdf();
+    await fs.writeFile(filePath, pdf);
     return { canceled: false, path: filePath };
   });
 
@@ -182,30 +267,56 @@ function registerIpcHandlers(config: Awaited<ReturnType<typeof loadAppConfig>>):
 
   ipcMain.handle("app:setLanguage", async (_event, language: LanguageCode): Promise<void> => {
     currentLanguage = language;
-    await rebuildMenu(config);
+    await rebuildMenuAndTray(config);
   });
 }
 
 app.whenReady().then(async () => {
-  await initDatabase();
+  spawnBackend();
 
   const configPath = path.join(getBundledResDir(), "config.json");
   const config = await loadAppConfig(configPath);
 
   registerIpcHandlers(config);
-  await rebuildMenu(config);
+  await refreshTranslations();
+  Menu.setApplicationMenu(
+    buildAppMenu({
+      getMainWindow: () => mainWindow,
+      config,
+      translations: currentTranslations,
+      quit: quitApp,
+    }),
+  );
 
   createMainWindow();
 
+  poller = new DuePoller(config.schedulerIntervalMinutes * 60_000, openReminderPopup);
+  poller.start();
+
+  appTray = setupTray({
+    showMainWindow: () => showAndFocus(mainWindow),
+    scheduler: poller,
+    quit: quitApp,
+    iconPath: getAppIconPath(),
+    getTranslations: () => currentTranslations,
+  });
+
   app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
+    if (mainWindow) {
+      showAndFocus(mainWindow);
+    } else {
       createMainWindow();
     }
   });
 });
 
+app.on("before-quit", () => {
+  isQuitting = true;
+  poller?.stop();
+  backendProcess?.kill();
+});
+
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+  // Never quit here: the main window hides instead of closing, and popups
+  // closing on their own shouldn't end the background reminder service.
 });

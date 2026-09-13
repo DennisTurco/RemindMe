@@ -1,5 +1,6 @@
 {
   "SupportEmail": "assistenza@shardpc.it",
+  "SchedulerIntervalMinutes": 1,
   "Links": {
     "Website": "https://www.shardpc.it/",
     "InfoPage": "https://github.com/DennisTurco/RemindMe",
