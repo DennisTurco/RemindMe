@@ -31,15 +31,12 @@ This project is, of course, published here on GitHub, but it's also available on
   <a href="https://dennis-turco.itch.io/remind-me">Remind Me by Dennis Turco</a>
 </iframe>
 
-# Important Notes
-
-* If, for any reason, the setup program doesn't add the application to the startup registry (regedit), you can manually run "add_to_startup.bat" located in the installation folder by double-clicking it.
-* This program is set to run automatically at PC startup by default. If you disable it, automatic backups will no longer occur.
-
 # Commands
 
-* To create a new .jar file: `mvn clean package`
-* To run the background service: `java -jar ./target/RemindMe-1.0-SNAPSHOT-jar-with-dependencies.jar --background`
+* To build the Java backend: `mvn clean package`
+* To run the backend headless API server: `java -jar ./target/RemindMe-1.0-SNAPSHOT-jar-with-dependencies.jar --serve`
+* To run the app in development (from `app/`): `npm run dev`
+* To build the Windows installer: see [`code_documentation.md`](src/main/resources/docs/code_documentation.md#11-building-the-installer)
 
 ## Platforms
 

@@ -192,7 +192,11 @@ changes needed.
 
 ## 11. Building the installer
 
-Producing a distributable Windows installer is a three-stage pipeline, all driven from `app/`:
+Producing the distributable Windows installer is a two-step pipeline: **electron-builder** first
+produces an unpacked, ready-to-run copy of the app, then **Inno Setup** wraps that into a single
+installer `.exe`. This mirrors the sibling DailyPill project's packaging setup.
+
+### Step 1 — electron-builder (unpacked app)
 
 ```bash
 cd app
@@ -205,8 +209,9 @@ This runs, in order:
    compiles the Electron main process (`tsc -p electron/tsconfig.json` → `app/dist-electron/`).
 2. **`npm run build:backend`** — runs `mvn -o package -DskipTests` in the repo root, producing
    `target/RemindMe-1.0-SNAPSHOT-jar-with-dependencies.jar`.
-3. **`electron-builder`** — packages everything into a Windows NSIS installer under
-   `app/release/`, using the `"build"` section of `app/package.json`:
+3. **`electron-builder`** — assembles everything into `app/release/win-unpacked/` (the `"win"."target"`
+   in `app/package.json`'s `"build"` section is `"dir"`, i.e. an unpacked folder, not a self-contained
+   installer), using:
    - `dist/` and `dist-electron/` (the built app code),
    - `res/` → bundled as `resources/res` (icons, sounds, translation files, `config.json`),
    - `../jre/` → bundled as `resources/jre` (a full JRE so end users don't need Java installed),
@@ -216,22 +221,20 @@ At runtime, `app/electron/main.ts`'s `spawnBackend()` launches
 `resources/jre/bin/java.exe -jar resources/backend/RemindMe.jar --serve` as a child process
 whenever the app is *not* running from source (`app.isPackaged`).
 
+### Step 2 — Inno Setup (installer .exe)
+
+Open [`installer/RemindMe.iss`](../../../../installer/RemindMe.iss) in the Inno Setup Compiler and
+build it (`Ctrl+F9`), or run it headless with `ISCC.exe installer\RemindMe.iss`. It packages
+`app/release/win-unpacked/` as-is and produces `installer/Output/RemindMe_Setup_<version>.exe`.
+
 ### Prerequisites
 
 - A local JRE at `../jre` (relative to `app/`), i.e. `jre/` at the repo root — see
   `.gitignore`, it is intentionally not committed and must be provided locally (or downloaded by a
   release script) before packaging.
-- A Windows icon at `app/build/icon.ico`, referenced by the `"win": { "icon": "build/icon.ico" }`
-  key in `app/package.json`. **This file is not currently present in the repository** —
-  `electron-builder` will fail to package until it's added (a suitable `.ico` already exists at
-  `app/res/img/logo.ico` and can likely be reused).
-- Keep the version number in sync before releasing: `app/package.json`'s `version` field is what
-  `electron-builder` uses for the installer's file name/metadata; it should be bumped alongside any
-  other version references before a release.
-
-### Legacy installer script
-
-The repository also contains `RemindMe_installer_inno_setup.iss`, an Inno Setup script from the
-Swing-app era. It launches `RemindMe.exe --background` and expects a `config.enc` file, neither of
-which apply to the current Electron/`--serve` architecture — it is effectively dead and should not
-be used to produce releases unless it gets updated first.
+- A Windows icon at `app/build/icon.ico`, referenced both by electron-builder
+  (`"win": { "icon": "build/icon.ico" }` in `app/package.json`) and by the Inno Setup script
+  (`SetupIconFile`).
+- Keep the version number in sync before releasing: bump it in `app/package.json`'s `version` field
+  and in `installer/RemindMe.iss`'s `AppVersion` (they are independent and not read from a shared
+  source, so both need updating by hand).
