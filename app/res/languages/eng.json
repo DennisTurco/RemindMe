@@ -14,7 +14,10 @@
         "ThemeText": "Theme",
         "LightThemeText": "Light",
         "DarkThemeText": "Dark",
-        "NoRemindText": "No reminders"
+        "NoRemindText": "No reminders",
+        "YesText": "Yes",
+        "NoText": "No",
+        "UnnamedReminderText": "(unnamed)"
     },
     "Menu": {
         "File": "File",
@@ -32,7 +35,8 @@
         "Export": "Export list to .json",
         "Share": "Share",
         "Support": "Support",
-        "Website": "Website"
+        "Website": "Website",
+        "ReviewTutorialButton": "Review tutorial"
     },
     "MainFrame": {
         "AddBackupTooltip": "Add new reminder",
@@ -40,7 +44,9 @@
         "ExportAsPdfTooltip": "Export as PDF",
         "ExportAsCsvTooltip": "Export as CSV",
         "ResearchBarTooltip": "Research bar",
-        "ResearchBarPlaceholder": "Search..."
+        "ResearchBarPlaceholder": "Search...",
+        "SwitchToLightThemeTooltip": "Switch to light theme",
+        "SwitchToDarkThemeTooltip": "Switch to dark theme"
     },
     "RemindList": {
         "IconColumn": "Icon",
@@ -70,7 +76,12 @@
         "CopyNamePopup": "Copy remind name",
         "EnableDisablePopup": "Enable / disable",
         "ActivePopup": "Active",
-        "TopLevelPopup": "Show on top"
+        "TopLevelPopup": "Show on top",
+        "PreviewButton": "Preview",
+        "CreationDateLabel": "Creation date",
+        "LastUpdateDateLabel": "Last update date",
+        "TimeFromLabel": "Start time",
+        "TimeToLabel": "End time"
     },
     "ManageRemindDialog": {
         "EditTitle": "Edit reminder",
@@ -94,7 +105,8 @@
         "DescriptionText": "Description",
         "IconText": "Icon",
         "SoundText": "Sound",
-        "ExecutionMethodText": "Execution method"
+        "ExecutionMethodText": "Execution method",
+        "DescriptionMarkdownHint": "You can use Markdown syntax (e.g. **bold**, bullet lists, links) to format the description."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Time interval for reminder",
@@ -163,5 +175,26 @@
         "RemindListCorrectlyImportedMessage": "Reminder list successfully imported!",
         "RemindListCorrectlyExportedTitle": "Export completed",
         "RemindListCorrectlyExportedMessage": "Reminder list successfully exported!"
+    },
+    "ExecutionMethod": {
+        "PcStartup": "PC Startup",
+        "CustomTimeRange": "Custom time range",
+        "OneTimePerDay": "Once a day"
+    },
+    "Onboarding": {
+        "SkipButton": "Skip",
+        "BackButton": "Back",
+        "NextButton": "Next",
+        "StartButton": "Start",
+        "Step1Title": "Welcome to RemindMe",
+        "Step1Body": "RemindMe helps you never forget what matters: create recurring reminders with your own icon, sound and description, and stay organized effortlessly.",
+        "Step2Title": "Create your first reminder",
+        "Step2Body": "Press **+** in the top left to add one: choose a name, description (also in **Markdown**), an icon and a notification sound, and decide whether it should always stay on top.",
+        "Step3Title": "When it triggers",
+        "Step3Body": "The **execution method** decides the behavior: on PC startup every so often, within a custom time range, or once a day at a specific time. Set the repeat interval with the dedicated button.",
+        "Step4Title": "Manage the list",
+        "Step4Body": "Use the search bar to filter reminders. Right-click a row to quickly edit, duplicate, delete, rename or enable/disable a reminder.",
+        "Step5Title": "Export and customize",
+        "Step5Body": "Export the list as **CSV** or **PDF** from the toolbar, or the whole list as JSON from the **File** menu. In **Options > Preferences** you can change the language and switch between light and dark theme at any time."
     }
 }

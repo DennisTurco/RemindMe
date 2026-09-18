@@ -98,7 +98,7 @@ public class JSONReminder {
         if (!directory.exists() || !directory.isDirectory()) {
             logger.info("Directory of the remind list file doesn't exist, reset to default value");
             Preferences.setRemindList(Preferences.getDefaultRemindList());
-            Preferences.updatePreferencesToJson();
+            Preferences.updatePreferencesToDb();
             directoryPath = Preferences.getRemindList().directory();
         }
         return directoryPath;

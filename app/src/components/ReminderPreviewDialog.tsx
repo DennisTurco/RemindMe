@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { iconPath, soundPath } from "../lib/catalog";
-import { useI18n } from "../lib/i18n";
+import { LANGUAGE_LOCALES, useI18n } from "../lib/i18n";
 import type { IconName, SoundName } from "../lib/types";
 import { MarkdownContent } from "./MarkdownContent";
 
@@ -21,8 +21,8 @@ function truncateName(name: string): string {
 
 /** Mirrors remindme.Dialogs.ReminderDialog: preview of how the notification popup will look. */
 export function ReminderPreviewDialog({ name, description, icon, sound, isTopLevel, onClose }: ReminderPreviewDialogProps) {
-  const { t } = useI18n();
-  const time = new Date().toLocaleTimeString("it-IT");
+  const { t, language } = useI18n();
+  const time = new Date().toLocaleTimeString(LANGUAGE_LOCALES[language]);
 
   useEffect(() => {
     const path = soundPath(sound);
@@ -38,7 +38,9 @@ export function ReminderPreviewDialog({ name, description, icon, sound, isTopLev
       <div className={`modal reminder-preview ${isTopLevel ? "reminder-preview-top-level" : ""}`} onClick={(e) => e.stopPropagation()}>
         <div className="reminder-preview-header">
           <img src={iconPath(icon)} alt="" width={50} height={50} />
-          <span className="reminder-preview-name">{truncateName(name) || "(senza nome)"}</span>
+          <span className="reminder-preview-name">
+            {truncateName(name) || t("General", "UnnamedReminderText", "(senza nome)")}
+          </span>
         </div>
         <MarkdownContent className="reminder-preview-description" text={description} />
         <div className="modal-actions reminder-preview-footer">

@@ -14,7 +14,10 @@
         "ThemeText": "Tema",
         "LightThemeText": "Chiaro",
         "DarkThemeText": "Scuro",
-        "NoRemindText": "Nessun promemoria"
+        "NoRemindText": "Nessun promemoria",
+        "YesText": "Sì",
+        "NoText": "No",
+        "UnnamedReminderText": "(senza nome)"
     },
     "Menu": {
         "File": "File",
@@ -32,7 +35,8 @@
         "Export": "Esporta elenco in .json",
         "Share": "Condividi",
         "Support": "Supporto",
-        "Website": "Sito Web"
+        "Website": "Sito Web",
+        "ReviewTutorialButton": "Rivedi il tutorial"
     },
     "MainFrame": {
         "AddBackupTooltip": "Aggiungi nuovo promemoria",
@@ -40,7 +44,9 @@
         "ExportAsPdfTooltip": "Esporta come PDF",
         "ExportAsCsvTooltip": "Esporta come CSV",
         "ResearchBarTooltip": "Barra di ricerca",
-        "ResearchBarPlaceholder": "Cerca..."
+        "ResearchBarPlaceholder": "Cerca...",
+        "SwitchToLightThemeTooltip": "Passa al tema chiaro",
+        "SwitchToDarkThemeTooltip": "Passa al tema scuro"
     },
     "RemindList": {
         "IconColumn": "Icona",
@@ -70,7 +76,12 @@
         "CopyNamePopup": "Copia nome promemoria",
         "EnableDisablePopup": "Abilita / disabilita",
         "ActivePopup": "Attivo",
-        "TopLevelPopup": "Mostra in primo piano"
+        "TopLevelPopup": "Mostra in primo piano",
+        "PreviewButton": "Anteprima",
+        "CreationDateLabel": "Data creazione",
+        "LastUpdateDateLabel": "Data ultima modifica",
+        "TimeFromLabel": "Ora inizio",
+        "TimeToLabel": "Ora fine"
     },
     "ManageRemindDialog": {
         "EditTitle": "Modifica promemoria",
@@ -94,7 +105,8 @@
         "DescriptionText": "Descrizione",
         "IconText": "Icona",
         "SoundText": "Suono",
-        "ExecutionMethodText": "Metodo di esecuzione"
+        "ExecutionMethodText": "Metodo di esecuzione",
+        "DescriptionMarkdownHint": "Puoi usare la sintassi Markdown (es. **grassetto**, elenchi puntati, link) per formattare la descrizione."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Intervallo di tempo del promemoria",
@@ -163,5 +175,26 @@
         "RemindListCorrectlyImportedMessage": "Elenco promemoria importato con successo!",
         "RemindListCorrectlyExportedTitle": "Esportazione completata",
         "RemindListCorrectlyExportedMessage": "Elenco promemoria esportato con successo!"
+    },
+    "ExecutionMethod": {
+        "PcStartup": "Avvio PC",
+        "CustomTimeRange": "Intervallo di tempo personalizzato",
+        "OneTimePerDay": "Una volta al giorno"
+    },
+    "Onboarding": {
+        "SkipButton": "Salta",
+        "BackButton": "Indietro",
+        "NextButton": "Avanti",
+        "StartButton": "Inizia",
+        "Step1Title": "Benvenuto in RemindMe",
+        "Step1Body": "RemindMe ti aiuta a non dimenticare le cose che contano: crea promemoria ricorrenti con un'icona, un suono e una descrizione tutta tua, e resta organizzato senza sforzo.",
+        "Step2Title": "Crea il tuo primo promemoria",
+        "Step2Body": "Premi **+** in alto a sinistra per aggiungerne uno: scegli nome, descrizione (anche in **Markdown**), icona e suono di notifica, e decidi se deve restare sempre visibile in primo piano.",
+        "Step3Title": "Quando si attiva",
+        "Step3Body": "Il **metodo di esecuzione** decide il comportamento: all'avvio del PC ogni tot tempo, in una fascia oraria personalizzata, oppure una volta al giorno a un orario preciso. L'intervallo di ripetizione si imposta col pulsante dedicato.",
+        "Step4Title": "Gestisci l'elenco",
+        "Step4Body": "Usa la barra di ricerca per filtrare i promemoria. Clic destro su una riga per modificare, duplicare, eliminare, rinominare o attivare/disattivare rapidamente un promemoria.",
+        "Step5Title": "Esporta e personalizza",
+        "Step5Body": "Esporta l'elenco in **CSV** o **PDF** dalla toolbar, oppure l'intero elenco in JSON dal menu **File**. In **Opzioni > Preferenze** puoi cambiare lingua e passare dal tema chiaro a quello scuro in qualsiasi momento."
     }
 }

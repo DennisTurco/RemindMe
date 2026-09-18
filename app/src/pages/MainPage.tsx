@@ -4,26 +4,18 @@ import { MarkdownContent } from "../components/MarkdownContent";
 import { PreferencesDialog } from "../components/PreferencesDialog";
 import { PromptDialog } from "../components/PromptDialog";
 import { ReminderFormDialog } from "../components/ReminderFormDialog";
-import { iconPath, timeIntervalToString } from "../lib/catalog";
+import { ReminderPreviewDialog } from "../components/ReminderPreviewDialog";
+import { EXECUTION_METHOD_TRANSLATION, iconPath, timeIntervalToString } from "../lib/catalog";
 import { useI18n } from "../lib/i18n";
 import { remindMe } from "../lib/ipc";
 import { getEffectiveTheme, toggleTheme } from "../lib/theme";
 import type { Remind } from "../lib/types";
-
-const EXECUTION_METHOD_LABELS: Record<Remind["executionMethod"], string> = {
-  PC_STARTUP: "Pc Startup",
-  CUSTOM_TIME_RANGE: "Custom Time Range",
-  ONE_TIME_PER_DAY: "One Time Per Day",
-};
+import { formatDate } from "../utils/date_formatter";
 
 interface ContextMenuState {
   x: number;
   y: number;
   remind: Remind;
-}
-
-function formatDate(value: string | null): string {
-  return value ?? "-";
 }
 
 export function MainPage() {
@@ -37,6 +29,7 @@ export function MainPage() {
   const [renamingRemind, setRenamingRemind] = useState<Remind | null>(null);
   const [renameConflict, setRenameConflict] = useState<string | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<"selection" | null>(null);
+  const [previewRemind, setPreviewRemind] = useState<Remind | null>(null);
   const [infoMessage, setInfoMessage] = useState<{ title: string; message: string } | null>(null);
   const [theme, setThemeState] = useState(getEffectiveTheme);
   const [showPreferences, setShowPreferences] = useState(false);
@@ -202,7 +195,11 @@ export function MainPage() {
         </div>
         <button
           className="btn btn-icon"
-          title={theme === "dark" ? "Passa al tema chiaro" : "Passa al tema scuro"}
+          title={
+            theme === "dark"
+              ? t("MainFrame", "SwitchToLightThemeTooltip", "Passa al tema chiaro")
+              : t("MainFrame", "SwitchToDarkThemeTooltip", "Passa al tema scuro")
+          }
           onClick={handleToggleTheme}
         >
           {theme === "dark" ? "☀" : "🌙"}
@@ -241,9 +238,9 @@ export function MainPage() {
                 <td className="checkbox-cell">
                   <input type="checkbox" checked={remind.isTopLevel} readOnly />
                 </td>
-                <td>{formatDate(remind.lastExecution)}</td>
-                <td>{formatDate(remind.nextExecution)}</td>
-                <td title="dd.HH:mm">{timeIntervalToString(remind.timeInterval)}</td>
+                <td>{formatDate(remind.lastExecution ?? "")}</td>
+                <td>{formatDate(remind.nextExecution ?? "")}</td>
+                <td title={t("TimePickerDialog", "Format", "gg.OO:mm")}>{timeIntervalToString(remind.timeInterval)}</td>
               </tr>
             ))}
             {reminds.length === 0 && (
@@ -259,44 +256,65 @@ export function MainPage() {
 
       {selected && (
         <div className="details-panel">
-          <h3>{selected.name}</h3>
+          <div className="details-panel-header">
+            <h3>{selected.name}</h3>
+            <div className="details-panel-actions">
+              <button className="btn" onClick={() => setEditingRemind(selected)}>
+                {t("RemindList", "EditPopup", "Modifica")}
+              </button>
+              <button className="btn" onClick={() => setPreviewRemind(selected)}>
+                {t("RemindList", "PreviewButton", "Anteprima")}
+              </button>
+              <button className="btn btn-danger" onClick={() => setDeleteTarget("selection")}>
+                {t("RemindList", "DeletePopup", "Elimina")}
+              </button>
+            </div>
+          </div>
           {selected.description && <MarkdownContent className="details-description" text={selected.description} />}
           <dl className="details-grid">
             <dt>{t("RemindList", "IsActiveColumn", "Attivo")}</dt>
             <dd>
-              <span className={`badge ${selected.isActive ? "badge-on" : ""}`}>{selected.isActive ? "Sì" : "No"}</span>
+              <span className={`badge ${selected.isActive ? "badge-on" : ""}`}>
+                {selected.isActive ? t("General", "YesText", "Sì") : t("General", "NoText", "No")}
+              </span>
             </dd>
             <dt>{t("RemindList", "IsTopLevelColumn", "Mostra in alto")}</dt>
             <dd>
-              <span className={`badge ${selected.isTopLevel ? "badge-on" : ""}`}>{selected.isTopLevel ? "Sì" : "No"}</span>
+              <span className={`badge ${selected.isTopLevel ? "badge-on" : ""}`}>
+                {selected.isTopLevel ? t("General", "YesText", "Sì") : t("General", "NoText", "No")}
+              </span>
             </dd>
             <dt>{t("RemindList", "LastExecutionColumn", "Ultima esecuzione")}</dt>
-            <dd>{formatDate(selected.lastExecution)}</dd>
+            <dd>{formatDate(selected.lastExecution ?? "")}</dd>
             <dt>{t("RemindList", "NextExecutionColumn", "Prossima esecuzione")}</dt>
-            <dd>{formatDate(selected.nextExecution)}</dd>
+            <dd>{formatDate(selected.nextExecution ?? "")}</dd>
             <dt>{t("RemindList", "TimeIntervalColumn", "Intervallo di tempo")}</dt>
             <dd>{timeIntervalToString(selected.timeInterval)}</dd>
-            {/* The *Detail translation keys hold CSV-header-style values (e.g. "DataCreazione", no spaces),
-                not human-readable labels, so these few fall back to hardcoded Italian rather than using them. */}
-            <dt>Data creazione</dt>
-            <dd>{formatDate(selected.creationDate)}</dd>
-            <dt>Data ultima modifica</dt>
-            <dd>{formatDate(selected.lastUpdateDate)}</dd>
+            <dt>{t("RemindList", "CreationDateLabel", "Data creazione")}</dt>
+            <dd>{formatDate(selected.creationDate ?? "")}</dd>
+            <dt>{t("RemindList", "LastUpdateDateLabel", "Data ultima modifica")}</dt>
+            <dd>{formatDate(selected.lastUpdateDate ?? "")}</dd>
             <dt>{t("RemindList", "CountDetail", "Conteggio")}</dt>
             <dd>{selected.remindCount}</dd>
-            <dt>Metodo esecuzione</dt>
-            <dd>{EXECUTION_METHOD_LABELS[selected.executionMethod]}</dd>
+            <dt>{t("ManageRemindDialog", "ExecutionMethodText", "Metodo di esecuzione")}</dt>
+            <dd>
+              {t(
+                "ExecutionMethod",
+                EXECUTION_METHOD_TRANSLATION[selected.executionMethod].key,
+                EXECUTION_METHOD_TRANSLATION[selected.executionMethod].fallback,
+              )}
+            </dd>
             {selected.executionMethod === "CUSTOM_TIME_RANGE" && selected.timeRange && (
               <>
-                <dt>Ora inizio</dt>
+                <dt>{t("RemindList", "TimeFromLabel", "Ora inizio")}</dt>
                 <dd>{selected.timeRange.start}</dd>
-                <dt>Ora fine</dt>
+                <dt>{t("RemindList", "TimeToLabel", "Ora fine")}</dt>
                 <dd>{selected.timeRange.end}</dd>
               </>
             )}
             {selected.executionMethod === "ONE_TIME_PER_DAY" && selected.timeRange && (
               <>
-                <dt>Ora inizio</dt>
+                <dt>{t("RemindList", "TimeFromLabel", "Ora inizio")}</dt>
                 <dd>{selected.timeRange.start}</dd>
               </>
             )}
@@ -304,9 +322,20 @@ export function MainPage() {
         </div>
       )}
 
+      <footer className="app-footer">
+        {t("General", "AppName", "Remind Me")} — {t("General", "Version", "Versione")} {__APP_VERSION__}
+      </footer>
+
       {contextMenu && (
         <ul className="context-menu" style={{ top: contextMenu.y, left: contextMenu.x }} onClick={(e) => e.stopPropagation()}>
-          <li onClick={() => setEditingRemind(contextMenu.remind)}>{t("RemindList", "EditPopup", "Modifica")}</li>
+          <li
+            onClick={() => {
+              setEditingRemind(contextMenu.remind);
+              setContextMenu(null);
+            }}
+          >
+            {t("RemindList", "EditPopup", "Modifica")}
+          </li>
           <li onClick={() => handleDuplicate(contextMenu.remind)}>{t("RemindList", "DuplicatePopup", "Duplica")}</li>
           <li
             onClick={() => {
@@ -389,6 +418,17 @@ export function MainPage() {
           message={t("Dialogs", "ConfirmationDeletionMessage", "Sei sicuro di voler eliminare le righe selezionate?")}
           onConfirm={handleConfirmedDelete}
           onCancel={() => setDeleteTarget(null)}
+        />
+      )}
+
+      {previewRemind && (
+        <ReminderPreviewDialog
+          name={previewRemind.name}
+          description={previewRemind.description}
+          icon={previewRemind.icon}
+          sound={previewRemind.sound}
+          isTopLevel={previewRemind.isTopLevel}
+          onClose={() => setPreviewRemind(null)}
         />
       )}
 

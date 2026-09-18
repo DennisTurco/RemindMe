@@ -3,6 +3,7 @@ package test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Disabled;
@@ -13,6 +14,8 @@ import remindme.Entities.Preferences;
 import remindme.Entities.RemindListPath;
 import remindme.Enums.LanguagesEnum;
 import remindme.Enums.ThemesEnum;
+import remindme.Sqlite.Database;
+import remindme.Sqlite.PreferencesRepository;
 
 @Disabled("Skip for now, preferences tests are unstable")
 public class PreferencesTest {
@@ -40,9 +43,18 @@ public class PreferencesTest {
     }
 
     private void buildAndReloadPreferences() throws IOException {
+        initDb();
         buildTempFile();
         buildValidPreferencesObject();
         reloadPreferences();
+    }
+
+    private void initDb() throws IOException {
+        try {
+            Preferences.init(new PreferencesRepository(Database.open(tempDir.resolve("preferences-test.db").toString())));
+        } catch (SQLException ex) {
+            throw new IOException(ex);
+        }
     }
 
     private void buildTempFile() throws IOException {
@@ -62,7 +74,7 @@ public class PreferencesTest {
     }
 
     private void reloadPreferences() {
-        Preferences.updatePreferencesToJson();
-        Preferences.loadPreferencesFromJson();
+        Preferences.updatePreferencesToDb();
+        Preferences.loadPreferencesFromDb();
     }
 }

@@ -14,7 +14,10 @@
         "ThemeText": "Design",
         "LightThemeText": "Hell",
         "DarkThemeText": "Dunkel",
-        "NoRemindText": "Keine Erinnerungen"
+        "NoRemindText": "Keine Erinnerungen",
+        "YesText": "Ja",
+        "NoText": "Nein",
+        "UnnamedReminderText": "(unbenannt)"
     },
     "Menu": {
         "File": "Datei",
@@ -32,7 +35,8 @@
         "Export": "Liste als .json exportieren",
         "Share": "Teilen",
         "Support": "Support",
-        "Website": "Webseite"
+        "Website": "Webseite",
+        "ReviewTutorialButton": "Tutorial erneut anzeigen"
     },
     "MainFrame": {
         "AddBackupTooltip": "Neue Erinnerung hinzufügen",
@@ -40,7 +44,9 @@
         "ExportAsPdfTooltip": "Als PDF exportieren",
         "ExportAsCsvTooltip": "Als CSV exportieren",
         "ResearchBarTooltip": "Suchleiste",
-        "ResearchBarPlaceholder": "Suchen..."
+        "ResearchBarPlaceholder": "Suchen...",
+        "SwitchToLightThemeTooltip": "Zu hellem Design wechseln",
+        "SwitchToDarkThemeTooltip": "Zu dunklem Design wechseln"
     },
     "RemindList": {
         "IconColumn": "Symbol",
@@ -70,7 +76,12 @@
         "CopyNamePopup": "Namen des Erinnerungsstücks kopieren",
         "EnableDisablePopup": "Aktivieren / deaktivieren",
         "ActivePopup": "Aktiv",
-        "TopLevelPopup": "Oben anzeigen"
+        "TopLevelPopup": "Oben anzeigen",
+        "PreviewButton": "Vorschau",
+        "CreationDateLabel": "Erstellungsdatum",
+        "LastUpdateDateLabel": "Datum der letzten Änderung",
+        "TimeFromLabel": "Startzeit",
+        "TimeToLabel": "Endzeit"
     },
     "ManageRemindDialog": {
         "EditTitle": "Erinnerung bearbeiten",
@@ -94,7 +105,8 @@
         "DescriptionText": "Beschreibung",
         "IconText": "Symbol",
         "SoundText": "Ton",
-        "ExecutionMethodText": "Ausführungsmethode"
+        "ExecutionMethodText": "Ausführungsmethode",
+        "DescriptionMarkdownHint": "Du kannst Markdown-Syntax verwenden (z. B. **fett**, Aufzählungen, Links), um die Beschreibung zu formatieren."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Zeitintervall für die Erinnerung",
@@ -163,5 +175,26 @@
         "RemindListCorrectlyImportedMessage": "Erinnerungsliste erfolgreich importiert!",
         "RemindListCorrectlyExportedTitle": "Export abgeschlossen",
         "RemindListCorrectlyExportedMessage": "Erinnerungsliste erfolgreich exportiert!"
+    },
+    "ExecutionMethod": {
+        "PcStartup": "PC-Start",
+        "CustomTimeRange": "Benutzerdefinierter Zeitraum",
+        "OneTimePerDay": "Einmal täglich"
+    },
+    "Onboarding": {
+        "SkipButton": "Überspringen",
+        "BackButton": "Zurück",
+        "NextButton": "Weiter",
+        "StartButton": "Los geht's",
+        "Step1Title": "Willkommen bei RemindMe",
+        "Step1Body": "RemindMe hilft dir, nichts Wichtiges zu vergessen: Erstelle wiederkehrende Erinnerungen mit eigenem Symbol, Ton und Beschreibung und bleibe mühelos organisiert.",
+        "Step2Title": "Erstelle deine erste Erinnerung",
+        "Step2Body": "Drücke oben links auf **+**, um eine hinzuzufügen: Wähle Name, Beschreibung (auch in **Markdown**), Symbol und Benachrichtigungston, und entscheide, ob sie immer im Vordergrund bleiben soll.",
+        "Step3Title": "Wann sie ausgelöst wird",
+        "Step3Body": "Die **Ausführungsmethode** bestimmt das Verhalten: bei jedem PC-Start nach einem festen Intervall, innerhalb eines benutzerdefinierten Zeitraums, oder einmal täglich zu einer festen Uhrzeit. Das Wiederholungsintervall stellst du über die entsprechende Schaltfläche ein.",
+        "Step4Title": "Liste verwalten",
+        "Step4Body": "Nutze die Suchleiste, um Erinnerungen zu filtern. Rechtsklick auf eine Zeile, um eine Erinnerung schnell zu bearbeiten, zu duplizieren, zu löschen, umzubenennen oder zu aktivieren/deaktivieren.",
+        "Step5Title": "Exportieren und anpassen",
+        "Step5Body": "Exportiere die Liste über die Symbolleiste als **CSV** oder **PDF**, oder die gesamte Liste als JSON über das Menü **Datei**. Unter **Optionen > Einstellungen** kannst du jederzeit die Sprache ändern und zwischen hellem und dunklem Design wechseln."
     }
 }

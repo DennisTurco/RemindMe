@@ -14,7 +14,10 @@
         "ThemeText": "Tema",
         "LightThemeText": "Claro",
         "DarkThemeText": "Oscuro",
-        "NoRemindText": "No hay recordatorios"
+        "NoRemindText": "No hay recordatorios",
+        "YesText": "Sí",
+        "NoText": "No",
+        "UnnamedReminderText": "(sin nombre)"
     },
     "Menu": {
         "File": "Archivo",
@@ -32,7 +35,8 @@
         "Export": "Exportar lista a .json",
         "Share": "Compartir",
         "Support": "Soporte",
-        "Website": "Sitio web"
+        "Website": "Sitio web",
+        "ReviewTutorialButton": "Ver el tutorial de nuevo"
     },
     "MainFrame": {
         "AddBackupTooltip": "Agregar nuevo recordatorio",
@@ -40,7 +44,9 @@
         "ExportAsPdfTooltip": "Exportar como PDF",
         "ExportAsCsvTooltip": "Exportar como CSV",
         "ResearchBarTooltip": "Barra de búsqueda",
-        "ResearchBarPlaceholder": "Buscar..."
+        "ResearchBarPlaceholder": "Buscar...",
+        "SwitchToLightThemeTooltip": "Cambiar a tema claro",
+        "SwitchToDarkThemeTooltip": "Cambiar a tema oscuro"
     },
     "RemindList": {
         "IconColumn": "Icono",
@@ -70,7 +76,12 @@
         "CopyNamePopup": "Copiar nombre del recordatorio",
         "EnableDisablePopup": "Habilitar / deshabilitar",
         "ActivePopup": "Activo",
-        "TopLevelPopup": "Mostrar en primer plano"
+        "TopLevelPopup": "Mostrar en primer plano",
+        "PreviewButton": "Vista previa",
+        "CreationDateLabel": "Fecha de creación",
+        "LastUpdateDateLabel": "Fecha de última modificación",
+        "TimeFromLabel": "Hora de inicio",
+        "TimeToLabel": "Hora de fin"
     },
     "ManageRemindDialog": {
         "EditTitle": "Editar recordatorio",
@@ -94,7 +105,8 @@
         "DescriptionText": "Descripción",
         "IconText": "Icono",
         "SoundText": "Sonido",
-        "ExecutionMethodText": "Método de ejecución"
+        "ExecutionMethodText": "Método de ejecución",
+        "DescriptionMarkdownHint": "Puedes usar sintaxis Markdown (p. ej. **negrita**, listas con viñetas, enlaces) para dar formato a la descripción."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Intervalo de tiempo del recordatorio",
@@ -163,5 +175,26 @@
         "RemindListCorrectlyImportedMessage": "¡Lista de recordatorios importada correctamente!",
         "RemindListCorrectlyExportedTitle": "Exportación completada",
         "RemindListCorrectlyExportedMessage": "¡Lista de recordatorios exportada correctamente!"
+    },
+    "ExecutionMethod": {
+        "PcStartup": "Inicio del PC",
+        "CustomTimeRange": "Rango de tiempo personalizado",
+        "OneTimePerDay": "Una vez al día"
+    },
+    "Onboarding": {
+        "SkipButton": "Saltar",
+        "BackButton": "Atrás",
+        "NextButton": "Siguiente",
+        "StartButton": "Empezar",
+        "Step1Title": "Bienvenido a RemindMe",
+        "Step1Body": "RemindMe te ayuda a no olvidar lo que importa: crea recordatorios recurrentes con tu propio icono, sonido y descripción, y mantente organizado sin esfuerzo.",
+        "Step2Title": "Crea tu primer recordatorio",
+        "Step2Body": "Pulsa **+** arriba a la izquierda para añadir uno: elige nombre, descripción (también en **Markdown**), icono y sonido de notificación, y decide si debe permanecer siempre visible en primer plano.",
+        "Step3Title": "Cuándo se activa",
+        "Step3Body": "El **método de ejecución** determina el comportamiento: al iniciar el PC cada cierto tiempo, dentro de un rango horario personalizado, o una vez al día a una hora concreta. El intervalo de repetición se configura con el botón dedicado.",
+        "Step4Title": "Gestiona la lista",
+        "Step4Body": "Usa la barra de búsqueda para filtrar los recordatorios. Haz clic derecho en una fila para editar, duplicar, eliminar, renombrar o activar/desactivar rápidamente un recordatorio.",
+        "Step5Title": "Exporta y personaliza",
+        "Step5Body": "Exporta la lista como **CSV** o **PDF** desde la barra de herramientas, o toda la lista como JSON desde el menú **Archivo**. En **Opciones > Preferencias** puedes cambiar el idioma y alternar entre tema claro y oscuro en cualquier momento."
     }
 }

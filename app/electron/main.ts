@@ -103,6 +103,13 @@ class DuePoller {
     try {
       const due = await apiClient.getDue();
       due.forEach((remind) => this.onDue(remind));
+      // The backend already updated lastExecution/nextExecution for these
+      // reminders as a side effect of GET /reminders/due (see markShown in
+      // ReminderRepository); tell the main window to refresh so its table
+      // reflects the new dates instead of staying stale until a manual search.
+      if (due.length > 0) {
+        mainWindow?.webContents.send("reminders:changed");
+      }
     } catch {
       // Backend not reachable yet (e.g. still starting up in dev); try again next tick.
     }
@@ -250,14 +257,14 @@ function registerIpcHandlers(config: Awaited<ReturnType<typeof loadAppConfig>>):
     if (!win) return { canceled: true };
 
     const { canceled, filePath } = await dialog.showSaveDialog(win, {
-      title: "Esporta come PDF",
-      defaultPath: "remind_list.pdf",
-      filters: [{ name: "PDF", extensions: ["pdf"] }],
+      title: "Esporta come Json",
+      defaultPath: "remind_list.json",
+      filters: [{ name: "JSON", extensions: ["json"] }],
     });
     if (canceled || !filePath) return { canceled: true };
 
-    const pdf = await apiClient.exportPdf();
-    await fs.writeFile(filePath, pdf);
+    const json = await apiClient.exportJson();
+    await fs.writeFile(filePath, JSON.stringify(json, null, 2));
     return { canceled: false, path: filePath };
   });
 

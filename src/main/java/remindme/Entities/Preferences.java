@@ -1,122 +1,62 @@
 package remindme.Entities;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import remindme.Enums.ConfigKey;
 import remindme.Enums.LanguagesEnum;
 import remindme.Enums.ThemesEnum;
+import remindme.Sqlite.PreferencesRepository;
 
+/**
+ * In-memory cache of the current preferences, backed by the SQLite
+ * "preferences" table (remindme.Sqlite.PreferencesRepository). Replaces the
+ * old preferences.json file store: call init() once with the repository
+ * before using any other method.
+ */
 public class Preferences {
     private static final Logger logger = LoggerFactory.getLogger(Preferences.class);
+    private static PreferencesRepository repository;
     private static LanguagesEnum language;
     private static ThemesEnum theme;
     private static RemindListPath remindList;
 
-    public static void loadPreferencesFromJson() {
-        try (FileReader reader = new FileReader(ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.PREFERENCES_FILE_STRING.getValue())) {
-            JsonElement jsonElement = JsonParser.parseReader(reader);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
+    private Preferences() {
+    }
 
-            language = getLanguageFromJson(jsonObject);
-            theme = getThemeFromJson(jsonObject);
-            remindList = getRemindListFromJson(jsonObject);
+    public static void init(PreferencesRepository preferencesRepository) {
+        repository = preferencesRepository;
+    }
 
-            logger.info("Preferences loaded from JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
-
-            updatePreferencesToJson();
-
-        } catch (FileNotFoundException e) {
-            logger.error("Preferences file not found. Using default preferences." + e.getMessage(), e);
-            updatePreferencesToJson(); // Create the JSON file with default preferences
-        } catch (Exception ex) {
-            logger.error("Failed to load preference JSON file: ", ex.getMessage());
+    public static void loadPreferencesFromDb() {
+        if (repository == null) {
+            logger.error("Preferences repository not initialized; using default preferences.");
             setDefaultPreferences();
-            updatePreferencesToJson();        }
+            return;
+        }
+
+        PreferencesRepository.Preferences loaded = repository.get();
+        language = loaded.language();
+        theme = loaded.theme();
+        remindList = loaded.remindList();
+
+        logger.info("Preferences loaded from database: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
     }
 
     private static void setDefaultPreferences() {
-        language = LanguagesEnum.ENG;
-        theme = ThemesEnum.INTELLIJ;
-        remindList = getDefaultRemindList();
+        PreferencesRepository.Preferences defaults = PreferencesRepository.defaults();
+        language = defaults.language();
+        theme = defaults.theme();
+        remindList = defaults.remindList();
     }
 
-    public static void updatePreferencesToJson() {
-        updatePreferencesToJson(ConfigKey.CONFIG_DIRECTORY_STRING.getValue(), ConfigKey.PREFERENCES_FILE_STRING.getValue());
-    }
-
-    public static void updatePreferencesToJson(String directory, String filename) {
-        try (FileWriter writer = new FileWriter(directory + filename)) {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.addProperty("Language", language.getFileName());
-            jsonObject.addProperty("Theme", theme.getThemeName());
-
-            JsonObject RemindListObject = new JsonObject();
-            RemindListObject.addProperty("Directory", remindList.directory());
-            RemindListObject.addProperty("File", remindList.file());
-
-            jsonObject.add("RemindList", RemindListObject);
-
-            // Convert JsonObject to JSON string using Gson
-            Gson gson = new Gson();
-            gson.toJson(jsonObject, writer);
-
-            logger.info("Preferences updated to JSON file: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
-
-        } catch (IOException ex) {
-            logger.error("An error occurred during updating preferences to json operation: " + ex.getMessage(), ex);        }
-    }
-
-    private static LanguagesEnum getLanguageFromJson(JsonObject jsonObject) {
-        if (jsonObject.has("Language") && !jsonObject.get("Language").isJsonNull()) {
-            String languageFileName = jsonObject.get("Language").getAsString();
-            for (LanguagesEnum lang : LanguagesEnum.values()) {
-                if (lang.getFileName().equals(languageFileName)) {
-                    return lang;
-                }
-            }
+    public static void updatePreferencesToDb() {
+        if (repository == null) {
+            logger.error("Preferences repository not initialized; cannot persist preferences.");
+            return;
         }
-        return LanguagesEnum.ENG;
-    }
 
-    private static ThemesEnum getThemeFromJson(JsonObject jsonObject) {
-        if (jsonObject.has("Theme") && !jsonObject.get("Theme").isJsonNull()) {
-            String themeName = jsonObject.get("Theme").getAsString();
-            for (ThemesEnum t : ThemesEnum.values()) {
-                if (t.getThemeName().equals(themeName)) {
-                    return t;
-                }
-            }
-        }
-        return ThemesEnum.INTELLIJ;
-    }
-
-    private static RemindListPath getRemindListFromJson(JsonObject jsonObject) {
-        if (jsonObject.has("RemindList") && !jsonObject.get("RemindList").isJsonNull()) {
-            JsonObject RemindListObject = jsonObject.getAsJsonObject("RemindList");
-
-            String directory = RemindListObject.has("Directory") && !RemindListObject.get("Directory").isJsonNull()
-                ? RemindListObject.get("Directory").getAsString()
-                : ConfigKey.RES_DIRECTORY_STRING.getValue();
-
-            String file = RemindListObject.has("File") && !RemindListObject.get("File").isJsonNull()
-                ? RemindListObject.get("File").getAsString()
-                : ConfigKey.REMIND_LIST_FILE_STRING.getValue() + ConfigKey.VERSION.getValue() + ".json";
-
-            return new RemindListPath(directory, file);
-        }
-        return getDefaultRemindList();
+        repository.save(new PreferencesRepository.Preferences(language, theme, remindList));
+        logger.info("Preferences updated in database: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
     }
 
     public static LanguagesEnum getLanguage() {
@@ -129,10 +69,7 @@ public class Preferences {
         return remindList;
     }
     public static RemindListPath getDefaultRemindList() {
-        return new RemindListPath(
-            ConfigKey.RES_DIRECTORY_STRING.getValue(),
-            ConfigKey.REMIND_LIST_FILE_STRING.getValue() + ConfigKey.VERSION.getValue() + ".json"
-        );
+        return PreferencesRepository.defaults().remindList();
     }
     public static void setLanguage(LanguagesEnum language) {
         Preferences.language = language;

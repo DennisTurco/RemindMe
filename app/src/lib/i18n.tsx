@@ -20,6 +20,15 @@ export const LANGUAGE_DISPLAY_NAMES: Record<LanguageCode, string> = {
   FRA: "Français",
 };
 
+/** BCP 47 locale used for Intl/Date formatting (e.g. Date#toLocaleTimeString), keyed by app language. */
+export const LANGUAGE_LOCALES: Record<LanguageCode, string> = {
+  ITA: "it-IT",
+  ENG: "en-US",
+  DEU: "de-DE",
+  ESP: "es-ES",
+  FRA: "fr-FR",
+};
+
 const STORAGE_KEY = "remindme-language";
 const DEFAULT_LANGUAGE: LanguageCode = "ITA";
 

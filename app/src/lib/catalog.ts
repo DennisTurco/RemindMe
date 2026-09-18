@@ -79,6 +79,13 @@ export const EXECUTION_METHOD_OPTIONS: { value: ExecutionMethod; label: string }
   { value: "ONE_TIME_PER_DAY", label: "One Time Per Day" },
 ];
 
+/** Translation key (under the "ExecutionMethod" category) + Italian fallback for each execution method. */
+export const EXECUTION_METHOD_TRANSLATION: Record<ExecutionMethod, { key: string; fallback: string }> = {
+  PC_STARTUP: { key: "PcStartup", fallback: "Avvio PC" },
+  CUSTOM_TIME_RANGE: { key: "CustomTimeRange", fallback: "Intervallo di tempo personalizzato" },
+  ONE_TIME_PER_DAY: { key: "OneTimePerDay", fallback: "Una volta al giorno" },
+};
+
 const ICON_PATH_BY_NAME = new Map(ICON_OPTIONS.map((o) => [o.value, o.path]));
 const SOUND_PATH_BY_NAME = new Map(SOUND_OPTIONS.map((o) => [o.value, o.path]));
 

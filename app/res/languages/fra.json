@@ -14,7 +14,10 @@
         "ThemeText": "Thème",
         "LightThemeText": "Clair",
         "DarkThemeText": "Sombre",
-        "NoRemindText": "Aucun rappel"
+        "NoRemindText": "Aucun rappel",
+        "YesText": "Oui",
+        "NoText": "Non",
+        "UnnamedReminderText": "(sans nom)"
     },
     "Menu": {
         "File": "Fichier",
@@ -32,7 +35,8 @@
         "Export": "Exporter la liste en .json",
         "Share": "Partager",
         "Support": "Support",
-        "Website": "Site web"
+        "Website": "Site web",
+        "ReviewTutorialButton": "Revoir le tutoriel"
     },
     "MainFrame": {
         "AddBackupTooltip": "Ajouter un nouveau rappel",
@@ -40,7 +44,9 @@
         "ExportAsPdfTooltip": "Exporter en PDF",
         "ExportAsCsvTooltip": "Exporter en CSV",
         "ResearchBarTooltip": "Barre de recherche",
-        "ResearchBarPlaceholder": "Rechercher..."
+        "ResearchBarPlaceholder": "Rechercher...",
+        "SwitchToLightThemeTooltip": "Passer au thème clair",
+        "SwitchToDarkThemeTooltip": "Passer au thème sombre"
     },
     "RemindList": {
         "IconColumn": "Icône",
@@ -70,7 +76,12 @@
         "CopyNamePopup": "Copier le nom du rappel",
         "EnableDisablePopup": "Activer / désactiver",
         "ActivePopup": "Actif",
-        "TopLevelPopup": "Afficher au premier plan"
+        "TopLevelPopup": "Afficher au premier plan",
+        "PreviewButton": "Aperçu",
+        "CreationDateLabel": "Date de création",
+        "LastUpdateDateLabel": "Date de dernière modification",
+        "TimeFromLabel": "Heure de début",
+        "TimeToLabel": "Heure de fin"
     },
     "ManageRemindDialog": {
         "EditTitle": "Modifier le rappel",
@@ -94,7 +105,8 @@
         "DescriptionText": "Description",
         "IconText": "Icône",
         "SoundText": "Son",
-        "ExecutionMethodText": "Méthode d'exécution"
+        "ExecutionMethodText": "Méthode d'exécution",
+        "DescriptionMarkdownHint": "Vous pouvez utiliser la syntaxe Markdown (par ex. **gras**, listes à puces, liens) pour mettre en forme la description."
     },
     "TimePickerDialog": {
         "TimeIntervalTitle": "Intervalle de temps pour le rappel",
@@ -163,5 +175,26 @@
         "RemindListCorrectlyImportedMessage": "Liste des rappels importée avec succès !",
         "RemindListCorrectlyExportedTitle": "Exportation terminée",
         "RemindListCorrectlyExportedMessage": "Liste des rappels exportée avec succès !"
+    },
+    "ExecutionMethod": {
+        "PcStartup": "Démarrage du PC",
+        "CustomTimeRange": "Plage horaire personnalisée",
+        "OneTimePerDay": "Une fois par jour"
+    },
+    "Onboarding": {
+        "SkipButton": "Passer",
+        "BackButton": "Précédent",
+        "NextButton": "Suivant",
+        "StartButton": "Commencer",
+        "Step1Title": "Bienvenue sur RemindMe",
+        "Step1Body": "RemindMe vous aide à ne jamais oublier ce qui compte : créez des rappels récurrents avec votre propre icône, son et description, et restez organisé sans effort.",
+        "Step2Title": "Créez votre premier rappel",
+        "Step2Body": "Appuyez sur **+** en haut à gauche pour en ajouter un : choisissez un nom, une description (aussi en **Markdown**), une icône et un son de notification, et décidez s'il doit toujours rester au premier plan.",
+        "Step3Title": "Quand il se déclenche",
+        "Step3Body": "La **méthode d'exécution** détermine le comportement : au démarrage du PC selon un intervalle, dans une plage horaire personnalisée, ou une fois par jour à une heure précise. L'intervalle de répétition se règle avec le bouton dédié.",
+        "Step4Title": "Gérez la liste",
+        "Step4Body": "Utilisez la barre de recherche pour filtrer les rappels. Clic droit sur une ligne pour modifier, dupliquer, supprimer, renommer ou activer/désactiver rapidement un rappel.",
+        "Step5Title": "Exportez et personnalisez",
+        "Step5Body": "Exportez la liste en **CSV** ou **PDF** depuis la barre d'outils, ou toute la liste en JSON depuis le menu **Fichier**. Dans **Options > Préférences**, vous pouvez changer de langue et basculer entre thème clair et sombre à tout moment."
     }
 }

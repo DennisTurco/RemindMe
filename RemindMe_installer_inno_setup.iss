@@ -4,14 +4,14 @@
 
 [Setup]
 AppName=RemindMe
-AppVersion=1.2.2
+AppVersion=2.0.0
 AppPublisher=Shard
 AppPublisherURL=https://www.shardpc.it/
 DefaultDirName={userdocs}\Shard\RemindMe
 DisableDirPage=yes
 DisableProgramGroupPage=no
 PrivilegesRequired=lowest
-OutputBaseFilename=RemindMe_v1.2.2_Setup
+OutputBaseFilename=RemindMe_v2.0.0_Setup
 SetupIconFile=src\main\resources\res\img\logo.ico
 SetupLogging=yes
 Compression=lzma

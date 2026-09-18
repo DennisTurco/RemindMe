@@ -65,6 +65,16 @@ public final class Database {
                     maxExecutionPerDay INTEGER NOT NULL DEFAULT 0
                 )
                 """);
+
+            statement.execute("""
+                CREATE TABLE IF NOT EXISTS preferences (
+                    id INTEGER PRIMARY KEY CHECK (id = 1),
+                    language TEXT NOT NULL DEFAULT 'ENG',
+                    theme TEXT NOT NULL DEFAULT 'INTELLIJ',
+                    remindListDirectory TEXT,
+                    remindListFile TEXT
+                )
+                """);
         }
     }
 }

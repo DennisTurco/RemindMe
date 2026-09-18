@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EXECUTION_METHOD_OPTIONS, ICON_OPTIONS, SOUND_OPTIONS, iconPath, soundPath } from "../lib/catalog";
+import { EXECUTION_METHOD_OPTIONS, EXECUTION_METHOD_TRANSLATION, ICON_OPTIONS, SOUND_OPTIONS, iconPath, soundPath } from "../lib/catalog";
 import { useI18n } from "../lib/i18n";
 import { createDefaultRemind } from "../lib/types";
 import type { ExecutionMethod, Remind, TimeInterval } from "../lib/types";
@@ -113,10 +113,14 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
 
         <label className="field">
           <span className="field-label-with-hint">
-            {t("General", "DescriptionText", "Descrizione")}
+            {t("ManageRemindDialog", "DescriptionText", "Descrizione")}
             <span
               className="info-icon"
-              title="Puoi usare la sintassi Markdown (es. **grassetto**, elenchi puntati, link) per formattare la descrizione."
+              title={t(
+                "ManageRemindDialog",
+                "DescriptionMarkdownHint",
+                "Puoi usare la sintassi Markdown (es. **grassetto**, elenchi puntati, link) per formattare la descrizione.",
+              )}
             >
               i
             </span>
@@ -134,7 +138,7 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
 
         <div className="field-row">
           <label className="field">
-            <span>{t("General", "IconText", "Icona")}</span>
+            <span>{t("ManageRemindDialog", "IconText", "Icona")}</span>
             <select
               value={icon}
               title={t("ManageRemindDialog", "IconTooltip", "Scegli un'icona per la notifica del promemoria")}
@@ -152,7 +156,7 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
 
         <div className="field-row">
           <label className="field">
-            <span>{t("General", "SoundText", "Suono")}</span>
+            <span>{t("ManageRemindDialog", "SoundText", "Suono")}</span>
             <select
               value={sound}
               title={t("ManageRemindDialog", "SoundTooltip", "Scegli un suono per la notifica del promemoria")}
@@ -202,7 +206,7 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
         <hr className="form-section" />
 
         <label className="field">
-          <span>{t("General", "ExecutionMethodText", "Metodo di esecuzione")}</span>
+          <span>{t("ManageRemindDialog", "ExecutionMethodText", "Metodo di esecuzione")}</span>
           <select
             value={executionMethod}
             title={t("ManageRemindDialog", "ExecutionMethodTooltip", "Seleziona come deve essere attivato il promemoria.")}
@@ -210,7 +214,7 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
           >
             {EXECUTION_METHOD_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
-                {opt.label}
+                {t("ExecutionMethod", EXECUTION_METHOD_TRANSLATION[opt.value].key, EXECUTION_METHOD_TRANSLATION[opt.value].fallback)}
               </option>
             ))}
           </select>

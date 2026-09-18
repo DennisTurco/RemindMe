@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { MarkdownContent } from "../components/MarkdownContent";
 import { iconPath, soundPath } from "../lib/catalog";
-import { useI18n } from "../lib/i18n";
+import { LANGUAGE_LOCALES, useI18n } from "../lib/i18n";
 import { remindMe } from "../lib/ipc";
 import type { Remind } from "../lib/types";
 
@@ -18,7 +18,7 @@ function truncateName(name: string): string {
  * the in-form "what would this look like" preview).
  */
 export function ReminderPopupPage() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const [params] = useSearchParams();
   const [remind, setRemind] = useState<Remind | null>(null);
   const name = params.get("name") ?? "";
@@ -39,7 +39,7 @@ export function ReminderPopupPage() {
 
   if (!remind) return null;
 
-  const time = new Date().toLocaleTimeString();
+  const time = new Date().toLocaleTimeString(LANGUAGE_LOCALES[language]);
 
   return (
     <div className={`popup-page ${remind.isTopLevel ? "popup-page-top-level" : ""}`}>

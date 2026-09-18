@@ -58,10 +58,12 @@ public class ReminderController {
 
     public void getDue(Context ctx) {
         List<Remind> due = SchedulingService.getRemindsToExecute(repository.getAll(), 1);
+        List<Remind> updated = new java.util.ArrayList<>();
         for (Remind remind : due) {
             repository.markShown(remind.getName());
+            updated.add(repository.getByName(remind.getName()));
         }
-        json(ctx, due);
+        json(ctx, updated);
     }
 
     public void getByName(Context ctx) {
@@ -144,16 +146,6 @@ public class ReminderController {
 
     public void exportCsv(Context ctx) {
         ctx.contentType("text/csv").result(ExportService.toCsv(repository.getAll()));
-    }
-
-    public void exportPdf(Context ctx) {
-        try {
-            byte[] bytes = ExportService.toPdfBytes(repository.getAll(), "RemindMe");
-            ctx.contentType("application/pdf").result(bytes);
-        } catch (java.io.IOException ex) {
-            logger.error("Failed to generate PDF export: " + ex.getMessage(), ex);
-            ctx.status(500).result("Failed to generate PDF");
-        }
     }
 
     public void exportJson(Context ctx) {

@@ -77,15 +77,6 @@ export const apiClient = {
     request<void>(`/reminders/${encodeURIComponent(name)}/topLevel`, { method: "POST", body: JSON.stringify({ value }) }),
 
   exportCsv: () => request<string>("/export/csv"),
-
-  async exportPdf(): Promise<Buffer> {
-    const res = await fetch(`${BASE_URL}/export/pdf`);
-    if (!res.ok) {
-      throw new Error(`RemindMe API /export/pdf failed (${res.status})`);
-    }
-    return Buffer.from(await res.arrayBuffer());
-  },
-
   exportJson: () => request<Remind[]>("/export/json"),
 
   importJson: (reminds: Remind[]) => request<void>("/import/json", { method: "POST", body: JSON.stringify(reminds) }),

@@ -1,69 +1,60 @@
 import { useState } from "react";
-import type { ReactNode } from "react";
+import { useI18n } from "../lib/i18n";
+import { MarkdownContent } from "./MarkdownContent";
 
 interface Step {
   icon: string;
-  title: string;
-  body: ReactNode;
+  titleKey: string;
+  titleFallback: string;
+  bodyKey: string;
+  bodyFallback: string;
 }
 
 const STEPS: Step[] = [
   {
     icon: "🔔",
-    title: "Benvenuto in RemindMe",
-    body: (
-      <>
-        RemindMe ti aiuta a non dimenticare le cose che contano: crea promemoria ricorrenti con
-        un'icona, un suono e una descrizione tutta tua, e resta organizzato senza sforzo.
-      </>
-    ),
+    titleKey: "Step1Title",
+    titleFallback: "Benvenuto in RemindMe",
+    bodyKey: "Step1Body",
+    bodyFallback:
+      "RemindMe ti aiuta a non dimenticare le cose che contano: crea promemoria ricorrenti con un'icona, un suono e una descrizione tutta tua, e resta organizzato senza sforzo.",
   },
   {
     icon: "➕",
-    title: "Crea il tuo primo promemoria",
-    body: (
-      <>
-        Premi <strong>+</strong> in alto a sinistra per aggiungerne uno: scegli nome, descrizione
-        (anche in <strong>Markdown</strong>), icona e suono di notifica, e decidi se deve restare
-        sempre visibile in primo piano.
-      </>
-    ),
+    titleKey: "Step2Title",
+    titleFallback: "Crea il tuo primo promemoria",
+    bodyKey: "Step2Body",
+    bodyFallback:
+      "Premi **+** in alto a sinistra per aggiungerne uno: scegli nome, descrizione (anche in **Markdown**), icona e suono di notifica, e decidi se deve restare sempre visibile in primo piano.",
   },
   {
     icon: "⏱",
-    title: "Quando si attiva",
-    body: (
-      <>
-        Il <strong>metodo di esecuzione</strong> decide il comportamento: all'avvio del PC ogni tot
-        tempo, in una fascia oraria personalizzata, oppure una volta al giorno a un orario preciso.
-        L'intervallo di ripetizione si imposta col pulsante dedicato.
-      </>
-    ),
+    titleKey: "Step3Title",
+    titleFallback: "Quando si attiva",
+    bodyKey: "Step3Body",
+    bodyFallback:
+      "Il **metodo di esecuzione** decide il comportamento: all'avvio del PC ogni tot tempo, in una fascia oraria personalizzata, oppure una volta al giorno a un orario preciso. L'intervallo di ripetizione si imposta col pulsante dedicato.",
   },
   {
     icon: "🗂",
-    title: "Gestisci l'elenco",
-    body: (
-      <>
-        Usa la barra di ricerca per filtrare i promemoria. Clic destro su una riga per modificare,
-        duplicare, eliminare, rinominare o attivare/disattivare rapidamente un promemoria.
-      </>
-    ),
+    titleKey: "Step4Title",
+    titleFallback: "Gestisci l'elenco",
+    bodyKey: "Step4Body",
+    bodyFallback:
+      "Usa la barra di ricerca per filtrare i promemoria. Clic destro su una riga per modificare, duplicare, eliminare, rinominare o attivare/disattivare rapidamente un promemoria.",
   },
   {
     icon: "⚙",
-    title: "Esporta e personalizza",
-    body: (
-      <>
-        Esporta l'elenco in <strong>CSV</strong> o <strong>PDF</strong> dalla toolbar, oppure l'intero
-        elenco in JSON dal menu <strong>File</strong>. In <strong>Opzioni &gt; Preferenze</strong> puoi
-        cambiare lingua e passare dal tema chiaro a quello scuro in qualsiasi momento.
-      </>
-    ),
+    titleKey: "Step5Title",
+    titleFallback: "Esporta e personalizza",
+    bodyKey: "Step5Body",
+    bodyFallback:
+      "Esporta l'elenco in **CSV** o **PDF** dalla toolbar, oppure l'intero elenco in JSON dal menu **File**. In **Opzioni > Preferenze** puoi cambiare lingua e passare dal tema chiaro a quello scuro in qualsiasi momento.",
   },
 ];
 
 export function OnboardingWizard({ onFinish }: { onFinish: () => void }) {
+  const { t } = useI18n();
   const [index, setIndex] = useState(0);
   const step = STEPS[index];
   const isFirst = index === 0;
@@ -73,12 +64,12 @@ export function OnboardingWizard({ onFinish }: { onFinish: () => void }) {
     <div className="modal-overlay" onClick={onFinish}>
       <div className="modal onboarding-panel" onClick={(e) => e.stopPropagation()}>
         <button className="btn onboarding-skip" onClick={onFinish}>
-          Salta
+          {t("Onboarding", "SkipButton", "Salta")}
         </button>
 
         <div className="onboarding-icon">{step.icon}</div>
-        <h2 className="onboarding-title">{step.title}</h2>
-        <p className="onboarding-body">{step.body}</p>
+        <h2 className="onboarding-title">{t("Onboarding", step.titleKey, step.titleFallback)}</h2>
+        <MarkdownContent className="onboarding-body" text={t("Onboarding", step.bodyKey, step.bodyFallback)} />
 
         <div className="onboarding-dots">
           {STEPS.map((_, i) => (
@@ -88,15 +79,15 @@ export function OnboardingWizard({ onFinish }: { onFinish: () => void }) {
 
         <div className="modal-actions onboarding-actions">
           <button className="btn" onClick={() => setIndex((i) => i - 1)} style={{ visibility: isFirst ? "hidden" : "visible" }}>
-            Indietro
+            {t("Onboarding", "BackButton", "Indietro")}
           </button>
           {isLast ? (
             <button className="btn btn-primary" onClick={onFinish}>
-              Inizia
+              {t("Onboarding", "StartButton", "Inizia")}
             </button>
           ) : (
             <button className="btn btn-primary" onClick={() => setIndex((i) => i + 1)}>
-              Avanti
+              {t("Onboarding", "NextButton", "Avanti")}
             </button>
           )}
         </div>

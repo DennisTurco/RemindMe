@@ -56,7 +56,7 @@ export function PreferencesDialog({ onClose }: PreferencesDialogProps) {
               onClose();
             }}
           >
-            Rivedi il tutorial
+            {t("Menu", "ReviewTutorialButton", "Rivedi il tutorial")}
           </button>
           <button className="btn btn-primary" onClick={onClose}>
             {t("General", "CloseButton", "Chiudi")}
@@ -66,3 +66,4 @@ export function PreferencesDialog({ onClose }: PreferencesDialogProps) {
     </div>
   );
 }
+

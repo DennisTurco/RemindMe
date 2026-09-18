@@ -138,6 +138,13 @@ textarea:focus-visible,
   gap: 8px;
 }
 
+.app-footer {
+  flex-shrink: 0;
+  text-align: center;
+  color: var(--fg-muted);
+  font-size: 0.78em;
+}
+
 .toolbar-group {
   display: flex;
   align-items: center;
@@ -269,6 +276,25 @@ textarea:focus-visible,
   font-size: 1.05em;
 }
 
+.details-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.details-panel-header h3 {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.details-panel-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 .details-description {
   color: var(--fg-muted);
   margin: 0 0 12px;
@@ -379,11 +405,17 @@ textarea:focus-visible,
   background: var(--row-hover);
 }
 
-.context-menu-separator {
+.context-menu li.context-menu-separator {
   height: 1px;
+  padding: 0;
   margin: 6px 0;
   background: var(--border);
   cursor: default;
+  pointer-events: none;
+}
+
+.context-menu li.context-menu-separator:hover {
+  background: var(--border);
 }
 
 .context-menu-submenu-label {
@@ -771,6 +803,15 @@ fieldset.field legend {
 .btn-primary:hover {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
+}
+
+.btn-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  background: rgba(229, 72, 77, 0.12);
 }
 
 .btn-icon {

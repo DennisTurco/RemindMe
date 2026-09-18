@@ -42,7 +42,6 @@ public class ApiServer {
         app.post("/reminders/{name}/topLevel", controller::setTopLevel);
 
         app.get("/export/csv", controller::exportCsv);
-        app.get("/export/pdf", controller::exportPdf);
         app.get("/export/json", controller::exportJson);
         app.post("/import/json", controller::importJson);
     }
