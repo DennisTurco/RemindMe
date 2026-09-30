@@ -17,7 +17,9 @@
         "NoRemindText": "No reminders",
         "YesText": "Yes",
         "NoText": "No",
-        "UnnamedReminderText": "(unnamed)"
+        "UnnamedReminderText": "(unnamed)",
+        "StartupText": "Startup",
+        "AutoLaunchText": "Launch RemindMe at system startup"
     },
     "Menu": {
         "File": "File",
@@ -46,7 +48,10 @@
         "ResearchBarTooltip": "Research bar",
         "ResearchBarPlaceholder": "Search...",
         "SwitchToLightThemeTooltip": "Switch to light theme",
-        "SwitchToDarkThemeTooltip": "Switch to dark theme"
+        "SwitchToDarkThemeTooltip": "Switch to dark theme",
+        "GithubButton": "GitHub",
+        "ReportIssueButton": "Report an issue",
+        "DonatePaypalButton": "Donate via PayPal"
     },
     "RemindList": {
         "IconColumn": "Icon",

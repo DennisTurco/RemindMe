@@ -20,6 +20,9 @@ export interface RemindMeBridge {
   exportPdf(): Promise<ExportResult>;
   setNativeTheme(mode: "light" | "dark"): Promise<void>;
   setLanguage(language: string): Promise<void>;
+  getAutoLaunch(): Promise<boolean>;
+  setAutoLaunch(enabled: boolean): Promise<void>;
+  openLink(key: "website" | "infoPage" | "issuePage" | "sharePage" | "donatePaypal" | "donateBuyMeACoffee"): Promise<void>;
   onNewReminderRequested(callback: () => void): () => void;
   onOpenPreferencesRequested(callback: () => void): () => void;
   onRemindersChanged(callback: () => void): () => void;
@@ -64,6 +67,9 @@ function createBrowserFallbackBridge(): RemindMeBridge {
     exportPdf: async () => ({ canceled: true }),
     setNativeTheme: async () => {},
     setLanguage: async () => {},
+    getAutoLaunch: async () => false,
+    setAutoLaunch: async () => {},
+    openLink: async () => {},
     onNewReminderRequested: () => () => {},
     onOpenPreferencesRequested: () => () => {},
     onRemindersChanged: () => () => {},

@@ -13,7 +13,7 @@
 ; remember to also remove the entry on uninstall.
 
 #define AppName      "RemindMe"
-#define AppVersion   "1.2.3"
+#define AppVersion   "2.0.0"
 #define AppPublisher "Shard"
 #define AppURL       "https://github.com/DennisTurco/RemindMe"
 #define AppExeName   "RemindMe.exe"

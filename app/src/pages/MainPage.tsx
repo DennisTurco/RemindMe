@@ -64,8 +64,8 @@ export function MainPage() {
     const result = await remindMe.exportCsv();
     if (!result.canceled) {
       setInfoMessage({
-        title: t("Dialogs", "SuccessGenericTitle", "Successo"),
-        message: t("Dialogs", "SuccessfullyExportedToCsvMessage", "Backup esportati in CSV con successo!"),
+        title: t("Dialogs", "SuccessGenericTitle", "Success"),
+        message: t("Dialogs", "SuccessfullyExportedToCsvMessage", "Backups exported to CSV successfully!"),
       });
     }
   }
@@ -74,8 +74,8 @@ export function MainPage() {
     const result = await remindMe.exportPdf();
     if (!result.canceled) {
       setInfoMessage({
-        title: t("Dialogs", "SuccessGenericTitle", "Successo"),
-        message: t("Dialogs", "SuccessfullyExportedToPdfMessage", "Backup esportati in PDF con successo!"),
+        title: t("Dialogs", "SuccessGenericTitle", "Success"),
+        message: t("Dialogs", "SuccessfullyExportedToPdfMessage", "Backups exported to PDF successfully!"),
       });
     }
   }
@@ -148,7 +148,7 @@ export function MainPage() {
   async function handleRenameConfirm(newName: string) {
     if (!renamingRemind) return;
     if (newName !== renamingRemind.name && reminds.some((r) => r.name === newName)) {
-      setRenameConflict(t("Dialogs", "RemindNameAlreadyUsedMessage", "Nome del promemoria già in uso!"));
+      setRenameConflict(t("Dialogs", "RemindNameAlreadyUsedMessage", "Remind name already used!"));
       return;
     }
     await remindMe.rename(renamingRemind.name, newName);
@@ -171,25 +171,25 @@ export function MainPage() {
       <div className="toolbar">
         <button
           className="btn btn-icon"
-          title={t("MainFrame", "AddBackupTooltip", "Aggiungi nuovo promemoria")}
+          title={t("MainFrame", "AddBackupTooltip", "Add new reminder")}
           onClick={() => setShowCreateForm(true)}
         >
           +
         </button>
         <input
           className="search-bar"
-          placeholder={t("MainFrame", "ResearchBarPlaceholder", "Cerca...")}
-          title={t("MainFrame", "ResearchBarTooltip", "Barra di ricerca")}
+          placeholder={t("MainFrame", "ResearchBarPlaceholder", "Search...")}
+          title={t("MainFrame", "ResearchBarTooltip", "Research bar")}
           value={search}
           onChange={(e) => handleSearchChange(e.target.value)}
         />
         <span className="toolbar-spacer" />
-        <span className="toolbar-label">{t("MainFrame", "ExportAs", "Esporta come: ")}</span>
+        <span className="toolbar-label">{t("MainFrame", "ExportAs", "Export as: ")}</span>
         <div className="toolbar-group">
-          <button className="btn" title={t("MainFrame", "ExportAsCsvTooltip", "Esporta come CSV")} onClick={handleExportCsv}>
+          <button className="btn" title={t("MainFrame", "ExportAsCsvTooltip", "Export as CSV")} onClick={handleExportCsv}>
             CSV
           </button>
-          <button className="btn" title={t("MainFrame", "ExportAsPdfTooltip", "Esporta come PDF")} onClick={handleExportPdf}>
+          <button className="btn" title={t("MainFrame", "ExportAsPdfTooltip", "Export as PDF")} onClick={handleExportPdf}>
             PDF
           </button>
         </div>
@@ -197,8 +197,8 @@ export function MainPage() {
           className="btn btn-icon"
           title={
             theme === "dark"
-              ? t("MainFrame", "SwitchToLightThemeTooltip", "Passa al tema chiaro")
-              : t("MainFrame", "SwitchToDarkThemeTooltip", "Passa al tema scuro")
+              ? t("MainFrame", "SwitchToLightThemeTooltip", "Switch to light theme")
+              : t("MainFrame", "SwitchToDarkThemeTooltip", "Switch to dark theme")
           }
           onClick={handleToggleTheme}
         >
@@ -210,13 +210,13 @@ export function MainPage() {
         <table className="remind-table">
           <thead>
             <tr>
-              <th>{t("RemindList", "IconColumn", "Icona")}</th>
-              <th>{t("RemindList", "NameColumn", "Nome")}</th>
-              <th>{t("RemindList", "IsActiveColumn", "Attivo")}</th>
-              <th>{t("RemindList", "IsTopLevelColumn", "Mostra in alto")}</th>
-              <th>{t("RemindList", "LastExecutionColumn", "Ultima esecuzione")}</th>
-              <th>{t("RemindList", "NextExecutionColumn", "Prossima esecuzione")}</th>
-              <th>{t("RemindList", "TimeIntervalColumn", "Intervallo di tempo")}</th>
+              <th>{t("RemindList", "IconColumn", "Icon")}</th>
+              <th>{t("RemindList", "NameColumn", "Name")}</th>
+              <th>{t("RemindList", "IsActiveColumn", "Active")}</th>
+              <th>{t("RemindList", "IsTopLevelColumn", "Show on Top")}</th>
+              <th>{t("RemindList", "LastExecutionColumn", "Last Execution")}</th>
+              <th>{t("RemindList", "NextExecutionColumn", "Next Execution")}</th>
+              <th>{t("RemindList", "TimeIntervalColumn", "Time Interval")}</th>
             </tr>
           </thead>
           <tbody>
@@ -240,13 +240,13 @@ export function MainPage() {
                 </td>
                 <td>{formatDate(remind.lastExecution ?? "")}</td>
                 <td>{formatDate(remind.nextExecution ?? "")}</td>
-                <td title={t("TimePickerDialog", "Format", "gg.OO:mm")}>{timeIntervalToString(remind.timeInterval)}</td>
+                <td title={t("TimePickerDialog", "Format", "dd.HH:mm")}>{timeIntervalToString(remind.timeInterval)}</td>
               </tr>
             ))}
             {reminds.length === 0 && (
               <tr>
                 <td colSpan={7} className="empty-row">
-                  {t("General", "NoRemindText", "Nessun promemoria")}
+                  {t("General", "NoRemindText", "No reminders")}
                 </td>
               </tr>
             )}
@@ -260,43 +260,43 @@ export function MainPage() {
             <h3>{selected.name}</h3>
             <div className="details-panel-actions">
               <button className="btn" onClick={() => setEditingRemind(selected)}>
-                {t("RemindList", "EditPopup", "Modifica")}
+                {t("RemindList", "EditPopup", "Edit")}
               </button>
               <button className="btn" onClick={() => setPreviewRemind(selected)}>
-                {t("RemindList", "PreviewButton", "Anteprima")}
+                {t("RemindList", "PreviewButton", "Preview")}
               </button>
               <button className="btn btn-danger" onClick={() => setDeleteTarget("selection")}>
-                {t("RemindList", "DeletePopup", "Elimina")}
+                {t("RemindList", "DeletePopup", "Delete")}
               </button>
             </div>
           </div>
           {selected.description && <MarkdownContent className="details-description" text={selected.description} />}
           <dl className="details-grid">
-            <dt>{t("RemindList", "IsActiveColumn", "Attivo")}</dt>
+            <dt>{t("RemindList", "IsActiveColumn", "Active")}</dt>
             <dd>
               <span className={`badge ${selected.isActive ? "badge-on" : ""}`}>
-                {selected.isActive ? t("General", "YesText", "Sì") : t("General", "NoText", "No")}
+                {selected.isActive ? t("General", "YesText", "Yes") : t("General", "NoText", "No")}
               </span>
             </dd>
-            <dt>{t("RemindList", "IsTopLevelColumn", "Mostra in alto")}</dt>
+            <dt>{t("RemindList", "IsTopLevelColumn", "Show on Top")}</dt>
             <dd>
               <span className={`badge ${selected.isTopLevel ? "badge-on" : ""}`}>
-                {selected.isTopLevel ? t("General", "YesText", "Sì") : t("General", "NoText", "No")}
+                {selected.isTopLevel ? t("General", "YesText", "Yes") : t("General", "NoText", "No")}
               </span>
             </dd>
-            <dt>{t("RemindList", "LastExecutionColumn", "Ultima esecuzione")}</dt>
+            <dt>{t("RemindList", "LastExecutionColumn", "Last Execution")}</dt>
             <dd>{formatDate(selected.lastExecution ?? "")}</dd>
-            <dt>{t("RemindList", "NextExecutionColumn", "Prossima esecuzione")}</dt>
+            <dt>{t("RemindList", "NextExecutionColumn", "Next Execution")}</dt>
             <dd>{formatDate(selected.nextExecution ?? "")}</dd>
-            <dt>{t("RemindList", "TimeIntervalColumn", "Intervallo di tempo")}</dt>
+            <dt>{t("RemindList", "TimeIntervalColumn", "Time Interval")}</dt>
             <dd>{timeIntervalToString(selected.timeInterval)}</dd>
-            <dt>{t("RemindList", "CreationDateLabel", "Data creazione")}</dt>
+            <dt>{t("RemindList", "CreationDateLabel", "Creation date")}</dt>
             <dd>{formatDate(selected.creationDate ?? "")}</dd>
-            <dt>{t("RemindList", "LastUpdateDateLabel", "Data ultima modifica")}</dt>
+            <dt>{t("RemindList", "LastUpdateDateLabel", "Last update date")}</dt>
             <dd>{formatDate(selected.lastUpdateDate ?? "")}</dd>
-            <dt>{t("RemindList", "CountDetail", "Conteggio")}</dt>
+            <dt>{t("RemindList", "CountDetail", "Count")}</dt>
             <dd>{selected.remindCount}</dd>
-            <dt>{t("ManageRemindDialog", "ExecutionMethodText", "Metodo di esecuzione")}</dt>
+            <dt>{t("ManageRemindDialog", "ExecutionMethodText", "Execution method")}</dt>
             <dd>
               {t(
                 "ExecutionMethod",
@@ -306,15 +306,15 @@ export function MainPage() {
             </dd>
             {selected.executionMethod === "CUSTOM_TIME_RANGE" && selected.timeRange && (
               <>
-                <dt>{t("RemindList", "TimeFromLabel", "Ora inizio")}</dt>
+                <dt>{t("RemindList", "TimeFromLabel", "Start time")}</dt>
                 <dd>{selected.timeRange.start}</dd>
-                <dt>{t("RemindList", "TimeToLabel", "Ora fine")}</dt>
+                <dt>{t("RemindList", "TimeToLabel", "End time")}</dt>
                 <dd>{selected.timeRange.end}</dd>
               </>
             )}
             {selected.executionMethod === "ONE_TIME_PER_DAY" && selected.timeRange && (
               <>
-                <dt>{t("RemindList", "TimeFromLabel", "Ora inizio")}</dt>
+                <dt>{t("RemindList", "TimeFromLabel", "Start time")}</dt>
                 <dd>{selected.timeRange.start}</dd>
               </>
             )}
@@ -323,7 +323,20 @@ export function MainPage() {
       )}
 
       <footer className="app-footer">
-        {t("General", "AppName", "Remind Me")} — {t("General", "Version", "Versione")} {__APP_VERSION__}
+        <span>
+          {t("General", "Version", "Version")} {__APP_VERSION__}
+        </span>
+        <span className="app-footer-links">
+          <button className="btn btn-link" onClick={() => remindMe.openLink("infoPage")}>
+            {t("MainFrame", "GithubButton", "GitHub")}
+          </button>
+          <button className="btn btn-link" onClick={() => remindMe.openLink("issuePage")}>
+            {t("MainFrame", "ReportIssueButton", "Report an issue")}
+          </button>
+          <button className="btn btn-link" onClick={() => remindMe.openLink("donatePaypal")}>
+            {t("MainFrame", "DonatePaypalButton", "Donate via PayPal")}
+          </button>
+        </span>
       </footer>
 
       {contextMenu && (
@@ -334,19 +347,19 @@ export function MainPage() {
               setContextMenu(null);
             }}
           >
-            {t("RemindList", "EditPopup", "Modifica")}
+            {t("RemindList", "EditPopup", "Edit")}
           </li>
-          <li onClick={() => handleDuplicate(contextMenu.remind)}>{t("RemindList", "DuplicatePopup", "Duplica")}</li>
+          <li onClick={() => handleDuplicate(contextMenu.remind)}>{t("RemindList", "DuplicatePopup", "Duplicate")}</li>
           <li
             onClick={() => {
               setRenamingRemind(contextMenu.remind);
               setContextMenu(null);
             }}
           >
-            {t("RemindList", "RenamePopup", "Rinomina")}
+            {t("RemindList", "RenamePopup", "Rename")}
           </li>
           <li className="context-menu-separator" />
-          <li className="context-menu-submenu-label">{t("RemindList", "EnableDisablePopup", "Abilita / disabilita")}</li>
+          <li className="context-menu-submenu-label">{t("RemindList", "EnableDisablePopup", "Enable / disable")}</li>
           <li className="context-menu-checkbox">
             <label>
               <input
@@ -354,7 +367,7 @@ export function MainPage() {
                 checked={contextMenu.remind.isActive}
                 onChange={(e) => handleToggleActive(contextMenu.remind, e.target.checked)}
               />
-              {t("RemindList", "ActivePopup", "Attivo")}
+              {t("RemindList", "ActivePopup", "Active")}
             </label>
           </li>
           <li className="context-menu-checkbox">
@@ -364,12 +377,12 @@ export function MainPage() {
                 checked={contextMenu.remind.isTopLevel}
                 onChange={(e) => handleToggleTopLevel(contextMenu.remind, e.target.checked)}
               />
-              {t("RemindList", "TopLevelPopup", "Mostra in primo piano")}
+              {t("RemindList", "TopLevelPopup", "Show on top")}
             </label>
           </li>
           <li className="context-menu-separator" />
           <li className="context-menu-item-danger" onClick={() => handleDeleteNoConfirm(contextMenu.remind)}>
-            {t("RemindList", "DeletePopup", "Elimina")}
+            {t("RemindList", "DeletePopup", "Delete")}
           </li>
         </ul>
       )}
@@ -395,8 +408,8 @@ export function MainPage() {
 
       {renamingRemind && (
         <PromptDialog
-          title={t("RemindList", "RenamePopup", "Rinomina promemoria")}
-          label={t("Dialogs", "RemindNameInput", "Nome del promemoria")}
+          title={t("RemindList", "RenamePopup", "Rename")}
+          label={t("Dialogs", "RemindNameInput", "Name of the reminder")}
           initialValue={renamingRemind.name}
           onConfirm={handleRenameConfirm}
           onCancel={() => setRenamingRemind(null)}
@@ -405,7 +418,7 @@ export function MainPage() {
 
       {renameConflict && (
         <ConfirmDialog
-          title={t("Dialogs", "ErrorGenericTitle", "Errore")}
+          title={t("Dialogs", "ErrorGenericTitle", "Error")}
           message={renameConflict}
           onConfirm={() => setRenameConflict(null)}
           onCancel={() => setRenameConflict(null)}
@@ -414,8 +427,8 @@ export function MainPage() {
 
       {deleteTarget === "selection" && selected && (
         <ConfirmDialog
-          title={t("Dialogs", "ConfirmationDeletionTitle", "Conferma eliminazione")}
-          message={t("Dialogs", "ConfirmationDeletionMessage", "Sei sicuro di voler eliminare le righe selezionate?")}
+          title={t("Dialogs", "ConfirmationDeletionTitle", "Confirm Deletion")}
+          message={t("Dialogs", "ConfirmationDeletionMessage", "Are you sure you want to delete the selected rows?")}
           onConfirm={handleConfirmedDelete}
           onCancel={() => setDeleteTarget(null)}
         />

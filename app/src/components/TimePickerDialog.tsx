@@ -21,7 +21,7 @@ export function TimePickerDialog({ initialValue, onConfirm, onCancel }: TimePick
   const [minutes, setMinutes] = useState(initialValue.minutes);
   const [error, setError] = useState<string | null>(null);
 
-  const spinnerTooltip = t("TimePickerDialog", "SpinnerTooltip", "Usa la rotella del mouse per modificare il valore");
+  const spinnerTooltip = t("TimePickerDialog", "SpinnerTooltip", "Mouse wheel to adjust the value");
 
   function wheelAdjust(setter: (updater: (v: number) => number) => void, min: number, max: number) {
     return (e: React.WheelEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ export function TimePickerDialog({ initialValue, onConfirm, onCancel }: TimePick
 
   function handleConfirm() {
     if (days === 0 && hours === 0 && minutes === 0) {
-      setError(t("Dialogs", "ErrorWrongTimeInterval", "L'intervallo di tempo non è corretto"));
+      setError(t("Dialogs", "ErrorWrongTimeInterval", "The time interval is not correct"));
       return;
     }
     onConfirm({ days, hours, minutes });
@@ -42,17 +42,17 @@ export function TimePickerDialog({ initialValue, onConfirm, onCancel }: TimePick
   return (
     <div className="modal-overlay" onClick={onCancel}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <h2>{t("TimePickerDialog", "TimeIntervalTitle", "Intervallo di tempo del promemoria")}</h2>
+        <h2>{t("TimePickerDialog", "TimeIntervalTitle", "Time interval for reminder")}</h2>
         <p className="modal-description">
           {t(
             "TimePickerDialog",
             "Description",
-            "Seleziona ogni quanto mostrare il promemoria scegliendo la frequenza in giorni, ore e minuti",
+            "Select how often to open the reminder by \nchoosing the frequency in days, hours and minutes",
           )}
         </p>
         <div className="time-picker-fields">
           <label className="field">
-            <span>{t("TimePickerDialog", "Days", "Giorni")}</span>
+            <span>{t("TimePickerDialog", "Days", "Days")}</span>
             <input
               type="number"
               min={0}
@@ -63,7 +63,7 @@ export function TimePickerDialog({ initialValue, onConfirm, onCancel }: TimePick
             />
           </label>
           <label className="field">
-            <span>{t("TimePickerDialog", "Hours", "Ore")}</span>
+            <span>{t("TimePickerDialog", "Hours", "Hours")}</span>
             <input
               type="number"
               min={0}
@@ -75,7 +75,7 @@ export function TimePickerDialog({ initialValue, onConfirm, onCancel }: TimePick
             />
           </label>
           <label className="field">
-            <span>{t("TimePickerDialog", "Minutes", "Minuti")}</span>
+            <span>{t("TimePickerDialog", "Minutes", "Minutes")}</span>
             <input
               type="number"
               min={0}
@@ -90,7 +90,7 @@ export function TimePickerDialog({ initialValue, onConfirm, onCancel }: TimePick
         {error && <p className="field-error">{error}</p>}
         <div className="modal-actions">
           <button className="btn" onClick={onCancel}>
-            {t("General", "CancelButton", "Annulla")}
+            {t("General", "CancelButton", "Cancel")}
           </button>
           <button className="btn btn-primary" onClick={handleConfirm}>
             {t("General", "OkButton", "Ok")}

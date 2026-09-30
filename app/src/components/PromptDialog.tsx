@@ -38,7 +38,7 @@ export function PromptDialog({ title, label, initialValue, onConfirm, onCancel }
         </label>
         <div className="modal-actions">
           <button className="btn" onClick={onCancel}>
-            {t("General", "CancelButton", "Annulla")}
+            {t("General", "CancelButton", "Cancel")}
           </button>
           <button className="btn btn-primary" onClick={handleConfirm} disabled={!value.trim()}>
             {t("General", "OkButton", "Ok")}

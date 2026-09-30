@@ -2,6 +2,10 @@ package remindme.Enums;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -244,29 +248,49 @@ public class TranslationLoaderEnum {
     }
 
     public static void loadTranslations(String filePath) throws IOException {
-        Gson gson = new Gson();
-
         try (FileReader reader = new FileReader(filePath)) {
-            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            applyTranslations(reader);
+        }
+    }
 
-            for (TranslationCategory category : TranslationCategory.values()) {
-                JsonObject categoryTranslations = jsonObject.getAsJsonObject(category.getCategoryName());
+    /**
+     * Loads a language file from the application's own classpath (a
+     * jar-embedded resource under src/main/resources) instead of the
+     * filesystem, so it keeps working regardless of the process's working
+     * directory in a packaged install.
+     */
+    public static void loadTranslationsFromClasspath(String resourcePath) throws IOException {
+        try (InputStream in = TranslationLoaderEnum.class.getResourceAsStream(resourcePath)) {
+            if (in == null) {
+                throw new IOException("Resource not found on classpath: " + resourcePath);
+            }
+            try (Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8)) {
+                applyTranslations(reader);
+            }
+        }
+    }
 
-                if (categoryTranslations != null) {
-                    for (Map.Entry<String, JsonElement> entry : categoryTranslations.entrySet()) {
-                        String key = entry.getKey();
-                        String value = entry.getValue().getAsString();
+    private static void applyTranslations(Reader reader) {
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
 
-                        // Use fromKeyName to get the TranslationKey from the JSON key
-                        TranslationKey translationKey = TranslationKey.fromKeyName(key);
-                        if (translationKey != null) {
-                            // If value is null or empty, fall back to the default value from the enum
-                            String translationValue = (value != null && !value.isEmpty()) ? value : translationKey.getDefaultValue();
-                            category.addTranslation(translationKey, translationValue);
-                        } else {
-                            // If the key is not recognized in the enum, log it and use the default value
-                            logger.warn("Warning: Unrecognized key in JSON: " + key + ", using default value");
-                        }
+        for (TranslationCategory category : TranslationCategory.values()) {
+            JsonObject categoryTranslations = jsonObject.getAsJsonObject(category.getCategoryName());
+
+            if (categoryTranslations != null) {
+                for (Map.Entry<String, JsonElement> entry : categoryTranslations.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue().getAsString();
+
+                    // Use fromKeyName to get the TranslationKey from the JSON key
+                    TranslationKey translationKey = TranslationKey.fromKeyName(key);
+                    if (translationKey != null) {
+                        // If value is null or empty, fall back to the default value from the enum
+                        String translationValue = (value != null && !value.isEmpty()) ? value : translationKey.getDefaultValue();
+                        category.addTranslation(translationKey, translationValue);
+                    } else {
+                        // If the key is not recognized in the enum, log it and use the default value
+                        logger.warn("Warning: Unrecognized key in JSON: " + key + ", using default value");
                     }
                 }
             }

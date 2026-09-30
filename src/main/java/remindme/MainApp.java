@@ -1,7 +1,9 @@
 package remindme;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -14,7 +16,6 @@ import com.google.gson.JsonParser;
 import remindme.Api.ApiServer;
 import remindme.Api.ReminderController;
 import remindme.Entities.Preferences;
-import remindme.Entities.RemindListPath;
 import remindme.Enums.ConfigKey;
 import remindme.Enums.LanguagesEnum;
 import remindme.Enums.ThemesEnum;
@@ -33,10 +34,12 @@ import remindme.Sqlite.ReminderRepository;
 public class MainApp {
 
     private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
-    private static final String CONFIG = "src/main/resources/res/config/config.json";
+    private static final String CONFIG_RESOURCE = "/res/config/config.json";
+    private static final String SUGGESTIONS_RESOURCE = "/res/suggestions_remind.json";
+    private static final String LANGUAGES_RESOURCE_DIR = "/res/languages/";
 
     public static void main(String[] args) {
-        ConfigKey.loadFromJson(CONFIG);
+        ConfigKey.loadFromClasspath(CONFIG_RESOURCE);
 
         boolean isServeMode = args.length > 0 && args[0].equalsIgnoreCase("--serve");
         if (!isServeMode) {
@@ -48,10 +51,27 @@ public class MainApp {
         runApiServer();
     }
 
+    /**
+     * Directory the running jar (or, in dev, the compiled classes) lives in.
+     * Used as a writable location for the SQLite database next to the app
+     * itself, resolved dynamically instead of a config value so it doesn't
+     * depend on the process's working directory or on config.json (which
+     * only ships dev-tree paths like "src/main/resources/res/").
+     */
+    private static String resolveDataDirectory() {
+        try {
+            File location = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            File dir = location.isFile() ? location.getParentFile() : location;
+            return dir.getAbsolutePath() + File.separator;
+        } catch (URISyntaxException | NullPointerException ex) {
+            logger.warn("Could not resolve application directory, falling back to the working directory: " + ex.getMessage());
+            return "";
+        }
+    }
+
     private static void runApiServer() {
         try {
-            String resDirectory = ConfigKey.RES_DIRECTORY_STRING.getValue();
-            String dbPath = resDirectory + "reminders.db";
+            String dbPath = resolveDataDirectory() + "reminders.db";
             Connection connection = Database.open(dbPath);
 
             ReminderRepository reminderRepository = new ReminderRepository(connection);
@@ -62,21 +82,12 @@ public class MainApp {
             migrateLegacyPreferencesIfNeeded(preferencesRepository);
             Preferences.loadPreferencesFromDb();
             try {
-                TranslationLoaderEnum.loadTranslations(ConfigKey.LANGUAGES_DIRECTORY_STRING.getValue() + Preferences.getLanguage().getFileName());
+                TranslationLoaderEnum.loadTranslationsFromClasspath(LANGUAGES_RESOURCE_DIR + Preferences.getLanguage().getFileName());
             } catch (IOException ex) {
                 logger.error("Failed to load translations: " + ex.getMessage(), ex);
             }
 
-            var legacyList = Preferences.getRemindList();
-            if (reminderRepository.getAll().isEmpty()) {
-                try {
-                    reminderRepository.insertMany(remindme.Json.JSONReminder.readRemindListFromJSON(legacyList.directory(), legacyList.file()));
-                } catch (IOException ex) {
-                    logger.info("No legacy remind list to migrate: " + ex.getMessage());
-                }
-            }
-
-            SuggestionsSeeder.seedIfEmpty(reminderRepository, resDirectory, "suggestions_remind.json");
+            SuggestionsSeeder.seedIfEmpty(reminderRepository, SUGGESTIONS_RESOURCE);
 
             ApiServer server = new ApiServer(new ReminderController(reminderRepository));
             server.start(ApiServer.DEFAULT_PORT);
@@ -89,11 +100,10 @@ public class MainApp {
 
     /**
      * One-time setup of the preferences table: migrates the old
-     * preferences.json file if one exists (mirroring how legacy remind lists
-     * are migrated above), otherwise seeds the row with default preferences
-     * (mirroring SuggestionsSeeder for reminders). Runs only while the
-     * preferences table is still empty, so it never overwrites a value the
-     * user already saved through the DB.
+     * preferences.json file if one exists, otherwise seeds the row with
+     * default preferences (mirroring SuggestionsSeeder for reminders). Runs
+     * only while the preferences table is still empty, so it never
+     * overwrites a value the user already saved through the DB.
      */
     private static void migrateLegacyPreferencesIfNeeded(PreferencesRepository preferencesRepository) {
         if (preferencesRepository.exists()) {
@@ -103,7 +113,6 @@ public class MainApp {
         String legacyPath = ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.PREFERENCES_FILE_STRING.getValue();
         try (FileReader reader = new FileReader(legacyPath)) {
             JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
-            RemindListPath defaultRemindList = PreferencesRepository.defaults().remindList();
 
             LanguagesEnum language = LanguagesEnum.ENG;
             if (json.has("Language") && !json.get("Language").isJsonNull()) {
@@ -127,19 +136,7 @@ public class MainApp {
                 }
             }
 
-            RemindListPath remindList = defaultRemindList;
-            if (json.has("RemindList") && !json.get("RemindList").isJsonNull()) {
-                JsonObject remindListJson = json.getAsJsonObject("RemindList");
-                String directory = remindListJson.has("Directory") && !remindListJson.get("Directory").isJsonNull()
-                    ? remindListJson.get("Directory").getAsString()
-                    : defaultRemindList.directory();
-                String file = remindListJson.has("File") && !remindListJson.get("File").isJsonNull()
-                    ? remindListJson.get("File").getAsString()
-                    : defaultRemindList.file();
-                remindList = new RemindListPath(directory, file);
-            }
-
-            preferencesRepository.save(new PreferencesRepository.Preferences(language, theme, remindList));
+            preferencesRepository.save(new PreferencesRepository.Preferences(language, theme));
             logger.info("Migrated legacy preferences.json into the SQLite database");
         } catch (IOException ex) {
             logger.info("No legacy preferences.json to migrate, seeding default preferences instead: " + ex.getMessage());

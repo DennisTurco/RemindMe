@@ -56,10 +56,10 @@ as a side effect of that same endpoint.
 |---------------|----------------|
 | `Api`         | `ApiServer` (Javalin route table) and `ReminderController` (HTTP handlers). |
 | `Sqlite`      | `Database` (connection + schema migration), `ReminderRepository`, `PreferencesRepository`. |
-| `Entities`    | Domain objects: `Remind`, `Preferences`, `RemindListPath`, `TimeInterval`. |
+| `Entities`    | Domain objects: `Remind`, `Preferences`, `TimeInterval`. |
 | `Enums`       | `ConfigKey` (reads `config.json`), `IconsEnum`, `SoundsEnum`, `LanguagesEnum`, `ThemesEnum`, `ExecutionMethod`, `TranslationLoaderEnum`. |
 | `Services`    | `SchedulingService`, `TimeIntervalService`, `ExportService` (CSV), `SuggestionsSeeder` (seeds example reminders on first run). |
-| `Json`        | `JSONReminder` — only used for one-time migration of a legacy JSON remind list into SQLite. |
+| `Json`        | `JSONReminder` - only used for one-time migration of a legacy JSON remind list into SQLite. |
 | `Helpers`     | Small value types such as `TimeRange`. |
 
 `MainApp` is the entry point. It loads `config.json`, opens the SQLite connection, wires up the two
@@ -95,43 +95,43 @@ npm run dev        # runs Vite and Electron together, waits for the backend on :
 ```
 
 Useful individual commands:
-- `npm run dev:vite-only` — Vite dev server only, using the in-memory browser fallback bridge
-  (no backend/Electron required) — handy for quick UI-only iteration.
-- `npm run typecheck` — type-checks both the renderer and the Electron main process.
-- `mvn test` — runs the JUnit 5 backend test suite.
+- `npm run dev:vite-only` - Vite dev server only, using the in-memory browser fallback bridge
+  (no backend/Electron required) - handy for quick UI-only iteration.
+- `npm run typecheck` - type-checks both the renderer and the Electron main process.
+- `mvn test` - runs the JUnit 5 backend test suite.
 
 ## 5. Dependencies
 
 Backend (`pom.xml`):
-- **Javalin** — embedded HTTP server for the REST API.
-- **sqlite-jdbc** — SQLite driver.
-- **Gson** — JSON (de)serialization for the API wire format and legacy migration.
-- **slf4j-api** / **logback-classic** — logging.
-- **JUnit 5** — testing.
+- **Javalin** - embedded HTTP server for the REST API.
+- **sqlite-jdbc** - SQLite driver.
+- **Gson** - JSON (de)serialization for the API wire format and legacy migration.
+- **slf4j-api** / **logback-classic** - logging.
+- **JUnit 5** - testing.
 
 Frontend (`app/package.json`):
-- **Electron** — desktop shell.
-- **React** + **react-router-dom** — UI and the popup-window route.
-- **react-markdown** + **remark-gfm** — renders reminder descriptions (and onboarding copy) as Markdown.
-- **date-fns** — date formatting.
-- **Vite** + **electron-builder** — dev server/bundler and installer packaging.
+- **Electron** - desktop shell.
+- **React** + **react-router-dom** - UI and the popup-window route.
+- **react-markdown** + **remark-gfm** - renders reminder descriptions (and onboarding copy) as Markdown.
+- **date-fns** - date formatting.
+- **Vite** + **electron-builder** - dev server/bundler and installer packaging.
 
 ## 6. Database
 
 SQLite database file: `res/reminders.db` (created and migrated automatically by
 `remindme.Sqlite.Database` on startup).
 
-- **`reminders`** — one row per reminder: name (primary key), description, schedule fields
+- **`reminders`** - one row per reminder: name (primary key), description, schedule fields
   (`timeIntervalDays/Hours/Minutes`, `timeRangeStart/End`, `executionMethod`), state
   (`isActive`, `isTopLevel`, `remindCount`, `lastExecution`, `nextExecution`), and presentation
   fields (`icon`, `sound`).
-- **`preferences`** — a single row (`id = 1`) holding `language`, `theme` and the legacy
-  `remindListDirectory`/`remindListFile` path (kept for the one-time JSON migration).
+- **`preferences`** - a single row (`id = 1`) holding `language` and `theme`.
 
 On first run, if the `preferences` table is empty, the backend migrates the old
-`res/config/preferences.json` file if it exists, otherwise it seeds default preferences — the app
-never falls back to reading that JSON file again afterwards. The same pattern applies to reminders:
-a legacy `remind_list*.json` is migrated once into the `reminders` table if it's still empty.
+`res/config/preferences.json` file if it exists, otherwise it seeds default preferences - the app
+never falls back to reading that JSON file again afterwards. Reminders are seeded from the bundled
+`suggestions_remind.json` (classpath resource) the same way, once, while the `reminders` table is
+still empty.
 
 ## 7. REST API
 
@@ -169,7 +169,7 @@ Supported languages: Italian (default), English, German, Spanish, French
 - Components call `t(category, key, fallbackText)` from `useI18n()`; the fallback is shown while
   the JSON hasn't loaded yet or if a key is missing, so the UI never renders empty text.
 - **When adding a new user-facing string**, add the key under the right category in **all five**
-  language files, not just `ita.json` — a call with a category/key that doesn't exist in a given
+  language files, not just `ita.json` - a call with a category/key that doesn't exist in a given
   language file silently falls back to the Italian/English text you hardcoded, which is easy to
   miss. There's no automated check for this yet; the fastest way to verify is to grep every
   `t("Category", "Key", ...)` call in `app/src` and confirm the pair exists in each of the five
@@ -187,7 +187,7 @@ changes needed.
 ## 10. Testing
 
 - Backend: `mvn test` (JUnit 5). Tests live in `src/test/java/test/`.
-- Frontend: `npm run typecheck` in `app/` (there is no frontend unit test suite yet — UI changes
+- Frontend: `npm run typecheck` in `app/` (there is no frontend unit test suite yet - UI changes
   should be verified manually via `npm run dev`).
 
 ## 11. Building the installer
@@ -196,7 +196,7 @@ Producing the distributable Windows installer is a two-step pipeline: **electron
 produces an unpacked, ready-to-run copy of the app, then **Inno Setup** wraps that into a single
 installer `.exe`. This mirrors the sibling DailyPill project's packaging setup.
 
-### Step 1 — electron-builder (unpacked app)
+### Step 1 - electron-builder (unpacked app)
 
 ```bash
 cd app
@@ -205,11 +205,11 @@ npm run build:electron
 
 This runs, in order:
 
-1. **`npm run build`** — type-checks and builds the renderer (`vite build` → `app/dist/`) and
+1. **`npm run build`** - type-checks and builds the renderer (`vite build` → `app/dist/`) and
    compiles the Electron main process (`tsc -p electron/tsconfig.json` → `app/dist-electron/`).
-2. **`npm run build:backend`** — runs `mvn -o package -DskipTests` in the repo root, producing
+2. **`npm run build:backend`** - runs `mvn -o package -DskipTests` in the repo root, producing
    `target/RemindMe-1.0-SNAPSHOT-jar-with-dependencies.jar`.
-3. **`electron-builder`** — assembles everything into `app/release/win-unpacked/` (the `"win"."target"`
+3. **`electron-builder`** - assembles everything into `app/release/win-unpacked/` (the `"win"."target"`
    in `app/package.json`'s `"build"` section is `"dir"`, i.e. an unpacked folder, not a self-contained
    installer), using:
    - `dist/` and `dist-electron/` (the built app code),
@@ -221,7 +221,7 @@ At runtime, `app/electron/main.ts`'s `spawnBackend()` launches
 `resources/jre/bin/java.exe -jar resources/backend/RemindMe.jar --serve` as a child process
 whenever the app is *not* running from source (`app.isPackaged`).
 
-### Step 2 — Inno Setup (installer .exe)
+### Step 2 - Inno Setup (installer .exe)
 
 Open [`installer/RemindMe.iss`](../../../../installer/RemindMe.iss) in the Inno Setup Compiler and
 build it (`Ctrl+F9`), or run it headless with `ISCC.exe installer\RemindMe.iss`. It packages
@@ -229,7 +229,7 @@ build it (`Ctrl+F9`), or run it headless with `ISCC.exe installer\RemindMe.iss`.
 
 ### Prerequisites
 
-- A local JRE at `../jre` (relative to `app/`), i.e. `jre/` at the repo root — see
+- A local JRE at `../jre` (relative to `app/`), i.e. `jre/` at the repo root - see
   `.gitignore`, it is intentionally not committed and must be provided locally (or downloaded by a
   release script) before packaging.
 - A Windows icon at `app/build/icon.ico`, referenced both by electron-builder

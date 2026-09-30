@@ -58,7 +58,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`/languages/${LANGUAGE_FILE_NAMES[language]}`)
+    fetch(`languages/${LANGUAGE_FILE_NAMES[language]}`)
       .then((res) => res.json())
       .then((data) => {
         if (!cancelled) setTranslations(data);

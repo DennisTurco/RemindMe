@@ -140,9 +140,17 @@ textarea:focus-visible,
 
 .app-footer {
   flex-shrink: 0;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   color: var(--fg-muted);
   font-size: 0.78em;
+}
+
+.app-footer-links {
+  display: flex;
+  gap: 4px;
 }
 
 .toolbar-group {
@@ -792,6 +800,20 @@ fieldset.field legend {
   opacity: 0.5;
   cursor: default;
   transform: none;
+}
+
+.btn-link {
+  padding: 2px 6px;
+  border: none;
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: inherit;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: var(--accent);
+  background: transparent;
 }
 
 .btn-primary {

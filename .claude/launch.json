@@ -5,6 +5,7 @@
       "name": "remindme-app",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev:vite-only"],
+      "cwd": "app",
       "port": 5173
     }
   ]

@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import remindme.Entities.RemindListPath;
-import remindme.Enums.ConfigKey;
 import remindme.Enums.LanguagesEnum;
 import remindme.Enums.ThemesEnum;
 
@@ -29,7 +27,7 @@ public class PreferencesRepository {
         this.connection = connection;
     }
 
-    public record Preferences(LanguagesEnum language, ThemesEnum theme, RemindListPath remindList) { }
+    public record Preferences(LanguagesEnum language, ThemesEnum theme) { }
 
     public boolean exists() {
         String sql = "SELECT 1 FROM preferences WHERE id = 1";
@@ -42,7 +40,7 @@ public class PreferencesRepository {
     }
 
     public Preferences get() {
-        String sql = "SELECT language, theme, remindListDirectory, remindListFile FROM preferences WHERE id = 1";
+        String sql = "SELECT language, theme FROM preferences WHERE id = 1";
         try (PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
                 return mapRow(rs);
@@ -55,19 +53,15 @@ public class PreferencesRepository {
 
     public void save(Preferences preferences) {
         String sql = """
-            INSERT INTO preferences (id, language, theme, remindListDirectory, remindListFile)
-            VALUES (1, ?, ?, ?, ?)
+            INSERT INTO preferences (id, language, theme)
+            VALUES (1, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
                 language = excluded.language,
-                theme = excluded.theme,
-                remindListDirectory = excluded.remindListDirectory,
-                remindListFile = excluded.remindListFile
+                theme = excluded.theme
             """;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, preferences.language().getFileName());
             stmt.setString(2, preferences.theme().getThemeName());
-            stmt.setString(3, preferences.remindList().directory());
-            stmt.setString(4, preferences.remindList().file());
             stmt.executeUpdate();
         } catch (SQLException ex) {
             logger.error("Failed to save preferences: " + ex.getMessage(), ex);
@@ -83,7 +77,7 @@ public class PreferencesRepository {
                 break;
             }
         }
-        save(new Preferences(resolved, current.theme(), current.remindList()));
+        save(new Preferences(resolved, current.theme()));
     }
 
     public void setTheme(String themeName) {
@@ -95,18 +89,11 @@ public class PreferencesRepository {
                 break;
             }
         }
-        save(new Preferences(current.language(), resolved, current.remindList()));
+        save(new Preferences(current.language(), resolved));
     }
 
     public static Preferences defaults() {
-        return new Preferences(
-            LanguagesEnum.ENG,
-            ThemesEnum.INTELLIJ,
-            new RemindListPath(
-                ConfigKey.RES_DIRECTORY_STRING.getValue(),
-                ConfigKey.REMIND_LIST_FILE_STRING.getValue() + ConfigKey.VERSION.getValue() + ".json"
-            )
-        );
+        return new Preferences(LanguagesEnum.ENG, ThemesEnum.INTELLIJ);
     }
 
     private Preferences mapRow(ResultSet rs) throws SQLException {
@@ -128,12 +115,6 @@ public class PreferencesRepository {
             }
         }
 
-        String directory = rs.getString("remindListDirectory");
-        String file = rs.getString("remindListFile");
-        RemindListPath remindList = (directory != null && file != null)
-            ? new RemindListPath(directory, file)
-            : defaults().remindList();
-
-        return new Preferences(language, theme, remindList);
+        return new Preferences(language, theme);
     }
 }

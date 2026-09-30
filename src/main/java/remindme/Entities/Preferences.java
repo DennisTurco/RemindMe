@@ -18,7 +18,6 @@ public class Preferences {
     private static PreferencesRepository repository;
     private static LanguagesEnum language;
     private static ThemesEnum theme;
-    private static RemindListPath remindList;
 
     private Preferences() {
     }
@@ -37,7 +36,6 @@ public class Preferences {
         PreferencesRepository.Preferences loaded = repository.get();
         language = loaded.language();
         theme = loaded.theme();
-        remindList = loaded.remindList();
 
         logger.info("Preferences loaded from database: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
     }
@@ -46,7 +44,6 @@ public class Preferences {
         PreferencesRepository.Preferences defaults = PreferencesRepository.defaults();
         language = defaults.language();
         theme = defaults.theme();
-        remindList = defaults.remindList();
     }
 
     public static void updatePreferencesToDb() {
@@ -55,7 +52,7 @@ public class Preferences {
             return;
         }
 
-        repository.save(new PreferencesRepository.Preferences(language, theme, remindList));
+        repository.save(new PreferencesRepository.Preferences(language, theme));
         logger.info("Preferences updated in database: language = " + language.getFileName() + ", theme = " + theme.getThemeName());
     }
 
@@ -65,17 +62,8 @@ public class Preferences {
     public static ThemesEnum getTheme() {
         return theme;
     }
-    public static RemindListPath getRemindList() {
-        return remindList;
-    }
-    public static RemindListPath getDefaultRemindList() {
-        return PreferencesRepository.defaults().remindList();
-    }
     public static void setLanguage(LanguagesEnum language) {
         Preferences.language = language;
-    }
-    public static void setRemindList(RemindListPath remindList) {
-        Preferences.remindList = remindList;
     }
     public static void setLanguage(String selectedLanguage) {
         try {

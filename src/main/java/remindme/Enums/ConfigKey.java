@@ -2,6 +2,10 @@ package remindme.Enums;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -41,14 +45,39 @@ public enum ConfigKey {
 
     public static void loadFromJson(String filePath) {
         try (FileReader reader = new FileReader(filePath)) {
-            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-            for (ConfigKey key : ConfigKey.values()) {
-                if (jsonObject.has(key.name())) {
-                    configValues.put(key, jsonObject.get(key.name()).getAsString());
-                }
-            }
+            parse(reader);
         } catch (IOException ex) {
             logger.error("An error occurred when loading configs from json: " + ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Loads config.json from the application's own classpath (a jar-embedded
+     * resource under src/main/resources) instead of the filesystem. Used at
+     * runtime so config loading keeps working regardless of the process's
+     * working directory in a packaged install, where a filesystem path
+     * relative to the source tree (e.g. "src/main/resources/...") no longer
+     * exists.
+     */
+    public static void loadFromClasspath(String resourcePath) {
+        try (InputStream in = ConfigKey.class.getResourceAsStream(resourcePath)) {
+            if (in == null) {
+                throw new IOException("Resource not found on classpath: " + resourcePath);
+            }
+            try (Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8)) {
+                parse(reader);
+            }
+        } catch (IOException ex) {
+            logger.error("An error occurred when loading configs from classpath: " + ex.getMessage(), ex);
+        }
+    }
+
+    private static void parse(Reader reader) {
+        JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+        for (ConfigKey key : ConfigKey.values()) {
+            if (jsonObject.has(key.name())) {
+                configValues.put(key, jsonObject.get(key.name()).getAsString());
+            }
         }
     }
 

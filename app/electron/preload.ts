@@ -21,6 +21,9 @@ export interface RemindMeBridge {
   exportPdf(): Promise<ExportResult>;
   setNativeTheme(mode: "light" | "dark"): Promise<void>;
   setLanguage(language: string): Promise<void>;
+  getAutoLaunch(): Promise<boolean>;
+  setAutoLaunch(enabled: boolean): Promise<void>;
+  openLink(key: "website" | "infoPage" | "issuePage" | "sharePage" | "donatePaypal" | "donateBuyMeACoffee"): Promise<void>;
   onNewReminderRequested(callback: () => void): () => void;
   onOpenPreferencesRequested(callback: () => void): () => void;
   onRemindersChanged(callback: () => void): () => void;
@@ -47,6 +50,9 @@ const bridge: RemindMeBridge = {
   exportPdf: () => ipcRenderer.invoke("reminders:exportPdf"),
   setNativeTheme: (mode) => ipcRenderer.invoke("app:setThemeSource", mode),
   setLanguage: (language) => ipcRenderer.invoke("app:setLanguage", language),
+  getAutoLaunch: () => ipcRenderer.invoke("app:getAutoLaunch"),
+  setAutoLaunch: (enabled) => ipcRenderer.invoke("app:setAutoLaunch", enabled),
+  openLink: (key) => ipcRenderer.invoke("app:openLink", key),
   onNewReminderRequested: (callback) => subscribe("menu:new-reminder", callback),
   onOpenPreferencesRequested: (callback) => subscribe("menu:open-preferences", callback),
   onRemindersChanged: (callback) => subscribe("reminders:changed", callback),

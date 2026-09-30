@@ -39,7 +39,7 @@ export function ReminderPreviewDialog({ name, description, icon, sound, isTopLev
         <div className="reminder-preview-header">
           <img src={iconPath(icon)} alt="" width={50} height={50} />
           <span className="reminder-preview-name">
-            {truncateName(name) || t("General", "UnnamedReminderText", "(senza nome)")}
+            {truncateName(name) || t("General", "UnnamedReminderText", "(unnamed)")}
           </span>
         </div>
         <MarkdownContent className="reminder-preview-description" text={description} />

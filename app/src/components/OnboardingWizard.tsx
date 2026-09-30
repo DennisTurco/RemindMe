@@ -14,42 +14,42 @@ const STEPS: Step[] = [
   {
     icon: "🔔",
     titleKey: "Step1Title",
-    titleFallback: "Benvenuto in RemindMe",
+    titleFallback: "Welcome to RemindMe",
     bodyKey: "Step1Body",
     bodyFallback:
-      "RemindMe ti aiuta a non dimenticare le cose che contano: crea promemoria ricorrenti con un'icona, un suono e una descrizione tutta tua, e resta organizzato senza sforzo.",
+      "RemindMe helps you never forget what matters: create recurring reminders with your own icon, sound and description, and stay organized effortlessly.",
   },
   {
     icon: "➕",
     titleKey: "Step2Title",
-    titleFallback: "Crea il tuo primo promemoria",
+    titleFallback: "Create your first reminder",
     bodyKey: "Step2Body",
     bodyFallback:
-      "Premi **+** in alto a sinistra per aggiungerne uno: scegli nome, descrizione (anche in **Markdown**), icona e suono di notifica, e decidi se deve restare sempre visibile in primo piano.",
+      "Press **+** in the top left to add one: choose a name, description (also in **Markdown**), an icon and a notification sound, and decide whether it should always stay on top.",
   },
   {
     icon: "⏱",
     titleKey: "Step3Title",
-    titleFallback: "Quando si attiva",
+    titleFallback: "When it triggers",
     bodyKey: "Step3Body",
     bodyFallback:
-      "Il **metodo di esecuzione** decide il comportamento: all'avvio del PC ogni tot tempo, in una fascia oraria personalizzata, oppure una volta al giorno a un orario preciso. L'intervallo di ripetizione si imposta col pulsante dedicato.",
+      "The **execution method** decides the behavior: on PC startup every so often, within a custom time range, or once a day at a specific time. Set the repeat interval with the dedicated button.",
   },
   {
     icon: "🗂",
     titleKey: "Step4Title",
-    titleFallback: "Gestisci l'elenco",
+    titleFallback: "Manage the list",
     bodyKey: "Step4Body",
     bodyFallback:
-      "Usa la barra di ricerca per filtrare i promemoria. Clic destro su una riga per modificare, duplicare, eliminare, rinominare o attivare/disattivare rapidamente un promemoria.",
+      "Use the search bar to filter reminders. Right-click a row to quickly edit, duplicate, delete, rename or enable/disable a reminder.",
   },
   {
     icon: "⚙",
     titleKey: "Step5Title",
-    titleFallback: "Esporta e personalizza",
+    titleFallback: "Export and customize",
     bodyKey: "Step5Body",
     bodyFallback:
-      "Esporta l'elenco in **CSV** o **PDF** dalla toolbar, oppure l'intero elenco in JSON dal menu **File**. In **Opzioni > Preferenze** puoi cambiare lingua e passare dal tema chiaro a quello scuro in qualsiasi momento.",
+      "Export the list as **CSV** or **PDF** from the toolbar, or the whole list as JSON from the **File** menu. In **Options > Preferences** you can change the language and switch between light and dark theme at any time.",
   },
 ];
 
@@ -64,7 +64,7 @@ export function OnboardingWizard({ onFinish }: { onFinish: () => void }) {
     <div className="modal-overlay" onClick={onFinish}>
       <div className="modal onboarding-panel" onClick={(e) => e.stopPropagation()}>
         <button className="btn onboarding-skip" onClick={onFinish}>
-          {t("Onboarding", "SkipButton", "Salta")}
+          {t("Onboarding", "SkipButton", "Skip")}
         </button>
 
         <div className="onboarding-icon">{step.icon}</div>
@@ -79,15 +79,15 @@ export function OnboardingWizard({ onFinish }: { onFinish: () => void }) {
 
         <div className="modal-actions onboarding-actions">
           <button className="btn" onClick={() => setIndex((i) => i - 1)} style={{ visibility: isFirst ? "hidden" : "visible" }}>
-            {t("Onboarding", "BackButton", "Indietro")}
+            {t("Onboarding", "BackButton", "Back")}
           </button>
           {isLast ? (
             <button className="btn btn-primary" onClick={onFinish}>
-              {t("Onboarding", "StartButton", "Inizia")}
+              {t("Onboarding", "StartButton", "Start")}
             </button>
           ) : (
             <button className="btn btn-primary" onClick={() => setIndex((i) => i + 1)}>
-              {t("Onboarding", "NextButton", "Avanti")}
+              {t("Onboarding", "NextButton", "Next")}
             </button>
           )}
         </div>

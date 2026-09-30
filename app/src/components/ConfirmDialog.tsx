@@ -16,7 +16,7 @@ export function ConfirmDialog({ title, message, onConfirm, onCancel }: ConfirmDi
         <p>{message}</p>
         <div className="modal-actions">
           <button className="btn" onClick={onCancel}>
-            {t("General", "CancelButton", "Annulla")}
+            {t("General", "CancelButton", "Cancel")}
           </button>
           <button className="btn btn-primary" onClick={onConfirm} autoFocus>
             {t("General", "OkButton", "Ok")}

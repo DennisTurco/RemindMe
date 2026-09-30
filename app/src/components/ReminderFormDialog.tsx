@@ -51,7 +51,7 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
   function handleSave() {
     const trimmedName = name.trim();
     if (!trimmedName) {
-      setError(t("Dialogs", "ErrorMessageForEmptyRemindName", "Il nome del promemoria non può essere vuoto"));
+      setError(t("Dialogs", "ErrorMessageForEmptyRemindName", "Remind name cannot be empty"));
       return;
     }
     if (!isEdit && isNameTaken(trimmedName)) {
@@ -59,7 +59,7 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
         t(
           "Dialogs",
           "ErrorMessageDuplicatedRedind",
-          "Impossibile creare un promemoria con questo nome perché ne esiste già uno.",
+          "Cannot create a reminder with this name because one already exists.",
         ),
       );
       return;
@@ -68,7 +68,7 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
     let timeRange: Remind["timeRange"] = null;
     if (executionMethod === "CUSTOM_TIME_RANGE") {
       if (!(timeFrom < timeTo)) {
-        setError(t("Dialogs", "ErrorMessageForWrongTimeRange", "L'intervallo di tempo non è valido"));
+        setError(t("Dialogs", "ErrorMessageForWrongTimeRange", "Time range is not valid"));
         return;
       }
       timeRange = { start: `${timeFrom}:00`, end: `${timeTo}:00` };
@@ -96,24 +96,24 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
       <div className="modal reminder-form" onClick={(e) => e.stopPropagation()}>
         <h2>
           {isEdit
-            ? t("ManageRemindDialog", "EditTitle", "Modifica promemoria")
-            : t("ManageRemindDialog", "CreateTitle", "Crea un nuovo promemoria")}
+            ? t("ManageRemindDialog", "EditTitle", "Edit reminder")
+            : t("ManageRemindDialog", "CreateTitle", "Create a new reminder")}
         </h2>
 
         <label className="field">
-          <span>{t("ManageRemindDialog", "NameText", "Nome")}</span>
+          <span>{t("ManageRemindDialog", "NameText", "Name")}</span>
           <input
             value={name}
             disabled={isEdit}
-            placeholder={t("ManageRemindDialog", "NamePlaceholder", "Inserisci il nome del promemoria")}
-            title={t("ManageRemindDialog", "NameTooltip", "Inserisci un nome per il promemoria")}
+            placeholder={t("ManageRemindDialog", "NamePlaceholder", "Enter reminder name")}
+            title={t("ManageRemindDialog", "NameTooltip", "Enter a name for the reminder")}
             onChange={(e) => setName(e.target.value)}
           />
         </label>
 
         <label className="field">
           <span className="field-label-with-hint">
-            {t("ManageRemindDialog", "DescriptionText", "Descrizione")}
+            {t("ManageRemindDialog", "DescriptionText", "Description")}
             <span
               className="info-icon"
               title={t(
@@ -127,8 +127,8 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
           </span>
           <textarea
             value={description}
-            placeholder={t("ManageRemindDialog", "DescriptionPlaceholder", "Inserisci una descrizione (opzionale)")}
-            title={t("ManageRemindDialog", "DescriptionTooltip", "Fornisci dettagli aggiuntivi per questo promemoria")}
+            placeholder={t("ManageRemindDialog", "DescriptionPlaceholder", "Enter description (optional)")}
+            title={t("ManageRemindDialog", "DescriptionTooltip", "Provide additional details for this reminder")}
             onChange={(e) => setDescription(e.target.value)}
             rows={3}
           />
@@ -138,10 +138,10 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
 
         <div className="field-row">
           <label className="field">
-            <span>{t("ManageRemindDialog", "IconText", "Icona")}</span>
+            <span>{t("ManageRemindDialog", "IconText", "Icon")}</span>
             <select
               value={icon}
-              title={t("ManageRemindDialog", "IconTooltip", "Scegli un'icona per la notifica del promemoria")}
+              title={t("ManageRemindDialog", "IconTooltip", "Choose an icon for the reminder notification")}
               onChange={(e) => setIcon(e.target.value as Remind["icon"])}
             >
               {ICON_OPTIONS.map((opt) => (
@@ -156,10 +156,10 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
 
         <div className="field-row">
           <label className="field">
-            <span>{t("ManageRemindDialog", "SoundText", "Suono")}</span>
+            <span>{t("ManageRemindDialog", "SoundText", "Sound")}</span>
             <select
               value={sound}
-              title={t("ManageRemindDialog", "SoundTooltip", "Scegli un suono per la notifica del promemoria")}
+              title={t("ManageRemindDialog", "SoundTooltip", "Choose a sound for the reminder notification")}
               onChange={(e) => setSound(e.target.value as Remind["sound"])}
             >
               {SOUND_OPTIONS.map((opt) => (
@@ -172,7 +172,7 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
           <button
             className="btn btn-icon"
             type="button"
-            title={t("ManageRemindDialog", "SoundButtonTooltip", "Ascolta l'anteprima del suono selezionato")}
+            title={t("ManageRemindDialog", "SoundButtonTooltip", "Preview the selected sound")}
             disabled={sound === "NO_SOUND"}
             onClick={playSoundPreview}
           >
@@ -185,8 +185,8 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
         <div className="field-row">
           <label className="checkbox-field">
             <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
-            <span title={t("ManageRemindDialog", "ActiveTooltip", "Attiva o disattiva il promemoria")}>
-              {t("ManageRemindDialog", "ActiveText", "Attivo")}
+            <span title={t("ManageRemindDialog", "ActiveTooltip", "Activate or disable the reminder")}>
+              {t("ManageRemindDialog", "ActiveText", "Active")}
             </span>
           </label>
           <label className="checkbox-field">
@@ -195,10 +195,10 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
               title={t(
                 "ManageRemindDialog",
                 "TopLevelTooltip",
-                "Se attivo, il promemoria sarà sempre visibile sopra le altre finestre",
+                "If enabled, the reminder will always appear on top of other windows",
               )}
             >
-              {t("ManageRemindDialog", "TopLevelText", "Mostra in alto")}
+              {t("ManageRemindDialog", "TopLevelText", "Show on Top")}
             </span>
           </label>
         </div>
@@ -206,10 +206,10 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
         <hr className="form-section" />
 
         <label className="field">
-          <span>{t("ManageRemindDialog", "ExecutionMethodText", "Metodo di esecuzione")}</span>
+          <span>{t("ManageRemindDialog", "ExecutionMethodText", "Execution method")}</span>
           <select
             value={executionMethod}
-            title={t("ManageRemindDialog", "ExecutionMethodTooltip", "Seleziona come deve essere attivato il promemoria.")}
+            title={t("ManageRemindDialog", "ExecutionMethodTooltip", "Select how the reminder should be triggered. 'PC Startup' runs the reminder when the computer starts, ignoring time intervals. 'Custom Time Range' triggers it only within a defined daily time window.")}
             onChange={(e) => setExecutionMethod(e.target.value as ExecutionMethod)}
           >
             {EXECUTION_METHOD_OPTIONS.map((opt) => (
@@ -222,20 +222,20 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
 
         <div className="field-row">
           <label className="field">
-            <span>{t("ManageRemindDialog", "DateFromText", "Da")}</span>
+            <span>{t("ManageRemindDialog", "DateFromText", "From")}</span>
             <input type="time" value={timeFrom} disabled={!timeFromEnabled} onChange={(e) => setTimeFrom(e.target.value)} />
           </label>
           <label className="field">
-            <span>{t("ManageRemindDialog", "DateToText", "A")}</span>
+            <span>{t("ManageRemindDialog", "DateToText", "To")}</span>
             <input type="time" value={timeTo} disabled={!timeRangeEnabled} onChange={(e) => setTimeTo(e.target.value)} />
           </label>
         </div>
 
         <div className="field-row">
           <button className="btn" type="button" disabled={!intervalEnabled} onClick={() => setShowTimePicker(true)}>
-            {t("TimePickerDialog", "TimeIntervalTitle", "Intervallo di tempo")}
+            {t("TimePickerDialog", "TimeIntervalTitle", "Time interval for reminder")}
           </button>
-          <span className="time-frequency-label" title={t("TimePickerDialog", "Format", "gg.OO:mm")}>
+          <span className="time-frequency-label" title={t("TimePickerDialog", "Format", "dd.HH:mm")}>
             {timeInterval.days}.{timeInterval.hours}:{timeInterval.minutes}
           </span>
         </div>
@@ -244,11 +244,11 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
 
         <div className="modal-actions reminder-form-actions">
           <button className="btn" type="button" onClick={() => setShowPreview(true)}>
-            {t("ManageRemindDialog", "PreviewText", "Anteprima promemoria")}
+            {t("ManageRemindDialog", "PreviewText", "Reminder preview")}
           </button>
           <div className="modal-actions-right">
             <button className="btn" onClick={onCancel}>
-              {t("General", "CancelButton", "Annulla")}
+              {t("General", "CancelButton", "Cancel")}
             </button>
             <button className="btn btn-primary" onClick={handleSave}>
               {t("General", "OkButton", "Ok")}

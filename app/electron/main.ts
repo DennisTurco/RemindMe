@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, dialog, ipcMain, nativeTheme } from "electron";
+import { app, BrowserWindow, Menu, dialog, ipcMain, nativeTheme, shell } from "electron";
 import { spawn, type ChildProcess } from "child_process";
 import * as fs from "fs/promises";
 import * as path from "path";
@@ -12,6 +12,13 @@ import type { AppTray } from "./tray";
 import type { Remind } from "./types";
 
 const isDev = !app.isPackaged;
+
+// Windows groups tray/notification/taskbar behavior (and lists apps in
+// Settings > Startup apps) by this id; without it, a login item registered
+// via setLoginItemSettings can silently fail to show up there.
+if (process.platform === "win32") {
+  app.setAppUserModelId("it.dennisturco.remindme");
+}
 
 let mainWindow: BrowserWindow | null = null;
 let poller: DuePoller;
@@ -43,6 +50,44 @@ async function refreshTranslations(): Promise<void> {
 function quitApp(): void {
   isQuitting = true;
   app.quit();
+}
+
+/** Windows/macOS "start with the system" toggle, run minimized to the tray via the "--hidden" flag. */
+function getAutoLaunchEnabled(): boolean {
+  return app.getLoginItemSettings().openAtLogin;
+}
+
+function setAutoLaunchEnabled(enabled: boolean): void {
+  app.setLoginItemSettings({
+    openAtLogin: enabled,
+    openAsHidden: enabled,
+    path: process.execPath,
+    args: ["--hidden"],
+  });
+}
+
+/**
+ * Auto-launch is on by default for new installs, but Windows only remembers
+ * "on" once we actually write the login item ourselves: getLoginItemSettings()
+ * has no way to distinguish "never configured" from "user turned it off", so
+ * a marker file in userData (not the OS setting itself) is the only reliable
+ * record of whether this default has already been applied once. Runs at most
+ * once per install; after that the user's own choice (on or off) is always
+ * left alone.
+ */
+async function applyDefaultAutoLaunchOnFirstRun(): Promise<void> {
+  if (isDev) return;
+
+  const marker = path.join(app.getPath("userData"), ".autolaunch-default-applied");
+  try {
+    await fs.access(marker);
+    return;
+  } catch {
+    // Marker doesn't exist yet: first run since install (or since userData was cleared).
+  }
+
+  setAutoLaunchEnabled(true);
+  await fs.writeFile(marker, "");
 }
 
 async function rebuildMenuAndTray(config: Awaited<ReturnType<typeof loadAppConfig>>): Promise<void> {
@@ -133,12 +178,15 @@ function loadRoute(win: BrowserWindow, hash: string): void {
 }
 
 function createMainWindow(): void {
+  const startHidden = process.argv.includes("--hidden");
+
   mainWindow = new BrowserWindow({
     width: 982,
     height: 715,
     minWidth: MIN_WIDTH,
     minHeight: MIN_HEIGHT,
     icon: getAppIconPath(),
+    show: !startHidden,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -209,6 +257,27 @@ function spawnBackend(): void {
   backendProcess.stderr?.on("data", (chunk) => console.error(`[backend] ${chunk}`));
 }
 
+/**
+ * Blocks until the Java backend responds to GET /health (or the timeout
+ * elapses), so the renderer's first `getAll()` on mount doesn't race the
+ * JVM's startup time and silently render an empty table: apiClient.getAll()
+ * has no retry, so a `fetch` that fails because the backend isn't listening
+ * yet just leaves the initial reminder list empty forever (it only recovers
+ * once something else, e.g. creating a reminder, triggers another refresh).
+ * No-op in dev, where the backend is started separately and may already be
+ * up or intentionally not running yet.
+ */
+async function waitForBackendReady(timeoutMs = 20_000, intervalMs = 200): Promise<void> {
+  if (isDev) return;
+
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    if (await apiClient.health()) return;
+    await new Promise((resolve) => setTimeout(resolve, intervalMs));
+  }
+  console.error(`[backend] did not become ready within ${timeoutMs}ms; continuing anyway`);
+}
+
 function registerIpcHandlers(config: Awaited<ReturnType<typeof loadAppConfig>>): void {
   ipcMain.handle("reminders:getAll", () => apiClient.getAll());
 
@@ -276,10 +345,23 @@ function registerIpcHandlers(config: Awaited<ReturnType<typeof loadAppConfig>>):
     currentLanguage = language;
     await rebuildMenuAndTray(config);
   });
+
+  ipcMain.handle("app:getAutoLaunch", (): boolean => getAutoLaunchEnabled());
+
+  ipcMain.handle("app:setAutoLaunch", (_event, enabled: boolean): void => {
+    setAutoLaunchEnabled(enabled);
+  });
+
+  ipcMain.handle("app:openLink", (_event, key: keyof Awaited<ReturnType<typeof loadAppConfig>>["links"]): void => {
+    const url = config.links[key];
+    if (url) void shell.openExternal(url);
+  });
 }
 
 app.whenReady().then(async () => {
   spawnBackend();
+  await applyDefaultAutoLaunchOnFirstRun();
+  await waitForBackendReady();
 
   const configPath = path.join(getBundledResDir(), "config.json");
   const config = await loadAppConfig(configPath);

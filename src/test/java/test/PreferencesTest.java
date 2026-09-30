@@ -1,6 +1,5 @@
 package test;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.SQLException;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import remindme.Entities.Preferences;
-import remindme.Entities.RemindListPath;
 import remindme.Enums.LanguagesEnum;
 import remindme.Enums.ThemesEnum;
 import remindme.Sqlite.Database;
@@ -35,16 +33,8 @@ public class PreferencesTest {
         assertEquals(ThemesEnum.CARBON, Preferences.getTheme());
     }
 
-    @Test
-    public void equal_shouldReturnTrue_forSameRemindListPath() throws IOException {
-        buildAndReloadPreferences();
-        assertEquals(new RemindListPath(tempDir.toString() + "/", "tempLogFile.json"),
-                     Preferences.getRemindList());
-    }
-
     private void buildAndReloadPreferences() throws IOException {
         initDb();
-        buildTempFile();
         buildValidPreferencesObject();
         reloadPreferences();
     }
@@ -57,20 +47,9 @@ public class PreferencesTest {
         }
     }
 
-    private void buildTempFile() throws IOException {
-        File tempLogFile = tempDir.resolve("tempLogFile.json").toFile();
-        if (!tempLogFile.exists()) {
-            tempLogFile.createNewFile();
-        }
-    }
-
     private void buildValidPreferencesObject() {
         Preferences.setLanguage(LanguagesEnum.DEU);
         Preferences.setTheme(ThemesEnum.CARBON.getThemeName());
-
-        Preferences.setRemindList(
-            new RemindListPath(tempDir.toString() + "/", "tempLogFile.json")
-        );
     }
 
     private void reloadPreferences() {

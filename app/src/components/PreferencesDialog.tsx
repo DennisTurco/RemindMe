@@ -1,9 +1,10 @@
 import { LANGUAGE_DISPLAY_NAMES, useI18n } from "../lib/i18n";
 import type { LanguageCode } from "../lib/i18n";
+import { remindMe } from "../lib/ipc";
 import { triggerOnboarding } from "../lib/onboarding";
 import { getEffectiveTheme, setTheme } from "../lib/theme";
 import type { ThemeMode } from "../lib/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface PreferencesDialogProps {
   onClose: () => void;
@@ -11,22 +12,32 @@ interface PreferencesDialogProps {
 
 const LANGUAGE_OPTIONS = Object.keys(LANGUAGE_DISPLAY_NAMES) as LanguageCode[];
 
-/** Opened from Options > Preferenze in the app menu. */
+/** Opened from Options > Preferences in the app menu. */
 export function PreferencesDialog({ onClose }: PreferencesDialogProps) {
   const { t, language, setLanguage } = useI18n();
   const [theme, setThemeState] = useState<ThemeMode>(getEffectiveTheme);
+  const [autoLaunch, setAutoLaunchState] = useState(false);
+
+  useEffect(() => {
+    void remindMe.getAutoLaunch().then(setAutoLaunchState);
+  }, []);
 
   function chooseTheme(mode: ThemeMode) {
     setThemeState(setTheme(mode));
   }
 
+  function toggleAutoLaunch(enabled: boolean) {
+    setAutoLaunchState(enabled);
+    void remindMe.setAutoLaunch(enabled);
+  }
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <h2>{t("Menu", "Preferences", "Preferenze")}</h2>
+        <h2>{t("Menu", "Preferences", "Preferences")}</h2>
 
         <fieldset className="field">
-          <legend>{t("General", "LanguageText", "Lingua")}</legend>
+          <legend>{t("General", "LanguageText", "Language")}</legend>
           <select value={language} onChange={(e) => setLanguage(e.target.value as LanguageCode)}>
             {LANGUAGE_OPTIONS.map((code) => (
               <option key={code} value={code}>
@@ -37,14 +48,22 @@ export function PreferencesDialog({ onClose }: PreferencesDialogProps) {
         </fieldset>
 
         <fieldset className="field">
-          <legend>{t("General", "ThemeText", "Tema")}</legend>
+          <legend>{t("General", "ThemeText", "Theme")}</legend>
           <label className="checkbox-field">
             <input type="radio" name="theme" checked={theme === "light"} onChange={() => chooseTheme("light")} />
-            {t("General", "LightThemeText", "Chiaro")}
+            {t("General", "LightThemeText", "Light")}
           </label>
           <label className="checkbox-field">
             <input type="radio" name="theme" checked={theme === "dark"} onChange={() => chooseTheme("dark")} />
-            {t("General", "DarkThemeText", "Scuro")}
+            {t("General", "DarkThemeText", "Dark")}
+          </label>
+        </fieldset>
+
+        <fieldset className="field">
+          <legend>{t("General", "StartupText", "Startup")}</legend>
+          <label className="checkbox-field">
+            <input type="checkbox" checked={autoLaunch} onChange={(e) => toggleAutoLaunch(e.target.checked)} />
+            {t("General", "AutoLaunchText", "Launch RemindMe at system startup")}
           </label>
         </fieldset>
 
@@ -56,10 +75,10 @@ export function PreferencesDialog({ onClose }: PreferencesDialogProps) {
               onClose();
             }}
           >
-            {t("Menu", "ReviewTutorialButton", "Rivedi il tutorial")}
+            {t("Menu", "ReviewTutorialButton", "Review tutorial")}
           </button>
           <button className="btn btn-primary" onClick={onClose}>
-            {t("General", "CloseButton", "Chiudi")}
+            {t("General", "CloseButton", "Close")}
           </button>
         </div>
       </div>

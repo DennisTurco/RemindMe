@@ -17,7 +17,9 @@
         "NoRemindText": "No hay recordatorios",
         "YesText": "Sí",
         "NoText": "No",
-        "UnnamedReminderText": "(sin nombre)"
+        "UnnamedReminderText": "(sin nombre)",
+        "StartupText": "Inicio",
+        "AutoLaunchText": "Iniciar RemindMe al arrancar el sistema"
     },
     "Menu": {
         "File": "Archivo",
@@ -46,7 +48,10 @@
         "ResearchBarTooltip": "Barra de búsqueda",
         "ResearchBarPlaceholder": "Buscar...",
         "SwitchToLightThemeTooltip": "Cambiar a tema claro",
-        "SwitchToDarkThemeTooltip": "Cambiar a tema oscuro"
+        "SwitchToDarkThemeTooltip": "Cambiar a tema oscuro",
+        "GithubButton": "GitHub",
+        "ReportIssueButton": "Reportar un problema",
+        "DonatePaypalButton": "Donar con PayPal"
     },
     "RemindList": {
         "IconColumn": "Icono",

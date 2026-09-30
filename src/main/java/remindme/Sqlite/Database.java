@@ -70,9 +70,7 @@ public final class Database {
                 CREATE TABLE IF NOT EXISTS preferences (
                     id INTEGER PRIMARY KEY CHECK (id = 1),
                     language TEXT NOT NULL DEFAULT 'ENG',
-                    theme TEXT NOT NULL DEFAULT 'INTELLIJ',
-                    remindListDirectory TEXT,
-                    remindListFile TEXT
+                    theme TEXT NOT NULL DEFAULT 'INTELLIJ'
                 )
                 """);
         }

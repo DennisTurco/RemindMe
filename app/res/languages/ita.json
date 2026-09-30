@@ -17,7 +17,9 @@
         "NoRemindText": "Nessun promemoria",
         "YesText": "Sì",
         "NoText": "No",
-        "UnnamedReminderText": "(senza nome)"
+        "UnnamedReminderText": "(senza nome)",
+        "StartupText": "Avvio",
+        "AutoLaunchText": "Avvia RemindMe all'accensione del PC"
     },
     "Menu": {
         "File": "File",
@@ -46,7 +48,10 @@
         "ResearchBarTooltip": "Barra di ricerca",
         "ResearchBarPlaceholder": "Cerca...",
         "SwitchToLightThemeTooltip": "Passa al tema chiaro",
-        "SwitchToDarkThemeTooltip": "Passa al tema scuro"
+        "SwitchToDarkThemeTooltip": "Passa al tema scuro",
+        "GithubButton": "GitHub",
+        "ReportIssueButton": "Segnala un problema",
+        "DonatePaypalButton": "Dona con PayPal"
     },
     "RemindList": {
         "IconColumn": "Icona",
