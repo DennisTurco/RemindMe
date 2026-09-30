@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Icon } from "../components/Icon";
 import { MarkdownContent } from "../components/MarkdownContent";
 import { iconPath, soundPath } from "../lib/catalog";
 import { LANGUAGE_LOCALES, useI18n } from "../lib/i18n";
@@ -44,12 +45,15 @@ export function ReminderPopupPage() {
   return (
     <div className={`popup-page ${remind.isTopLevel ? "popup-page-top-level" : ""}`}>
       <div className="reminder-preview-header">
-        <img src={iconPath(remind.icon)} alt="" width={50} height={50} />
+        <img src={iconPath(remind.icon)} alt="" className="reminder-preview-icon" />
         <span className="reminder-preview-name">{truncateName(remind.name)}</span>
       </div>
       <MarkdownContent className="reminder-preview-description" text={remind.description} />
       <div className="modal-actions reminder-preview-footer">
-        <span className="reminder-preview-time">{time}</span>
+        <span className="reminder-preview-time">
+          <Icon name="clock" size={14} />
+          {time}
+        </span>
         <button className="btn btn-primary" onClick={() => window.close()} autoFocus>
           {t("General", "OkButton", "Ok")}
         </button>

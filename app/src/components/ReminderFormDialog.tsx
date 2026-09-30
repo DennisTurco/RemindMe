@@ -1,8 +1,17 @@
 import { useState } from "react";
-import { EXECUTION_METHOD_OPTIONS, EXECUTION_METHOD_TRANSLATION, ICON_OPTIONS, SOUND_OPTIONS, iconPath, soundPath } from "../lib/catalog";
+import {
+  EXECUTION_METHOD_OPTIONS,
+  EXECUTION_METHOD_TRANSLATION,
+  ICON_OPTIONS,
+  SOUND_OPTIONS,
+  iconPath,
+  soundPath,
+  timeIntervalToString,
+} from "../lib/catalog";
 import { useI18n } from "../lib/i18n";
 import { createDefaultRemind } from "../lib/types";
 import type { ExecutionMethod, Remind, TimeInterval } from "../lib/types";
+import { Icon } from "./Icon";
 import { ReminderPreviewDialog } from "./ReminderPreviewDialog";
 import { TimePickerDialog } from "./TimePickerDialog";
 
@@ -93,157 +102,155 @@ export function ReminderFormDialog({ mode, initialRemind, isNameTaken, onSave, o
 
   return (
     <div className="modal-overlay" onClick={onCancel}>
-      <div className="modal reminder-form" onClick={(e) => e.stopPropagation()}>
+      <div className="modal modal-scrollable reminder-form" onClick={(e) => e.stopPropagation()}>
         <h2>
           {isEdit
             ? t("ManageRemindDialog", "EditTitle", "Edit reminder")
             : t("ManageRemindDialog", "CreateTitle", "Create a new reminder")}
         </h2>
 
-        <label className="field">
-          <span>{t("ManageRemindDialog", "NameText", "Name")}</span>
-          <input
-            value={name}
-            disabled={isEdit}
-            placeholder={t("ManageRemindDialog", "NamePlaceholder", "Enter reminder name")}
-            title={t("ManageRemindDialog", "NameTooltip", "Enter a name for the reminder")}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-
-        <label className="field">
-          <span className="field-label-with-hint">
-            {t("ManageRemindDialog", "DescriptionText", "Description")}
-            <span
-              className="info-icon"
-              title={t(
-                "ManageRemindDialog",
-                "DescriptionMarkdownHint",
-                "Puoi usare la sintassi Markdown (es. **grassetto**, elenchi puntati, link) per formattare la descrizione.",
-              )}
-            >
-              i
-            </span>
-          </span>
-          <textarea
-            value={description}
-            placeholder={t("ManageRemindDialog", "DescriptionPlaceholder", "Enter description (optional)")}
-            title={t("ManageRemindDialog", "DescriptionTooltip", "Provide additional details for this reminder")}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={3}
-          />
-        </label>
-
-        <hr className="form-section" />
-
-        <div className="field-row">
+        <div className="modal-body">
           <label className="field">
-            <span>{t("ManageRemindDialog", "IconText", "Icon")}</span>
-            <select
-              value={icon}
-              title={t("ManageRemindDialog", "IconTooltip", "Choose an icon for the reminder notification")}
-              onChange={(e) => setIcon(e.target.value as Remind["icon"])}
+            <span>{t("ManageRemindDialog", "NameText", "Name")}</span>
+            <input
+              value={name}
+              disabled={isEdit}
+              placeholder={t("ManageRemindDialog", "NamePlaceholder", "Enter reminder name")}
+              title={t("ManageRemindDialog", "NameTooltip", "Enter a name for the reminder")}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+
+          <label className="field">
+            <span className="field-label-with-hint">
+              {t("ManageRemindDialog", "DescriptionText", "Description")}
+              <span
+                className="info-icon"
+                title={t(
+                  "ManageRemindDialog",
+                  "DescriptionMarkdownHint",
+                  "Puoi usare la sintassi Markdown (es. **grassetto**, elenchi puntati, link) per formattare la descrizione.",
+                )}
+              >
+                i
+              </span>
+            </span>
+            <textarea
+              value={description}
+              placeholder={t("ManageRemindDialog", "DescriptionPlaceholder", "Enter description (optional)")}
+              title={t("ManageRemindDialog", "DescriptionTooltip", "Provide additional details for this reminder")}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={3}
+            />
+          </label>
+
+          <div className="field-row">
+            <label className="field">
+              <span>{t("ManageRemindDialog", "IconText", "Icon")}</span>
+              <select
+                value={icon}
+                title={t("ManageRemindDialog", "IconTooltip", "Choose an icon for the reminder notification")}
+                onChange={(e) => setIcon(e.target.value as Remind["icon"])}
+              >
+                {ICON_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <img className="icon-preview" src={iconPath(icon)} alt="" />
+          </div>
+
+          <div className="field-row">
+            <label className="field">
+              <span>{t("ManageRemindDialog", "SoundText", "Sound")}</span>
+              <select
+                value={sound}
+                title={t("ManageRemindDialog", "SoundTooltip", "Choose a sound for the reminder notification")}
+                onChange={(e) => setSound(e.target.value as Remind["sound"])}
+              >
+                {SOUND_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              className="btn btn-icon"
+              type="button"
+              title={t("ManageRemindDialog", "SoundButtonTooltip", "Preview the selected sound")}
+              disabled={sound === "NO_SOUND"}
+              onClick={playSoundPreview}
             >
-              {ICON_OPTIONS.map((opt) => (
+              <Icon name="play" size={14} />
+            </button>
+          </div>
+
+          <div className="checkbox-row">
+            <label className="checkbox-field checkbox-card">
+              <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
+              <span title={t("ManageRemindDialog", "ActiveTooltip", "Activate or disable the reminder")}>
+                {t("ManageRemindDialog", "ActiveText", "Active")}
+              </span>
+            </label>
+            <label className="checkbox-field checkbox-card">
+              <input type="checkbox" checked={isTopLevel} onChange={(e) => setIsTopLevel(e.target.checked)} />
+              <span
+                title={t(
+                  "ManageRemindDialog",
+                  "TopLevelTooltip",
+                  "If enabled, the reminder will always appear on top of other windows",
+                )}
+              >
+                {t("ManageRemindDialog", "TopLevelText", "Show on Top")}
+              </span>
+            </label>
+          </div>
+
+          <label className="field">
+            <span>{t("ManageRemindDialog", "ExecutionMethodText", "Execution method")}</span>
+            <select
+              value={executionMethod}
+              title={t("ManageRemindDialog", "ExecutionMethodTooltip", "Select how the reminder should be triggered. 'PC Startup' runs the reminder when the computer starts, ignoring time intervals. 'Custom Time Range' triggers it only within a defined daily time window.")}
+              onChange={(e) => setExecutionMethod(e.target.value as ExecutionMethod)}
+            >
+              {EXECUTION_METHOD_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
-                  {opt.label}
+                  {t("ExecutionMethod", EXECUTION_METHOD_TRANSLATION[opt.value].key, EXECUTION_METHOD_TRANSLATION[opt.value].fallback)}
                 </option>
               ))}
             </select>
           </label>
-          <img className="icon-preview" src={iconPath(icon)} alt="" width={40} height={40} />
-        </div>
 
-        <div className="field-row">
-          <label className="field">
-            <span>{t("ManageRemindDialog", "SoundText", "Sound")}</span>
-            <select
-              value={sound}
-              title={t("ManageRemindDialog", "SoundTooltip", "Choose a sound for the reminder notification")}
-              onChange={(e) => setSound(e.target.value as Remind["sound"])}
-            >
-              {SOUND_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            className="btn btn-icon"
-            type="button"
-            title={t("ManageRemindDialog", "SoundButtonTooltip", "Preview the selected sound")}
-            disabled={sound === "NO_SOUND"}
-            onClick={playSoundPreview}
-          >
-            ▶
-          </button>
-        </div>
+          <div className="field-row">
+            <label className="field">
+              <span>{t("ManageRemindDialog", "DateFromText", "From")}</span>
+              <input type="time" value={timeFrom} disabled={!timeFromEnabled} onChange={(e) => setTimeFrom(e.target.value)} />
+            </label>
+            <label className="field">
+              <span>{t("ManageRemindDialog", "DateToText", "To")}</span>
+              <input type="time" value={timeTo} disabled={!timeRangeEnabled} onChange={(e) => setTimeTo(e.target.value)} />
+            </label>
+          </div>
 
-        <hr className="form-section" />
-
-        <div className="field-row">
-          <label className="checkbox-field">
-            <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
-            <span title={t("ManageRemindDialog", "ActiveTooltip", "Activate or disable the reminder")}>
-              {t("ManageRemindDialog", "ActiveText", "Active")}
+          <div className={`interval-row ${intervalEnabled ? "" : "is-disabled"}`}>
+            <span className="interval-value" title={t("TimePickerDialog", "Format", "dd.HH:mm")}>
+              <Icon name="clock" size={15} />
+              {timeIntervalToString(timeInterval)}
             </span>
-          </label>
-          <label className="checkbox-field">
-            <input type="checkbox" checked={isTopLevel} onChange={(e) => setIsTopLevel(e.target.checked)} />
-            <span
-              title={t(
-                "ManageRemindDialog",
-                "TopLevelTooltip",
-                "If enabled, the reminder will always appear on top of other windows",
-              )}
-            >
-              {t("ManageRemindDialog", "TopLevelText", "Show on Top")}
-            </span>
-          </label>
+            <button className="btn" type="button" disabled={!intervalEnabled} onClick={() => setShowTimePicker(true)}>
+              {t("TimePickerDialog", "TimeIntervalTitle", "Time interval for reminder")}
+            </button>
+          </div>
+
+          {error && <p className="field-error">{error}</p>}
         </div>
-
-        <hr className="form-section" />
-
-        <label className="field">
-          <span>{t("ManageRemindDialog", "ExecutionMethodText", "Execution method")}</span>
-          <select
-            value={executionMethod}
-            title={t("ManageRemindDialog", "ExecutionMethodTooltip", "Select how the reminder should be triggered. 'PC Startup' runs the reminder when the computer starts, ignoring time intervals. 'Custom Time Range' triggers it only within a defined daily time window.")}
-            onChange={(e) => setExecutionMethod(e.target.value as ExecutionMethod)}
-          >
-            {EXECUTION_METHOD_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {t("ExecutionMethod", EXECUTION_METHOD_TRANSLATION[opt.value].key, EXECUTION_METHOD_TRANSLATION[opt.value].fallback)}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <div className="field-row">
-          <label className="field">
-            <span>{t("ManageRemindDialog", "DateFromText", "From")}</span>
-            <input type="time" value={timeFrom} disabled={!timeFromEnabled} onChange={(e) => setTimeFrom(e.target.value)} />
-          </label>
-          <label className="field">
-            <span>{t("ManageRemindDialog", "DateToText", "To")}</span>
-            <input type="time" value={timeTo} disabled={!timeRangeEnabled} onChange={(e) => setTimeTo(e.target.value)} />
-          </label>
-        </div>
-
-        <div className="field-row">
-          <button className="btn" type="button" disabled={!intervalEnabled} onClick={() => setShowTimePicker(true)}>
-            {t("TimePickerDialog", "TimeIntervalTitle", "Time interval for reminder")}
-          </button>
-          <span className="time-frequency-label" title={t("TimePickerDialog", "Format", "dd.HH:mm")}>
-            {timeInterval.days}.{timeInterval.hours}:{timeInterval.minutes}
-          </span>
-        </div>
-
-        {error && <p className="field-error">{error}</p>}
 
         <div className="modal-actions reminder-form-actions">
           <button className="btn" type="button" onClick={() => setShowPreview(true)}>
+            <Icon name="eye" size={15} />
             {t("ManageRemindDialog", "PreviewText", "Reminder preview")}
           </button>
           <div className="modal-actions-right">

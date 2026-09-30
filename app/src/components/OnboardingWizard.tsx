@@ -63,7 +63,7 @@ export function OnboardingWizard({ onFinish }: { onFinish: () => void }) {
   return (
     <div className="modal-overlay" onClick={onFinish}>
       <div className="modal onboarding-panel" onClick={(e) => e.stopPropagation()}>
-        <button className="btn onboarding-skip" onClick={onFinish}>
+        <button className="btn btn-ghost onboarding-skip" onClick={onFinish}>
           {t("Onboarding", "SkipButton", "Skip")}
         </button>
 

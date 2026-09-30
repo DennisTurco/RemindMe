@@ -53,16 +53,29 @@ function quitApp(): void {
 }
 
 /** Windows/macOS "start with the system" toggle, run minimized to the tray via the "--hidden" flag. */
+/**
+ * On Windows, getLoginItemSettings() only reports openAtLogin=true when queried
+ * with the exact same path + args the login item was written with, so both
+ * calls must share these. In dev, process.execPath is the bare electron.exe:
+ * the entry script has to be passed too or the login item launches nothing.
+ */
+function getLoginItemOptions(): { path: string; args: string[] } {
+  const args = isDev ? [path.resolve(process.argv[1]), "--hidden"] : ["--hidden"];
+  return { path: process.execPath, args };
+}
+
 function getAutoLaunchEnabled(): boolean {
-  return app.getLoginItemSettings().openAtLogin;
+  return app.getLoginItemSettings(getLoginItemOptions()).openAtLogin;
 }
 
 function setAutoLaunchEnabled(enabled: boolean): void {
   app.setLoginItemSettings({
+    ...getLoginItemOptions(),
     openAtLogin: enabled,
     openAsHidden: enabled,
-    path: process.execPath,
-    args: ["--hidden"],
+    // Windows: also (re)approves the entry in Task Manager's Startup tab, otherwise
+    // turning it back on here has no effect if it was once disabled there.
+    enabled,
   });
 }
 

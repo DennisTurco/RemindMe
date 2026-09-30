@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { iconPath, soundPath } from "../lib/catalog";
 import { LANGUAGE_LOCALES, useI18n } from "../lib/i18n";
 import type { IconName, SoundName } from "../lib/types";
+import { Icon } from "./Icon";
 import { MarkdownContent } from "./MarkdownContent";
 
 interface ReminderPreviewDialogProps {
@@ -37,14 +38,17 @@ export function ReminderPreviewDialog({ name, description, icon, sound, isTopLev
     <div className="modal-overlay" onClick={onClose}>
       <div className={`modal reminder-preview ${isTopLevel ? "reminder-preview-top-level" : ""}`} onClick={(e) => e.stopPropagation()}>
         <div className="reminder-preview-header">
-          <img src={iconPath(icon)} alt="" width={50} height={50} />
+          <img src={iconPath(icon)} alt="" className="reminder-preview-icon" />
           <span className="reminder-preview-name">
             {truncateName(name) || t("General", "UnnamedReminderText", "(unnamed)")}
           </span>
         </div>
         <MarkdownContent className="reminder-preview-description" text={description} />
         <div className="modal-actions reminder-preview-footer">
-          <span className="reminder-preview-time">{time}</span>
+          <span className="reminder-preview-time">
+          <Icon name="clock" size={14} />
+          {time}
+        </span>
           <button className="btn btn-primary" onClick={onClose} autoFocus>
             {t("General", "OkButton", "Ok")}
           </button>

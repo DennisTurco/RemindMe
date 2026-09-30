@@ -98,6 +98,7 @@ export function soundPath(sound: SoundName): string {
 }
 
 export function timeIntervalToString(interval: { days: number; hours: number; minutes: number } | null): string {
-  if (!interval) return "-";
-  return `${interval.days}.${interval.hours}:${interval.minutes}`;
+  if (!interval) return "—";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${interval.days}.${pad(interval.hours)}:${pad(interval.minutes)}`;
 }

@@ -28,7 +28,11 @@ export function PreferencesDialog({ onClose }: PreferencesDialogProps) {
 
   function toggleAutoLaunch(enabled: boolean) {
     setAutoLaunchState(enabled);
-    void remindMe.setAutoLaunch(enabled);
+    // Re-read what the OS actually stored, so the checkbox never shows a state that wasn't saved.
+    void remindMe
+      .setAutoLaunch(enabled)
+      .then(() => remindMe.getAutoLaunch())
+      .then(setAutoLaunchState);
   }
 
   return (
