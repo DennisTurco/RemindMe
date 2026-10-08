@@ -57,12 +57,12 @@ as a side effect of that same endpoint.
 | `Api`         | `ApiServer` (Javalin route table) and `ReminderController` (HTTP handlers). |
 | `Sqlite`      | `Database` (connection + schema migration), `ReminderRepository`, `PreferencesRepository`. |
 | `Entities`    | Domain objects: `Remind`, `Preferences`, `TimeInterval`. |
-| `Enums`       | `ConfigKey` (reads `config.json`), `IconsEnum`, `SoundsEnum`, `LanguagesEnum`, `ThemesEnum`, `ExecutionMethod`, `TranslationLoaderEnum`. |
+| `Enums`       | `IconsEnum`, `SoundsEnum`, `LanguagesEnum`, `ThemesEnum`, `ExecutionMethod`, `TranslationLoaderEnum`. |
 | `Services`    | `SchedulingService`, `TimeIntervalService`, `ExportService` (CSV), `SuggestionsSeeder` (seeds example reminders on first run). |
 | `Json`        | `JSONReminder` - only used for one-time migration of a legacy JSON remind list into SQLite. |
 | `Helpers`     | Small value types such as `TimeRange`. |
 
-`MainApp` is the entry point. It loads `config.json`, opens the SQLite connection, wires up the two
+`MainApp` is the entry point. It opens the SQLite connection, wires up the two
 repositories, migrates legacy JSON data into SQLite if the tables are still empty, seeds example
 reminders on a brand-new database, and starts the Javalin server.
 

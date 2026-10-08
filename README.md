@@ -37,6 +37,7 @@ This project is, of course, published here on GitHub, but it's also available on
 * To run the backend headless API server: `java -jar ./target/RemindMe-1.0-SNAPSHOT-jar-with-dependencies.jar --serve`
 * To run the app in development (from `app/`): `npm run dev`
 * To build the Windows installer: see [`code_documentation.md`](src/main/resources/docs/code_documentation.md#11-building-the-installer)
+* To build the Linux installers (AppImage + .deb): run the "Build Linux installers" GitHub Action manually (Actions tab > Run workflow), or on a Linux machine put a Linux JRE in `jre-linux/` and run `npm run build:linux` from `app/`
 
 ## Platforms
 
@@ -55,22 +56,6 @@ This project is, of course, published here on GitHub, but it's also available on
 | Spanish | ✅ |
 | German | ✅ |
 | French | ✅ |
-
-## Tecnical Documentation
-
-### Protect the SMTP password
-
-To protect the SMTP password, it needs to be encrypted.
-The following steps should be performed during the initial setup:
-
-1. Create a file named config.txt in the root directory.
-2. Add the password inside the file in this format:
-
-   ```txt
-   SMTP_PASSWORD=PasswordToEncrypt
-   ```
-
-3. Run remindme.Email.EncryptConfigFile to encrypt the .txt file and generate the corresponding .enc file.
 
 ## Licence
 

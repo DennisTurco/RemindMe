@@ -1,5 +1,6 @@
 import { app, BrowserWindow, Menu, dialog, ipcMain, nativeTheme, shell } from "electron";
 import { spawn, type ChildProcess } from "child_process";
+import * as fsSync from "fs";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { apiClient } from "./apiClient";
@@ -52,7 +53,7 @@ function quitApp(): void {
   app.quit();
 }
 
-/** Windows/macOS "start with the system" toggle, run minimized to the tray via the "--hidden" flag. */
+/** "Start with the system" toggle, run minimized to the tray via the "--hidden" flag. */
 /**
  * On Windows, getLoginItemSettings() only reports openAtLogin=true when queried
  * with the exact same path + args the login item was written with, so both
@@ -64,11 +65,52 @@ function getLoginItemOptions(): { path: string; args: string[] } {
   return { path: process.execPath, args };
 }
 
+/**
+ * Electron's login item API is Windows/macOS only: on Linux, desktops follow
+ * the XDG autostart spec, i.e. a .desktop file in ~/.config/autostart.
+ */
+function getLinuxAutostartFile(): string {
+  const configHome = process.env.XDG_CONFIG_HOME || path.join(app.getPath("home"), ".config");
+  return path.join(configHome, "autostart", "remindme.desktop");
+}
+
+function setLinuxAutostartEnabled(enabled: boolean): void {
+  const file = getLinuxAutostartFile();
+  if (!enabled) {
+    fsSync.rmSync(file, { force: true });
+    return;
+  }
+
+  // Inside an AppImage, execPath points into a temporary mount that changes
+  // every run: APPIMAGE is the path of the .AppImage file itself.
+  const { path: execPath, args } = getLoginItemOptions();
+  const exec = [process.env.APPIMAGE || execPath, ...args].map((part) => `"${part}"`).join(" ");
+  const entry = [
+    "[Desktop Entry]",
+    "Type=Application",
+    "Name=RemindMe",
+    `Exec=${exec}`,
+    "Terminal=false",
+    "X-GNOME-Autostart-enabled=true",
+    "",
+  ].join("\n");
+
+  fsSync.mkdirSync(path.dirname(file), { recursive: true });
+  fsSync.writeFileSync(file, entry);
+}
+
 function getAutoLaunchEnabled(): boolean {
+  if (process.platform === "linux") {
+    return fsSync.existsSync(getLinuxAutostartFile());
+  }
   return app.getLoginItemSettings(getLoginItemOptions()).openAtLogin;
 }
 
 function setAutoLaunchEnabled(enabled: boolean): void {
+  if (process.platform === "linux") {
+    setLinuxAutostartEnabled(enabled);
+    return;
+  }
   app.setLoginItemSettings({
     ...getLoginItemOptions(),
     openAtLogin: enabled,
@@ -264,8 +306,19 @@ function spawnBackend(): void {
   const javaExe = path.join(process.resourcesPath, "jre", "bin", process.platform === "win32" ? "java.exe" : "java");
   const jarPath = path.join(process.resourcesPath, "backend", "RemindMe.jar");
   const cwd = path.join(process.resourcesPath, "backend");
+  // The install folder is read-only on Linux (AppImage mount, root-owned
+  // /opt for .deb/.rpm), so the database and logs live in the per-user
+  // userData folder instead, on every platform.
+  const dataDir = app.getPath("userData");
+  const javaArgs = [
+    `-Dremindme.dataDir=${dataDir}`,
+    `-Dremindme.logDir=${path.join(dataDir, "logs")}`,
+    "-jar",
+    jarPath,
+    "--serve",
+  ];
 
-  backendProcess = spawn(javaExe, ["-jar", jarPath, "--serve"], { cwd, windowsHide: true });
+  backendProcess = spawn(javaExe, javaArgs, { cwd, windowsHide: true });
   backendProcess.stdout?.on("data", (chunk) => console.log(`[backend] ${chunk}`));
   backendProcess.stderr?.on("data", (chunk) => console.error(`[backend] ${chunk}`));
 }

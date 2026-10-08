@@ -14,6 +14,7 @@
     "build": "tsc -b && vite build && npm run build:electron-main",
     "build:backend": "cd .. && mvn -o package -DskipTests",
     "build:electron": "npm run build && npm run build:backend && electron-builder",
+    "build:linux": "npm run build && npm run build:backend && electron-builder --linux",
     "typecheck": "tsc --noEmit && tsc --noEmit -p electron/tsconfig.json"
   },
   "dependencies": {
@@ -49,10 +50,6 @@
         "to": "res"
       },
       {
-        "from": "../jre",
-        "to": "jre"
-      },
-      {
         "from": "../target/RemindMe-1.0-SNAPSHOT-jar-with-dependencies.jar",
         "to": "backend/RemindMe.jar"
       }
@@ -63,7 +60,44 @@
     },
     "win": {
       "target": "dir",
-      "icon": "build/icon.ico"
+      "icon": "build/icon.ico",
+      "extraResources": [
+        {
+          "from": "../jre",
+          "to": "jre"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "res/img/logo.png",
+      "category": "Utility",
+      "maintainer": "Dennis Turco <d.turco@dotblue.it>",
+      "synopsis": "Schedule and manage custom periodic reminders",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "extraResources": [
+        {
+          "from": "../jre-linux",
+          "to": "jre"
+        }
+      ]
+    },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnotify4",
+        "libnss3",
+        "libxss1",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0",
+        "libuuid1",
+        "libsecret-1-0",
+        "libayatana-appindicator3-1 | libappindicator3-1"
+      ]
     }
   }
 }

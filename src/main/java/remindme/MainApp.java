@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -16,7 +18,6 @@ import com.google.gson.JsonParser;
 import remindme.Api.ApiServer;
 import remindme.Api.ReminderController;
 import remindme.Entities.Preferences;
-import remindme.Enums.ConfigKey;
 import remindme.Enums.LanguagesEnum;
 import remindme.Enums.ThemesEnum;
 import remindme.Enums.TranslationLoaderEnum;
@@ -34,13 +35,14 @@ import remindme.Sqlite.ReminderRepository;
 public class MainApp {
 
     private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
-    private static final String CONFIG_RESOURCE = "/res/config/config.json";
     private static final String SUGGESTIONS_RESOURCE = "/res/suggestions_remind.json";
     private static final String LANGUAGES_RESOURCE_DIR = "/res/languages/";
+    private static final String DATA_DIR_PROPERTY = "remindme.dataDir";
+    private static final String DB_FILE_NAME = "reminders.db";
+    /** Where the pre-SQLite Java app kept its preferences, relative to its working directory. */
+    private static final String LEGACY_PREFERENCES_FILE = "src/main/resources/res/config/preferences.json";
 
     public static void main(String[] args) {
-        ConfigKey.loadFromClasspath(CONFIG_RESOURCE);
-
         boolean isServeMode = args.length > 0 && args[0].equalsIgnoreCase("--serve");
         if (!isServeMode) {
             logger.warn("Usage: java -jar RemindMe.jar --serve");
@@ -52,13 +54,31 @@ public class MainApp {
     }
 
     /**
-     * Directory the running jar (or, in dev, the compiled classes) lives in.
-     * Used as a writable location for the SQLite database next to the app
-     * itself, resolved dynamically instead of a config value so it doesn't
-     * depend on the process's working directory or on config.json (which
-     * only ships dev-tree paths like "src/main/resources/res/").
+     * Writable directory for the SQLite database. The packaged Electron app
+     * passes its per-user data folder via -Dremindme.dataDir, since the
+     * install folder isn't writable everywhere (AppImage mounts are
+     * read-only, .deb/.rpm installs live in root-owned /opt). Without it
+     * (dev), falls back to the directory of the running jar/classes.
      */
     private static String resolveDataDirectory() {
+        String dataDir = System.getProperty(DATA_DIR_PROPERTY);
+        if (dataDir != null && !dataDir.isBlank()) {
+            File dir = new File(dataDir);
+            if (!dir.isDirectory() && !dir.mkdirs()) {
+                logger.warn("Could not create data directory " + dir.getAbsolutePath() + ", falling back to the application directory");
+                return resolveApplicationDirectory();
+            }
+            return dir.getAbsolutePath() + File.separator;
+        }
+        return resolveApplicationDirectory();
+    }
+
+    /**
+     * Directory the running jar (or, in dev, the compiled classes) lives in,
+     * resolved dynamically so it doesn't depend on the process's working
+     * directory.
+     */
+    private static String resolveApplicationDirectory() {
         try {
             File location = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation().toURI());
             File dir = location.isFile() ? location.getParentFile() : location;
@@ -71,7 +91,9 @@ public class MainApp {
 
     private static void runApiServer() {
         try {
-            String dbPath = resolveDataDirectory() + "reminders.db";
+            String dataDir = resolveDataDirectory();
+            migrateLegacyDatabaseIfNeeded(dataDir);
+            String dbPath = dataDir + DB_FILE_NAME;
             Connection connection = Database.open(dbPath);
 
             ReminderRepository reminderRepository = new ReminderRepository(connection);
@@ -99,6 +121,32 @@ public class MainApp {
     }
 
     /**
+     * Earlier Windows builds kept reminders.db next to the jar. When the data
+     * directory moves elsewhere (-Dremindme.dataDir), copy the old database
+     * (plus its SQLite WAL/SHM side files) over once so upgrading users keep
+     * their reminders. Never overwrites an existing database in dataDir.
+     */
+    private static void migrateLegacyDatabaseIfNeeded(String dataDir) {
+        File target = new File(dataDir + DB_FILE_NAME);
+        File legacy = new File(resolveApplicationDirectory() + DB_FILE_NAME);
+        if (target.exists() || !legacy.isFile() || legacy.getAbsoluteFile().equals(target.getAbsoluteFile())) {
+            return;
+        }
+
+        try {
+            for (String suffix : new String[] { "", "-wal", "-shm" }) {
+                Path source = Path.of(legacy.getPath() + suffix);
+                if (Files.exists(source)) {
+                    Files.copy(source, Path.of(target.getPath() + suffix));
+                }
+            }
+            logger.info("Migrated legacy database from " + legacy.getAbsolutePath() + " to " + target.getAbsolutePath());
+        } catch (IOException ex) {
+            logger.error("Failed to migrate legacy database: " + ex.getMessage(), ex);
+        }
+    }
+
+    /**
      * One-time setup of the preferences table: migrates the old
      * preferences.json file if one exists, otherwise seeds the row with
      * default preferences (mirroring SuggestionsSeeder for reminders). Runs
@@ -110,8 +158,7 @@ public class MainApp {
             return;
         }
 
-        String legacyPath = ConfigKey.CONFIG_DIRECTORY_STRING.getValue() + ConfigKey.PREFERENCES_FILE_STRING.getValue();
-        try (FileReader reader = new FileReader(legacyPath)) {
+        try (FileReader reader = new FileReader(LEGACY_PREFERENCES_FILE)) {
             JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
 
             LanguagesEnum language = LanguagesEnum.ENG;

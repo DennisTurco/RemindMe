@@ -1,0 +1,61 @@
+# Builds the Linux installers (AppImage + .deb). Manual trigger only:
+# Actions tab > "Build Linux installers" > Run workflow.
+name: Build Linux installers
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Same major as the bundled Windows JRE (jre/release: 22.0.2)
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "22"
+          cache: maven
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Build Java backend
+        run: mvn -B package -DskipTests
+
+      # Linux counterpart of the Windows jre/ folder, picked up by
+      # package.json > build.linux.extraResources ("../jre-linux").
+      - name: Create Linux JRE
+        run: |
+          jlink \
+            --add-modules ALL-MODULE-PATH \
+            --strip-debug \
+            --no-man-pages \
+            --no-header-files \
+            --compress=zip-6 \
+            --output jre-linux
+
+      - name: Install frontend dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Build frontend and Electron main
+        working-directory: app
+        run: npm run build
+
+      - name: Package Linux installers
+        working-directory: app
+        run: npx electron-builder --linux --publish never
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RemindMe-linux
+          path: |
+            app/release/*.AppImage
+            app/release/*.deb
+          if-no-files-found: error
