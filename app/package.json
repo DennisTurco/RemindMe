@@ -4,6 +4,7 @@
   "version": "2.0.0",
   "description": "A lightweight, cross-platform app to schedule and manage custom periodic reminders.",
   "author": "Dennis Turco",
+  "homepage": "https://github.com/DennisTurco/RemindMe",
   "type": "module",
   "main": "dist-electron/main.js",
   "scripts": {
