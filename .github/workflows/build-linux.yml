@@ -1,9 +1,22 @@
-# Builds the Linux installers (AppImage + .deb). Manual trigger only:
-# Actions tab > "Build Linux installers" > Run workflow.
+# Builds the Linux installers (AppImage + .deb) on every push/merge to
+# master, or manually: Actions tab > "Build Linux installers" > Run workflow.
 name: Build Linux installers
 
 on:
+  push:
+    branches: [master]
+    # Docs-only changes don't need new installers
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "src/main/resources/docs/**"
+      - ".github/ISSUE_TEMPLATE/**"
   workflow_dispatch:
+
+# A newer push to master supersedes a build still running for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-linux:

@@ -1,0 +1,75 @@
+# Builds the Windows installer (Inno Setup .exe) on every push/merge to
+# master, or manually: Actions tab > "Build Windows installer" > Run workflow.
+name: Build Windows installer
+
+on:
+  push:
+    branches: [master]
+    # Docs-only changes don't need new installers
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "src/main/resources/docs/**"
+      - ".github/ISSUE_TEMPLATE/**"
+  workflow_dispatch:
+
+# A newer push to master supersedes a build still running for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Same major as the locally bundled JRE (jre/release: 22.0.2)
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "22"
+          cache: maven
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Build Java backend
+        run: mvn -B package -DskipTests
+
+      # The jre/ folder is gitignored: recreate it here, picked up by
+      # package.json > build.win.extraResources ("../jre").
+      - name: Create Windows JRE
+        run: jlink --add-modules ALL-MODULE-PATH --strip-debug --no-man-pages --no-header-files --compress=zip-6 --output jre
+
+      - name: Install frontend dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Build frontend and Electron main
+        working-directory: app
+        run: npm run build
+
+      # Produces app/release/win-unpacked/ (win target "dir"), the input of the Inno Setup script
+      - name: Package Electron app
+        working-directory: app
+        run: npx electron-builder --win --publish never
+
+      - name: Install Inno Setup
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup -y --no-progress
+          }
+
+      - name: Build installer
+        run: '& "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" installer\RemindMe.iss'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RemindMe-windows
+          path: installer/Output/*.exe
+          if-no-files-found: error

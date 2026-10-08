@@ -1,10 +1,24 @@
-# Builds the macOS installers (.dmg for Apple Silicon and Intel). Manual
-# trigger only: Actions tab > "Build macOS installers" > Run workflow.
+# Builds the macOS installers (.dmg for Apple Silicon and Intel) on every
+# push/merge to master, or manually: Actions tab > "Build macOS installers"
+# > Run workflow.
 # The app is ad-hoc signed only (no Apple Developer ID / notarization yet).
 name: Build macOS installers
 
 on:
+  push:
+    branches: [master]
+    # Docs-only changes don't need new installers
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "src/main/resources/docs/**"
+      - ".github/ISSUE_TEMPLATE/**"
   workflow_dispatch:
+
+# A newer push to master supersedes a build still running for an older one
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-mac:

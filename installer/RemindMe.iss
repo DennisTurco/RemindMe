@@ -7,10 +7,9 @@
 ;   - Press Ctrl+F9 (Build) or use the Build > Compile menu
 ;   - The installer is created in installer\Output\RemindMe_Setup_....exe
 ;
-; Note: RemindMe does not currently register itself to start with Windows
-; (unlike some other apps that use the "auto-launch" npm package), so this
-; installer does not create an HKCU...\Run entry either. If that changes,
-; remember to also remove the entry on uninstall.
+; Note: the app itself (not this installer) registers RemindMe to start with
+; Windows, via Electron's app.setLoginItemSettings() (on by default after the
+; first run). Those HKCU...\Run entries are removed on uninstall, see [Code].
 
 #define AppName      "RemindMe"
 #define AppVersion   "2.0.0"
@@ -92,3 +91,21 @@ Filename: "taskkill.exe"; \
   Parameters: "/f /t /im {#AppExeName}"; \
   Flags: runhidden waituntilterminated; \
   RunOnceId: "KillApp"
+
+[Code]
+const
+  // Value name Electron's setLoginItemSettings() writes on Windows: the app's
+  // AppUserModelId, set in app/electron/main.ts (app.setAppUserModelId)
+  LoginItemName = 'it.dennisturco.remindme';
+
+// Removes the "start with Windows" entries the app created at runtime, so
+// Windows doesn't keep trying to launch an executable that no longer exists.
+// StartupApproved\Run is the Task Manager > Startup apps on/off state.
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  if CurUninstallStep = usPostUninstall then
+  begin
+    RegDeleteValue(HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Run', LoginItemName);
+    RegDeleteValue(HKEY_CURRENT_USER, 'Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run', LoginItemName);
+  end;
+end;
