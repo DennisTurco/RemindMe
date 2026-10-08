@@ -32,7 +32,7 @@
     "MainFrame": {
         "AddBackupTooltip": "Aggiungi nuovo promemoria",
         "ExportAs": "Esporta come: ",
-        "ExportAsPdfTooltip": "Esporta come PDF",
+        "ExportAsJsonTooltip": "Esporta come JSON",
         "ExportAsCsvTooltip": "Esporta come CSV",
         "ResearchBarTooltip": "Barra di ricerca",
         "ResearchBarPlaceholder": "Cerca..."
@@ -141,11 +141,11 @@
         "ErrorMessageForWrongTimeRange": "L'intervallo di tempo non è valido",
         "SuccessGenericTitle": "Successo",
         "SuccessfullyExportedToCsvMessage": "Backup esportati in CSV con successo!",
-        "SuccessfullyExportedToPdfMessage": "Backup esportati in PDF con successo!",
+        "SuccessfullyExportedToJsonMessage": "Backup esportati in JSON con successo!",
         "ErrorMessageForExportingToCsv": "Errore durante l'esportazione dei promemoria in CSV: ",
-        "ErrorMessageForExportingToPdf": "Errore durante l'esportazione dei promemoria in PDF: ",
+        "ErrorMessageForExportingToJson": "Errore durante l'esportazione dei promemoria in JSON: ",
         "CsvNameMessageInput": "Inserisci il nome del file CSV.",
-        "PdfNameMessageInput": "Inserisci il nome del file PDF.",
+        "JsonNameMessageInput": "Inserisci il nome del file JSON.",
         "DuplicatedFileNameMessage": "Il file esiste già. Sovrascrivere?",
         "ErrorMessageInvalidFilename": "Nome file non valido. Usa solo lettere, numeri, trattini e underscore.",
         "ShareLinkCopiedMessage": "Link copiato negli appunti!",

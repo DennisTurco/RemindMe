@@ -32,7 +32,7 @@
     "MainFrame": {
         "AddBackupTooltip": "Neue Erinnerung hinzufügen",
         "ExportAs": "Exportieren als: ",
-        "ExportAsPdfTooltip": "Als PDF exportieren",
+        "ExportAsJsonTooltip": "Als JSON exportieren",
         "ExportAsCsvTooltip": "Als CSV exportieren",
         "ResearchBarTooltip": "Suchleiste",
         "ResearchBarPlaceholder": "Suchen..."
@@ -141,11 +141,11 @@
         "ErrorMessageForWrongTimeRange": "Der Zeitraum ist ungültig",
         "SuccessGenericTitle": "Erfolg",
         "SuccessfullyExportedToCsvMessage": "Backups erfolgreich als CSV exportiert!",
-        "SuccessfullyExportedToPdfMessage": "Backups erfolgreich als PDF exportiert!",
+        "SuccessfullyExportedToJsonMessage": "Backups erfolgreich als JSON exportiert!",
         "ErrorMessageForExportingToCsv": "Fehler beim Exportieren der Erinnerungen als CSV: ",
-        "ErrorMessageForExportingToPdf": "Fehler beim Exportieren der Erinnerungen als PDF: ",
+        "ErrorMessageForExportingToJson": "Fehler beim Exportieren der Erinnerungen als JSON: ",
         "CsvNameMessageInput": "Gib den Namen der CSV-Datei ein.",
-        "PdfNameMessageInput": "Gib den Namen der PDF-Datei ein.",
+        "JsonNameMessageInput": "Gib den Namen der JSON-Datei ein.",
         "DuplicatedFileNameMessage": "Datei existiert bereits. Überschreiben?",
         "ErrorMessageInvalidFilename": "Ungültiger Dateiname. Verwende nur Buchstaben, Zahlen, Bindestriche und Unterstriche.",
         "ShareLinkCopiedMessage": "Freigabelink wurde in die Zwischenablage kopiert!",

@@ -32,7 +32,7 @@
     "MainFrame": {
         "AddBackupTooltip": "Agregar nuevo recordatorio",
         "ExportAs": "Exportar como: ",
-        "ExportAsPdfTooltip": "Exportar como PDF",
+        "ExportAsJsonTooltip": "Exportar como JSON",
         "ExportAsCsvTooltip": "Exportar como CSV",
         "ResearchBarTooltip": "Barra de búsqueda",
         "ResearchBarPlaceholder": "Buscar..."
@@ -141,11 +141,11 @@
         "ErrorMessageForWrongTimeRange": "El rango de tiempo no es válido",
         "SuccessGenericTitle": "Éxito",
         "SuccessfullyExportedToCsvMessage": "¡Copias de seguridad exportadas como CSV correctamente!",
-        "SuccessfullyExportedToPdfMessage": "¡Copias de seguridad exportadas como PDF correctamente!",
+        "SuccessfullyExportedToJsonMessage": "¡Copias de seguridad exportadas como JSON correctamente!",
         "ErrorMessageForExportingToCsv": "Error al exportar recordatorios a CSV: ",
-        "ErrorMessageForExportingToPdf": "Error al exportar recordatorios a PDF: ",
+        "ErrorMessageForExportingToJson": "Error al exportar recordatorios a JSON: ",
         "CsvNameMessageInput": "Introduce el nombre del archivo CSV.",
-        "PdfNameMessageInput": "Introduce el nombre del archivo PDF.",
+        "JsonNameMessageInput": "Introduce el nombre del archivo JSON.",
         "DuplicatedFileNameMessage": "El archivo ya existe. ¿Sobrescribir?",
         "ErrorMessageInvalidFilename": "Nombre de archivo inválido. Usa solo letras, números, guiones y guiones bajos.",
         "ShareLinkCopiedMessage": "¡Enlace compartido copiado al portapapeles!",

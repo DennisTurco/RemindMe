@@ -43,7 +43,7 @@
     "MainFrame": {
         "AddBackupTooltip": "Ajouter un nouveau rappel",
         "ExportAs": "Exporter en : ",
-        "ExportAsPdfTooltip": "Exporter en PDF",
+        "ExportAsJsonTooltip": "Exporter en JSON",
         "ExportAsCsvTooltip": "Exporter en CSV",
         "ResearchBarTooltip": "Barre de recherche",
         "ResearchBarPlaceholder": "Rechercher...",
@@ -165,11 +165,11 @@
         "ErrorMessageForWrongTimeRange": "L'intervalle de temps n'est pas valide",
         "SuccessGenericTitle": "Succès",
         "SuccessfullyExportedToCsvMessage": "Sauvegardes exportées en CSV avec succès !",
-        "SuccessfullyExportedToPdfMessage": "Sauvegardes exportées en PDF avec succès !",
+        "SuccessfullyExportedToJsonMessage": "Sauvegardes exportées en JSON avec succès !",
         "ErrorMessageForExportingToCsv": "Erreur lors de l'exportation des rappels en CSV : ",
-        "ErrorMessageForExportingToPdf": "Erreur lors de l'exportation des rappels en PDF : ",
+        "ErrorMessageForExportingToJson": "Erreur lors de l'exportation des rappels en JSON : ",
         "CsvNameMessageInput": "Entrez le nom du fichier CSV.",
-        "PdfNameMessageInput": "Entrez le nom du fichier PDF.",
+        "JsonNameMessageInput": "Entrez le nom du fichier JSON.",
         "DuplicatedFileNameMessage": "Le fichier existe déjà. Écraser ?",
         "ErrorMessageInvalidFilename": "Nom de fichier invalide. Utilisez uniquement des caractères alphanumériques, des tirets et des soulignés.",
         "ShareLinkCopiedMessage": "Lien de partage copié dans le presse-papiers !",
@@ -200,6 +200,6 @@
         "Step4Title": "Gérez la liste",
         "Step4Body": "Utilisez la barre de recherche pour filtrer les rappels. Clic droit sur une ligne pour modifier, dupliquer, supprimer, renommer ou activer/désactiver rapidement un rappel.",
         "Step5Title": "Exportez et personnalisez",
-        "Step5Body": "Exportez la liste en **CSV** ou **PDF** depuis la barre d'outils, ou toute la liste en JSON depuis le menu **Fichier**. Dans **Options > Préférences**, vous pouvez changer de langue et basculer entre thème clair et sombre à tout moment."
+        "Step5Body": "Exportez la liste en **CSV** ou **JSON** depuis la barre d'outils, ou toute la liste en JSON depuis le menu **Fichier**. Dans **Options > Préférences**, vous pouvez changer de langue et basculer entre thème clair et sombre à tout moment."
     }
 }

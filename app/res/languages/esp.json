@@ -43,7 +43,7 @@
     "MainFrame": {
         "AddBackupTooltip": "Agregar nuevo recordatorio",
         "ExportAs": "Exportar como: ",
-        "ExportAsPdfTooltip": "Exportar como PDF",
+        "ExportAsJsonTooltip": "Exportar como JSON",
         "ExportAsCsvTooltip": "Exportar como CSV",
         "ResearchBarTooltip": "Barra de búsqueda",
         "ResearchBarPlaceholder": "Buscar...",
@@ -165,11 +165,11 @@
         "ErrorMessageForWrongTimeRange": "El rango de tiempo no es válido",
         "SuccessGenericTitle": "Éxito",
         "SuccessfullyExportedToCsvMessage": "¡Copias de seguridad exportadas como CSV correctamente!",
-        "SuccessfullyExportedToPdfMessage": "¡Copias de seguridad exportadas como PDF correctamente!",
+        "SuccessfullyExportedToJsonMessage": "¡Copias de seguridad exportadas como JSON correctamente!",
         "ErrorMessageForExportingToCsv": "Error al exportar recordatorios a CSV: ",
-        "ErrorMessageForExportingToPdf": "Error al exportar recordatorios a PDF: ",
+        "ErrorMessageForExportingToJson": "Error al exportar recordatorios a JSON: ",
         "CsvNameMessageInput": "Introduce el nombre del archivo CSV.",
-        "PdfNameMessageInput": "Introduce el nombre del archivo PDF.",
+        "JsonNameMessageInput": "Introduce el nombre del archivo JSON.",
         "DuplicatedFileNameMessage": "El archivo ya existe. ¿Sobrescribir?",
         "ErrorMessageInvalidFilename": "Nombre de archivo inválido. Usa solo letras, números, guiones y guiones bajos.",
         "ShareLinkCopiedMessage": "¡Enlace compartido copiado al portapapeles!",
@@ -200,6 +200,6 @@
         "Step4Title": "Gestiona la lista",
         "Step4Body": "Usa la barra de búsqueda para filtrar los recordatorios. Haz clic derecho en una fila para editar, duplicar, eliminar, renombrar o activar/desactivar rápidamente un recordatorio.",
         "Step5Title": "Exporta y personaliza",
-        "Step5Body": "Exporta la lista como **CSV** o **PDF** desde la barra de herramientas, o toda la lista como JSON desde el menú **Archivo**. En **Opciones > Preferencias** puedes cambiar el idioma y alternar entre tema claro y oscuro en cualquier momento."
+        "Step5Body": "Exporta la lista como **CSV** o **JSON** desde la barra de herramientas, o toda la lista como JSON desde el menú **Archivo**. En **Opciones > Preferencias** puedes cambiar el idioma y alternar entre tema claro y oscuro en cualquier momento."
     }
 }

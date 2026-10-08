@@ -99,12 +99,12 @@ export function MainPage() {
     }
   }
 
-  async function handleExportPdf() {
-    const result = await remindMe.exportPdf();
+  async function handleexportJson() {
+    const result = await remindMe.exportJson();
     if (!result.canceled) {
       setInfoMessage({
         title: t("Dialogs", "SuccessGenericTitle", "Success"),
-        message: t("Dialogs", "SuccessfullyExportedToPdfMessage", "Backups exported to PDF successfully!"),
+        message: t("Dialogs", "SuccessfullyExportedToJsonMessage", "Backups exported to JSON successfully!"),
       });
     }
   }
@@ -223,8 +223,8 @@ export function MainPage() {
           <button className="btn" title={t("MainFrame", "ExportAsCsvTooltip", "Export as CSV")} onClick={handleExportCsv}>
             CSV
           </button>
-          <button className="btn" title={t("MainFrame", "ExportAsPdfTooltip", "Export as PDF")} onClick={handleExportPdf}>
-            PDF
+          <button className="btn" title={t("MainFrame", "ExportAsJsonTooltip", "Export as JSON")} onClick={handleexportJson}>
+            JSON
           </button>
         </div>
         <button

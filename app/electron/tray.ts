@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, Tray } from "electron";
+import { BrowserWindow, Menu, Tray, nativeImage, type NativeImage } from "electron";
 import type { Translations } from "./services/i18nService";
 import { t } from "./services/i18nService";
 
@@ -20,9 +20,26 @@ export interface AppTray {
   refresh(): void;
 }
 
+/**
+ * The macOS menu bar shows tray images at their pixel size (no automatic
+ * scaling like on Windows/Linux), so the 512px logo is shrunk to the
+ * standard 18pt height, with a 2x representation for Retina displays.
+ */
+function getTrayImage(iconPath: string): NativeImage | string {
+  if (process.platform !== "darwin") return iconPath;
+
+  const source = nativeImage.createFromPath(iconPath);
+  const image = nativeImage.createEmpty();
+  for (const scaleFactor of [1, 2]) {
+    const resized = source.resize({ height: 18 * scaleFactor, quality: "best" });
+    image.addRepresentation({ scaleFactor, buffer: resized.toPNG() });
+  }
+  return image;
+}
+
 /** Mirrors remindme.Controllers.TrayController: Apri / Pausa-Riprendi / Esci. */
 export function setupTray(ctx: TrayContext): AppTray {
-  const tray = new Tray(ctx.iconPath);
+  const tray = new Tray(getTrayImage(ctx.iconPath));
   tray.on("click", () => ctx.showMainWindow());
 
   function refresh(): void {

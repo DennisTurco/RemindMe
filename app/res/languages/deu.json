@@ -43,7 +43,7 @@
     "MainFrame": {
         "AddBackupTooltip": "Neue Erinnerung hinzufügen",
         "ExportAs": "Exportieren als: ",
-        "ExportAsPdfTooltip": "Als PDF exportieren",
+        "ExportAsJsonTooltip": "Als JSON exportieren",
         "ExportAsCsvTooltip": "Als CSV exportieren",
         "ResearchBarTooltip": "Suchleiste",
         "ResearchBarPlaceholder": "Suchen...",
@@ -165,11 +165,11 @@
         "ErrorMessageForWrongTimeRange": "Der Zeitraum ist ungültig",
         "SuccessGenericTitle": "Erfolg",
         "SuccessfullyExportedToCsvMessage": "Backups erfolgreich als CSV exportiert!",
-        "SuccessfullyExportedToPdfMessage": "Backups erfolgreich als PDF exportiert!",
+        "SuccessfullyExportedToJsonMessage": "Backups erfolgreich als JSON exportiert!",
         "ErrorMessageForExportingToCsv": "Fehler beim Exportieren der Erinnerungen als CSV: ",
-        "ErrorMessageForExportingToPdf": "Fehler beim Exportieren der Erinnerungen als PDF: ",
+        "ErrorMessageForExportingToJson": "Fehler beim Exportieren der Erinnerungen als JSON: ",
         "CsvNameMessageInput": "Gib den Namen der CSV-Datei ein.",
-        "PdfNameMessageInput": "Gib den Namen der PDF-Datei ein.",
+        "JsonNameMessageInput": "Gib den Namen der JSON-Datei ein.",
         "DuplicatedFileNameMessage": "Datei existiert bereits. Überschreiben?",
         "ErrorMessageInvalidFilename": "Ungültiger Dateiname. Verwende nur Buchstaben, Zahlen, Bindestriche und Unterstriche.",
         "ShareLinkCopiedMessage": "Freigabelink wurde in die Zwischenablage kopiert!",
@@ -200,6 +200,6 @@
         "Step4Title": "Liste verwalten",
         "Step4Body": "Nutze die Suchleiste, um Erinnerungen zu filtern. Rechtsklick auf eine Zeile, um eine Erinnerung schnell zu bearbeiten, zu duplizieren, zu löschen, umzubenennen oder zu aktivieren/deaktivieren.",
         "Step5Title": "Exportieren und anpassen",
-        "Step5Body": "Exportiere die Liste über die Symbolleiste als **CSV** oder **PDF**, oder die gesamte Liste als JSON über das Menü **Datei**. Unter **Optionen > Einstellungen** kannst du jederzeit die Sprache ändern und zwischen hellem und dunklem Design wechseln."
+        "Step5Body": "Exportiere die Liste über die Symbolleiste als **CSV** oder **JSON**, oder die gesamte Liste als JSON über das Menü **Datei**. Unter **Optionen > Einstellungen** kannst du jederzeit die Sprache ändern und zwischen hellem und dunklem Design wechseln."
     }
 }

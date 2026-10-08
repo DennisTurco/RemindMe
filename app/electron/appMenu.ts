@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, MenuItemConstructorOptions, clipboard, dialog, shell } from "electron";
+import { app, BrowserWindow, Menu, MenuItemConstructorOptions, clipboard, dialog, shell } from "electron";
 import * as fs from "fs/promises";
 import { apiClient } from "./apiClient";
 import type { AppConfig } from "./services/appConfigService";
@@ -140,7 +140,17 @@ export function buildAppMenu({ getMainWindow, config, translations, quit }: AppM
   }
 
   const template: MenuItemConstructorOptions[] = [];
+  if (process.platform === "darwin") {
+    // macOS always shows the first menu under the app's name, and copy/paste
+    // shortcuts (Cmd+C/V/X/A) in text fields only work through an Edit menu.
+    // Quit stays in File (with its Cmd+Q accelerator) to avoid a duplicate.
+    template.push({
+      label: app.name,
+      submenu: [{ role: "about" }, { type: "separator" }, { role: "hide" }, { role: "hideOthers" }, { role: "unhide" }],
+    });
+  }
   if (fileItems.length > 0) template.push({ label: m("File", "File"), submenu: fileItems });
+  if (process.platform === "darwin") template.push({ role: "editMenu" });
   if (optionsItems.length > 0) template.push({ label: m("Options", "Opzioni"), submenu: optionsItems });
   if (infoItems.length > 0) template.push({ label: m("About", "Informazioni"), submenu: infoItems });
   if (helpItems.length > 0) template.push({ label: m("Help", "Aiuto"), submenu: helpItems });

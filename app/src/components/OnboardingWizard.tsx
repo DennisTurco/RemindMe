@@ -49,7 +49,7 @@ const STEPS: Step[] = [
     titleFallback: "Export and customize",
     bodyKey: "Step5Body",
     bodyFallback:
-      "Export the list as **CSV** or **PDF** from the toolbar, or the whole list as JSON from the **File** menu. In **Options > Preferences** you can change the language and switch between light and dark theme at any time.",
+      "Export the list as **CSV** or **JSON** from the toolbar, or the whole list as JSON from the **File** menu. In **Options > Preferences** you can change the language and switch between light and dark theme at any time.",
   },
 ];
 

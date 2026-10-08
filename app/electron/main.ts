@@ -233,7 +233,11 @@ function loadRoute(win: BrowserWindow, hash: string): void {
 }
 
 function createMainWindow(): void {
-  const startHidden = process.argv.includes("--hidden");
+  // macOS login items don't receive command-line args: there the OS reports
+  // whether this launch came from the login item instead.
+  const startHidden =
+    process.argv.includes("--hidden") ||
+    (process.platform === "darwin" && app.getLoginItemSettings().wasOpenedAtLogin);
 
   mainWindow = new BrowserWindow({
     width: 982,
@@ -387,7 +391,7 @@ function registerIpcHandlers(config: Awaited<ReturnType<typeof loadAppConfig>>):
     return { canceled: false, path: filePath };
   });
 
-  ipcMain.handle("reminders:exportPdf", async (): Promise<{ canceled: boolean; path?: string }> => {
+  ipcMain.handle("reminders:exportJson", async (): Promise<{ canceled: boolean; path?: string }> => {
     const win = mainWindow;
     if (!win) return { canceled: true };
 

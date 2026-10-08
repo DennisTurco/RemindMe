@@ -16,6 +16,7 @@
     "build:backend": "cd .. && mvn -o package -DskipTests",
     "build:electron": "npm run build && npm run build:backend && electron-builder",
     "build:linux": "npm run build && npm run build:backend && electron-builder --linux",
+    "build:mac": "npm run build && npm run build:backend && electron-builder --mac",
     "typecheck": "tsc --noEmit && tsc --noEmit -p electron/tsconfig.json"
   },
   "dependencies": {
@@ -82,6 +83,28 @@
       "extraResources": [
         {
           "from": "../jre-linux",
+          "to": "jre"
+        }
+      ]
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "icon": "res/img/logo.png",
+      "category": "public.app-category.productivity",
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}",
+      "identity": "-",
+      "hardenedRuntime": false,
+      "extraResources": [
+        {
+          "from": "../jre-mac-${arch}",
           "to": "jre"
         }
       ]

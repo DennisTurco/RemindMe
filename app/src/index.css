@@ -327,7 +327,7 @@ textarea:focus-visible,
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-/* Segmented control (CSV / PDF) */
+/* Segmented control (CSV / JSON) */
 .segmented {
   display: inline-flex;
   height: var(--control-h);

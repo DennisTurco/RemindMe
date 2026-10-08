@@ -17,7 +17,7 @@ export interface RemindMeBridge {
   setActive(name: string, isActive: boolean): Promise<void>;
   setTopLevel(name: string, isTopLevel: boolean): Promise<void>;
   exportCsv(): Promise<ExportResult>;
-  exportPdf(): Promise<ExportResult>;
+  exportJson(): Promise<ExportResult>;
   setNativeTheme(mode: "light" | "dark"): Promise<void>;
   setLanguage(language: string): Promise<void>;
   getAutoLaunch(): Promise<boolean>;
@@ -64,7 +64,7 @@ function createBrowserFallbackBridge(): RemindMeBridge {
       reminds = reminds.map((r) => (r.name === name ? { ...r, isTopLevel } : r));
     },
     exportCsv: async () => ({ canceled: true }),
-    exportPdf: async () => ({ canceled: true }),
+    exportJson: async () => ({ canceled: true }),
     setNativeTheme: async () => {},
     setLanguage: async () => {},
     getAutoLaunch: async () => false,

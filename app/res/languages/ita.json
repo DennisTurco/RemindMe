@@ -43,7 +43,7 @@
     "MainFrame": {
         "AddBackupTooltip": "Aggiungi nuovo promemoria",
         "ExportAs": "Esporta come: ",
-        "ExportAsPdfTooltip": "Esporta come PDF",
+        "ExportAsJsonTooltip": "Esporta come JSON",
         "ExportAsCsvTooltip": "Esporta come CSV",
         "ResearchBarTooltip": "Barra di ricerca",
         "ResearchBarPlaceholder": "Cerca...",
@@ -165,11 +165,11 @@
         "ErrorMessageForWrongTimeRange": "L'intervallo di tempo non è valido",
         "SuccessGenericTitle": "Successo",
         "SuccessfullyExportedToCsvMessage": "Backup esportati in CSV con successo!",
-        "SuccessfullyExportedToPdfMessage": "Backup esportati in PDF con successo!",
+        "SuccessfullyExportedToJsonMessage": "Backup esportati in JSON con successo!",
         "ErrorMessageForExportingToCsv": "Errore durante l'esportazione dei promemoria in CSV: ",
-        "ErrorMessageForExportingToPdf": "Errore durante l'esportazione dei promemoria in PDF: ",
+        "ErrorMessageForExportingToJson": "Errore durante l'esportazione dei promemoria in JSON: ",
         "CsvNameMessageInput": "Inserisci il nome del file CSV.",
-        "PdfNameMessageInput": "Inserisci il nome del file PDF.",
+        "JsonNameMessageInput": "Inserisci il nome del file JSON.",
         "DuplicatedFileNameMessage": "Il file esiste già. Sovrascrivere?",
         "ErrorMessageInvalidFilename": "Nome file non valido. Usa solo lettere, numeri, trattini e underscore.",
         "ShareLinkCopiedMessage": "Link copiato negli appunti!",
@@ -200,6 +200,6 @@
         "Step4Title": "Gestisci l'elenco",
         "Step4Body": "Usa la barra di ricerca per filtrare i promemoria. Clic destro su una riga per modificare, duplicare, eliminare, rinominare o attivare/disattivare rapidamente un promemoria.",
         "Step5Title": "Esporta e personalizza",
-        "Step5Body": "Esporta l'elenco in **CSV** o **PDF** dalla toolbar, oppure l'intero elenco in JSON dal menu **File**. In **Opzioni > Preferenze** puoi cambiare lingua e passare dal tema chiaro a quello scuro in qualsiasi momento."
+        "Step5Body": "Esporta l'elenco in **CSV** o **JSON** dalla toolbar, oppure l'intero elenco in JSON dal menu **File**. In **Opzioni > Preferenze** puoi cambiare lingua e passare dal tema chiaro a quello scuro in qualsiasi momento."
     }
 }

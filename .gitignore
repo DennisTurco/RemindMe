@@ -3,4 +3,5 @@
 /src/main/resources/res/reminders.db*
 /jre/
 /jre-linux/
+/jre-mac-*/
 /installer/Output/

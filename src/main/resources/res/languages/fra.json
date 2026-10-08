@@ -32,7 +32,7 @@
     "MainFrame": {
         "AddBackupTooltip": "Ajouter un nouveau rappel",
         "ExportAs": "Exporter en : ",
-        "ExportAsPdfTooltip": "Exporter en PDF",
+        "ExportAsJsonTooltip": "Exporter en JSON",
         "ExportAsCsvTooltip": "Exporter en CSV",
         "ResearchBarTooltip": "Barre de recherche",
         "ResearchBarPlaceholder": "Rechercher..."
@@ -141,11 +141,11 @@
         "ErrorMessageForWrongTimeRange": "L'intervalle de temps n'est pas valide",
         "SuccessGenericTitle":"Succès",
         "SuccessfullyExportedToCsvMessage":"Sauvegardes exportées en CSV avec succès !",
-        "SuccessfullyExportedToPdfMessage":"Sauvegardes exportées en PDF avec succès !",
+        "SuccessfullyExportedToJsonMessage":"Sauvegardes exportées en JSON avec succès !",
         "ErrorMessageForExportingToCsv": "Erreur lors de l'exportation des rappels en CSV : ",
-        "ErrorMessageForExportingToPdf": "Erreur lors de l'exportation des rappels en PDF : ",
+        "ErrorMessageForExportingToJson": "Erreur lors de l'exportation des rappels en JSON : ",
         "CsvNameMessageInput":"Entrez le nom du fichier CSV.",
-        "PdfNameMessageInput":"Entrez le nom du fichier PDF.",
+        "JsonNameMessageInput":"Entrez le nom du fichier JSON.",
         "DuplicatedFileNameMessage":"Le fichier existe déjà. Écraser ?",
         "ErrorMessageInvalidFilename":"Nom de fichier invalide. Utilisez uniquement des caractères alphanumériques, des tirets et des soulignés.",
         "ShareLinkCopiedMessage":"Lien de partage copié dans le presse-papiers !",

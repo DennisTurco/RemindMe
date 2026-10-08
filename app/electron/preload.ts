@@ -18,7 +18,7 @@ export interface RemindMeBridge {
   setActive(name: string, isActive: boolean): Promise<void>;
   setTopLevel(name: string, isTopLevel: boolean): Promise<void>;
   exportCsv(): Promise<ExportResult>;
-  exportPdf(): Promise<ExportResult>;
+  exportJson(): Promise<ExportResult>;
   setNativeTheme(mode: "light" | "dark"): Promise<void>;
   setLanguage(language: string): Promise<void>;
   getAutoLaunch(): Promise<boolean>;
@@ -47,7 +47,7 @@ const bridge: RemindMeBridge = {
   setActive: (name, isActive) => ipcRenderer.invoke("reminders:setActive", name, isActive),
   setTopLevel: (name, isTopLevel) => ipcRenderer.invoke("reminders:setTopLevel", name, isTopLevel),
   exportCsv: () => ipcRenderer.invoke("reminders:exportCsv"),
-  exportPdf: () => ipcRenderer.invoke("reminders:exportPdf"),
+  exportJson: () => ipcRenderer.invoke("reminders:exportJson"),
   setNativeTheme: (mode) => ipcRenderer.invoke("app:setThemeSource", mode),
   setLanguage: (language) => ipcRenderer.invoke("app:setLanguage", language),
   getAutoLaunch: () => ipcRenderer.invoke("app:getAutoLaunch"),
