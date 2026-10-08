@@ -82,9 +82,12 @@ function setLinuxAutostartEnabled(enabled: boolean): void {
   }
 
   // Inside an AppImage, execPath points into a temporary mount that changes
-  // every run: APPIMAGE is the path of the .AppImage file itself.
+  // every run: APPIMAGE is the path of the .AppImage file itself. Packaged
+  // builds run as "<name>.bin" behind the sandbox-detecting launcher script
+  // (build/linux-after-pack.cjs): autostart goes through the launcher too.
   const { path: execPath, args } = getLoginItemOptions();
-  const exec = [process.env.APPIMAGE || execPath, ...args].map((part) => `"${part}"`).join(" ");
+  const launcher = isDev ? execPath : execPath.replace(/\.bin$/, "");
+  const exec = [process.env.APPIMAGE || launcher, ...args].map((part) => `"${part}"`).join(" ");
   const entry = [
     "[Desktop Entry]",
     "Type=Application",
@@ -231,6 +234,29 @@ function loadRoute(win: BrowserWindow, hash: string): void {
     win.loadFile(path.join(__dirname, "../dist/index.html"), { hash });
   }
 }
+
+/**
+ * macOS keeps an app in the Dock for as long as it runs, even with every
+ * window hidden. RemindMe should look like a tray-only app while it runs in
+ * the background, so the Dock icon is shown only while some window (main
+ * window or a reminder popup) is visible.
+ */
+function updateDockVisibility(): void {
+  if (process.platform !== "darwin") return;
+
+  const anyVisible = BrowserWindow.getAllWindows().some((win) => !win.isDestroyed() && win.isVisible());
+  if (anyVisible) {
+    void app.dock.show();
+  } else {
+    app.dock.hide();
+  }
+}
+
+app.on("browser-window-created", (_event, win) => {
+  win.on("show", updateDockVisibility);
+  win.on("hide", updateDockVisibility);
+  win.on("closed", updateDockVisibility);
+});
 
 function createMainWindow(): void {
   // macOS login items don't receive command-line args: there the OS reports
@@ -448,6 +474,8 @@ app.whenReady().then(async () => {
   );
 
   createMainWindow();
+  // Started hidden (login item): no "show" event will fire, hide the Dock icon now
+  updateDockVisibility();
 
   poller = new DuePoller(config.schedulerIntervalMinutes * 60_000, openReminderPopup);
   poller.start();

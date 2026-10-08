@@ -42,6 +42,7 @@
   "build": {
     "appId": "it.dennisturco.remindme",
     "productName": "RemindMe",
+    "afterPack": "build/linux-after-pack.cjs",
     "files": [
       "dist/**/*",
       "dist-electron/**/*"

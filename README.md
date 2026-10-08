@@ -42,6 +42,12 @@ This project is, of course, published here on GitHub, but it's also available on
 | Linux | ✅ |
 | MacOS | ✅ |
 
+### Installing on Linux
+
+* **Ubuntu, Debian, Mint and derivatives**: download the `.deb` and install it with a double click, or with `sudo apt install ./RemindMe-<version>-amd64.deb`. RemindMe then appears in the applications menu.
+* **Other distributions**: download the `.AppImage`, make it executable (`chmod +x RemindMe-<version>-x86_64.AppImage`) and run it.
+  If it doesn't start and mentions `libfuse.so.2`, install FUSE 2: `sudo apt install libfuse2` (`libfuse2t64` on Ubuntu 24.04+), or the equivalent package of your distribution.
+
 ## Supported Languages
 
 | Piattaforma | Availability |

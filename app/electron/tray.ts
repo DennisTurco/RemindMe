@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, Tray, nativeImage, type NativeImage } from "electron";
+import { app, BrowserWindow, Menu, Tray, nativeImage, type NativeImage } from "electron";
 import type { Translations } from "./services/i18nService";
 import { t } from "./services/i18nService";
 
@@ -81,6 +81,10 @@ export function setupTray(ctx: TrayContext): AppTray {
 export function showAndFocus(win: BrowserWindow | null): void {
   if (!win) return;
   if (win.isMinimized()) win.restore();
+  // macOS: bring the Dock icon back *before* showing the window (it's hidden
+  // while RemindMe runs from the tray only), otherwise the window can open
+  // behind other apps instead of taking focus.
+  if (process.platform === "darwin") void app.dock.show();
   win.show();
   win.focus();
 }
