@@ -11,7 +11,24 @@ export const LANGUAGE_FILE_NAMES: Record<LanguageCode, string> = {
   FRA: "fra.json",
 };
 
-export const DEFAULT_LANGUAGE: LanguageCode = "ITA";
+export const DEFAULT_LANGUAGE: LanguageCode = "ENG";
+
+const LOCALE_PREFIX_TO_LANGUAGE: Record<string, LanguageCode> = {
+  it: "ITA",
+  en: "ENG",
+  de: "DEU",
+  es: "ESP",
+  fr: "FRA",
+};
+
+/** Maps BCP 47 locales (e.g. "it-IT", ordered by preference) to the first supported app language, else DEFAULT_LANGUAGE. */
+export function languageFromLocales(locales: readonly string[]): LanguageCode {
+  for (const locale of locales) {
+    const match = LOCALE_PREFIX_TO_LANGUAGE[locale.toLowerCase().split(/[-_]/)[0]];
+    if (match) return match;
+  }
+  return DEFAULT_LANGUAGE;
+}
 
 export type Translations = Record<string, Record<string, string>>;
 

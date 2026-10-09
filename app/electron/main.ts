@@ -6,7 +6,7 @@ import * as path from "path";
 import { apiClient } from "./apiClient";
 import { buildAppMenu } from "./appMenu";
 import { loadAppConfig } from "./services/appConfigService";
-import { DEFAULT_LANGUAGE, loadTranslations } from "./services/i18nService";
+import { DEFAULT_LANGUAGE, languageFromLocales, loadTranslations } from "./services/i18nService";
 import type { LanguageCode, Translations } from "./services/i18nService";
 import { setupTray, showAndFocus } from "./tray";
 import type { AppTray } from "./tray";
@@ -139,6 +139,12 @@ async function applyDefaultAutoLaunchOnFirstRun(): Promise<void> {
   const marker = path.join(app.getPath("userData"), ".autolaunch-default-applied");
   try {
     await fs.access(marker);
+    // Already applied: on Linux the autostart entry stores an absolute path,
+    // which goes stale if the app moved (e.g. AppImage deleted, .deb installed
+    // instead), so rewrite it with the current one while it's still enabled.
+    if (process.platform === "linux" && getAutoLaunchEnabled()) {
+      setLinuxAutostartEnabled(true);
+    }
     return;
   } catch {
     // Marker doesn't exist yet: first run since install (or since userData was cleared).
@@ -463,6 +469,8 @@ app.whenReady().then(async () => {
   const config = await loadAppConfig(configPath);
 
   registerIpcHandlers(config);
+  // Until the renderer reports the saved choice, label the menu/tray in the system language.
+  currentLanguage = languageFromLocales([...app.getPreferredSystemLanguages(), app.getLocale()]);
   await refreshTranslations();
   Menu.setApplicationMenu(
     buildAppMenu({

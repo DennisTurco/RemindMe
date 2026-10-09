@@ -30,16 +30,34 @@ export const LANGUAGE_LOCALES: Record<LanguageCode, string> = {
 };
 
 const STORAGE_KEY = "remindme-language";
-const DEFAULT_LANGUAGE: LanguageCode = "ITA";
+const DEFAULT_LANGUAGE: LanguageCode = "ENG";
+
+const LOCALE_PREFIX_TO_LANGUAGE: Record<string, LanguageCode> = {
+  it: "ITA",
+  en: "ENG",
+  de: "DEU",
+  es: "ESP",
+  fr: "FRA",
+};
+
+/** First supported language among the system's preferred locales, else DEFAULT_LANGUAGE. */
+function detectSystemLanguage(): LanguageCode {
+  const locales = navigator.languages?.length ? navigator.languages : [navigator.language];
+  for (const locale of locales) {
+    const match = LOCALE_PREFIX_TO_LANGUAGE[locale?.toLowerCase().split(/[-_]/)[0] ?? ""];
+    if (match) return match;
+  }
+  return DEFAULT_LANGUAGE;
+}
 
 type Translations = Record<string, Record<string, string>>;
 
 function readStoredLanguage(): LanguageCode {
   try {
     const value = localStorage.getItem(STORAGE_KEY);
-    return value && value in LANGUAGE_FILE_NAMES ? (value as LanguageCode) : DEFAULT_LANGUAGE;
+    return value && value in LANGUAGE_FILE_NAMES ? (value as LanguageCode) : detectSystemLanguage();
   } catch {
-    return DEFAULT_LANGUAGE;
+    return detectSystemLanguage();
   }
 }
 

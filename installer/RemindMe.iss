@@ -12,8 +12,8 @@
 ; first run). Those HKCU...\Run entries are removed on uninstall, see [Code].
 
 #define AppName      "RemindMe"
-#define AppVersion   "2.0.0"
-#define AppPublisher "Shard"
+#define AppVersion   "2.0.1"
+#define AppPublisher "Dennis Turco"
 #define AppURL       "https://github.com/DennisTurco/RemindMe"
 #define AppExeName   "RemindMe.exe"
 #ifndef SourceDir
